@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+
+    <link rel="stylesheet" href="/Frontend/User Login/user_login.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    
+    <section class="vh-100" style="background-image: linear-gradient(#6C6A6A,#1E1E1E); overflow: hidden;">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6 px-0 d-none d-sm-block image-section" style="position: relative;">
+                <img src="/Frontend/Assets/Image1.jpg"
+                alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+                
+                <div class="text-overlay position-absolute top-0 end-0 p-3">
+                  <h2 class="text-white">Gather & Grub</h2>
+                  </div>
+      
+            </div>
+
+            <div class="col-sm-6 header" style=" padding-top: 150px; font-family: 'lato', sans-serif;" >
+                <div class="px-1 py-0 ms-xl-2 text-center" >
+                    
+                    <span class="h1 fw-bold mb-0 text-white" style="font-family:'lato';">Ready for Another Taste?</span>
+
+                    <h2 style="color:#FAFF00; ">Login now!</h2>
+                  </div>
+                  
+          
+                  <div class="d-flex justify-content-center align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-0 pt-xl-0 mt-xl-n5" >
+          
+                    <form style="width: 25rem;">
+          
+                      
+                        <table class="mx-auto">
+                            <tr>
+                                <td><label for="username" >Username:</label></td>
+                                <td><input type="text" id="username" name="username" ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="password">Password:</label></td>
+                                <td><input type="password" id="password" name="password"  ></td>
+                            </tr>
+                            <tr><a href="">
+                                <td colspan="2"><button type="submit" style="border-radius: 5px; font-size: large; margin-top: 10px;">Login</button></td></a>
+                            </tr>
+
+                            <tr>
+                              <td colspan="2">
+                                <p style="color: white; display: flex; justify-content: center;">Not a Member? 
+                                  <a href="/Frontend/User Registration/user_reg.html" style="padding-left: 10px; color: #FAFF00; text-decoration: underline;text-decoration-color:  #7440E4;"> Signup</a>
+                                </p>
+                              </td>
+                            </tr>
+                        </table>
+                    </form>
+                    
+          
+                  </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    
+</body>
+</html>
