@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,700;1,900&display=swap');
 
+body{
+    font-family: 'Lato' , sans-serif;
+}
 .text-overlay{
     position:absolute;
     top: 10px;
@@ -15,82 +18,55 @@
     padding: 50px 10px; 
     font-weight: bold;
 }
-
-table {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    border-collapse: collapse;
-   
-}
-td {
-    padding: 10px;
-    font-size: medium;
-}
 label{
     color: white;
-    font-size: 20px;
+ 
 }
-input {
-    width: 100%;
-    padding: 2px;
-    border-radius: 5px;
-    
+
+input:focus{
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
 }
-button {
-    width: 100%;
-    padding: 4px;
-    background-color: #FAFF00;
+
+.custom-hover{
+    background-color: #FAFF00 !important; 
     color: black;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 25px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin: 20px;
+    font-size: 18px; 
+    padding: 3px;
 }
-button:hover {
-    background-color: #9ba49b;
-    border: 1px solid #FAFF00;
-    transition: background-color 0.3s, color 0.3s;
+.custom-hover:hover{
+    background-color: #9ba49b !important;
+     border: 1px solid #FAFF00 !important; 
+     transition: background-color 0.3s, color 0.3s !important;
+}
+
+p{
+    color: white; 
+    display: flex; 
+    justify-content: center;
+    padding-top: 10px;
+}
+
+p a{
+    padding-left: 10px; 
+    color: white; 
+    text-decoration: underline;
+    text-decoration-color:  #7440E4;
+}
+
+p a:hover{
+    color:#FAFF00;
 }
 
 /* Responsive behavior */
-@media (min-width: 576px) and (max-width: 760px) {
-   .image-section{
-    display: none !important;
+@media  (min-width: 579px) {
+   .custom-padding{
+    padding-top: 20px;
+    padding-bottom: 10px;
    }
-
-   table {
-    width: 100%;
-    max-width: 100px;
-    margin: 0 auto;
-    border-collapse: collapse;
-    display:inline;
-    padding-left: 30px;
-}
-td {
-    display: flex;
-    flex-direction: column;
-    padding: 2px;
-    font-size: medium;
-    justify-content: center;
-}
-label{
-    color: white;
-    font-size: 15px;
-}
-input {
-    width: 100%;
-    padding: 2px;
-    border-radius: 5px;
-   
-    
-}
-button {
-    width: 100%;
-    padding: 3px;  
-}
+   .p-custom{
+    padding-top: 100px;
+   }
 }
 
