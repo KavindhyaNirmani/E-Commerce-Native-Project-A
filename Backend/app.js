@@ -2,7 +2,7 @@
 
 
 const express=require('express');
-const app =express();
+const app =express();//Initalizing the express application
 const morgan=require('morgan');
 const bodyParser = require('body-parser');
 
