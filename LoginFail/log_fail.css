@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #444;
+  color: #ffffffff;
+}
+.modal-content {
+  background-color: #2d2d2d;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /*display using full screen for small screen */
+  padding: 20px;
+}
+.fail-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.message {
+  font-size: 16px;
+}
+.btn {
+  display: block;
+  position: relative;
+  margin: auto;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #ffc107;
+  border-color: #ffc107;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 5px;
+}
+.btn:hover {
+  background-color: #e0a800;
+  border-color: #e0a800;
+}
+.img-fluid {
+  width: 50px;
+  height: auto;
+  margin-left: 45%;
+}
+.close_img {
+  width: 7%;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  transition: transform 0.2s ease;
+}
+.close_img:active {
+  transform: scale(1.2);
+}
