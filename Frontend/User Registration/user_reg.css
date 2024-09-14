@@ -17,81 +17,59 @@
     font-weight: bold;
 }
 
-table {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    border-collapse: collapse;
-   
-}
-td {
-    padding: 10px;
-    font-size: medium;
-}
 label{
     color: white;
     font-size: 18px;
+    padding-left: 2px !important;
 }
-input {
-    width: 100%;
-    padding: 1px;
-    border-radius: 5px;
-    
+p{
+    color: white; 
+    display: flex; 
+    justify-content: center;
+    padding-top: 10px;
 }
-button {
-    width: 100%;
-    padding: 3px;
-    background-color: #FAFF00;
+
+p a{
+    padding-left: 10px; 
+    color: white; 
+    text-decoration: underline;
+    text-decoration-color:  #7440E4;
+}
+.custom-hover{
+    background-color: #FAFF00 !important; 
     color: black;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-    box-sizing: border-box;
-    border-radius: 5px;
+    font-size: 18px; 
+    padding: 3px; 
 }
-button:hover {
-    background-color: #9ba49b;
-    border: 1px solid #FAFF00;
-    transition: background-color 0.3s, color 0.3s;
+.custom-hover:hover{
+    background-color: #9ba49b !important;
+     border: 1px solid #FAFF00 !important; 
+     transition: background-color 0.3s, color 0.3s !important;
 }
-
+p a:hover{
+    color:#FAFF00;
+}
 /* Responsive behavior */
-@media (min-width: 576px) and (max-width: 760px) {
-    .image-section{
-     display: none !important;
+@media  (min-width: 579px) {
+    .custom-padding{
+     padding-top: 20px;
+     padding-bottom: 10px;
     }
- 
-    table {
-     width: 100%;
-     max-width: 100px;
-     margin: 0 auto;
-     border-collapse: collapse;
-     display:inline;
-     padding-left: 0px;
- }
- td {
-     display: flex;
-     flex-direction: column;
-     padding: 2px;
-     font-size: medium;
-     justify-content: center;
- }
- label{
-     color: white;
-     font-size: 13px;
- }
- input {
-     width: 100%;
-     padding: 2px;
-     border-radius: 5px;  
- }
- td p{
-    font-size: 13px;
- }
- button {
-     width: 100%;
-     padding: 2px;  
- }
+    .p-custom{
+     padding-top: 150px;
+    }
  }
 
+
+ @media (min-width: 576px) and (max-width: 760px) {
+    .custom-padding{
+        padding-top: 0px;
+        padding-bottom: 0px;
+       }
+}
+
+@media(max-width:530px){
+    .text-style{
+        font-size: smaller;
+    }
+}
