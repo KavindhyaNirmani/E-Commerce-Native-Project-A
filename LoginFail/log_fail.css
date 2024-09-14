@@ -51,6 +51,7 @@ body {
   top: 10px;
   right: 20px;
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 .close_img:active {
   transform: scale(1.2);
