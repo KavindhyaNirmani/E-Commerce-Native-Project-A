@@ -14,7 +14,7 @@
         /* Hero section */
         .hero {
             text-align: center;
-            background-image: url('/assets/cakebg.jpg');
+            background-image: url('/BevaragesMenu/bevbackground.jpg');
             background-size: cover;
             background-position: center;
             height: 368px;
@@ -69,7 +69,7 @@
             font-family: Lato;
         }
 
-              /* Menu section */
+               /* Menu section */
 .menu {
     padding: 20px;
     margin: 10px;
@@ -228,7 +228,7 @@
         }
 
         // Load first 8 menu items
-        fetch('cakeData.json')
+        fetch('bevData.json')
             .then(response => response.json())
             .then(data => {
                 const menu = document.getElementById('pizzaMenu');
