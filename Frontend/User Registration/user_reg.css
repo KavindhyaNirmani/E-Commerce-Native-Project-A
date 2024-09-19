@@ -33,7 +33,7 @@ p a{
     padding-left: 10px; 
     color: white; 
     text-decoration: underline;
-    text-decoration-color:  #7440E4;
+    text-decoration-color:  white;
 }
 .custom-hover{
     background-color: #FAFF00 !important; 
@@ -59,7 +59,6 @@ p a:hover{
      padding-top: 150px;
     }
  }
-
 
  @media (min-width: 576px) and (max-width: 760px) {
     .custom-padding{
