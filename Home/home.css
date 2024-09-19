@@ -29,33 +29,41 @@
 }
 
 /*Feature Section*/
-.feature-img {
-  width: 60%;
-  height: auto;
-  margin-bottom: 15px;
-}
-/*for small devices*/
-@media (max-width: 768px) {
-  .feature-img {
-    width: 50%;
-  }
-}
-/*for mobile phones*/
-@media (max-width: 576px) {
-  .feature-img {
-    width: 30%;
-  }
-}
-.features h3 {
-  color: #ffffff;
-  font-size: 24px;
-}
-.features p {
-  color: #ffffff;
-  font-size: 14px;
-}
 .features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
   background-color: #1f0b0b;
+}
+
+.feature {
+  flex: 1 1 300px;
+  max-width: 300px;
+  text-align: center;
+  margin: 10px;
+}
+
+.feature img {
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: white;
+  font-family: Lato;
+}
+
+.feature p {
+  font-size: 1rem;
+  color: white;
+  font-family: Lato;
 }
 
 /*About Section*/
@@ -109,6 +117,7 @@
   border-radius: 20px;
   overflow: hidden;
   margin: 5px;
+  margin-bottom: 10px;
 }
 .card-img-container {
   background-color: #1f0b0b;
@@ -140,11 +149,38 @@
 .card .btn:hover,
 .card .btn:focus,
 .card .btn:active {
+  background-color: #9ba49b;
+  color: #000000;
   outline: none;
   border: none;
   box-shadow: none;
 }
 
+/*for screens between 320px and 576px */
+@media (max-width: 576px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .col {
+    flex: 0 0 auto;
+    margin-bottom: 10px; /* Space between cards */
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .card-img-container {
+    height: 250px;
+  }
+}
+
+/*for screens up to 768px */
 @media (max-width: 768px) {
   .menutopic h2 {
     font-size: 24px;
@@ -159,16 +195,20 @@
     margin-bottom: 3px;
   }
 }
-
-@media (max-width: 576px) {
-  .card-img-container {
-    height: 200px;
-  }
-  .col {
-    margin-bottom: 2px; /* space between cards */
-  }
+/*offer section*/
+.carousel-container {
+  max-width: 795px;
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.carousel-inner img {
+  width: 100%;
+  height: auto;
 }
 
 body {
   font-family: "Lato", sans-serif;
+  background-image: linear-gradient(#6c6a6a, #1e1e1e);
 }
