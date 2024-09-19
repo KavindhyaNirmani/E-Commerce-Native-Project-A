@@ -4,74 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="/assets/image2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
    
     <style>
-        .navbar{
-      background-color:black;
-      height: 72px;
-      margin: 0.5rem;
-
-    }
-    body {
-      background-image: linear-gradient(#6C6A6A, #1E1E1E);
-      height: 100vh; /* Ensure body takes full viewport height */
-      margin: 0;
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    .login-button {
-      background-color: rgb(238, 241, 31);
-      color: black;
-      font-family: Lato;
-      font-size: 14px;
-      padding: 1px 17px;
-      height: 25px;
-      width: 80px;
-      border-radius: 50px;
-      text-decoration:none;
-      transition: 0.3s background-color;
-    }
-
-    .login-button:hover {
-      background-color: #6C6A6A;
-    }
-   
-    .navbar-toggler {
-      border: none;
-      font-size: 1.25rem;
-    
-    }
-
-    .navbar-toggler:focus, .btn-close:focus {
-      box-shadow: none;
-      outline: none;
-    }
-
-    .nav-link {
-      color:#fff;
-      font-weight: 500;
-      font-family: Lato;
-    }
-
-    .navbar-nav{
-      margin-left: 100px;
-      
-    }
-
-    .nav-link:hover, .nav-link.active {
-      color: rgb(238, 241, 31);
-    }
-
-    /* Default background for offcanvas */
-    
+        /* Custom Styles */
         
 
         /* Hero section */
         .hero {
             text-align: center;
-            background-image: url('/assets/pizzabg.jpg');
+            background-image: url('/BevaragesMenu/bevbackground.jpg');
             background-size: cover;
             background-position: center;
             height: 368px;
@@ -126,55 +69,56 @@
             font-family: Lato;
         }
 
-        /* Menu section */
-        .menu {
-            padding: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+               /* Menu section */
+.menu {
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-        .menu-item {
-            flex: 1 1 23%;
-            text-align: center;
-            height: 430px;
-            width: 320px;
-            margin: 10px;
-            padding: 15px;
-            border-radius: 20px;
-            background-color: #1F0B0B;
-            color: white;
-            font-family: Lato;
-        }
+.menu-item {
+    flex: 1 1 23%; /* Default for larger screens */
+    text-align: center;
+    height: 450px;
+    width: 200px;
+    margin: 10px;
+    border-radius: 20px;
+    background-color: #1F0B0B;
+    font-family: Lato;
+}
 
         .menu-item img {
             width: 100%;
-            height: 215px;
+            height: 200px;
             margin-bottom: 20px;
+            border-radius: 25px;
         }
 
         .menu-item h4 {
             font-size: 1.rem;
             margin-bottom: 10px;
+            color: white
         }
 
         .menu-item h5 {
             font-size: 1rem;
             margin-bottom: 10px;
+            color: rgb(238, 241, 31);
         }
 
         .menu-item p {
             font-size: 1rem;
             margin-bottom: 10px;
+            color:white;
         }
-
-    
 
         .add-to-cart {
             background-color: rgb(238, 241, 31);
             width: 170px;
             height: 26px;
-            margin-bottom: 30px;
+            margin-top: 50px;
             color: black;
             font-family: Lato;
             border: none;
@@ -212,60 +156,30 @@
         }
 
         /* Responsive Styles */
+        @media (max-width: 1024px) {
+        .menu-item {
+            flex: 1 1 48% !important; /* Two items per row */
+             }
+        }
+
         @media (max-width: 768px) {
-            .menu-item {
-                flex: 1 1 48%;
-            }
+    .menu-item {
+        flex: 1 1 48%;
+    }
         }
 
         @media (max-width: 576px) {
-            .menu-item {
-                flex: 1 1 100%;
+        .menu-item {
+        flex: 1 1 100%; /* One item per row on small screens */
             }
         }
     </style>
 </head>
 <body style="background-image: linear-gradient(#6C6A6A, #1E1E1E); height:100vh;">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand me-auto" href="#">
-            <img src="/assets/image2.png" alt="Logo" style="height: 50px;">
-          </a>
-    
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-start flex-grow-1 pe-3 ">
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2 "href="#"> Home </a>
-                </li>
-    
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="#">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="#">Menu</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link mx-lg-2" href="#">Promotion</a>
-                </li>
-    
-              </ul>
-            </div>
-          </div>
-          <a href="#" class="login-button">Sign In</a>
-          <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-    
-          <li class="nav-item">
-            <img class="logo" src="/assets/cart.png" alt="Cart">
-          </li>
-        </div>
-      </nav>
+    <header>
+        <iframe src="/Header/header.html" style="border:none;width:100%; height:80px;"></iframe>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -293,7 +207,7 @@
 
     <!-- Pizza Menu Section -->
     <section class="menu" id="pizzaMenu"></section>
-    <button class="view-all-btn" onclick="location.href='fullMenu.html'">View More</button>
+    <button class="view-all-btn" onclick="location.href='beverages2.html'">View More</button>
 
     <!-- Footer Section -->
     <footer>
@@ -314,7 +228,7 @@
         }
 
         // Load first 8 menu items
-        fetch('menuData.json')
+        fetch('bevData.json')
             .then(response => response.json())
             .then(data => {
                 const menu = document.getElementById('pizzaMenu');
@@ -336,20 +250,5 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
-  crossorigin="anonymous"></script>
-
-  <script>
-    // Get the offcanvas element by ID
-    const offcanvasNavbar = document.getElementById('offcanvasNavbar');
-
-    // Listen for the event when offcanvas is shown
-    offcanvasNavbar.addEventListener('show.bs.offcanvas', function () {
-      offcanvasNavbar.style.backgroundColor = 'black';  // Change background color when opened
-    });
-
-  </script>
 </body>
 </html>
