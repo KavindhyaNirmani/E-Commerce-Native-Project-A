@@ -7,6 +7,7 @@ const morgan=require('morgan');
 const bodyParser = require('body-parser');
 
 const authRoutes=require('./api/routes/authRoutes');
+const itemRoutes=require('./api/routes/itemRoutes');
 
 //middleware for logging requests and parsing the body
 app.use(morgan('dev'));
@@ -33,6 +34,7 @@ next();
 
 
 app.use('/auth',authRoutes);
+app.use('/items',itemRoutes);
 
 
 app.use((req,res,next)=>{

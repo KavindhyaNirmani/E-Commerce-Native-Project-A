@@ -1,63 +1,63 @@
 [
     {
-      "imgSrc": "menucake1.jpg",
+      "imgSrc": "menubev1.jpg",
       "title": "Hot & Spicy Chicken",
       "price": "Rs. 950.00",
       "description": "Spicy chunks of chicken, Hot & Spicy Chicken, capsicums & onions with a double layer of cheese."
     },
     {
-      "imgSrc": "menucake2.jpg",
+      "imgSrc": "menubev2.jpg",
       "title": "Cheesy Pizza",
       "price": "Rs. 1000.00",
       "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
     },
     {
-      "imgSrc": "menucake6.jpeg",
+      "imgSrc": "menubev5.jpg",
       "title": "Meat Lovers",
       "price": "Rs. 1200.00",
       "description": "Filled high with pepperoni, sausage, ham, bacon, and ground beef. A meat feast on every slice."
     },
 
     {
-        "imgSrc": "menucake5.jpg",
+        "imgSrc": "menubev4.jpg",
         "title": "Cheesy Pizza",
         "price": "Rs. 1000.00",
         "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
       },
       {
-        "imgSrc": "menucake5.jpg",
+        "imgSrc": "menubev5.jpg",
         "title": "Meat Lovers",
         "price": "Rs. 1200.00",
         "description": "Filled high with pepperoni, sausage, ham, bacon, and ground beef. A meat feast on every slice."
       },
     
       {
-        "imgSrc": "menucake1.jpg",
+        "imgSrc": "menubev1.jpg",
         "title": "Hot & Spicy Chicken",
         "price": "Rs. 950.00",
         "description": "Spicy chunks of chicken, Hot & Spicy Chicken, capsicums & onions with a double layer of cheese."
       },
       {
-        "imgSrc": "menucake2.jpg",
+        "imgSrc": "menubev2.jpg",
         "title": "Cheesy Pizza",
         "price": "Rs. 1000.00",
         "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
       },
       {
-        "imgSrc": "menucake6.jpeg",
+        "imgSrc": "menubev5.jpg",
         "title": "Meat Lovers",
         "price": "Rs. 1200.00",
         "description": "Filled high with pepperoni, sausage, ham, bacon, and ground beef. A meat feast on every slice."
       },
   
       {
-          "imgSrc": "menucake5.jpg",
+          "imgSrc": "menubev4.jpg",
           "title": "Cheesy Pizza",
           "price": "Rs. 1000.00",
           "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
         },
         {
-          "imgSrc": "menucake5.jpg",
+          "imgSrc": "menubev5.jpg",
           "title": "Meat Lovers",
           "price": "Rs. 1200.00",
           "description": "Filled high with pepperoni, sausage, ham, bacon, and ground beef. A meat feast on every slice."
