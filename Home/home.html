@@ -43,7 +43,7 @@
     >
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../Assets/main.png" class="masthead" alt="img1" />
+          <img src="../Assets/main1.png" class="masthead" alt="img1" />
           <div class="carousel-caption carousel">
             <h2>Welcome To</h2>
             <h1>Gather & Grab!!</h1>
@@ -155,7 +155,7 @@
                 />
               </div>
               <div class="card-body">
-                <a href="#">
+                <a href="../Frontend/BevaragesMenu/beverages.html">
                 <button class="btn btn-primary">Beverages</button>
               </a>
               </div>
@@ -184,6 +184,30 @@
     </div>
     </div>
     <!--footer-->
-       
+    <footer>
+      <iframe
+          src="../Frontend/Footer/footer.html"
+          id="footerFrame"
+          scrolling="no"
+          onload="adjustFooterHeight(this)"
+          style="margin-top: 30px; width: 100%; border: none; overflow: hidden;"
+      ></iframe>
+  </footer>
+  
+  <script>
+    function adjustFooterHeight(iframe) {
+      // Add a delay to ensure the content is fully loaded before calculating height
+      setTimeout(() => {
+          try {
+              const document = iframe.contentWindow.document;
+              const height = document.documentElement.scrollHeight; // Use documentElement for more accurate height
+              iframe.style.height = height + 'px';
+          } catch (e) {
+              console.error('Error adjusting iframe height:', e);
+          }
+      }, 100); // 100ms delay to allow content to render
+    }
+  </script>
+  
   </body>
 </html>

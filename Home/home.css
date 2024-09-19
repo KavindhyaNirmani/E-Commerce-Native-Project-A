@@ -8,6 +8,7 @@
   display: block;
   min-height: 30vh;
   background-size: cover;
+  max-height: 60vh;
 }
 .carousel-caption h2 {
   color: #ffffff;
@@ -118,6 +119,8 @@
   overflow: hidden;
   margin: 5px;
   margin-bottom: 10px;
+  max-width: 320px;
+  min-width: 200px;
 }
 .card-img-container {
   background-color: #1f0b0b;
@@ -127,6 +130,7 @@
   padding: 10px;
   width: 100%;
   height: 300px;
+  max-height: 300px;
 }
 .card img {
   width: 100%;
