@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `cart_id` int NOT NULL,
+  `cart_id` int NOT NULL AUTO_INCREMENT,
   `added_at` datetime DEFAULT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`cart_id`,`user_id`),
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `cart_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart_items` (
-  `cart_item_id` int NOT NULL,
+  `cart_item_id` int NOT NULL AUTO_INCREMENT,
   `quantity` varchar(45) DEFAULT NULL,
   `item_price` decimal(10,0) DEFAULT NULL,
   `item_id` int NOT NULL,
@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `category_id` int NOT NULL,
+  `category_id` int NOT NULL AUTO_INCREMENT,
   `category_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `item` (
-  `item_id` int NOT NULL,
+  `item_id` int NOT NULL AUTO_INCREMENT,
   `item_name` varchar(45) DEFAULT NULL,
   `item_description` varchar(225) DEFAULT NULL,
   `item_price` decimal(10,0) DEFAULT NULL,
@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `order_id` int NOT NULL,
+  `order_id` int NOT NULL AUTO_INCREMENT,
   `order_date` datetime DEFAULT NULL,
   `total_amount` decimal(10,0) DEFAULT NULL,
   `order_status` enum('Pending','Successfull','Failed') DEFAULT 'Pending',
@@ -142,7 +142,7 @@ CREATE TABLE `order` (
   `user_id` int NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `fk_ORDER_CART1_idx` (`cart_id`,`user_id`),
-  CONSTRAINT `fk_ORDER_CART1` FOREIGN KEY (`cart_id`, `user_id`) REFERENCES `cart` (`cart_id`, `user_id`)
+  CONSTRAINT `fk_ORDER_CART1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -163,13 +163,13 @@ DROP TABLE IF EXISTS `order_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_details` (
-  `order_address_id` int NOT NULL,
+  `order_detail_id` int NOT NULL AUTO_INCREMENT,
   `full_name` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `postal_code` varchar(45) DEFAULT NULL,
   `order_id` int NOT NULL,
-  PRIMARY KEY (`order_address_id`),
+  PRIMARY KEY (`order_detail_id`),
   KEY `fk_ORDER_DETAILS_ORDER1_idx` (`order_id`),
   CONSTRAINT `fk_ORDER_DETAILS_ORDER1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -192,7 +192,7 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_items` (
-  `order_item_id` int NOT NULL,
+  `order_item_id` int NOT NULL AUTO_INCREMENT,
   `quantity` int DEFAULT NULL,
   `item_price` decimal(10,0) DEFAULT NULL,
   `ORDER_ITEMScol` varchar(45) DEFAULT NULL,
@@ -223,12 +223,12 @@ DROP TABLE IF EXISTS `payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `payment_id` int NOT NULL,
+  `PAYMENT_id` int NOT NULL AUTO_INCREMENT,
   `amount_paid` decimal(10,0) DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
   `payment_status` enum('Pending','Successfull','Failed') DEFAULT NULL,
   `order_id` int NOT NULL,
-  PRIMARY KEY (`payment_id`),
+  PRIMARY KEY (`PAYMENT_id`),
   KEY `fk_PAYMENT_ORDER1_idx` (`order_id`),
   CONSTRAINT `fk_PAYMENT_ORDER1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -251,7 +251,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `user_id` int NOT NULL,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
@@ -281,4 +281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-19 11:57:29
+-- Dump completed on 2024-09-20 12:18:15
