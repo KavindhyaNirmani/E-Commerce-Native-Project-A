@@ -40,7 +40,7 @@
           
                   <div class="d-flex justify-content-center align-items-center px-1 ms-xl-4 mt-2 pt-0 pt-xl-0 mt-xl-n5" >
           
-                    <form class="needs-validation" novalidate style="font-family: 'Lato' ,sans-serif;">
+                    <form method="POST" class="needs-validation" novalidate onsubmit="loginUser(event)" style="font-family: 'Lato' ,sans-serif;">
                       <div class=" form-group row custom-padding"  >
                           <label for="username" class="col-md-4 col-form-label">Username</label>
                           <div class="col-md-8">
@@ -104,6 +104,38 @@
               }, false);
             });
           })();
+
+          async function loginUser(event) {
+    event.preventDefault();  // Prevent the default form submission
+
+    // Fetch form values
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      // Send a POST request to the backend login endpoint
+      const response = await fetch('http://localhost:5010/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Login successful!');
+        // Redirect or perform further actions here
+         //window.location.href = '/path/to/dashboard';
+      } else {
+        alert(data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  }
 
 
         </script>
