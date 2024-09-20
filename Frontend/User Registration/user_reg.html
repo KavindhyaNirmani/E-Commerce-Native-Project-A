@@ -41,7 +41,7 @@
           <div
             class="d-flex justify-content-center align-items-center px-2 ms-xl-4 mt-0 pt-0 pt-xl-0 mt-xl-n5">
 
-            <form  method="POST" class="needs-validation" novalidate style="font-family: 'Lato', sans-serif;">
+            <form  method="POST" class="needs-validation" novalidate onsubmit="registerUser(event)"   style="font-family: 'Lato', sans-serif;">
 
               <div class=" form-group row custom-padding">
                 <label for="username" class="col-md-3 col-form-label">Email</label>
@@ -119,7 +119,20 @@
           if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
+          } else {
+          // Only check passwords after the form has been validated
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+
+          if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent submission
+            alert('Passwords do not match'); // Show an alert if passwords don't match
+            return;
           }
+
+          // If passwords match and form is valid, continue submission
+          registerUser(event);
+        }
 
           form.classList.add('was-validated');
         }, false);
@@ -133,13 +146,6 @@
       const email = document.getElementById('email').value;
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
-      // Simple password matching validation
-     if (password !== confirmPassword) {
-         alert('Password do not match');
-         return;
-      }
 
       try {
           // Send a POST request to the backend
@@ -164,8 +170,6 @@
       }
   }
 
-  // Attach the registerUser function to the form's submit event
-  document.querySelector('form').addEventListener('submit', registerUser)
 
 </script>
 
