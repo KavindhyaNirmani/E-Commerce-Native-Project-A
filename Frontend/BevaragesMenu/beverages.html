@@ -297,7 +297,12 @@
 
     <!-- Footer Section -->
     <footer>
-        <iframe src="../Footer/footer.html" id="footerFrame" onload="adjustFooterHeight(this)" style="margin-top: 30px;"></iframe>
+        <iframe 
+        src="../Footer/footer.html" 
+        id="footerFrame" 
+        style="width: 100%; border: none; margin-top: 30px; height: 297px;"
+        onload="adjustFooterHeight(this)" 
+        ></iframe>
     </footer>
 
     <script>
@@ -308,7 +313,7 @@
                     const height = document.body.scrollHeight;
                     iframe.style.height = height + 'px';
                 } catch (e) {
-                    console.error('Error adjusting iframe height:', e);
+                    console.error("Error adjusting iframe height:", e);
                 }
             }, 100);
         }
