@@ -1,0 +1,66 @@
+[
+    {
+      "imgSrc": "menucake1.jpg",
+      "title": "Hot & Spicy Chicken",
+      "price": "Rs. 950.00",
+      "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+    },
+    {
+      "imgSrc": "menucake2.jpg",
+      "title": "Cheesy Pizza",
+      "price": "Rs. 1000.00",
+      "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+    },
+    {
+      "imgSrc": "menucake6.jpeg",
+      "title": "Meat Lovers",
+      "price": "Rs. 1200.00",
+      "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+    },
+
+    {
+        "imgSrc": "menucake5.jpg",
+        "title": "Cheesy Pizza",
+        "price": "Rs. 1000.00",
+        "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+      },
+      {
+        "imgSrc": "menucake5.jpg",
+        "title": "Meat Lovers",
+        "price": "Rs. 1200.00",
+        "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+      },
+    
+      {
+        "imgSrc": "menucake1.jpg",
+        "title": "Hot & Spicy Chicken",
+        "price": "Rs. 950.00",
+        "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+      },
+      {
+        "imgSrc": "menucake2.jpg",
+        "title": "Cheesy Pizza",
+        "price": "Rs. 1000.00",
+        "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+      },
+      {
+        "imgSrc": "menucake6.jpeg",
+        "title": "Meat Lovers",
+        "price": "Rs. 1200.00",
+        "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+      },
+  
+      {
+          "imgSrc": "menucake5.jpg",
+          "title": "Cheesy Pizza",
+          "price": "Rs. 1000.00",
+          "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust."
+        },
+        {
+          "imgSrc": "menucake5.jpg",
+          "title": "Meat Lovers",
+          "price": "Rs. 1200.00",
+          "description": "A rich and creamy blend of mozzarella, cheddar,  baked to perfection on a crispy crust.."
+        }
+  ]
+  
