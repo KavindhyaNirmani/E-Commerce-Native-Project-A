@@ -87,7 +87,7 @@
   </section>
 
   <!-- Load Modal -->
-  <div id="modal-content"></div>
+  <div id="success-modal-content"></div>
 
   <!-- JavaScript -->
   <script>
@@ -135,7 +135,7 @@
 
           if (response.ok) {
           // Load the modal from the external file and show it
-          $('#modal-content').load('../Reg_success/reg_success.html', function () {
+          $('#success-modal-content').load('../Reg_success/reg_success.html', function () {
              
           $("#successModal").modal("show");
           })
