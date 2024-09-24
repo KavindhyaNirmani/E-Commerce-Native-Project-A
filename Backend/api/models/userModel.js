@@ -2,7 +2,7 @@
 
 //userModels for define methods for interacting with the user.
 
-// api/models/userModel.js
+
 
 const db = require('../../config/db');
 
@@ -33,7 +33,7 @@ class User {
     static async create(userData) {
         const { username, email, hashedPassword, role } = userData;
         try {
-            await db.execute(
+            await db.execute(//send the sql queries to the database
                 'INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)',
                 [username, email, hashedPassword, role]
             );
