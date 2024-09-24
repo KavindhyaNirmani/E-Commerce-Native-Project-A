@@ -6,15 +6,15 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #444;
-  color: #ffffff;
+  background-color: #b7b0b0 !important;
+  color: #ffffff !important;
 }
 .modal-content {
-  background-color: #2d2d2d;
+  background-color: #2d2d2d !important;
   border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1) !important;
   max-width: 100%;
-  padding: 20px;
+  padding: 0px;
 }
 .success-title {
   font-size: 24px;
@@ -29,15 +29,19 @@ body {
   margin: auto;
   text-align: center;
   padding: 10px 0;
-  background-color: #ffc107;
-  border-color: #ffc107;
+  background-color: #FAFF00 !important;
+  border-color: #FAFF00 !important;
   width: 100%;
   font-weight: bold;
   border-radius: 5px;
 }
 .btn:hover {
-  background-color: #e0a800;
-  border-color: #e0a800;
+  background-color: #9ba49b !important;
+  border-color: #9ba49b !important;
+}
+.a btn{
+  text-decoration: none !important;
+  color: black !important;
 }
 .img-fluid {
   width: 50px;
