@@ -49,9 +49,9 @@ exports.addItem=async (req,res)=>{
         //Create item
         await Item.create({
             item_name,
+            item_image,
             item_description,
             item_price,
-            item_image,
             category_id:category.category_id
         });
 

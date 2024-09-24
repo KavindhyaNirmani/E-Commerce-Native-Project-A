@@ -4,7 +4,7 @@ class item{
     //Find item by category
     static async findByCategory(category_id){
         try{
-            const [results]=await db.execute('SELECT*FROM items WHERE category_id=?',[category_id]);
+            const [results]=await db.execute('SELECT*FROM item WHERE category_id=?',[category_id]);
             return results;
         }catch(error){
             throw new Error('Error finding items'+error.message);
@@ -17,7 +17,7 @@ class item{
       const {item_name,item_description,item_price,item_image,category_id}=itemData;
 
       try{
-        await db.execute('INSERT INTO items(item_name,item_description,item_price,item_image,category_id ) VALUES(?,?,?,?,?)',
+        await db.execute('INSERT INTO item(item_name,item_description,item_price,item_image,category_id ) VALUES(?,?,?,?,?)',
             [item_name,item_description,item_price,item_image,category_id]
         );
       }catch(error){
