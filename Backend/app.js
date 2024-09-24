@@ -3,7 +3,7 @@
 
 const express=require('express');
 const app =express();//Initalizing the express application
-const morgan=require('morgan');
+const morgan=require('morgan');//a middleware for logging http requests and responses
 const bodyParser = require('body-parser');
 
 const authRoutes=require('./api/routes/authRoutes');
@@ -30,6 +30,16 @@ if(req.method==='OPTIONS'){
 next();
 
 });
+
+/*{
+        
+        "item_name": "Avacado",
+        "item_price": "1.5",
+        "item_description": "Classic pizza with mozzarella and tomato sauce",
+        "item_image": "C:\\Users\\Devini\\Pictures\\codepark\\pizza-image.jpg",
+        "category_id": 3
+    }
+ */
 
 
 
