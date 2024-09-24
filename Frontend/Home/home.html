@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="../Assets/image2.png">
     <!--Bootstrap CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -34,7 +35,42 @@
   </head>
   <body style="font-family: 'Lato', sans-serif">
     <!--Navbar-->
-    <header> <iframe src="../Header/header.html" style="border:none;width:100%; height:80px;"></iframe> </header>
+    <nav class="navbar navbar-expand-lg ">
+      <div class="container-fluid">
+          <a class="navbar-brand me-auto" href="#">
+              <img src="../Assets/image2.png" alt="Logo" style="height: 50px;">
+          </a>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+              <div class="offcanvas-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                  <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="#">About Us</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="#">Menu</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link mx-lg-2" href="#">Promotion</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <a href="#" class="login-button">Sign In</a>
+          <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <li class="nav-item">
+              <img class="logo" src="../Assets/cart.png" alt="Cart">
+          </li>
+      </div>
+  </nav>
+
     <!--Welcome section-->
     <div
       class="carousel slide"
@@ -121,7 +157,7 @@
                 />
               </div>
               <div class="card-body">
-                <a href="../Frontend/PizzaMenu/pizza.html">
+                <a href="../PizzaMenu/pizza.html">
                   <button class="btn btn-primary">Pizza</button>
                 </a>
               </div>
@@ -138,7 +174,7 @@
                 />
               </div>
               <div class="card-body">
-                <a href="../Frontend/CakeMenu/cake.html"
+                <a href="../CakeMenu/cake.html">
                 <button class="btn btn-primary">Cakes</button>
               </a>
               </div>
@@ -155,7 +191,7 @@
                 />
               </div>
               <div class="card-body">
-                <a href="../Frontend/BevaragesMenu/beverages.html">
+                <a href="../BevaragesMenu/beverages.html">
                 <button class="btn btn-primary">Beverages</button>
               </a>
               </div>
@@ -207,6 +243,12 @@
           }
       }, 100); // 100ms delay to allow content to render
     }
+
+    // Offcanvas background color
+    const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+        offcanvasNavbar.addEventListener('show.bs.offcanvas', function () {
+            offcanvasNavbar.style.backgroundColor = 'black';
+        });
   </script>
   
   </body>
