@@ -37,6 +37,12 @@
             border: none;
             font-size: 1.25rem;
         }
+         
+        /* change toggler color */
+        .navbar-toggler-icon {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='yellow' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
 
         .navbar-toggler:focus, .btn-close:focus {
             box-shadow: none;
@@ -292,7 +298,7 @@
         <iframe 
         src="../Footer/footer.html" 
         id="footerFrame" 
-        style="width: 100%; border: none; margin-top: 30px; height: 297px;"
+        style="width: 100%; border: none; margin-top: 30px; height: 297px; "
         onload="adjustFooterHeight(this)" 
         ></iframe>
     </footer>
