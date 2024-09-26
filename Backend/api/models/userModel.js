@@ -44,14 +44,41 @@ class User {
 
     // Create a new admin (only accessible to current admins)
     static async createAdmin(adminData) {
-        const { username, email, hashedPassword } = adminData;
+        const { first_name, last_name, username, email, password, phone_no, address, user_image, role } = adminData;
+    
         try {
             await db.execute(
-                'INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)',
-                [username, email, hashedPassword, 'admin']
+                'INSERT INTO user (first_name, last_name, username, email, password, phone_no, address, user_image, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [first_name, last_name, username, email, password, phone_no, address, user_image, role]
             );
         } catch (error) {
             throw new Error('Error creating admin: ' + error.message);
+        }
+    }
+    
+    
+
+
+    //Get all admins to the admin profiles page
+    static async findAllAdmins(){
+        try{
+            const [results] = await db.execute('SELECT * FROM user WHERE role = ? AND is_deleted = 0', ['admin']);
+
+            return results;
+        }catch(error){
+            throw new Error('Error fetching admins:'+error.message)
+        }
+    }
+
+
+    //Delete admin by Id
+    static async deleteById(adminId){
+        try{
+            await db.execute('UPDATE user SET is_deleted = 1 WHERE user_id = ?', [adminId]);
+
+        }catch(error){
+            throw new Error('Error deleting the admin:'+error.message);
+
         }
     }
 }

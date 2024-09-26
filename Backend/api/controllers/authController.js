@@ -22,11 +22,12 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash Password
+        // Hash Password+
         const hashedPassword = await bcrypt.hash(password, 8);
 
         // Create user (role is 'user' by default)
-        await User.create({ username, email, hashedPassword, role: 'user' });
+        
+        await User.create({ username, email, password: hashedPassword, role: 'user' });
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
@@ -50,13 +51,17 @@ exports.login = async (req, res) => {
         // Check password
         const isMatch = await bcrypt.compare(password, user.password);
 
+
+
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid Password' });
         }
 
+        console.log('User role from DB:', user.role); 
+
         // Create and return JWT token with role information
         const token = jwt.sign(//generates a JWT token using the user's id and role
-            { userId: user.id, role: user.role },
+            { userId: user.user_id, role: user.role },
             process.env.JWT_SECRET,
             { expiresIn: '2h' }
         );
@@ -73,11 +78,27 @@ exports.login = async (req, res) => {
     }
 };
 
+function checkMissingFields(body, requiredFields) {
+    const missingFields = requiredFields.filter(field => !body[field]);
+    return missingFields;
+}
+
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
-    const { username, email, password } = req.body;
+    console.log('Request Body:', req.body);
+
+    const { first_name, last_name, username, email, password, phone_no, address, user_image } = req.body;
 
     try {
+        // Check for missing fields
+        const missingFields = checkMissingFields(req.body, ['first_name', 'last_name', 'username', 'email', 'password']);
+        if (missingFields.length > 0) {
+            return res.status(400).json({ 
+                message: 'Required fields are missing', 
+                missingFields 
+            });
+        }
+
         // Check if the admin already exists
         const existingAdmin = await User.findByEmail(email);
         if (existingAdmin) {
@@ -88,7 +109,19 @@ exports.addAdmin = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 8);
 
         // Create admin (role is 'admin')
-        await User.createAdmin({ username, email, hashedPassword });
+        const newAdmin = {
+            first_name: first_name || null,  // Ensure we are using null if undefined
+            last_name: last_name || null,
+            username: username || null,
+            email: email || null,
+            password: hashedPassword,
+            phone_no: phone_no || null,
+            address: address || null,
+            user_image: user_image || null,
+            role: 'admin' // Setting the role as admin
+        };
+
+        await User.createAdmin(newAdmin);
 
         res.status(201).json({ message: 'Admin created successfully' });
     } catch (error) {
@@ -96,3 +129,65 @@ exports.addAdmin = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+
+
+
+// Function to check for missing fields
+function checkMissingFields(body, requiredFields) {
+    const missingFields = [];
+    requiredFields.forEach(field => {
+        if (!body[field]) {
+            missingFields.push(field);
+        }
+    });
+    return missingFields;
+}
+
+
+// Function to check for missing fields
+function checkMissingFields(body, requiredFields) {
+    const missingFields = [];
+    requiredFields.forEach(field => {
+        if (!body[field]) {
+            missingFields.push(field);
+        }
+    });
+    return missingFields;
+}
+
+
+
+
+exports.getAllAdmins=async(req,res)=>{
+    try{
+        const admins=await User.findAllAdmins();
+        res.status(200).json({
+            status:'success',data:admins
+        });
+    }catch(error){
+        console.error('Error fetching admins:',error);
+        res.status(500).json({
+            message:'server error',error:error.message
+        });
+    }
+};
+
+
+exports.deleteAdmin=async(req,res)=>{
+    const{user_id}=req.params;
+    try{
+        await User.deleteById(user_id);
+        res.status(200).json({
+            message:'Admin deleted successfully'
+        });
+    }catch(error){
+        console.error('Error deleting admin:',error);
+        res.status(500).json({
+            message:'server error',error:error.message
+        });
+    }
+
+};
+
+
