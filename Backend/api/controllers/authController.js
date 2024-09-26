@@ -6,6 +6,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const multer = require('multer');
+const path = require('path');
 
 // Register a new user (only user can register via form)
 exports.register = async (req, res) => {//exported asynchronous function to be used as the handler for the registration route
@@ -82,6 +84,16 @@ function checkMissingFields(body, requiredFields) {
     const missingFields = requiredFields.filter(field => !body[field]);
     return missingFields;
 }
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../../Frontend/Assets')); // Save uploaded files in Frontend/Assets
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));  // Use current timestamp for unique filename
+    }
+});
 
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
@@ -191,3 +203,7 @@ exports.deleteAdmin=async(req,res)=>{
 };
 
 
+const upload = multer({ storage: storage });
+
+
+exports.upload = upload;

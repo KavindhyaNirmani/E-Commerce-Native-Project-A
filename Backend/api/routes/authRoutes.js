@@ -6,6 +6,7 @@ const express=require('express');
 const authController=require('../controllers/authController');
 const {protect,adminOnly}= require('../middleware/authMiddleware');
 
+const upload = authController.upload;
 const router=express.Router();//create a new instance of the Express Router
 
 //User registration
@@ -15,7 +16,7 @@ router.post('/register',authController.register);
 router.post('/login',authController.login);
 
 //Admin creation(admin-only route)
-router.post('/add-admin',protect,adminOnly,authController.addAdmin);
+router.post('/add-admin', protect, adminOnly, upload.single('user_image'), authController.addAdmin);
 
 //Get all admins
 router.get('/admins',protect,adminOnly,authController.getAllAdmins);
