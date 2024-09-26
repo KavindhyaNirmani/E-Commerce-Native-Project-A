@@ -17,5 +17,10 @@ router.post('/login',authController.login);
 //Admin creation(admin-only route)
 router.post('/add-admin',protect,adminOnly,authController.addAdmin);
 
+//Get all admins
+router.get('/admins',protect,adminOnly,authController.getAllAdmins);
+
+//Delete an admin by Id
+router.delete('/admins/:user_id',protect,adminOnly,authController.deleteAdmin);
 module.exports=router;
 

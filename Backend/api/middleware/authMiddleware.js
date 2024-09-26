@@ -10,19 +10,18 @@ const jwt =require('jsonwebtoken');
 
 
 exports.protect = (req, res, next) => {
-    console.log('Middleware protect executed');  // Debug log
+    console.log('Middleware protect executed'); 
 
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
-            console.log('Token:', token);  // Debug log
-
+            console.log('Token:', token); 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = decoded;
             next();
         } catch (error) {
-            console.error('Token verification failed:', error);  // Debug log
+            console.error('Token verification failed:', error); 
             res.status(401).json({ message: 'Not authorized, token failed' });
         }
     } else {
