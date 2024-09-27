@@ -29,52 +29,7 @@
   left: clamp(10px, 2vw, 70px);
 }
 
-.navbar {
-  background-color: black;
-  height: 72px;
-  margin: 0.5rem;
-}
 
-.login-button {
-  background-color: #FAFF00;
-  color: black;
-  font-family: 'Lato', sans-serif;
-  font-size: 14px;
-  padding: 1px 17px;
-  height: 25px;
-  width: 80px;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: 0.3s ;
-}
-
-.login-button:hover {
-  background-color: #6C6A6A;
-}
-
-.navbar-toggler {
-  border: none;
-  font-size: 1.25rem;
-}
-
-.navbar-toggler:focus, .btn-close:focus {
-  box-shadow: none;
-  outline: none;
-}
-
-.nav-link {
-  color: #fff;
-  font-weight: 500;
-  font-family: 'Lato', sans-serif;
-}
-
-.navbar-nav {
-  margin-left: 100px;
-}
-
-.nav-link:hover, .nav-link.active {
-  color: #FAFF00;
-}
 
 /*Feature Section*/
 .features {
@@ -259,7 +214,3 @@
   height: auto;
 }
 
-body {
-  font-family: "Lato", sans-serif;
-  background-image: linear-gradient(#6c6a6a, #1e1e1e);
-}
