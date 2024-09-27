@@ -85,21 +85,24 @@ function checkMissingFields(body, requiredFields) {
     return missingFields;
 }
 
+const absolutePath = path.join('D:/Code_Park_E_Com_Site/Frontend/Assets');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../../Frontend/Assets')); // Save uploaded files in Frontend/Assets
+        cb(null, absolutePath);  // Use absolute path to Frontend/Assets  
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));  // Use current timestamp for unique filename
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);// Generate unique filename. Because if different time or different user add files with same name
+        cb(null, uniqueSuffix + '-' + file.originalname);  
     }
 });
 
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
     console.log('Request Body:', req.body);
+    console.log('File:', req.file); // Log the file to verify if it's being uploaded
 
-    const { first_name, last_name, username, email, password, phone_no, address, user_image } = req.body;
+    const { first_name, last_name, username, email, password, phone_no, address } = req.body;
 
     try {
         // Check for missing fields
@@ -129,8 +132,8 @@ exports.addAdmin = async (req, res) => {
             password: hashedPassword,
             phone_no: phone_no || null,
             address: address || null,
-            user_image: user_image || null,
-            role: 'admin' // Setting the role as admin
+            user_image: req.file ? req.file.filename : null, // Assign the file name from multer
+            role: 'admin' 
         };
 
         await User.createAdmin(newAdmin);
