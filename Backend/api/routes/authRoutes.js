@@ -5,7 +5,6 @@
 const express=require('express');
 const authController=require('../controllers/authController');
 const {protect,adminOnly}= require('../middleware/authMiddleware');
-
 const upload = authController.upload;
 const router=express.Router();//create a new instance of the Express Router
 
