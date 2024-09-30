@@ -160,16 +160,18 @@
         // Load first 8 menu items
 
         fetch('http://localhost:5010/items/beverage')
-        .then(response => response.json())
-        .then(data => {
-        const menu = document.getElementById('pizzaMenu');
-        const limitedData = data.slice(4, ); // Display only 4 items initially
+    .then(response => response.json())
+    .then(data => {
+        const menu = document.getElementById('beverageMenu');
+        const limitedData = data.slice(4); // Display only 4 items initially
         limitedData.forEach(item => {
+            const imageUrl = `http://localhost:5010${item.item_image}`;
+            console.log('Image URL:', imageUrl); // Log the constructed URL
             const menuItem = document.createElement('div');
             menuItem.classList.add('col-md-3', 'col-sm-6', 'mb-4');
             menuItem.innerHTML = `
                 <div class="menu-item">
-                    <img src="${item.item_image}" alt="${item.item_name}">
+                    <img src="${imageUrl}" alt="${item.item_name}">
                     <h4>${item.item_name}</h4>
                     <h5>${item.item_price}</h5>
                     <p>${item.item_description}</p>
@@ -180,6 +182,7 @@
         });
     })
     .catch(error => console.error('Error loading menu data:', error));
+
 
         // Offcanvas background color
         const offcanvasNavbar = document.getElementById('offcanvasNavbar');

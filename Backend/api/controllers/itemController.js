@@ -51,7 +51,8 @@ exports.addItem=async (req,res)=>{
     console.log('Add item request received');
 
     const {item_name,item_description,item_price,category_name}=req.body;
-    const item_image=req.file? req.file.filename:null;
+    const item_image = req.file ? `/Assets/Menu/${req.file.filename}` : null;
+
 
     try{
         //Find category by name

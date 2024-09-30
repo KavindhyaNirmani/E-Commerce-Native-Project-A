@@ -17,13 +17,15 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.json());
 
+
+//CORS setup
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin","*");
 
     res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept,Authorization");
 
 
-    //CORS setup
+
 if(req.method==='OPTIONS'){
     res.header('Access-Control-Allow-Methods','PUT,POST,DELETE,GET,PATCH');
     return res.status(200).json({});
@@ -38,6 +40,12 @@ next();
 
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
+
+app.use('/Assets', express.static(path.join(__dirname, '../Frontend/Assets')));
+
+
+console.log(path.join(__dirname, 'Assets')); 
+
 
 
 app.use((req,res,next)=>{
