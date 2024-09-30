@@ -5,6 +5,8 @@ const express=require('express');
 const app =express();//Initalizing the express application
 const morgan=require('morgan');//a middleware for logging http requests and responses
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
 
 const authRoutes=require('./api/routes/authRoutes');
 const itemRoutes=require('./api/routes/itemRoutes');
@@ -26,20 +28,11 @@ if(req.method==='OPTIONS'){
     res.header('Access-Control-Allow-Methods','PUT,POST,DELETE,GET,PATCH');
     return res.status(200).json({});
 
+
 }
 next();
 
 });
-
-/*{
-        
-        "item_name": "Avacado",
-        "item_price": "1.5",
-        "item_description": "Classic pizza with mozzarella and tomato sauce",
-        "item_image": "C:\\Users\\Devini\\Pictures\\codepark\\pizza-image.jpg",
-        "category_id": 3
-    }
- */
 
 
 
@@ -66,3 +59,5 @@ app.use((error,req,res,next)=>{
 
 
 module.exports=app;
+
+

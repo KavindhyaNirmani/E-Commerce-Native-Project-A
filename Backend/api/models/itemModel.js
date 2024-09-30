@@ -33,7 +33,7 @@ class Item{
 
       try{
         await db.execute('INSERT INTO item(item_name,item_description,item_price,item_image,category_id ) VALUES(?,?,?,?,?)',
-            [item_name,item_description,item_price,item_image,category_id]
+            [item_name,item_description,item_price,`/Assets/${item_image}`,category_id]
         );
       }catch(error){
         throw new Error('Error adding new item:'+error.message);
@@ -64,7 +64,7 @@ class Item{
               item_description !== undefined ? item_description : null,
               item_price !== undefined ? item_price : null,
               category_id !== undefined ? category_id : null,
-              item_image !== undefined ? item_image : null,
+              item_image !== undefined ? `/Assets/${item_image}` : null,
               item_id
           ]);
       } catch (error) {
