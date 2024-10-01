@@ -15,11 +15,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
+  <common-sidebar></common-sidebar>
+    <div class="container-fluid" style="margin-left: 300px; padding: 10px;">
         <div class="row">
-          <div class="col-2 left-section">
+         <!-- <div class="col-2 left-section">
             <h1>left section</h1>
-          </div> 
+          </div> -->
           
           <div class="col-10 admin-list">
             <h3>Admin List</h3>
@@ -27,6 +28,7 @@
 
             <div id="adminListContainer" class="d-flex flex-wrap gap-3">
             <!--Admin list will dispaly here-->
+            
             </div>
             
             <button id="addAdminButton" class="btn custom-btn mt-5">Add a new admin</button>
@@ -172,7 +174,7 @@
     url: 'http://localhost:5010/auth/admins',
     type: 'GET',
     headers:{
-      'Authorization' :'Bearer' + localStorage.getItem('token')
+      'Authorization' :'Bearer ' + localStorage.getItem('token')
     },
     success: function(response){
       $('#adminListContainer').empty();
@@ -239,10 +241,14 @@ const appendNewAdminToTable =(admin)=>{
   </div>
   <ul class="list-group list-group-flush">
 
-  <li class="list-group-item">Email: ${admin.email}</li>
-  <li class="list-group-item">Username: ${admin.user_name}</li>
-  <li class="list-group-item">Address: ${admin.address}</li>
+  <li class="list-group-item">Email: ${admin.first_name}</li>
+  <li class="list-group-item">Username: ${admin.last_name}</li>
+  <li class="list-group-item">Address: ${admin.user_name}</li>
+  <li class="list-group-item">Phone Number: ${admin.role}</li>
+  <li class="list-group-item">Phone Number: ${admin.email}</li>
+  <li class="list-group-item">Phone Number: ${admin.password}</li>
   <li class="list-group-item">Phone Number: ${admin.phone_number}</li>
+  <li class="list-group-item">Phone Number: ${admin.address}</li>
   </ul>
   <div class="card-body text-center">
   <button class="btn btn-danger remove-admin-button" data-admin-id="${admin._id}">Remove Admin</button>
@@ -321,7 +327,7 @@ $('#addAdminForm').on('submit', function(event){
                 const adminId = $(this).data('admin-id');
                 if(confirm('Are you sure you want to remove this admin?')){
                     $.ajax({
-                        url: `http://localhost:5010/auth/admins/${adminId}`,
+                        url: `http://localhost:5010/auth/admins/:user_id`,
                         type: 'DELETE',
                         headers: {
                             'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
@@ -340,5 +346,6 @@ $('#addAdminForm').on('submit', function(event){
           });   
 
     </script>
+    <script src="../Sidebar/Sidebar.js"></script>
 </body>
 </html>

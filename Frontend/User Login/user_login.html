@@ -133,26 +133,28 @@
       const data = await response.json();
 
       if (response.ok) {
-      
-      localStorage.setItem('token', data.token);  
-      localStorage.setItem('role', data.role);  
+                        const data = await response.json();
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('role', data.role);
 
-      
-      if (data.role === 'admin') {
-        window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
-      } else if (data.role === 'user') {
-        window.location.href = '../Home/home.html';  // Redirect user to homepage
-      }
-    }else {
-       // alert(data.message || 'Login failed');
-       $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
-             
-       $("#failModal").modal("show");
-             })
-               
+                        // Display a success message
+                        alert('Login successful!');
 
-      }
-    } catch (error) {
+                        // Redirect based on user role
+                        if (data.role === 'admin') {
+                            window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
+                        } else if (data.role === 'user') {
+                            window.location.href = '../Home/home.html';  // Redirect user to homepage
+                        }
+                    } else {
+                        // Handle login failure
+                        const errorData = await response.json();
+                        console.error('Login failed:', errorData);
+                        $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
+                            $("#failModal").modal("show");
+                        });
+                    }
+                } catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
     }
