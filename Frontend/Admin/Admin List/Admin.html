@@ -24,11 +24,21 @@
           <div class="col-10 admin-list">
             <h3>Admin List</h3>
 
-            <button id="addAdminButton" class="btn custom-btn">Add a new admin</button>
+
+            <div id="adminListContainer" class="d-flex flex-wrap gap-3">
+            <!--Admin list will dispaly here-->
+            </div>
+            
+            <button id="addAdminButton" class="btn custom-btn mt-5">Add a new admin</button>
+          </div>
+
+            
           </div>
         </div>
 
     </div>
+
+    <!--Add admin model-->
      <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
       <div class="modal-dialog  modal-dialog-custom">
         <div class="modal-content"> 
@@ -127,7 +137,7 @@
                   </div>
 
                 </div>
-<!--
+              <!--
                 <div class="col-sm-5 pt-5">
                   <label for="adminImage" class="form-label">Upload Admin Image:</label>
                   <input type="file" class="form-control" id="adminImage" accept="image/*" required>
@@ -140,29 +150,71 @@
                 <button type="button " class="btn  btn-custom " data-bs-dismiss="modal">Cancel</button>
               </div>
 
-            </form>
+              </form>
             </div>
-
-
-
           </div>
         </div>
-
-
-
       </div>
     </div>
-  </div>
   
   
-    <script>;
+  
+    <script>
 
-$(document).ready(function(){
-
-
-var adminModal = new bootstrap.Modal(document.getElementById('adminModal'), {
+  $(document).ready(function(){
+  const adminModal = new bootstrap.Modal(document.getElementById('adminModal'), {
     keyboard: false
 });
+
+//fetch admins
+const fetchAdmins =()=>{
+  $.ajax({
+    url: 'http://localhost:5010/auth/add-admin',
+    type: 'GET',
+    headers:{
+      'Authorization' :'Bearer' + localStorage.getItem('token')
+    },
+    success: function(response){
+      $('#adminListContainer').empty();
+      response.admins.forEach(admin=>{
+        appendNewAdminToTable(admin);
+      });
+    },
+    error:function(xhr,status,error){
+      console.error('Error fetching admins:',error);
+      alert('Failed to fetch admins. Please try again.');
+    }
+  });
+};
+
+//function to append admins into admin list
+const appendNewAdminToTable =(admin)=>{
+  const adminCard =`
+  <div class="card" style="width: 18rem;">
+  <img class="card-img-top rounded-circle mt-3 mx-auto d-block" height="60" width="60" src="../../../Frontend/Assets/cakebg.jpg" alt="Admin Image">
+
+  <div class="card-body text-center">
+  <h5 class="card-title">${admin.first_name} ${admin.last_name}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+
+  <li class="list-group-item">Email: ${admin.email}</li>
+  <li class="list-group-item">Username: ${admin.user_name}</li>
+  <li class="list-group-item">Address: ${admin.address}</li>
+  <li class="list-group-item">Phone Number: ${admin.phone_number}</li>
+  </ul>
+  <div class="card-body text-center">
+  <button class="btn btn-danger remove-admin-button" data-admin-id="${admin._id}">Remove Admin</button>
+  </div>
+</div>
+`
+$('#adminListContainer').append(adminCard);
+};
+
+//function to append new admin after creation 
+
+ fetchAdmins();
+
 
   //show the modal 
     $('#addAdminButton').on('click', function(){
@@ -193,32 +245,59 @@ $('#addAdminForm').on('submit', function(event){
             // You might need to handle the file differently, such as using FormData
         };
 
-        // Example: Send form data to the server via AJAX
         $.ajax({
-            url: '/auth/register', // Replace with your actual endpoint
-            type: 'POST',
-            data: JSON.stringify(formData),
-            contentType: 'application/json',
-            success: function(response){
-                // Handle success (e.g., add new admin to the table)
-                console.log('Admin added successfully:', response);
-                adminModal.hide();
-                // Optionally, refresh the admin list or append the new admin to the table
-                // appendNewAdminToTable(response);
-            },
-            error: function(xhr, status, error){
-                // Handle error
-                console.error('Error adding admin:', error);
-                alert('Failed to add admin. Please try again.');
-            }
-        });
-    }
+                        url:'http://localhost:5010/auth/add-admin',
+                        type: 'POST',
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+                        },
+                        success: function(response){ 
+                            console.log('Admin added successfully:', response);
+                            adminModal.hide();
+                            // Append the new admin to the admin list
+                            appendNewAdminToTable(response.admin);
+                        },
+                        error: function(xhr, status, error){
+                            // Handle error
+                            console.error('Error adding admin:', error);
+                            if(xhr.responseJSON && xhr.responseJSON.message){
+                                alert(xhr.responseJSON.message);
+                            } else {
+                                alert('Failed to add admin. Please try again.');
+                            }
+                        }
+                    });
+                }
 
-    // Add Bootstrap validation classes
-    $(this).addClass('was-validated');
-});
+                // Add Bootstrap validation classes
+                $(this).addClass('was-validated');
+            });
 
-});      
+            // Handle remove admin
+            $(document).on('click', '.remove-admin-button', function(){
+                const adminId = $(this).data('admin-id');
+                if(confirm('Are you sure you want to remove this admin?')){
+                    $.ajax({
+                        url: `http://localhost:5010/auth/admins/${adminId}`,
+                        type: 'DELETE',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+                        },
+                        success: function(response){
+                            alert('Admin removed successfully');
+                            fetchAdmins(); // Refresh the admin list
+                        },
+                        error: function(xhr, status, error){
+                            console.error('Error removing admin:', error);
+                            alert('Failed to remove admin. Please try again.');
+                        }
+                    });
+                }
+            });
+          });   
+
     </script>
 </body>
 </html>
