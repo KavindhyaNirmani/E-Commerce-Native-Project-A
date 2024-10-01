@@ -113,7 +113,7 @@
             });
           })();
 
-          async function loginUser(event) {
+    async function loginUser(event) {
     event.preventDefault();  // Prevent the default form submission
 
     // Fetch form values
@@ -133,10 +133,17 @@
       const data = await response.json();
 
       if (response.ok) {
-        alert('Login successful!');
-        // Redirect or perform further actions here
-         window.location.href = '/../Frontend/Admin/Admin List/Admin.html';
-      } else {
+      
+      localStorage.setItem('token', data.token);  
+      localStorage.setItem('role', data.role);  
+
+      
+      if (data.role === 'admin') {
+        window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
+      } else if (data.role === 'user') {
+        window.location.href = '../Home/home.html';  // Redirect user to homepage
+      }
+    }else {
        // alert(data.message || 'Login failed');
        $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
              

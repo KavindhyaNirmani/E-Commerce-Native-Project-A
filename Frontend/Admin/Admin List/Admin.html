@@ -167,9 +167,9 @@
 });
 
 //fetch admins
-const fetchAdmins =()=>{
+/*const fetchAdmins =()=>{
   $.ajax({
-    url: 'http://localhost:5010/auth/add-admin',
+    url: 'http://localhost:5010/auth/admins',
     type: 'GET',
     headers:{
       'Authorization' :'Bearer' + localStorage.getItem('token')
@@ -185,7 +185,48 @@ const fetchAdmins =()=>{
       alert('Failed to fetch admins. Please try again.');
     }
   });
-};
+};*/
+
+async function fetchAdmins() {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('http://localhost:5010/auth/admins', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const data = await response.json();
+
+    // Debugging: log the response to check its structure
+    console.log('Response data:', data);
+
+    if (response.ok) {
+      // Access the data property which contains the admins array
+      if (data && data.data) {
+        displayAdmins(data.data); // Pass the admins array to the display function
+      } else {
+        alert('No admins found or invalid response format.');
+      }
+    } else {
+      alert(data.message || 'Failed to fetch admins. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error fetching admins:', error);
+    alert('Failed to fetch admins. Please try again.');
+  }
+}
+
+// Function to display the list of admins
+function displayAdmins(admins) {
+                $('#adminListContainer').empty(); // Clear existing entries
+                admins.forEach(admin => {
+                    appendNewAdminToTable(admin);
+                });
+}
 
 //function to append admins into admin list
 const appendNewAdminToTable =(admin)=>{
@@ -235,11 +276,11 @@ $('#addAdminForm').on('submit', function(event){
         var formData = {
             first_name: $('#first_name').val(),
             last_name: $('#last_name').val(),
-            user_name: $('#user_name').val(),
+            username: $('#user_name').val(),
             role: $('#role').val(),
             email: $('#email').val(),
             password: $('#password').val(),
-            phone_number: $('#phone_number').val(),
+            phone_no: $('#phone_number').val(),
             address: $('#address').val(),
             // Handle file upload if necessary
             // You might need to handle the file differently, such as using FormData
