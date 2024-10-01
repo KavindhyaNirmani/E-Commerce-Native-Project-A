@@ -131,8 +131,8 @@
     <!-- Pizza Menu Section -->
     <div class="container my-5">
       <!-- Pizza Menu Section -->
-      <div class="row" id="pizzaMenu"></div>
-      <button class="view-all-btn" onclick="location.href='cake.html'">Back</button>
+      <div class="row" id="cakeMenu"></div>
+      <button class="view-all-btn" onclick="location.href='pizza.html'">Back</button>
   </div>
 
     <!-- Footer Section -->
@@ -162,7 +162,7 @@
         fetch('http://localhost:5010/items/cake')
     .then(response => response.json())
     .then(data => {
-        const menu = document.getElementById('cakeaMenu');
+        const menu = document.getElementById('cakeMenu');
         const limitedData = data.slice(4); // Display only 4 items initially
         limitedData.forEach(item => {
             const imageUrl = `http://localhost:5010${item.item_image}`;
