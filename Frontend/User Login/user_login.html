@@ -133,28 +133,19 @@
       const data = await response.json();
 
       if (response.ok) {
-                       
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('role', data.role);
+        alert('Login successful!');
+        // Redirect or perform further actions here
+         //window.location.href = '/path/to/dashboard';
+      } else {
+       // alert(data.message || 'Login failed');
+       $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
+             
+       $("#failModal").modal("show");
+             })
+               
 
-                        // Display a success message
-                        alert('Login successful!');
-
-                        // Redirect based on user role
-                        if (data.role === 'admin') {
-                            window.location.href = '../Admin/AdminList/Admin.html';  // Redirect admin
-                        } else if (data.role === 'user') {
-                            window.location.href = '../Home/home.html';  // Redirect user to homepage
-                        }
-                    } else {
-                        // Handle login failure
-                       
-                        console.error('Login failed:', errorData);
-                        $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
-                            $("#failModal").modal("show");
-                        });
-                    }
-                } catch (error) {
+      }
+    } catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
     }
