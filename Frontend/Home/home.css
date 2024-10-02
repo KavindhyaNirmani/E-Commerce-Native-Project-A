@@ -115,7 +115,7 @@
   border-radius: 50px;
   margin: 0 auto;
 }
-.card {
+#card {
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;

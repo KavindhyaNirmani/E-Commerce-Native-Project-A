@@ -133,7 +133,7 @@
       const data = await response.json();
 
       if (response.ok) {
-                        const data = await response.json();
+                       
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('role', data.role);
 
@@ -142,13 +142,13 @@
 
                         // Redirect based on user role
                         if (data.role === 'admin') {
-                            window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
+                            window.location.href = '../Admin/AdminList/Admin.html';  // Redirect admin
                         } else if (data.role === 'user') {
                             window.location.href = '../Home/home.html';  // Redirect user to homepage
                         }
                     } else {
                         // Handle login failure
-                        const errorData = await response.json();
+                       
                         console.error('Login failed:', errorData);
                         $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
                             $("#failModal").modal("show");
@@ -164,4 +164,4 @@
    
         </script>
     </body>
-</html>  
+</html>
