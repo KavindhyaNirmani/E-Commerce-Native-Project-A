@@ -247,7 +247,7 @@
         let pizzaLimit = 4; // Initial limit for items to display
 
         // Fetch all pizza items and store them
-        fetch('http://localhost:5010/items/pizza')
+        fetch('http://localhost:5010/items/category/pizza')
             .then(response => response.json())
             .then(data => {
                 allPizzaData = data;

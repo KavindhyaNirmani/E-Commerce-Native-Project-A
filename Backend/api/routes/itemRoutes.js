@@ -27,11 +27,14 @@ const upload =multer({storage:storage});
 
 
 //Fetch items by category(pizza,cake,beverage)
-router.get('/:category_name',itemController.getItemsByCategory);
+router.get('/category/:category_name',itemController.getItemsByCategory);
 
 
 /// Fetch all items
 router.get('/', itemController.getAllItems);
+
+// Fetch a single item by its ID
+router.get('/:item_id', itemController.getItemById);
 
 router.use('/Assets/Menu', express.static(absolutePath));
 

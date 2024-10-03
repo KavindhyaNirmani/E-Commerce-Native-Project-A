@@ -163,18 +163,11 @@
         }
 
         // Load first 8 menu items
-        fetch('http://localhost:5010/items/cake')
-<<<<<<< Updated upstream
-    .then(response => response.json())
-    .then(data => {
-        const menu = document.getElementById('cakeMenu');
-        const limitedData = data.slice(4); // Display only 4 items initially
-=======
+        fetch('http://localhost:5010/items/category/cake')
         .then(response => response.json())
         .then(data => {
         const menu = document.getElementById('cakeMenu');
         const limitedData = data.slice(4, ); // Display only 4 items initially
->>>>>>> Stashed changes
         limitedData.forEach(item => {
             const imageUrl = `http://localhost:5010${item.item_image}`;
             console.log('Image URL:', imageUrl); // Log the constructed URL

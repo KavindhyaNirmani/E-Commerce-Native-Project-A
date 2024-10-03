@@ -196,7 +196,7 @@
       try {
         const response = await fetch(`http://localhost:5010/items/${id}`);
         const item = await response.json();
-        document.getElementById('viewImg').src = item.item_image;
+        document.getElementById('viewImg').src = `http://localhost:5010${item.item_image}`;
         document.getElementById('viewName').value = item.item_name;
         document.getElementById('viewDescription').value = item.item_description;
         document.getElementById('viewPrice').value = item.item_price;

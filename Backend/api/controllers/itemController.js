@@ -1,10 +1,9 @@
-const Item=require('../models/itemModel');
 const Category=require('../models/categoryModel');
+const Item=require('../models/itemModel');
 const fs =require('fs');//using for file system.It can readFiles(),writeFile(),appendFile(),etc.
 const path=require('path');
 
 //get all items based on category(pizza,cake,beverage)
-
 exports.getItemsByCategory=async(req,res)=>{
     const {category_name}=req.params;
 
@@ -32,6 +31,7 @@ exports.getItemsByCategory=async(req,res)=>{
 };
 
 
+
 //Get all items (excluding deleted ones)
 exports.getAllItems=async(req,res)=>{
     try{
@@ -44,6 +44,31 @@ exports.getAllItems=async(req,res)=>{
         });
     }
 };
+
+
+// Fetch a single item by its ID
+exports.getItemById = async (req, res) => {
+    const { item_id } = req.params; // Get item ID from the request parameters
+
+    try {
+        const item = await Item.findById(item_id); // Fetch the item using the model
+
+        if (!item) {
+            return res.status(404).json({
+                message: 'Item not found'
+            });
+        }
+
+        res.status(200).json(item);
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        res.status(500).json({
+            message: 'Server error', error: error.message
+        });
+    }
+};
+
+
 
 //Add a new item (admin only)
 exports.addItem=async (req,res)=>{
