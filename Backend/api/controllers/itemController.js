@@ -153,18 +153,3 @@ exports.deleteItem=async(req,res)=>{
 };
 
 
-/* 
-
-// Display the items on pizza page(frontend API)
-fetch('http://localhost:5010/items/pizza')
-    .then(response => response.json())
-    .then(data => {
-        // Render the items on the page
-        console.log(data); // Display pizza items
-    })
-    .catch(error => {
-        console.error('Error fetching pizza items:', error);
-    });
-
-
-*/

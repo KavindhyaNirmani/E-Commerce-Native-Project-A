@@ -93,7 +93,6 @@
          <div id="failed-modal-container"></div>
 
          <script>
-<<<<<<< HEAD
          // Example starter JavaScript for disabling form submissions if there are invalid fields
           (function () {
             'use strict';
@@ -143,9 +142,9 @@
 
                         // Redirect based on user role
                         if (data.role === 'admin') {
-                            window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
+                            window.location.href = '../Admin/AdminList/Admin.html';  // Redirect admin
                         } else if (data.role === 'user') {
-                            window.location.href = '../Home/home.html';  // Redirect user to homepage
+                            window.location.href = '../Home/index.html';  // Redirect user to homepage
                         }
                     } else {
                         // Handle login failure
@@ -162,74 +161,6 @@
   }
   
 
-=======
-          // Example starter JavaScript for disabling form submissions if there are invalid fields
-           (function () {
-             'use strict';
-         
-             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-             var forms = document.querySelectorAll('.needs-validation');
-         
-             // Loop over them and prevent submission
-             Array.prototype.slice.call(forms).forEach(function (form) {
-               form.addEventListener('submit', function (event) {
-                 if (!form.checkValidity()) {
-                   event.preventDefault();
-                   event.stopPropagation();
-                 }
-         
-                 form.classList.add('was-validated');
-               }, false);
-             });
-           })();
- 
-           async function loginUser(event) {
-     event.preventDefault();  // Prevent the default form submission
- 
-     // Fetch form values
-     const username = document.getElementById('username').value;
-     const password = document.getElementById('password').value;
- 
-     try {
-         // Send a POST request to the backend login endpoint
-         const response = await fetch('http://localhost:5010/auth/login', {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json'
-             },
-             body: JSON.stringify({ username, password })
-         });
- 
-         // Check if the response is OK (status code 200)
-         if (response.ok) {
-             const data = await response.json(); // Get the response data
-             localStorage.setItem('token', data.token);
-             localStorage.setItem('role', data.role);
- 
-             // Display a success message
-             alert('Login successful!');
- 
-             // Redirect based on user role
-             if (data.role === 'admin') {
-                 window.location.href = '../Admin/AdminList/Admin.html';  // Redirect admin
-             } else if (data.role === 'user') {
-                 window.location.href = '../Home/home.html';  // Redirect user to homepage
-             }
-         } else {
-             // Handle login failure
-             const errorData = await response.json(); // Get the error data
-             console.error('Login failed:', errorData);
-             $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
-                 $("#failModal").modal("show");
-             });
-         }
-     } catch (error) {
-         console.error('Error:', error); // Log the error to console
-         alert('An error occurred. Please try again.');
-     }
- }
- 
->>>>>>> 1126bb5597ae2671ae94944d032377f968d00529
    
  
     
