@@ -15,6 +15,11 @@
     <title>Gather and Grab</title>
     <link rel="icon" type="image/png" href="../Assets/image2.png">
     <link rel="stylesheet" href="additem.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
   </head>
   <body style="background-image: linear-gradient(#6C6A6A, #1E1E1E); height:100vh;">
 
@@ -34,7 +39,7 @@
                         <th>Item Name</th>
                         <th>Item Description</th>
                         <th>Price</th>
-                        <th>Category Name</th>
+                        <th>Category ID</th>
                         <th>Item Image</th>
                         <th>Action</th>
                     </tr>
@@ -68,7 +73,7 @@
                                 <input type="file" name="" id="ImgInput" accept="image/*" required>
                                 <i class="bi bi-plus-circle-dotted"></i>
                             </label>
-                            <img id="imgPreview" alt="Item Image" width="200" height="200" class="img d-block mx-auto">  
+                            <img id="imgPreview" src=" " alt=" " width="200" height="200" class="img d-block mx-auto">  
                         </div>
 
                         <div class="inputField">
@@ -151,14 +156,10 @@
       </div>
   </div>
     
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- JavaScript Logic -->
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('myForm');
     const tableBody = document.getElementById('data');
     const imgPreview = document.getElementById('imgPreview');
@@ -175,9 +176,9 @@
           newRow.innerHTML = `
             <td>${item.item_name}</td>
             <td>${item.item_description}</td>
-            <td>$${item.item_price}</td>
+            <td>Rs: ${item.item_price}</td>
             <td>${item.category_id}</td>
-            <td><img src="${item.item_image}" alt="Item Image" width="40" height="40"></td>
+            <td><img src="${item.item_image}" alt=" " width="40" height="40"></td>
             <td>
               <button class="btn btn-success" onclick="viewItem('${item.item_id}')"><i class="bi bi-eye"></i></button>
               <button class="btn btn-primary" onclick="editItem('${item.item_id}')"><i class="bi bi-pencil-square"></i></button>
@@ -264,7 +265,7 @@
     window.deleteItem = async (id) => {
       if (confirm('Are you sure you want to delete this item?')) {
         try {
-          const response = await fetch(`http://localhost:5010/items/${id}`, {
+          const response = await fetch(`http://localhost:5010/items/:item_id`, {
             method: 'DELETE',
           });
 
