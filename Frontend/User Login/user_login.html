@@ -133,7 +133,7 @@
       const data = await response.json();
 
       if (response.ok) {
-                        const data = await response.json();
+                       
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('role', data.role);
 
@@ -148,7 +148,7 @@
                         }
                     } else {
                         // Handle login failure
-                        const errorData = await response.json();
+                       
                         console.error('Login failed:', errorData);
                         $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
                             $("#failModal").modal("show");
