@@ -123,6 +123,8 @@
   margin-bottom: 10px;
   max-width: 320px;
   min-width: 200px;
+  align-items: center;
+  justify-content: center;
 
 }
 .card-img-container {
@@ -176,10 +178,11 @@
     margin-bottom: 10px; /* Space between cards */
   }
 
-  .card {
+  #card {
     width: 100%;
     max-width: 320px;
-    margin: 0 auto;
+    align-items: center;
+    
   }
 
   .card-img-container {

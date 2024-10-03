@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="../Assets/image2.png">
+    <link rel="stylesheet" href="additem.css">
+  </head>
+  <body style="background-image: linear-gradient(#6C6A6A, #1E1E1E); height:100vh;">
+
+    <section class="p-3">
+       <div class="row">
+        <div class="col-12">
+        <h6>Item List</h6>
+       </div>
+    </div>
+
+       <div class="row">
+         <div class="col-12">
+            <table class="table table-striped table-hover mt-3 text-center table-bordered">
+
+                <thead>
+                    <tr> 
+                        <th>Item Name</th>
+                        <th>Item Description</th>
+                        <th>Price</th>
+                        <th>Category Name</th>
+                        <th>Item Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="data">
+                   
+                </tbody>
+                    
+            </table>
+         </div>
+       </div>
+       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userForm">Add Items<i class="bi bi-plus-circle"></i></button>
+    
+    </section>
+
+    <!--Model form-->
+    <div class="modal fade" id="userForm">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Item Information</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form  id="myForm">
+                        <div class="card imgholder">
+                             <label for="ImgInput" class="upload">
+                                <input type="file" name="" id="ImgInput" accept="image/*" required>
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </label>
+                            <img id="imgPreview" alt="Item Image" width="200" height="200" class="img d-block mx-auto">  
+                        </div>
+
+                        <div class="inputField">
+                            <div>
+                                <label>Item Name</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            
+                            <div>
+                                <label>Item Description</label>
+                                <input type="text" class="form-control" id="description" required>
+                            </div>
+                            
+                            <div>
+                                <label>Price</label>
+                                <input type="text" class="form-control" id="price" required>
+                            </div>
+                            
+                            <div>
+                                <label class="form-label">Category</label>
+                                <select id="category" class="form-select" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="pizza">Pizza</option>
+                                    <option value="cake">Cake</option>
+                                    <option value="beverage">Beverage</option>
+                                </select>
+                            </div>  
+                        </div>    
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" form="myForm" class="btn btn-primary submit">Submit</button>
+                    <button type="reset" class="btn btn-danger">Discard</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--View Data Modal-->
+    <div class="modal fade" id="readData">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                  <h4 class="modal-title">View Item</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div class="modal-body">
+                  <div class="card imgholder mb-3">
+                      <img id="viewImg" alt=" " width="200" height="200" class="img d-block mx-auto">
+                  </div>
+
+                  <div class="inputField">
+                      <div class="mb-3">
+                          <label class="form-label">Item Name</label>
+                          <input type="text" id="viewName" class="form-control" disabled>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Item Description</label>
+                          <input type="text" id="viewDescription" class="form-control" disabled>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Price</label>
+                          <input type="number" id="viewPrice" class="form-control" disabled>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Category</label>
+                          <select id="viewCategory" class="form-select" disabled>
+                              <option value="pizza">Pizza</option>
+                              <option value="cake">Cake</option>
+                              <option value="beverage">Beverage</option>
+                          </select>
+                      </div>
+                  </div>    
+              </div>
+          </div>
+      </div>
+  </div>
+    
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- JavaScript Logic -->
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('myForm');
+    const tableBody = document.getElementById('data');
+    const imgPreview = document.getElementById('imgPreview');
+    let currentItemId = null;
+
+    // Load items from the API
+    const loadItems = async () => {
+      try {
+        const response = await fetch('http://localhost:5010/items');
+        const items = await response.json();
+        tableBody.innerHTML = '';
+        items.forEach(item => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td>${item.item_name}</td>
+            <td>${item.item_description}</td>
+            <td>$${item.item_price}</td>
+            <td>${item.category_id}</td>
+            <td><img src="${item.item_image}" alt="Item Image" width="40" height="40"></td>
+            <td>
+              <button class="btn btn-success" onclick="viewItem('${item.item_id}')"><i class="bi bi-eye"></i></button>
+              <button class="btn btn-primary" onclick="editItem('${item.item_id}')"><i class="bi bi-pencil-square"></i></button>
+              <button class="btn btn-danger" onclick="deleteItem('${item.item_id}')"><i class="bi bi-trash"></i></button>
+            </td>
+          `;
+          tableBody.appendChild(newRow);
+        });
+      } catch (error) {
+        console.error('Error loading items:', error);
+      }
+    };
+
+    // View item
+    window.viewItem = async (id) => {
+      try {
+        const response = await fetch(`http://localhost:5010/items/${id}`);
+        const item = await response.json();
+        document.getElementById('viewImg').src = item.item_image;
+        document.getElementById('viewName').value = item.item_name;
+        document.getElementById('viewDescription').value = item.item_description;
+        document.getElementById('viewPrice').value = item.item_price;
+        document.getElementById('viewCategory').value = item.category_id;
+        new bootstrap.Modal(document.getElementById('readData')).show();
+      } catch (error) {
+        console.error('Error fetching item:', error);
+      }
+    };
+
+    // Edit item
+    window.editItem = async (id) => {
+      try {
+        const response = await fetch(`http://localhost:5010/items/${id}`);
+        const item = await response.json();
+        document.getElementById('name').value = item.item_name;
+        document.getElementById('description').value = item.item_description;
+        document.getElementById('price').value = item.item_price;
+        document.getElementById('category').value = item.category_id;
+        currentItemId = id;
+        new bootstrap.Modal(document.getElementById('userForm')).show();
+      } catch (error) {
+        console.error('Error fetching item for edit:', error);
+      }
+    };
+
+    // Add or update item
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const description = document.getElementById('description').value;
+      const price = document.getElementById('price').value;
+      const category = document.getElementById('category').value;
+      const image = document.getElementById('ImgInput').files[0];
+
+      const formData = new FormData();
+      formData.append('item_name', name);
+      formData.append('item_description', description);
+      formData.append('item_price', price);
+      formData.append('category_id', category);
+      formData.append('item_image', image);
+
+      try {
+        const url = currentItemId ? `http://localhost:5010/items/${currentItemId}` : 'http://localhost:5010/items';
+        const method = currentItemId ? 'PUT' : 'POST';
+        const response = await fetch(url, {
+          method: method,
+          body: formData,
+        });
+
+        if (response.ok) {
+          loadItems();
+          form.reset();
+          currentItemId = null;
+          document.querySelector('.btn-close').click(); // Close modal
+        } else {
+          console.error('Error submitting form:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    });
+
+    // Delete item
+    window.deleteItem = async (id) => {
+      if (confirm('Are you sure you want to delete this item?')) {
+        try {
+          const response = await fetch(`http://localhost:5010/items/${id}`, {
+            method: 'DELETE',
+          });
+
+          if (response.ok) {
+            loadItems();
+          } else {
+            console.error('Error deleting item:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error deleting item:', error);
+        }
+      }
+    };
+
+    // Load items on page load
+    loadItems();
+  });
+</script>
+
+  </body>
+</html>
