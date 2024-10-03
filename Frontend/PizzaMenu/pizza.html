@@ -188,11 +188,13 @@
 
     <!-- Navbar -->
     <div id="header-placeholder"></div>
+
     <script>
         fetch('../Header/header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
+                // Ensure the offcanvas background color is set after loading
                 const offcanvasNavbar = document.getElementById('offcanvasNavbar');
                 offcanvasNavbar.style.backgroundColor = 'black';
             })
@@ -207,17 +209,17 @@
     <!-- Features Section -->
     <section class="features">
         <div class="feature">
-            <img src="../Assets/pizza 1.png" alt="Pizza">
+            <img src="../Assets/Images/pizza1.png" alt="Pizza">
             <h3>Fresh Pizza</h3>
             <p>We serve fresh, hand-tossed pizza with authentic ingredients.</p>
         </div>
         <div class="feature">
-            <img src="../Assets/delivery-man 1.png" alt="Delivery">
+            <img src="../Assets/Images/delivery-man1.png" alt="Delivery">
             <h3>Fast & Fresh Delivery</h3>
             <p>Get your pizzas delivered fresh and fast to satisfy your cravings.</p>
         </div>
         <div class="feature">
-            <img src="../Assets/cake 1.png" alt="Dessert">
+            <img src="../Assets/Images/cake1.png" alt="Dessert">
             <h3>Sweet Desserts</h3>
             <p>Our sweet treats will give you the perfect end to your meal.</p>
         </div>
