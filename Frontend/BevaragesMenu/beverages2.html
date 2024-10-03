@@ -159,7 +159,7 @@
 
         // Load first 8 menu items
 
-        fetch('http://localhost:5010/items/beverage')
+        fetch('http://localhost:5010/items/category/beverage')
     .then(response => response.json())
     .then(data => {
         const menu = document.getElementById('beverageMenu');

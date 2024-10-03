@@ -41,7 +41,8 @@ next();
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
 
-app.use('/Assets', express.static(path.join(__dirname, '../Frontend/Assets')));
+const menuAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Menu');
+app.use('/Assets/Menu', express.static(menuAssetsPath));
 
 
 console.log(path.join(__dirname, 'Assets')); 

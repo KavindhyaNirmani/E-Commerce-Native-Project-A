@@ -243,10 +243,10 @@
     </script>
 
         <script>
-        fetch('http://localhost:5010/items/cake')
+        fetch('http://localhost:5010/items/category/cake')
         .then(response => response.json())
         .then(data => {
-        const menu = document.getElementById('pizzaMenu');
+        const menu = document.getElementById('cakeMenu');
         const limitedData = data.slice(0, 4); // Display only 4 items initially
         limitedData.forEach(item => {
             const menuItem = document.createElement('div');

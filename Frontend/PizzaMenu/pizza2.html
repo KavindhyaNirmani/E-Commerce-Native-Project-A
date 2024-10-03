@@ -162,31 +162,7 @@
         }
 
         // Load pizza menu items
-        fetch('http://localhost:5010/items/pizza')
-<<<<<<< Updated upstream
-    .then(response => response.json())
-    .then(data => {
-        const menu = document.getElementById('pizzaMenu');
-        const limitedData = data.slice(4); // Display only 4 items initially
-        limitedData.forEach(item => {
-            const imageUrl = `http://localhost:5010${item.item_image}`;
-            console.log('Image URL:', imageUrl); // Log the constructed URL
-            const menuItem = document.createElement('div');
-            menuItem.classList.add('col-md-3', 'col-sm-6', 'mb-4');
-            menuItem.innerHTML = `
-                <div class="menu-item">
-                    <img src="${imageUrl}" alt="${item.item_name}">
-                    <h4>${item.item_name}</h4>
-                    <h5>${item.item_price}</h5>
-                    <p>${item.item_description}</p>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            `;
-            menu.appendChild(menuItem);
-        });
-    })
-    .catch(error => console.error('Error loading menu data:', error));
-=======
+        fetch('http://localhost:5010/items/category/pizza')
             .then(response => response.json())
             .then(data => {
                 const menu = document.getElementById('pizzaMenu');
@@ -207,7 +183,6 @@
                 });
             })
             .catch(error => console.error('Error loading menu data:', error));
->>>>>>> Stashed changes
 
 
         // Offcanvas background color
