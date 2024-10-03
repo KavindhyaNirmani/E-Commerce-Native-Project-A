@@ -2,6 +2,7 @@ const Category=require('../models/categoryModel');
 const Item=require('../models/itemModel');
 const fs =require('fs');//using for file system.It can readFiles(),writeFile(),appendFile(),etc.
 const path=require('path');
+const multer = require('multer');
 
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory=async(req,res)=>{
@@ -76,7 +77,7 @@ exports.addItem=async (req,res)=>{
     console.log('Add item request received');
 
     const {item_name,item_description,item_price,category_name}=req.body;
-    const item_image = req.file ? `/Assets/Menu/${req.file.filename}` : null;
+    const item_image =  `/Assets/Menu/${req.file.filename}`;;
 
 
     try{
