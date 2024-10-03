@@ -94,6 +94,76 @@
          <div id="failed-modal-container"></div>
 
          <script>
+<<<<<<< HEAD
+         // Example starter JavaScript for disabling form submissions if there are invalid fields
+          (function () {
+            'use strict';
+        
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation');
+        
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+        
+                form.classList.add('was-validated');
+              }, false);
+            });
+          })();
+
+    async function loginUser(event) {
+    event.preventDefault();  // Prevent the default form submission
+
+    // Fetch form values
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      // Send a POST request to the backend login endpoint
+      const response = await fetch('http://localhost:5010/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+                       
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('role', data.role);
+
+                        // Display a success message
+                        alert('Login successful!');
+
+                        // Redirect based on user role
+                        if (data.role === 'admin') {
+                            window.location.href = '../Admin/Admin List/Admin.html';  // Redirect admin
+                        } else if (data.role === 'user') {
+                            window.location.href = '../Home/home.html';  // Redirect user to homepage
+                        }
+                    } else {
+                        // Handle login failure
+                       
+                        console.error('Login failed:', errorData);
+                        $('#failed-modal-container').load('../LoginFail/log_fail.html', function () {
+                            $("#failModal").modal("show");
+                        });
+                    }
+                } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  }
+  
+
+=======
           // Example starter JavaScript for disabling form submissions if there are invalid fields
            (function () {
              'use strict';
@@ -161,6 +231,7 @@
      }
  }
  
+>>>>>>> 1126bb5597ae2671ae94944d032377f968d00529
    
  
     
