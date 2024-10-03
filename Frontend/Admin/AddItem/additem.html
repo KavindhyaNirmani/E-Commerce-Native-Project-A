@@ -177,7 +177,7 @@
             <td>${item.item_description}</td>
             <td>$${item.item_price}</td>
             <td>${item.category_id}</td>
-            <td><img src="${item.item_image}" alt="Item Image" width="40" height="40"></td>
+            <td><img src="http://localhost:5010${item.item_image}" alt="Item Image" width="40" height="40"></td>
             <td>
               <button class="btn btn-success" onclick="viewItem('${item.item_id}')"><i class="bi bi-eye"></i></button>
               <button class="btn btn-primary" onclick="editItem('${item.item_id}')"><i class="bi bi-pencil-square"></i></button>
