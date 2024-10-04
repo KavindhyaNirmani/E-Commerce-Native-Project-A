@@ -58,11 +58,17 @@
     
     <!-- Pizza Menu Section -->
     <div class="container my-5">
-        
-        <div class="row" id="pizzaMenu"></div>
-        <button id="viewMoreBtn" class="view-all-btn">View More</button>   
-    </div>
 
+        <div class="row" id="pizzaMenu"></div>
+        
+        <!-- Container to align buttons left and right -->
+        <div class="button-container">
+            <button id="backBtn" class="back-btn" onclick="window.location.href='../Pages/index.html#menu';">Back</button>
+            <button id="viewMoreBtn" class="view-all-btn">View More</button>
+        </div>
+    
+    </div>
+    
 
     <!-- Footer Section -->
     <div id="footer-placeholder"></div>
@@ -81,7 +87,7 @@
         let pizzaLimit = 4; // Initial limit for items to display
 
         // Fetch all pizza items and store them
-        fetch('http://localhost:5010/items/category/pizza')
+        fetch('http://localhost:5010/items/category/beverage')
             .then(response => response.json())
             .then(data => {
                 allPizzaData = data;
