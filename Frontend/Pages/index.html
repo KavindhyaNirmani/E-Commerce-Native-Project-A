@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="../Assets/Images/image2.png" />
+    <link rel="icon" type="image/png" href="../Assets/Images/logo.png" />
     <!--Bootstrap CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -44,7 +44,7 @@
     <div id="header-placeholder"></div>
 
     <script>
-      fetch("../Header/header.html")
+      fetch("../Components/header.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("header-placeholder").innerHTML = data;
@@ -209,31 +209,16 @@
       </div>
     </div>
 
-    <!--footer-->
-    <footer>
-      <iframe
-        src="../Footer/footer.html"
-        id="footerFrame"
-        scrolling="no"
-        onload="adjustFooterHeight(this)"
-        style="margin-top: 30px; width: 100%; border: none; overflow: hidden"
-      ></iframe>
-    </footer>
-
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
     <script>
-      function adjustFooterHeight(iframe) {
-        // Add a delay to ensure the content is fully loaded before calculating height
-        setTimeout(() => {
-          try {
-            const document = iframe.contentWindow.document;
-            const height = document.documentElement.scrollHeight; // Use documentElement for more accurate height
-            iframe.style.height = height + "px";
-          } catch (e) {
-            console.error("Error adjusting iframe height:", e);
-          }
-        }, 100); // 100ms delay to allow content to render
-      }
-
+        fetch('../Components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+  
       // Offcanvas background color
       const offcanvasNavbar = document.getElementById("offcanvasNavbar");
       offcanvasNavbar.addEventListener("show.bs.offcanvas", function () {
