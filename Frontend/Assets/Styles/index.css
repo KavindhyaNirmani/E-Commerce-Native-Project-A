@@ -121,13 +121,8 @@
   margin-bottom: 10px;
   max-width: 320px;
   min-width: 200px;
-<<<<<<< HEAD:Frontend/Home/home.css
-  align-items: center;
-  justify-content: center;
-
-=======
   margin-top: 0;
->>>>>>> fc35898588f05d115c451839b92efd1967051e45:Frontend/Assets/Styles/index.css
+  justify-content: center;
 }
 
 .card-img-container {
@@ -185,7 +180,7 @@
     width: 100%;
     max-width: 320px;
     align-items: center;
-    
+    margin: 0 auto;
   }
 
   .card-img-container {
