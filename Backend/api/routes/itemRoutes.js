@@ -49,7 +49,7 @@ router.post('/', upload.single('item_image'), itemController.addItem);
 router.put('/:item_id', protect, adminOnly, upload.single('item_image'), itemController.updateItem);
 
 // Delete an item (soft delete)
-router.delete('/:item_id', protect, adminOnly, itemController.deleteItem);
+router.delete('/:item_id', itemController.deleteItem);
 
 
 module.exports=router;

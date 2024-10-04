@@ -119,7 +119,7 @@ exports.addItem=async (req,res)=>{
 exports.updateItem = async (req, res) => {
     const { item_id } = req.params;
     const { item_name, item_description, item_price, category_name } = req.body;
-    const item_image = req.file ? req.file.filename : null;  // Ensure file is optional
+    const item_image = req.file ?`/Assets/Menu/${req.file.filename}` : null;  // Ensure file is optional
 
     try {
         // Find the category by name
@@ -129,6 +129,22 @@ exports.updateItem = async (req, res) => {
                 message: "Invalid category"
             });
         }
+
+       
+
+        //Fetch current item details from the DB
+        const currentItem=await Item.findById(item_id);
+        if(!currentItem){
+            return res.status(404).json({
+                message:'Item not found'
+            });
+        }
+
+         // If no new image uploaded, retain the existing one
+         if (!item_image) {
+            item_image = currentItem.item_image;
+        }
+
 
         // Prepare the item data, ensuring undefined values are converted to null
         const itemData = {
@@ -146,7 +162,8 @@ exports.updateItem = async (req, res) => {
         await Item.update(item_id, itemData);
 
         res.status(200).json({
-            message: "Item updated successfully"
+            message: "Item updated successfully",
+            item:itemData
         });
 
     } catch (error) {
