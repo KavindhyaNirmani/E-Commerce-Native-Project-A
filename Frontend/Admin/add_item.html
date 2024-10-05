@@ -223,7 +223,7 @@
       }
     };
 
-    // Add or update item
+    // Add new item
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('name').value;
@@ -240,17 +240,22 @@
       formData.append('item_image', image);
 
       try {
-        const url = currentItemId ? `http://localhost:5010/items/${currentItemId}` : 'http://localhost:5010/items';
-        const method = currentItemId ? 'PUT' : 'POST';
+        const url =  'http://localhost:5010/items';
+        
         const response = await fetch(url, {
-          method: method,
+          method: 'POST',
           body: formData,
         });
+
+        // Log the response for debugging 
+        const result = await response.json(); // Parse JSON response
+        console.log('Server response:', result);
+
 
         if (response.ok) {
           loadItems();
           form.reset();
-          currentItemId = null;
+          imgPreview.src = '';//// Reset image preview
           document.querySelector('.btn-close').click(); // Close modal
         } else {
           console.error('Error submitting form:', response.statusText);
@@ -259,6 +264,12 @@
         console.error('Error submitting form:', error);
       }
     });
+
+    // Discard button (reset form)
+    form.addEventListener('reset', () => {
+      imgPreview.src = ''; // Clear image preview on discard
+    });
+
 
     // Delete item
     window.deleteItem = async (id) => {

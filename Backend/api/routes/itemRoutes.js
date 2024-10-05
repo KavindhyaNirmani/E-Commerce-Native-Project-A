@@ -10,7 +10,7 @@ const router=express.Router();
 
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\Menu');
 
-const menuAssetsPath = path.resolve(__dirname, '../../../Frontend/Assets/Menu');
+const menuAssetsPath = path.resolve(__dirname, '../../../Frontend/Assets/Images/Menu');
 console.log('Saving to:', menuAssetsPath);
 
 const storage = multer.diskStorage({
@@ -37,7 +37,7 @@ router.get('/', itemController.getAllItems);
 // Fetch a single item by its ID
 router.get('/:item_id', itemController.getItemById);
 
-router.use('/Assets/Menu', express.static(menuAssetsPath));
+router.use('/Assets/Images/Menu', express.static(menuAssetsPath));
 
 // Add a new item (with image upload)
 //router.post('/', protect, adminOnly, upload.single('item_image'), itemController.addItem);
