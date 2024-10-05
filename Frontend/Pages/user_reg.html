@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration</title>
+  <title>Gather and Grab</title>
+  <link rel="icon" type="image/png" href="../Assets/Images/logo.png">
 
 
  <!-- Bootstrap CSS -->
@@ -78,7 +79,7 @@
 
               <button type="submit" class="btn mt-3 w-100 fw-bold custom-hover p-1">Signup</button>
 
-              <p>Already a Member? <a href="../User Login/user_login.html">Login</a></p>
+              <p>Already a Member? <a href="./user_login.html">Login</a></p>
             </form>
           </div>
         </div>
@@ -135,7 +136,7 @@
 
           if (response.ok) {
           // Load the modal from the external file and show it
-          $('#success-modal-content').load('../Reg_success/reg_success.html', function () {
+          $('#success-modal-content').load('./user_reg.html', function () {
              
           $("#successModal").modal("show");
           })

@@ -16,7 +16,7 @@
   font-size: clamp(20px, 5vw, 60px);
 }
 .carousel-caption h1 {
-  color: #faff00;
+  color: #FAD700;
   text-align: left;
   font-size: clamp(30px, 7vw, 80px);
   font-size: oblique;
@@ -73,7 +73,7 @@
 }
 /*text side*/
 .about-text h2 {
-  color: #faff00;
+  color: #FAD700;
   font-weight: bold;
   margin-top: 20px;
   font-size: 34px;
@@ -105,7 +105,7 @@
 /*Menu section*/
 .menutopic {
   background-color: transparent;
-  color: #faff00;
+  color: #FAD700;
   min-width: fit-content;
   max-width: 350px;
   padding: 5px 10px;
@@ -143,7 +143,7 @@
 }
 
 .card .btn {
-  background-color: #faff00;
+  background-color: #FAD700;
   color: #000000;
   border: none;
   padding: 10px 20px;
@@ -156,7 +156,7 @@
 .card .btn:hover,
 .card .btn:focus,
 .card .btn:active {
-  background-color: #9ba49b;
+  background-color: #FAF000;
   color: #000000;
   outline: none;
   border: none;
@@ -237,7 +237,7 @@
 
 /* Button Style */
 .carousel-container button {
-  background-color: #faff00;
+  background-color: #FAD700;
   color: #000000;
   border: none;
   padding: 8px 18px;
@@ -253,7 +253,7 @@
 .carousel-container button:hover,
 .carousel-container button:focus,
 .carousel-container button:active {
-  background-color: #9ba49b;
+  background-color: #FAF000;
   color: #000000;
   outline: none;
   border: none;

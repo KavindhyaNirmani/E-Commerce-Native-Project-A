@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Header</title>
+    <link rel="icon" type="image/png" href="../Assets/Images/logo.png">
     <!--bootstrap-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -11,6 +12,8 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <!--Bootstrap 5 icons CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
       /* Background gradient for the whole page */
       .navbar {
@@ -26,23 +29,6 @@
         background-repeat: no-repeat;
       }
 
-      .login-button {
-        background-color: rgb(238, 241, 31) !important;
-        color: black;
-        font-family: Lato;
-        font-size: 14px;
-        padding: 1px 17px;
-        height: 25px;
-        width: 80px;
-        border-radius: 50px;
-        text-decoration: none;
-        transition: 0.3s background-color;
-      }
-
-      .login-button:hover {
-        background-color: #6c6a6a;
-      }
-
       .navbar-toggler {
         border: none;
         font-size: 1.25rem;
@@ -52,17 +38,11 @@
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='yellow' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
         }
 
-
-      .navbar-toggler:focus,
-      .btn-close:focus {
-        box-shadow: none;
-        outline: none;
-      }
-
       .nav-link {
-        color: #fff !important;
+        color: #FFD700 !important;
         font-weight: 500;
         font-family: Lato;
+        margin-top: 10px;
       }
 
       .navbar-nav {
@@ -71,64 +51,80 @@
 
       .nav-link:hover,
       .nav-link.active {
-        color: rgb(238, 241, 31) !important;
+        color: #FAFF00 !important;
       }
+
+      /* Align icons horizontally */
+      .navbar-icons {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-icons li {
+        margin-left: 10px;
+      }
+
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg ">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#">
-          <img src="../Assets/image2.png" alt="Logo" style="height: 50px" />
+        <a class="navbar-brand me-auto" href="../Pages/index.html">
+          <img src="../Assets/Images/logo.png" alt="Logo" style="height: 50px" />
         </a>
 
-        <div
-          class="offcanvas offcanvas-end"
-          tabindex="-1"
-          id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel"
-        >
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
+            <button 
+                type="button" 
+                class="btn-close text-reset" 
+                data-bs-dismiss="offcanvas" 
+                aria-label="Close" 
+                style="background-color: yellow; border-radius: 50%; opacity: 1;">
+            </button>
           </div>
+
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../Home/home.html#carouselExampleSlidesOnly"> Home </a>
+                <a class="nav-link mx-lg-2" href="../Pages/index.html#carouselExampleSlidesOnly">Home</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="../Pages/index.html#about">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="../Pages/index.html#menu">Menu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-lg-2" href="../Pages/index.html#carouselExampleSlidesOnly">Promotion</a>
+              </li>
+            </ul>
 
+            <!-- Align icons horizontally in a single ul -->
+            <ul  >
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../Home/home.html#about">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../Home/home.html#menu">Menu</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="#">Promotion</a>
+                <a class="nav-link" href="../Pages/user_reg.html"><i class="bi bi-person-add" style="font-size: 1.5rem;"></i></a>
               </li>
             </ul>
           </div>
         </div>
-        <a href="../User Registration/user_reg.html" class="login-button">Sign In</a>
+
+        <ul>
+          <li class="nav-item">
+            <a class="nav-link" href="../Pages/cart.html"><i class="bi bi-cart" style="font-size: 1.5rem;"></i></a>
+          </li>
+          </ul>
+
         <button
-          class="navbar-toggler pe-0"
+          class="navbar-toggler pe-1"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <li class="nav-item">
-          <img class="logo" src="../Assets/cart.png" alt="Cart" />
-        </li>
+        
       </div>
     </nav>
 
