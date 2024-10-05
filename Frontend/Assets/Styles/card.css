@@ -181,7 +181,7 @@
     display: inline-block;
 }
 
-/* Hover Effects */
+          /* Hover Effects */
 .view-all-btn:hover, .back-btn:hover {
     background-color: #FAFF00;
 }
