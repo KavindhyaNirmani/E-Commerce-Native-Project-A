@@ -46,7 +46,7 @@ router.post('/', upload.single('item_image'), itemController.addItem);
 
 
 // Update an item (with image upload)
-router.put('/:item_id', protect, adminOnly, upload.single('item_image'), itemController.updateItem);
+router.put('/:item_id', upload.single('item_image'), itemController.updateItem);
 
 // Delete an item (soft delete)
 router.delete('/:item_id', itemController.deleteItem);
