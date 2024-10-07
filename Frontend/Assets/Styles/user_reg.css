@@ -1,6 +1,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+body{
+    background-image: linear-gradient(#6C6A6A,#1E1E1E);
+   
+}
+
 .text-overlay{
     position:absolute;
     top: 10px;
@@ -69,6 +74,14 @@ p a:hover{
 
 @media(max-width:530px){
     .text-style{
-        font-size: smaller;
+        font-size: 20px;
+    }
+}
+
+
+@media(max-width:425px){
+    .logo_icon{
+        /*padding-top: 0px;
+        margin-top: 0px;*/
     }
 }
