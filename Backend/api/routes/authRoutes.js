@@ -7,12 +7,8 @@ const path=require('path');
 const multer=require('multer');
 const authController=require('../controllers/authController');
 const {protect,adminOnly}= require('../middleware/authMiddleware');
-<<<<<<< HEAD
-const upload = authController.upload;
-=======
 
 
->>>>>>> origin/main
 const router=express.Router();//create a new instance of the Express Router
 
 const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
