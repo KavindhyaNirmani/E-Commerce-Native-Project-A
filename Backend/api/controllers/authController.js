@@ -20,11 +20,20 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
         return res.status(400).json({ message: 'Passwords do not match' });
     }
 
+<<<<<<< HEAD
      // To Ensure all required fields are properly passed
      if (!username || !email || !password) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
 
+=======
+    // To Ensure all required fields are properly passed
+    if (!username || !email || !password) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+
+>>>>>>> origin/main
     try {
         // Check if the user is already registered
         const existingUser = await User.findByEmail(email);
@@ -32,12 +41,17 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
             return res.status(400).json({ message: 'User already exists' });
         }
 
+        
         // Hash Password+
         const hashedPassword = await bcrypt.hash(password, 8);
 
         // Create user (role is 'user' by default)
         
+<<<<<<< HEAD
         await User.create({ username :username|| null, email:email||null, password: hashedPassword ||null, role: 'user'  });
+=======
+        await User.create({ username :username|| null, email:email||null, password: hashedPassword ||null, role: 'user' });
+>>>>>>> origin/main
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin List</title>
+    <link rel="icon" type="image/png" href="../Assets/image2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../Assets/Styles/Admin.css">
+  
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <common-sidebar></common-sidebar>
+    <div class="container-fluid" style="margin-left: 300px; padding: 10px;">
+        <div class="row">
+         <!-- <div class="col-2 left-section">
+            <h1>left section</h1>
+          </div> -->
+          
+          <div class="col-10 admin-list">
+            <h3>Admin List</h3>
+
+
+            <div id="adminListContainer" class="d-flex flex-wrap gap-3">
+            <!--Admin list will dispaly here-->
+            
+            </div>
+            
+            <button id="addAdminButton" class="btn custom-btn mt-5">Add a new admin</button>
+          </div>
+
+            
+          </div>
+        </div>
+
+    </div>
+
+    <!--Add admin model-->
+     <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-custom">
+        <div class="modal-content"> 
+          <div class="pt-3 px-3">
+            <h5 class="modal-title custom-title" id="adminModalLabel">Admin Profile</h5>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-7">
+
+              <form method="POST" id="addAdminForm" class="needs-validation" novalidate>
+
+                
+                  <div class="mb-3 row">
+                    <label for="firstname" class=" col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="first_name" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="lastname" class=" col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="last_name" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="username" class="col-sm-3 col-form-label">User Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="user_name" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="role" class="col-sm-3 col-form-label">Role</label>
+                    <div class="col-sm-9">
+                      <select class="form-select" id="role" required>
+                        <option value="" selected disabled>Select a Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="editor">User</option>
+                        
+                      </select>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="email" class="col-sm-3 col-form-label">Email </label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="email" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="password" class="col-sm-3 col-form-label">Password </label>
+                    <div class="col-sm-9"><input type="password" class="form-control" id="password" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="phoneNumber" class="col-sm-3 col-form-label">P.No </label>
+                    <div class="col-sm-9"><input type="tel" class="form-control" id="phone_number" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row ">
+                    <label for="address" class="col-sm-3 col-form-label">Address </label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="address" required>
+                      <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              <!--
+                <div class="col-sm-5 pt-5">
+                  <label for="adminImage" class="form-label">Upload Admin Image:</label>
+                  <input type="file" class="form-control" id="adminImage" accept="image/*" required>
+                </div>-->
+              
+
+              <div class="d-flex button-section">
+                <button type="submit" class="btn btn-custom ">Submit</button>
+                <button type="button" class="btn  btn-custom " data-bs-dismiss="modal">Discard</button>
+                <button type="button " class="btn  btn-custom " data-bs-dismiss="modal">Cancel</button>
+              </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+    <script>
+
+  $(document).ready(function(){
+  const adminModal = new bootstrap.Modal(document.getElementById('adminModal'), {
+    keyboard: false
+});
+
+//fetch admins
+/*const fetchAdmins =()=>{
+  $.ajax({
+    url: 'http://localhost:5010/auth/admins',
+    type: 'GET',
+    headers:{
+      'Authorization' :'Bearer ' + localStorage.getItem('token')
+    },
+    success: function(response){
+      $('#adminListContainer').empty();
+      response.admins.forEach(admin=>{
+        appendNewAdminToTable(admin);
+      });
+    },
+    error:function(xhr,status,error){
+      console.error('Error fetching admins:',error);
+      alert('Failed to fetch admins. Please try again.');
+    }
+  });
+};*/
+
+async function fetchAdmins() {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch('http://localhost:5010/auth/admins', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const data = await response.json();
+
+    // Debugging: log the response to check its structure
+    console.log('Response data:', data);
+
+    if (response.ok) {
+      // Access the data property which contains the admins array
+      if (data && data.data) {
+        displayAdmins(data.data); // Pass the admins array to the display function
+      } else {
+        alert('No admins found or invalid response format.');
+      }
+    } else {
+      alert(data.message || 'Failed to fetch admins. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error fetching admins:', error);
+    alert('Failed to fetch admins. Please try again.');
+  }
+}
+
+// Function to display the list of admins
+function displayAdmins(admins) {
+                $('#adminListContainer').empty(); // Clear existing entries
+                admins.forEach(admin => {
+                    appendNewAdminToTable(admin);
+                });
+}
+
+//function to append admins into admin list
+const appendNewAdminToTable =(admin)=>{
+  const adminCard =`
+  <div class="card" style="width: 18rem;">
+  <img class="card-img-top rounded-circle mt-3 mx-auto d-block" height="60" width="60" src="../../../Frontend/Assets/cakebg.jpg" alt="Admin Image">
+
+  <div class="card-body text-center">
+  <h5 class="card-title">${admin.first_name} ${admin.last_name}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+
+  <li class="list-group-item">Email: ${admin.first_name}</li>
+  <li class="list-group-item">Username: ${admin.last_name}</li>
+  <li class="list-group-item">Address: ${admin.user_name}</li>
+  <li class="list-group-item">Phone Number: ${admin.role}</li>
+  <li class="list-group-item">Phone Number: ${admin.email}</li>
+  <li class="list-group-item">Phone Number: ${admin.password}</li>
+  <li class="list-group-item">Phone Number: ${admin.phone_number}</li>
+  <li class="list-group-item">Phone Number: ${admin.address}</li>
+  </ul>
+  <div class="card-body text-center">
+  <button class="btn btn-danger remove-admin-button" data-admin-id="${admin._id}">Remove Admin</button>
+  </div>
+</div>
+`
+$('#adminListContainer').append(adminCard);
+};
+
+//function to append new admin after creation 
+
+ fetchAdmins();
+
+
+  //show the modal 
+    $('#addAdminButton').on('click', function(){
+    $('#addAdminForm')[0].reset();
+    $('#addAdminForm').removeClass('was-validated');
+    adminModal.show();
+});
+
+$('#addAdminForm').on('submit', function(event){
+    event.preventDefault(); // Prevent default form submission
+    var form = $(this)[0];
+
+    // Check if the form is valid
+    if (form.checkValidity() === false) {
+        event.stopPropagation();
+    } else {
+        // Collect form data
+        var formData = {
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            username: $('#user_name').val(),
+            role: $('#role').val(),
+            email: $('#email').val(),
+            password: $('#password').val(),
+            phone_no: $('#phone_number').val(),
+            address: $('#address').val(),
+            // Handle file upload if necessary
+            // You might need to handle the file differently, such as using FormData
+        };
+
+        $.ajax({
+                        url:'http://localhost:5010/auth/add-admin',
+                        type: 'POST',
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+                        },
+                        success: function(response){ 
+                            console.log('Admin added successfully:', response);
+                            adminModal.hide();
+                            // Append the new admin to the admin list
+                            appendNewAdminToTable(response.admin);
+                        },
+                        error: function(xhr, status, error){
+                            // Handle error
+                            console.error('Error adding admin:', error);
+                            if(xhr.responseJSON && xhr.responseJSON.message){
+                                alert(xhr.responseJSON.message);
+                            } else {
+                                alert('Failed to add admin. Please try again.');
+                            }
+                        }
+                    });
+                }
+
+                // Add Bootstrap validation classes
+                $(this).addClass('was-validated');
+            });
+
+            // Handle remove admin
+            $(document).on('click', '.remove-admin-button', function(){
+                const adminId = $(this).data('admin-id');
+                if(confirm('Are you sure you want to remove this admin?')){
+                    $.ajax({
+                        url: `http://localhost:5010/auth/admins/:user_id`,
+                        type: 'DELETE',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+                        },
+                        success: function(response){
+                            alert('Admin removed successfully');
+                            fetchAdmins(); // Refresh the admin list
+                        },
+                        error: function(xhr, status, error){
+                            console.error('Error removing admin:', error);
+                            alert('Failed to remove admin. Please try again.');
+                        }
+                    });
+                }
+            });
+          });   
+
+    </script>
+    <script src="../Components/Sidebar/Sidebar.js"></script>
+</body>
+</html>

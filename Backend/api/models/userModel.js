@@ -21,6 +21,7 @@ class User {
 
     // Find user by username
     static async findByUsername(username) {
+        
         try {
             const [result] = await db.execute('SELECT * FROM user WHERE username = ?', [username]);
             return result[0];
@@ -31,7 +32,9 @@ class User {
 
     // Create a new user
     static async create(userData) {
-        const { username, email, hashedPassword, role } = userData;
+        const { username, email, password, role } = userData;
+
+        console.log('User data:', { username, email, password, role }); 
         try {
             await db.execute(//send the sql queries to the database
                 'INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)',

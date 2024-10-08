@@ -1,10 +1,10 @@
-const Item=require('../models/itemModel');
 const Category=require('../models/categoryModel');
+const Item=require('../models/itemModel');
 const fs =require('fs');//using for file system.It can readFiles(),writeFile(),appendFile(),etc.
 const path=require('path');
+const multer = require('multer');
 
 //get all items based on category(pizza,cake,beverage)
-
 exports.getItemsByCategory=async(req,res)=>{
     const {category_name}=req.params;
 
@@ -32,6 +32,7 @@ exports.getItemsByCategory=async(req,res)=>{
 };
 
 
+
 //Get all items (excluding deleted ones)
 exports.getAllItems=async(req,res)=>{
     try{
@@ -45,13 +46,39 @@ exports.getAllItems=async(req,res)=>{
     }
 };
 
+
+// Fetch a single item by its ID
+exports.getItemById = async (req, res) => {
+    const { item_id } = req.params; // Get item ID from the request parameters
+
+    try {
+        const item = await Item.findById(item_id); // Fetch the item using the model
+
+        if (!item) {
+            return res.status(404).json({
+                message: 'Item not found'
+            });
+        }
+
+        res.status(200).json(item);
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        res.status(500).json({
+            message: 'Server error', error: error.message
+        });
+    }
+};
+
+
+
 //Add a new item (admin only)
 exports.addItem=async (req,res)=>{
 
     console.log('Add item request received');
 
     const {item_name,item_description,item_price,category_name}=req.body;
-    const item_image=req.file? req.file.filename:null;
+    const item_image =  `/Assets/Images/Menu/${req.file.filename}`;
+
 
     try{
         //Find category by name
@@ -92,7 +119,7 @@ exports.addItem=async (req,res)=>{
 exports.updateItem = async (req, res) => {
     const { item_id } = req.params;
     const { item_name, item_description, item_price, category_name } = req.body;
-    const item_image = req.file ? req.file.filename : null;  // Ensure file is optional
+    const item_image = req.file ?`/Assets/Images/Menu/${req.file.filename}` : null;  // Ensure file is optional
 
     try {
         // Find the category by name
@@ -102,6 +129,22 @@ exports.updateItem = async (req, res) => {
                 message: "Invalid category"
             });
         }
+
+       
+
+        //Fetch current item details from the DB
+        const currentItem=await Item.findById(item_id);
+        if(!currentItem){
+            return res.status(404).json({
+                message:'Item not found'
+            });
+        }
+
+         // If no new image uploaded, retain the existing one
+         if (!item_image) {
+            item_image = currentItem.item_image;
+        }
+
 
         // Prepare the item data, ensuring undefined values are converted to null
         const itemData = {
@@ -119,7 +162,8 @@ exports.updateItem = async (req, res) => {
         await Item.update(item_id, itemData);
 
         res.status(200).json({
-            message: "Item updated successfully"
+            message: "Item updated successfully",
+            item:itemData
         });
 
     } catch (error) {
@@ -152,18 +196,3 @@ exports.deleteItem=async(req,res)=>{
 };
 
 
-/* 
-
-// Display the items on pizza page(frontend API)
-fetch('http://localhost:5010/items/pizza')
-    .then(response => response.json())
-    .then(data => {
-        // Render the items on the page
-        console.log(data); // Display pizza items
-    })
-    .catch(error => {
-        console.error('Error fetching pizza items:', error);
-    });
-
-
-*/

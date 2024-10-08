@@ -5,6 +5,8 @@ const express=require('express');
 const app =express();//Initalizing the express application
 const morgan=require('morgan');//a middleware for logging http requests and responses
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
 
 const authRoutes=require('./api/routes/authRoutes');
 const itemRoutes=require('./api/routes/itemRoutes');
@@ -15,36 +17,36 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.json());
 
+
+//CORS setup
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin","*");
 
     res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept,Authorization");
 
 
-    //CORS setup
+
 if(req.method==='OPTIONS'){
     res.header('Access-Control-Allow-Methods','PUT,POST,DELETE,GET,PATCH');
     return res.status(200).json({});
+
 
 }
 next();
 
 });
 
-/*{
-        
-        "item_name": "Avacado",
-        "item_price": "1.5",
-        "item_description": "Classic pizza with mozzarella and tomato sauce",
-        "item_image": "C:\\Users\\Devini\\Pictures\\codepark\\pizza-image.jpg",
-        "category_id": 3
-    }
- */
-
 
 
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
+
+const menuAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/Menu');
+app.use('/Assets/Images/Menu', express.static(menuAssetsPath));
+
+
+console.log(path.join(__dirname, 'Assets')); 
+
 
 
 app.use((req,res,next)=>{
@@ -66,3 +68,5 @@ app.use((error,req,res,next)=>{
 
 
 module.exports=app;
+
+

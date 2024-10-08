@@ -20,7 +20,7 @@ class category{
     //Fetch all categories
     static async getAll(){
         try{
-            const [result]=await db.execute('SELECT*FROM categories');
+            const [result]=await db.execute('SELECT*FROM category');
             return result;
         }catch(error){
             throw new Error('Error fetching categories'+error.message);
