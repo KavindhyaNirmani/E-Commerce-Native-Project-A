@@ -119,7 +119,7 @@ exports.addItem=async (req,res)=>{
 exports.updateItem = async (req, res) => {
     const { item_id } = req.params;
     const { item_name, item_description, item_price, category_name } = req.body;
-    const item_image = req.file ?`/Assets/Images/Menu/${req.file.filename}` : null;  // Ensure file is optional
+    let item_image = req.file ?`/Assets/Images/Menu/${req.file.filename}` : null;  // Ensure file is optional
 
     try {
         // Find the category by name
@@ -190,7 +190,7 @@ exports.deleteItem=async(req,res)=>{
     }catch(error){
         console.error('Error deleting item:',error);
         res.status(500).json({
-            message:'Server error,error:error.message'
+            message:'Server error',error:error.message
         });
     }
 };
