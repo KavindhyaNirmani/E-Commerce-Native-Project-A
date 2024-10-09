@@ -1,4 +1,4 @@
-/*Sidebar*/
+/* Sidebar styles */
 .sidebar {
   background-color: black;
   width: 250px;
@@ -7,13 +7,15 @@
   top: 0;
   left: 0;
   padding: 4px;
-  transition: all 0.1s;
+  /* transition: all 0.01s;*/
 }
+
 .sidebar .logo {
   text-align: center;
   margin-bottom: 20px;
 }
-.sidebar.logo-img {
+
+.sidebar .logo-img {
   width: 180px;
   height: auto;
   margin-top: 40px;
@@ -29,30 +31,31 @@
   border: 2px solid white;
   text-align: left;
   text-decoration: none;
-  transition: all 0.1s;
+  /*transition: all 0.01s;*/
   border-radius: 10px;
   width: 240px;
   height: 55px;
   margin-left: 3px;
 }
-.nav-link:hover {
-  background-color: #faff00;
-  color: black;
-  font-weight: bold;
-}
-.nav-link:active {
-  background-color: #faff00;
-  color: black;
-  font-weight: bold;
-}
 
-/*toggle button*/
+.nav-link:hover {
+  background-color: #fad700;
+  color: black;
+  font-weight: bold;
+}
+.nav-link.active {
+  background-color: #fad700;
+  color: black;
+  font-weight: bold;
+}
+/* Toggle Button */
 .toggle-container {
   display: flex;
-  justify-content: flex-end;
-  padding: 10px;
+  justify-content: flex-end; /* Aligns the button to the right */
+  padding: 10px; /* Optional: Add some padding */
   border: none;
 }
+
 .toggle-btn {
   color: black;
   border: none;
@@ -60,31 +63,50 @@
   cursor: pointer;
   display: none;
   background-color: transparent;
-  font-size: 24px;
+  font-size: 24px; /* Adjust font size */
   font-weight: bolder;
-  border: 1px slid black;
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Very light border */
   padding: 5px;
   box-shadow: none;
 }
+
+.sidebar-frame {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border: none;
+}
+
+/* Main content */
 .content {
-  margin-left: 320px;
+  margin-left: 250px;
   padding: 20px;
 }
-/*mrespnsive*/
+
+/* Media Query for small screens */
 @media (max-width: 768px) {
   .sidebar {
     width: 0;
     padding: 0;
     overflow: hidden;
   }
+
   .sidebar.show {
     width: 250px;
     padding: 4px;
   }
-  .toggle-btn {
-    display: block;
-  }
+
   .content {
     margin-left: 0;
   }
+
+  .toggle-btn {
+    display: block;
+  }
+}
+body {
+  background-color: #6c6a6a;
 }
