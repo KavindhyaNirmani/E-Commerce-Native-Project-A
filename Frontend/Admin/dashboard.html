@@ -33,9 +33,10 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body style="background-color: #333; color: yellow">
+    <common-sidebar></common-sidebar>
     <div class="content">
-      <!--Menu Section-->
+      <!-- Menu section -->
       <section class="our menu-padding" style="margin-top: 10px">
         <div class="container" id="menu">
           <div class="menutopic text-center">
@@ -44,14 +45,14 @@
           <div
             class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-1"
           >
-            <!--Pizza-->
+            <!-- Pizza -->
             <div class="col">
               <div class="card text-center" id="card">
                 <div class="card-img-container">
                   <img
                     src="../Assets/Images/pizza.jfif"
-                    alt="pizza"
                     class="card-img-top img-fluid"
+                    alt="pizza"
                   />
                 </div>
                 <div class="card-body">
@@ -59,14 +60,14 @@
                 </div>
               </div>
             </div>
-            <!--Cake-->
+            <!-- Cake -->
             <div class="col">
               <div class="card text-center" id="card">
                 <div class="card-img-container">
                   <img
                     src="../Assets/Images/cake.png"
-                    alt="pizza"
                     class="card-img-top img-fluid"
+                    alt="cake"
                   />
                 </div>
                 <div class="card-body">
@@ -74,14 +75,14 @@
                 </div>
               </div>
             </div>
-            <!--Beverage-->
+            <!-- Beverages -->
             <div class="col">
               <div class="card text-center" id="card">
                 <div class="card-img-container">
                   <img
                     src="../Assets/Images/beverage.png"
-                    alt="pizza"
                     class="card-img-top img-fluid"
+                    alt="beverage"
                   />
                 </div>
                 <div class="card-body">
@@ -92,7 +93,8 @@
           </div>
         </div>
       </section>
-      <!--Order summary Section-->
+
+      <!-- Order Summary Section -->
       <div class="container my-4">
         <h2>Order Summary</h2>
         <table class="table table-dark">
@@ -105,10 +107,162 @@
             </tr>
           </thead>
           <tbody id="order-summary-body">
-            <!--Will be populated dynamically-->
+            <!-- This will be populated dynamically -->
           </tbody>
         </table>
       </div>
+
+      <!-- Special Offers Section -->
+      <div class="container my-4">
+        <h2>Special Offers</h2>
+        <div id="special-offer-gallery" class="text-center mt-5">
+          <!-- Offer images will be dynamically loaded here -->
+        </div>
+        <div class="text-center my-2 mt-3">
+          <button id="add-offer-btn" class="btn custom-yellow ml-2">
+            Add New
+          </button>
+          <button id="view-more-btn" class="btn custom-yellow-outline ml-2">
+            View More
+          </button>
+        </div>
+      </div>
+
+      <!-- Popup Modal for Adding New Offer -->
+      <div
+        class="modal fade"
+        id="addOfferModal"
+        tabindex="-1"
+        aria-labelledby="addOfferModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addOfferModalLabel">Add New Offer</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="closeModal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="offerForm">
+                <div class="form-group">
+                  <label for="offerDetail">Offer Detail</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="offerDetail"
+                    placeholder="Enter offer details"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="offerImage">Upload Image</label><br />
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="offerImage"
+                    required
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn" id="submitOfferBtn">
+                Submit
+              </button>
+              <button type="button" class="btn" data-bs-dismiss="modal">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <script>
+      let offers = []; // Array to store offer images and details
+      let showOffers = false; // State variable to track if offers are shown
+
+      // Handle modal popup for adding new offer
+      document
+        .getElementById("add-offer-btn")
+        .addEventListener("click", function () {
+          $("#addOfferModal").modal("show");
+        });
+
+      // Handle adding new offer logic
+      document
+        .getElementById("submitOfferBtn")
+        .addEventListener("click", function () {
+          const offerDetail = document.getElementById("offerDetail").value;
+          const offerImage = document.getElementById("offerImage").files[0];
+
+          if (offerImage) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              // Push new offer details into the array
+              offers.push({ detail: offerDetail, image: e.target.result });
+              displayOffers(); // Display offers after adding new one
+              $("#addOfferModal").modal("hide"); // Close modal
+            };
+            reader.readAsDataURL(offerImage); // Read the image file as a data URL
+          }
+        });
+
+      // Function to display offers
+      function displayOffers() {
+        const gallery = document.getElementById("special-offer-gallery");
+        gallery.innerHTML = ""; // Clear previous offers
+
+        // Check if there are offers
+        if (offers.length === 0) {
+          gallery.innerHTML = "<p>No special offers yet.</p>"; // Display message when no offers
+          return; // Exit the function
+        }
+
+        // Always show the first offer, if available
+        if (offers.length > 0) {
+          const firstOffer = offers[0];
+          gallery.innerHTML += `<div class="offer-img-container">
+                    <img src="${firstOffer.image}" alt="Offer" class="special-offer-img" />
+                    <button class="delete-btn" onclick="deleteOffer(0)">X</button>
+                    <p>${firstOffer.detail}</p>
+                </div>`;
+        }
+
+        // Show remaining offers only when the toggle is active
+        if (showOffers) {
+          for (let i = 1; i < offers.length; i++) {
+            const offer = offers[i];
+            gallery.innerHTML += `<div class="offer-img-container">
+                        <img src="${offer.image}" alt="Offer" class="special-offer-img" />
+                        <button class="delete-btn" onclick="deleteOffer(${i})">X</button>
+                        <p>${offer.detail}</p>
+                    </div>`;
+          }
+        }
+      }
+
+      // Function to toggle offers visibility
+      document.getElementById("view-more-btn").onclick = function () {
+        showOffers = !showOffers; // Toggle the state
+        this.textContent = showOffers ? "Hide Offers" : "View More"; // Change button text
+        displayOffers(); // Refresh offer display
+      };
+
+      // Function to delete an offer
+      function deleteOffer(index) {
+        offers.splice(index, 1); // Remove offer from the array
+        displayOffers(); // Refresh the display
+      }
+
+      // Initial display of offers (if any)
+      displayOffers();
+    </script>
+    <script src="../Components/Sidebar/Sidebar.js"></script>
   </body>
 </html>
