@@ -9,6 +9,9 @@ const User = require('../models/userModel');
 const multer = require('multer');
 const path = require('path');
 
+
+
+
 // Register a new user (only user can register via form)
 exports.register = async (req, res) => {//exported asynchronous function to be used as the handler for the registration route
     const { username, email, password, confirmPassword } = req.body;
@@ -16,8 +19,7 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Passwords do not match' });
     }
-
-    // To Ensure all required fields are properly passed
+ // To Ensure all required fields are properly passed
     if (!username || !email || !password) {
         return res.status(400).json({ message: 'Missing required fields' });
     }
@@ -44,6 +46,10 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+
+
+
 
 // Login for both users and admin
 exports.login = async (req, res) => {
@@ -103,6 +109,11 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);  
     }
 });
+
+
+
+
+
 
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
@@ -167,17 +178,6 @@ function checkMissingFields(body, requiredFields) {
 }
 
 
-// Function to check for missing fields
-function checkMissingFields(body, requiredFields) {
-    const missingFields = [];
-    requiredFields.forEach(field => {
-        if (!body[field]) {
-            missingFields.push(field);
-        }
-    });
-    return missingFields;
-}
-
 
 
 
@@ -194,6 +194,8 @@ exports.getAllAdmins=async(req,res)=>{
         });
     }
 };
+
+
 
 
 exports.deleteAdmin=async(req,res)=>{
@@ -214,6 +216,8 @@ exports.deleteAdmin=async(req,res)=>{
 
 
 const upload = multer({ storage: storage });
+
+
 
 
 exports.upload = upload;

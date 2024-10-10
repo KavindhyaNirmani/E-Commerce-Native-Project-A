@@ -39,11 +39,11 @@ router.post('/login',authController.login);
 router.use('/Assets/UserImage', express.static(absolutePath));
 
 //Admin creation(admin-only route)
-router.post('/add-admin', protect, adminOnly, upload.single('user_image'), authController.addAdmin);
+router.post('/add-admin',  upload.single('user_image'), authController.addAdmin);
 
 
 //Get all admins
-router.get('/admins',protect,adminOnly,authController.getAllAdmins);
+router.get('/admins',authController.getAllAdmins);
 
 //Delete an admin by Id
 router.delete('/admins/:user_id',protect,adminOnly,authController.deleteAdmin);
