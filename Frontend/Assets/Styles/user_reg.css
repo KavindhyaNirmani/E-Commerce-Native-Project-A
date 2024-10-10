@@ -66,21 +66,35 @@ p a{
     text-decoration: underline;
     text-decoration-color:  white;
 }
+
+button{
+    background-color: #FAD700 !important;
+}
 .custom-btn{
     background-color: #FAD700 !important; 
+    color: black; 
+    font-size: 18px;
+    padding: 3px;
+    border: none;
+    border-radius:5px ;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-btn:hover {
+    background-color: #FAFF00 !important; 
     color: black;
-    font-size: 18px; 
-    padding: 3px; 
+   
 }
-.custom-btn:hover{
-    background-color: #FAFF00 !important;
-     border: 1px solid #FAFF00 !important; 
-     transition: background-color 0.3s, color 0.3s !important;
+p a{
+    padding-left: 10px; 
+    color: white; 
+    text-decoration: underline;
+    text-decoration-color:  white;
 }
+
 p a:hover{
     color:#FAFF00;
 }
-
 .custom-padding{
     padding: 10px !important;
 }
