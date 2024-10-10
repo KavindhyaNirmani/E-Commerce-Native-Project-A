@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="../Assets/Images/logo.png">
+    <link rel="icon" type="image/png" href="/Assets/image2.png">
     
     <!-- jQuery (if needed for other parts of your project) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
-        Add New Item <i class="bi bi-plus-circle"></i>
+        Add Items <i class="bi bi-plus-circle"></i>
       </button>
     </section>
     
@@ -95,13 +95,13 @@
                 
                 <div>
                   <label for="price" class="form-label">Price (Rs)</label>
-                  <input type="number"  class="form-control" id="price" required>
+                  <input type="number" step="0.01" class="form-control" id="price" required>
                 </div>
                 
                 <div>
                   <label for="category" class="form-label">Category</label>
                   <select id="category" class="form-select" required>
-                    <option >Select Category</option>
+                    <option value="">Select Category</option>
                     <option value="pizza">Pizza</option>
                     <option value="cake">Cake</option>
                     <option value="beverage">Beverage</option>
@@ -202,10 +202,10 @@
                   <button class="btn " onclick="viewItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button class="btn" onclick="editItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="editItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button class="btn" onclick="deleteItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="deleteItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
