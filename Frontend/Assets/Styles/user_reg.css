@@ -1,16 +1,41 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+*{
+    box-sizing: border-box;
+}
 body{
     background-image: linear-gradient(#6C6A6A,#1E1E1E);
+    
+    overflow-x: hidden;
    
 }
+
+.image-section {
+    height: 100vh; /* Make it cover full viewport height */
+    
+    z-index:-1 ;
+}
+
+/* Adjust the form section to not overlap with the image */
+.form-section {
+   
+    overflow-y: auto; /* Allow vertical scrolling if necessary */
+    height: 100vh; /* Full viewport height */
+    padding: 20px; /* Add some padding if needed */
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 
 .text-overlay{
     position:absolute;
     top: 10px;
     right: 10px;
-    padding: 50px;
+    padding: 20px;
 
 }
 .text-overlay h2{
@@ -18,7 +43,7 @@ body{
     margin: 0;
     font-size:2.5rem;
     font-family: 'Lato' , sans-serif;
-    padding: 50px 10px; 
+    padding: 20px 10px; 
     font-weight: bold;
 }
 
@@ -32,6 +57,7 @@ p{
     display: flex; 
     justify-content: center;
     padding-top: 10px;
+    
 }
 
 p a{
@@ -40,48 +66,64 @@ p a{
     text-decoration: underline;
     text-decoration-color:  white;
 }
-.custom-hover{
-    background-color: #FAFF00 !important; 
+.custom-btn{
+    background-color: #FAD700 !important; 
     color: black;
     font-size: 18px; 
     padding: 3px; 
 }
-.custom-hover:hover{
-    background-color: #9ba49b !important;
+.custom-btn:hover{
+    background-color: #FAFF00 !important;
      border: 1px solid #FAFF00 !important; 
      transition: background-color 0.3s, color 0.3s !important;
 }
 p a:hover{
     color:#FAFF00;
 }
-/* Responsive behavior */
-@media  (min-width: 579px) {
-    .custom-padding{
-     padding-top: 20px;
-     padding-bottom: 10px;
-    }
-    .p-custom{
-     padding-top: 150px;
-    }
- }
 
- @media (min-width: 576px) and (max-width: 760px) {
-    .custom-padding{
-        padding-top: 0px;
-        padding-bottom: 0px;
-       }
+.custom-padding{
+    padding: 10px !important;
 }
+/* Responsive behavior */
+@media  (min-width: 530px) {
 
-@media(max-width:530px){
     .text-style{
         font-size: 20px;
     }
+ }
+
+ @media (min-width: 568px) and (max-width: 922px) {
+   
+    .image-section{
+        height: 100vh;
+    }
 }
 
+@media(min-width:922px){
+    .body{
+        max-height: 500px;
+        overflow: scroll;
+    }
+}
 
 @media(max-width:425px){
-    .logo_icon{
-        /*padding-top: 0px;
-        margin-top: 0px;*/
+    .body{
+        max-height: 400px;
+        overflow: hidden;
+    }  
+}
+
+@media (min-width: 768px) and (max-width: 922px) {
+
+    .custom-padding{
+        padding: 20px;
     }
+
+   
+    
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    
+    
 }
