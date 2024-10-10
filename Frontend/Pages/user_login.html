@@ -45,7 +45,7 @@
           
                   <div class="d-flex justify-content-center align-items-center px-1 ms-xl-4 mt-2 pt-0 pt-xl-0 mt-xl-n5 " >
           
-                    <form method="POST" class="needs-validation" novalidate onsubmit="loginUser(event)" style="font-family: 'Lato' ,sans-serif;">
+                    <form method="POST" id="loginForm" class="needs-validation" novalidate style="font-family: 'Lato' ,sans-serif;">
                       <div class=" form-group row custom-padding"  >
                           <label for="username" class="col-md-4 col-form-label">Username</label>
                           <div class="col-md-8">
@@ -92,7 +92,7 @@
 
          <script>
          // Example starter JavaScript for disabling form submissions if there are invalid fields
-          (function () {
+          /*(function () {
             'use strict';
         
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -148,7 +148,7 @@
                         // Handle login failure
                        
                         console.error('Login failed:', errorData);
-                        $('#failed-modal-container').load('../Assets/Styles/log_fail.css', function () {
+                        $('#failed-modal-container').load('../Pages/log_fail.html', function () {
                             $("#failModal").modal("show");
                         });
                     }
@@ -157,7 +157,73 @@
       alert('An error occurred. Please try again.');
     };
   };
-  
+  */
+  document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('loginForm');
+      
+      // Listen for form submission
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();  // Prevent default form submission
+
+        // Validate the form using Bootstrap validation classes
+        if (!form.checkValidity()) {
+          event.stopPropagation();
+          form.classList.add('was-validated');
+          return;
+        }
+
+        // Get form values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        
+
+        // Send both password and confirmPassword in the payload
+        try {
+          console.log("Sending data to the server:", {  username, password});
+
+          const response = await fetch('http://localhost:5010/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            // Send both password and confirmPassword to the server
+            body: JSON.stringify({ username, password })
+          });
+
+          const data = await response.json();
+          console.log("Response from server:", data);
+
+          if (response.ok) {
+
+            localStorage.setItem('token', data.token);
+                        localStorage.setItem('role', data.role);
+
+                        // Display a success message
+                        alert('Login successful!');
+
+                        // Redirect based on user role
+                        if (data.role === 'admin') {
+                            window.location.href = '../Admin/Admin.html';  // Redirect admin
+                        } else if (data.role === 'user') {
+                            window.location.href = '../Pages/index.html';  // Redirect user to homepage
+                        }
+        
+            
+          } else {
+            $('#failed-modal-container').load('../Pages/log_fail.html', function () {
+            $("#failModal").modal("show");
+                        });
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        }
+      });
+    });
+
+
+  </script>
 
    
  
