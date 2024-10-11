@@ -112,7 +112,7 @@ p {
   text-align: left;
   padding: 0;
 }
-#card {
+#beverageCard, #cakeCard, #pizzaCard{
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;
@@ -120,7 +120,14 @@ p {
   max-width: 150px;
   max-height: 170px;
   min-width: 80px;
+  width: 100%;
+  max-width: 150px;
+  margin: 0; /* Set margin to 0 for no gaps */
+  max-height: 170px;
+  margin-bottom: 5px; /* Space between cards if needed */
 }
+
+
 
 .card-img-container {
   background-color: #1f0b0b;
@@ -156,13 +163,7 @@ p {
     margin: 0; /* Set margin to 0 for no gaps */
   }
 
-  #card {
-    width: 100%;
-    max-width: 150px;
-    margin: 0; /* Set margin to 0 for no gaps */
-    max-height: 170px;
-    margin-bottom: 5px; /* Space between cards if needed */
-  }
+  
 
   .card-img-container {
     height: 250px;
