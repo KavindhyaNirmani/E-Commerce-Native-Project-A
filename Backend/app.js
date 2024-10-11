@@ -10,6 +10,7 @@ const path = require('path');
 
 const authRoutes=require('./api/routes/authRoutes');
 const itemRoutes=require('./api/routes/itemRoutes');
+const cartRoutes=require('./api/routes/cartRoutes');
 
 //middleware for logging requests and parsing the body
 app.use(morgan('dev'));
@@ -40,6 +41,7 @@ next();
 
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
+app.use('/cart',cartRoutes);
 
 const menuAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/Menu');
 app.use('/Assets/Images/Menu', express.static(menuAssetsPath));
