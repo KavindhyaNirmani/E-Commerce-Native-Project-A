@@ -16,40 +16,36 @@
   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
-<body>
 
- 
+
+
+<body>
     
-    <section class="vh-100"> 
-    style="background-image: linear-gradient(#6C6A6A,#1E1E1E); overflow: hidden;">
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6 px-0 d-none d-sm-block image-section" style="position: relative;">
               <img src="../Assets/Images/login_image.jpg"
                 alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
-                <img src="../Assets/Images/login_image.jpg"
-
-                alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
                 
-                <div class="text-overlay position-absolute top-0 end-0 p-3">
+                <div class="text-overlay">
                   <h2 class="text-white">Gather & Grab</h2>
                   </div>
       
             </div>
 
-            <div class="col-sm-6 pt-5 header " style="font-family: 'Lato' ,sans-serif;" >
+            <div class="col-sm-6 pt-2 header" style="font-family: 'Lato' ,sans-serif;" >
                 <div class="px-1 py-0 ms-xl-2 text-center flex justify-content-center " >
 
                   <img src="../Assets/Images/Logo_icon.png" class="d-md-none d-sm-none d-xs-block" style="width: 100px; ">
                     <p class="h2 fw-bold mb-0 text-white p-custom" style="font-family:'lato',sans-serif; ">Ready for Another Taste?</p>
-                    <h2 class="pb-4" style="color:#FAFF00;  ">Login now!</h2>
+                    <h2 class="pb-3" style="color:#FAD700;  ">Login now!</h2>
 
                 </div>
                   
           
-                  <div class="d-flex justify-content-center align-items-center px-1 ms-xl-4 mt-2 pt-0 pt-xl-0 mt-xl-n5" >
+                  <div class="d-flex justify-content-center align-items-center px-1 ms-xl-4 mt-2 pt-0 pt-xl-0 mt-xl-n5 " >
           
-                    <form method="POST" class="needs-validation" novalidate onsubmit="loginUser(event)" style="font-family: 'Lato' ,sans-serif;">
+                    <form method="POST" id="loginForm" class="needs-validation" novalidate style="font-family: 'Lato' ,sans-serif;">
                       <div class=" form-group row custom-padding"  >
                           <label for="username" class="col-md-4 col-form-label">Username</label>
                           <div class="col-md-8">
@@ -73,7 +69,7 @@
 
                     
                        
-                      <button type="submit" class="btn mt-3 w-100 fw-bold custom-hover p-1" >Login</button>
+                      <button type="submit" class="mt-3 w-100 fw-bold cus-hover p-1 " >Login</button>
                       
                       <p>Not a Member? 
                         <a href="../Pages/user_reg.html" > Signup </a>
@@ -89,14 +85,14 @@
                   </div>
               </div>
             </div>
-         </section>
+        
 
 
          <div id="failed-modal-container"></div>
 
          <script>
          // Example starter JavaScript for disabling form submissions if there are invalid fields
-          (function () {
+          /*(function () {
             'use strict';
         
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -152,7 +148,7 @@
                         // Handle login failure
                        
                         console.error('Login failed:', errorData);
-                        $('#failed-modal-container').load('../Assets/Styles/log_fail.css', function () {
+                        $('#failed-modal-container').load('../Pages/log_fail.html', function () {
                             $("#failModal").modal("show");
                         });
                     }
@@ -161,7 +157,73 @@
       alert('An error occurred. Please try again.');
     };
   };
-  
+  */
+  document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('loginForm');
+      
+      // Listen for form submission
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();  // Prevent default form submission
+
+        // Validate the form using Bootstrap validation classes
+        if (!form.checkValidity()) {
+          event.stopPropagation();
+          form.classList.add('was-validated');
+          return;
+        }
+
+        // Get form values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        
+
+        // Send both password and confirmPassword in the payload
+        try {
+          console.log("Sending data to the server:", {  username, password});
+
+          const response = await fetch('http://localhost:5010/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            // Send both password and confirmPassword to the server
+            body: JSON.stringify({ username, password })
+          });
+
+          const data = await response.json();
+          console.log("Response from server:", data);
+
+          if (response.ok) {
+
+            localStorage.setItem('token', data.token);
+                        localStorage.setItem('role', data.role);
+
+                        // Display a success message
+                        alert('Login successful!');
+
+                        // Redirect based on user role
+                        if (data.role === 'admin') {
+                            window.location.href = '../Admin/Admin.html';  // Redirect admin
+                        } else if (data.role === 'user') {
+                            window.location.href = '../Pages/index.html';  // Redirect user to homepage
+                        }
+        
+            
+          } else {
+            $('#failed-modal-container').load('../Pages/log_fail.html', function () {
+            $("#failModal").modal("show");
+                        });
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        }
+      });
+    });
+
+
+  </script>
 
    
  
