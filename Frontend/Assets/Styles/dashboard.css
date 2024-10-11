@@ -1,0 +1,228 @@
+.container h2 {
+  color: #fad700;
+}
+/*menu section*/
+.card h5 {
+  text-align: center;
+  color: #fad700;
+}
+/* Customize the button and table styling */
+.table td,
+.table th {
+  color: white;
+}
+/*offer section*/
+.special-offer-img {
+  width: 300px;
+  height: 150px;
+}
+
+.modal-content {
+  background-color: #666;
+  color: #fad700;
+}
+
+.modal-header {
+  background-color: #000;
+  color: #fad700;
+}
+#closeModal {
+  color: #ffffff;
+}
+.modal-footer button {
+  width: 100px;
+  background-color: #fad700;
+  border: none;
+  color: black;
+  font-weight: bold;
+}
+
+.modal-footer button:hover {
+  background-color: #fad700;
+}
+
+.form-control,
+.form-control-file {
+  background-color: #555;
+  border: none;
+  color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: #444;
+  color: #fad700;
+}
+
+/* Special offer section styles */
+.offer-img-container {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+
+.offer-img-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.offer-img-container .delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+.custom-yellow {
+  background-color: #fad700; /* Set your custom yellow */
+  color: black;
+  border: 2px solid #fad700;
+  font-weight: bolder;
+}
+
+.custom-yellow:hover,
+.custom-yellow:active {
+  background-color: #666; /* Slightly darker yellow on hover */
+  color: #fad700;
+  font-weight: bold;
+}
+
+.custom-yellow-outline {
+  background-color: transparent;
+  color: #fad700;
+  border: 2px solid #fad700; /* Border to match the 'outline' style */
+}
+
+.custom-yellow-outline:hover {
+  background-color: #fad700;
+  color: black;
+  font-weight: bold;
+}
+p {
+  color: #fad700;
+}
+/* Menu section */
+.menutopic h2 {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+}
+#beverageCard, #cakeCard, #pizzaCard{
+  background-color: #1f0b0b;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 5px; /* Adjusted margin to reduce space */
+  max-width: 150px;
+  max-height: 170px;
+  min-width: 80px;
+  width: 100%;
+  max-width: 150px;
+  margin: 0; /* Set margin to 0 for no gaps */
+  max-height: 170px;
+  margin-bottom: 5px; /* Space between cards if needed */
+}
+
+
+
+.card-img-container {
+  background-color: #1f0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.col {
+  padding: 0; /* Remove padding to minimize space */
+}
+
+/* Centering for small screens */
+@media (max-width: 576px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centering the row items */
+  }
+
+  .col {
+    flex: 0 0 auto;
+    margin: 0; /* Set margin to 0 for no gaps */
+  }
+
+  
+
+  .card-img-container {
+    height: 250px;
+  }
+}
+
+/* for screens up to 768px */
+@media (max-width: 768px) {
+  .menutopic h2 {
+    font-size: 24px;
+    justify-content: left;
+  }
+
+  .menu-padding {
+    padding: 10px 0;
+  }
+
+  .card-img-container {
+    height: 250px;
+  }
+
+  .col {
+    margin-bottom: 3px; /* Adjust margin between cards */
+    padding: 0; /* Remove padding for no extra space */
+  }
+}
+
+@media (min-width: 1440px) {
+  .row {
+    max-width: 1200px;
+    justify-content: center;
+    min-width: fit-content;
+    padding-left: 8%;
+  }
+}
+@media (max-width: 576px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the row items */
+  }
+
+  .col {
+    flex: 0 0 auto;
+    margin: 0; /* Set margin to 0 for no gaps */
+    display: flex; /* Ensure the column can center its contents */
+    justify-content: center; /* Center the card within the column */
+  }
+
+  #card {
+    width: 100%; /* Allow card to take the full width of the column */
+    max-width: 150px; /* Maintain max width */
+    margin-bottom: 5px; /* Space between cards */
+  }
+
+  .card-img-container {
+    height: 250px;
+    display: flex; /* Center the image container */
+    justify-content: center; /* Center the image within the container */
+    align-items: center; /* Center the image vertically */
+  }
+}

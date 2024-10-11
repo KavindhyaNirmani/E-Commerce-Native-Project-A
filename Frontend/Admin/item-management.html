@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="/Assets/image2.png">
+    <link rel="icon" type="image/png" href="../Assets/Images/logo.png?v=1" />
+
     
     <!-- jQuery (if needed for other parts of your project) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -22,17 +23,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../Assets/Styles/additem.css">
+    <link rel="stylesheet" href="../Assets/Styles/item-management.css">
     
    
     
   </head>
-  <body>
+  <body style="background-image: linear-gradient(#6C6A6A, #1E1E1E); height:100%;">
     
     <section class="p-3">
       <div class="row">
         <div class="col-12">
-          <h6 class="mb-4">Item List</h6>
+          <h6 class="mb-4">Add Item</h6>
         </div>
       </div>
     
@@ -57,7 +58,7 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#userForm">
+      <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
         Add Items <i class="bi bi-plus-circle"></i>
       </button>
     </section>
@@ -74,12 +75,12 @@
     
           <div class="modal-body">
             <form id="myForm">
-              <div class="card imgholder">
-                <label for="ImgInput" class="upload">
+              <div class="card image-holder">
+                <label for="imgInput" class="upload">
                   <i class="bi bi-plus-circle-dotted fs-1"></i>
-                  <input type="file" name="item_image" id="ImgInput" accept="image/*" style="display: none;">
+                  <input type="file" name="item_image" id="imgInput" accept="image/*" style="display: none;">
                 </label>
-                <img id="imgPreview" src="" alt="Image Preview" width="200" height="200" class="img d-block mx-auto">
+                <img id="imgPreview" src=" " alt="Image Preview" width="200" height="200" class="img d-block mx-auto">
               </div>
     
               <div class="inputField">
@@ -169,7 +170,7 @@
         const form = document.getElementById('myForm');
         const tableBody = document.getElementById('data');
         const imgPreview = document.getElementById('imgPreview');
-        const ImgInput = document.getElementById('ImgInput');
+        const imgInput = document.getElementById('imgInput');
         let currentItemId = null;
         const userFormModal = new bootstrap.Modal(document.getElementById('userForm'));
         const readDataModal = new bootstrap.Modal(document.getElementById('readData'));
@@ -199,13 +200,13 @@
                   <img src="http://localhost:5010${escapeHTML(item.item_image)}" alt="Item Image" width="40" height="40">
                 </td>
                 <td>
-                  <button class="btn btn-success btn-sm me-1" onclick="viewItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="viewItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button class="btn btn-primary btn-sm me-1" onclick="editItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="editItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm" onclick="deleteItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="deleteItem('${encodeURIComponent(item.item_id)}')">
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
@@ -281,7 +282,7 @@
           const description = document.getElementById('description').value.trim();
           const price = document.getElementById('price').value.trim();
           const category = document.getElementById('category').value;
-          const image = ImgInput.files[0];
+          const image = imgInput.files[0];
     
           // Basic validation
           if (!name || !description || !price || !category) {
@@ -369,8 +370,8 @@
         };
     
         // Image Preview Handler
-        ImgInput.addEventListener('change', () => {
-          const file = ImgInput.files[0];
+        imgInput.addEventListener('change', () => {
+          const file = imgInput.files[0];
           if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {

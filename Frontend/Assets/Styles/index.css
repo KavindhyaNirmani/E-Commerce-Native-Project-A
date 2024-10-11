@@ -16,7 +16,7 @@
   font-size: clamp(20px, 5vw, 60px);
 }
 .carousel-caption h1 {
-  color: #FAD700;
+  color: #fad700;
   text-align: left;
   font-size: clamp(30px, 7vw, 80px);
   font-size: oblique;
@@ -73,7 +73,7 @@
 }
 /*text side*/
 .about-text h2 {
-  color: #FAD700;
+  color: #fad700;
   font-weight: bold;
   margin-top: 20px;
   font-size: 34px;
@@ -105,15 +105,17 @@
 /*Menu section*/
 .menutopic {
   background-color: transparent;
-  color: #FAD700;
+  color: #fad700;
   min-width: fit-content;
   max-width: 350px;
   padding: 5px 10px;
   border-radius: 50px;
   margin: 0 auto;
   justify-content: center;
+  font-size: 34px;
+  font-weight: bold;
 }
-#card {
+#cakeCard, #pizzaCard, #beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;
@@ -143,7 +145,7 @@
 }
 
 .card .btn {
-  background-color: #FAD700;
+  background-color: #fad700;
   color: #000000;
   border: none;
   padding: 10px 20px;
@@ -156,7 +158,7 @@
 .card .btn:hover,
 .card .btn:focus,
 .card .btn:active {
-  background-color: #FAF000;
+  background-color: #faf000;
   color: #000000;
   outline: none;
   border: none;
@@ -215,29 +217,32 @@
 }
 
 /* Offer Section */
-.carousel-container {
-  max-width: 795px;
-  margin: 0 auto;
-  width: 100%;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  text-align: right;
-  position: relative;
+.offer-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
-.carousel-inner {
-  position: relative;
+.offer-item:hover {
+  transform: scale(1.05);
 }
 
-.carousel-inner img {
-  width: 100%;
+.offer-item img {
+  max-width: 100%;
   height: auto;
-  display: block;
+  margin-bottom: 15px;
 }
 
+.button-container {
+  margin-top: 20px;
+}
+.container h2 {
+  color: #fad700;
+}
 /* Button Style */
-.carousel-container button {
-  background-color: #FAD700;
+#viewMoreBtn {
+  background-color: #fad700;
   color: #000000;
   border: none;
   padding: 8px 18px;
@@ -247,13 +252,15 @@
   cursor: pointer;
   margin-top: 10px;
   width: 150px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 /* Hover and Focus States */
-.carousel-container button:hover,
-.carousel-container button:focus,
-.carousel-container button:active {
-  background-color: #FAF000;
+#viewMoreBtn:hover,
+#viewMoreBtn:focus,
+#viewMoreBtn:active {
+  background-color: #faf000;
   color: #000000;
   outline: none;
   border: none;
@@ -262,7 +269,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .carousel-container button {
+  #viewMoreBtn {
     padding: 6px 14px;
     width: 130px;
     font-size: 12px;
@@ -270,7 +277,7 @@
 }
 
 @media (max-width: 576px) {
-  .carousel-container button {
+  #viewMoreBtn {
     padding: 5px 12px;
     width: 110px;
     font-size: 12px;

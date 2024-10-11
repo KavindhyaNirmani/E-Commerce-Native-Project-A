@@ -14,22 +14,30 @@ table tr td{
     height: 20px;
 }
 
-td button{
-    margin:5px;
-}
+
 
 td button i{
     font-size: 20px;
 }
 
 .btn{
-    color: yellow ;
+    color: #FAD700 ;
     size: 120%;
+    display:inline
 }
-.btn-primary{
-    background-color: yellow;
+.btn:hover{
+    color: #FAFF00;
+}
+
+.btn1{
+    background-color:#FAD700;
     color: #000;
     font-family: bold;
+}
+.btn1:hover {
+    background-color: #FAFF00;
+    color: #000;
+   
 }
 .modal-content{
     width: 80%;
@@ -47,7 +55,7 @@ td button i{
     padding: 0;
 }
 
-.modal-body form .imgholder{
+.modal-body form .image-holder{
     /* flex-basis: 32%;
     height: 100%;*/
     width: 200px;
