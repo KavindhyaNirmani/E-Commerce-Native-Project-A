@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="../Assets/Images/logo.png" />
+    <!--Bootstrap CSS-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="../Assets/Styles/cart.css" />
+    <!--Google font-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!--Font-Awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- jQuery-->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Popper.js and Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
+      background-image: linear-gradient(#6c6a6a, #1e1e1e);
+      height: 100vh;
+    "
+  >
+    <div class="container">
+      <div class="row">
+        <!--Cart table-->
+        <div class="col-lg-8">
+          <h3>My Cart</h3>
+          <p id="cart-message" class="empty-cart-message">Your Cart is Empty</p>
+          <table id="cart-table" class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item</th>
+                <th></th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+          </table>
+          <button class="btn-add" onclick="window.location.href='index.html'">
+            Add Items
+          </button>
+        </div>
+        <!--Order Summary-->
+        <div class="col-lg-4">
+          <div class="order-summary">
+            <h4>Order Summary</h4>
+            <table>
+              <tr>
+                <td>No. of Items</td>
+                <td>:</td>
+                <td><span id="item-count">0</span></td>
+              </tr>
+              <tr>
+                <td>Sub Total</td>
+                <td>:</td>
+                <td>Rs.<span id="sub-total">0.00</span></td>
+              </tr>
+              <tr>
+                <td>Discount</td>
+                <td>:</td>
+                <td>Rs.<span id="discount">0.00</span></td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <hr class="full-width-line" />
+                  <!-- Added horizontal line -->
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Total </strong></td>
+                <td>:</td>
+                <td>
+                  <strong>Rs. <span id="total">0.00</span></strong>
+                </td>
+              </tr>
+            </table>
+            <button class="btn-checkout" onclick="proceedToCheckout()">
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Test data for cart items
+      let cartItems = [
+        {
+          name: "Hot & Spicy Chicken",
+          price: 3500,
+          quantity: 1,
+          image: "https://via.placeholder.com/50",
+          checked: false,
+        },
+        {
+          name: "Fresh Orange Juice",
+          price: 3500,
+          quantity: 1,
+          image: "https://via.placeholder.com/50",
+          checked: false,
+        },
+        {
+          name: "Cold Coffee",
+          price: 3500,
+          quantity: 1,
+          image: "https://via.placeholder.com/50",
+          checked: false,
+        },
+      ];
+
+      // Render the cart items and update the order summary
+      function renderCart() {
+        const cartTableBody = document.getElementById("cart-items");
+        const cartMessage = document.getElementById("cart-message");
+        const cartTable = document.getElementById("cart-table");
+        cartTableBody.innerHTML = ""; // Clear existing rows
+
+        if (cartItems.length === 0) {
+          cartMessage.style.display = "block";
+          cartTable.style.display = "none";
+          updateOrderSummary();
+          return;
+        } else {
+          cartMessage.style.display = "none";
+          cartTable.style.display = "table";
+        }
+
+        cartItems.forEach((item, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td><input type="checkbox" class="item-checkbox" ${
+                item.checked ? "checked" : ""
+              } data-index="${index}" onclick="toggleCheckbox(${index})"></td>
+              <td>
+                  <img src="${item.image}" alt="${
+            item.name
+          }" width="50" class="img-fluid"></td>
+          <td class="item-details">
+                  ${item.name}<br><small class="item-price">Rs. ${
+            item.price
+          }.00</small>
+              </td>
+              <td>
+                  <div class="quantity-controls">
+                      <button class="btn decrease-btn" data-index="${index}">-</button>
+                      <span class="quantity">${item.quantity}</span>
+                      <button class="btn increase-btn" data-index="${index}">+</button>
+                  </div>
+              </td>
+              <td id="totalPrice">Rs. ${(item.price * item.quantity).toFixed(
+                2
+              )}</td>
+              <td>
+                  <i class="fa fa-trash-o" onclick="removeItem(${index})" id="trash-icon"></i>
+              </td>
+          `;
+          cartTableBody.appendChild(row);
+        });
+
+        // Re-attach event listeners for increase and decrease buttons after rendering
+        const increaseButtons = document.querySelectorAll(".increase-btn");
+        const decreaseButtons = document.querySelectorAll(".decrease-btn");
+
+        increaseButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const index = button.getAttribute("data-index");
+            changeQuantity(index, 1);
+          });
+        });
+
+        decreaseButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const index = button.getAttribute("data-index");
+            changeQuantity(index, -1);
+          });
+        });
+
+        updateOrderSummary();
+      }
+
+      // Change the quantity of a cart item
+      function changeQuantity(index, increment) {
+        const quantity = cartItems[index].quantity + increment;
+
+        if (quantity > 0) {
+          cartItems[index].quantity = quantity; // Update the quantity
+        }
+
+        renderCart(); // Re-render the cart to update totals
+      }
+
+      // Remove an item from the cart
+      function removeItem(index) {
+        cartItems.splice(index, 1); // Remove the item from the array
+        renderCart(); // Re-render the cart to update the UI
+      }
+
+      // Toggle the checkbox for an item
+      function toggleCheckbox(index) {
+        cartItems[index].checked = !cartItems[index].checked; // Toggle checked status
+        updateOrderSummary(); // Update order summary after toggling
+      }
+
+      // Update the order summary based on selected items
+      function updateOrderSummary() {
+        let itemCount = 0;
+        let subTotal = 0;
+
+        cartItems.forEach((item) => {
+          if (item.checked) {
+            itemCount += item.quantity;
+            subTotal += item.price * item.quantity;
+          }
+        });
+
+        const discount = 0; // Discount logic will come from backend
+
+        document.getElementById("item-count").textContent = itemCount;
+        document.getElementById("sub-total").textContent = subTotal.toFixed(2);
+        document.getElementById("discount").textContent = discount.toFixed(2);
+        document.getElementById("total").textContent = (
+          subTotal - discount
+        ).toFixed(2);
+      }
+
+      // Proceed to checkout function (dummy function for now)
+      function proceedToCheckout() {
+        alert("Proceeding to checkout...");
+      }
+
+      // Initial render of the cart
+      renderCart();
+    </script>
+  </body>
+</html>
