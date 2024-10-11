@@ -1,0 +1,41 @@
+
+
+.form-container{
+background-image: linear-gradient(#6C6A6A, #1E1E1E);
+padding: 20px;
+border-radius: 20px;
+color: #fff;
+width: 80%;
+margin: 50px auto;
+}
+
+.header-container{
+color: #FAD700;
+font-size: 1.2rem;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.form-control {
+  background-color: aliceblue;
+  border: none;
+  margin-bottom: 10px;
+  color: black;
+  transition: none;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+
+.btn-confirm{
+  background-color: #FAD700;
+  border: none;
+  color: #1E1E1E;
+  height: 35px;
+  width: 100px;
+  border-radius: 5px;
+  
+  
+  
+  
+}
