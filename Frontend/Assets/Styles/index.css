@@ -115,7 +115,7 @@
   font-size: 34px;
   font-weight: bold;
 }
-#card {
+#cakeCard, #pizzaCard, #beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;
