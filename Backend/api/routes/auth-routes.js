@@ -5,8 +5,8 @@
 const express=require('express');
 const path=require('path');
 const multer=require('multer');
-const authController=require('../controllers/authController');
-const {protect,adminOnly}= require('../middleware/authMiddleware');
+const authController=require('../controllers/auth-controller');
+const {protect,adminOnly}= require('../middleware/auth-middleware');
 const router=express.Router();//create a new instance of the Express Router
 
 

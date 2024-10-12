@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 
-const authRoutes=require('./api/routes/authRoutes');
-const itemRoutes=require('./api/routes/itemRoutes');
-const cartRoutes=require('./api/routes/cartRoutes');
+const authRoutes=require('./api/routes/auth-routes');
+const itemRoutes=require('./api/routes/item-routes');
+const cartRoutes=require('./api/routes/cart-routes');
 
 //middleware for logging requests and parsing the body
 app.use(morgan('dev'));

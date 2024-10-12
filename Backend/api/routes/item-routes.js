@@ -1,6 +1,6 @@
 const express=require('express');
-const itemController=require('../controllers/itemController');
-const{protect,adminOnly}=require('../middleware/authMiddleware');
+const itemController=require('../controllers/item-controller');
+const{protect,adminOnly}=require('../middleware/auth-middleware');
 const multer= require('multer');
 const path = require('path');
 const router=express.Router();
