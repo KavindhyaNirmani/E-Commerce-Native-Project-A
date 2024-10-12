@@ -13,6 +13,7 @@ class Cart {
     }
   }
 
+
   // Create a new cart for a user
   static async createCart(userId) {
     try {
@@ -23,5 +24,6 @@ class Cart {
     }
   }
 }
+
 
 module.exports = Cart;

@@ -2,14 +2,11 @@
 
 // authcontroller contains the user registration a,login and admin creation login.
 
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const multer = require('multer');
 const path = require('path');
-
-
 
 
 // Register a new user (only user can register via form)
@@ -26,6 +23,7 @@ exports.register = async (req, res) => {//exported asynchronous function to be u
 
 
     try {
+
         // Check if the user is already registered
         const existingUser = await User.findByEmail(email);
         if (existingUser) {
@@ -65,8 +63,6 @@ exports.login = async (req, res) => {
 
         // Check password
         const isMatch = await bcrypt.compare(password, user.password);
-
-
 
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid Password' });
@@ -216,8 +212,5 @@ exports.deleteAdmin=async(req,res)=>{
 
 
 const upload = multer({ storage: storage });
-
-
-
 
 exports.upload = upload;

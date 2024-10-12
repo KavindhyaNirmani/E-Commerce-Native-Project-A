@@ -5,6 +5,7 @@ const path=require('path');
 
 
 class Item{
+
     //Find item by category
     static async findByCategory(category_id){
         try{
@@ -15,6 +16,8 @@ class Item{
         }
     }
 
+
+
     // Get all items (excluding soft deleted ones)
     static async findAll() {
       try {
@@ -24,6 +27,8 @@ class Item{
           throw new Error('Error fetching items: ' + error.message);
       }
     }
+
+
     
     // Fetch a single item by its ID(excluding soft deleted items)
     static async findById(item_id) {
@@ -34,6 +39,7 @@ class Item{
           throw new Error('Error fetching item: ' + error.message);
       }
   }
+
 
 
     //Add a new item(Admin's feature)
@@ -50,6 +56,7 @@ class Item{
       }
 
     }
+
 
 
     // Update an item (handle undefined values explicitly)
@@ -83,6 +90,7 @@ class Item{
   
 
 
+
     //Soft delete an item
     static async softDelete(item_id){
       try{await db.execute('UPDATE item SET is_deleted=1 WHERE item_id=?',[item_id]);
@@ -92,6 +100,7 @@ class Item{
       }
     }
 }
+
 
 
 module.exports=Item;
