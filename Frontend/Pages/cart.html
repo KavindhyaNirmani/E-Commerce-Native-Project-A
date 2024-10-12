@@ -64,8 +64,11 @@
             </thead>
             <tbody id="cart-items"></tbody>
           </table>
-          <button class="btn-add" onclick="window.location.href='index.html'">
-            Add Items
+          <button
+            class="btn-add"
+            onclick="window.location.href='index.html#menu'"
+          >
+            Add item
           </button>
         </div>
         <!--Order Summary-->
@@ -102,7 +105,10 @@
                 </td>
               </tr>
             </table>
-            <button class="btn-checkout" onclick="proceedToCheckout()">
+            <button
+              class="btn-checkout"
+              onclick="window.location.href='checkout.html'"
+            >
               Proceed to Checkout
             </button>
           </div>
@@ -110,31 +116,6 @@
       </div>
     </div>
     <script>
-      // Test data for cart items
-      let cartItems = [
-        {
-          name: "Hot & Spicy Chicken",
-          price: 3500,
-          quantity: 1,
-          image: "https://via.placeholder.com/50",
-          checked: false,
-        },
-        {
-          name: "Fresh Orange Juice",
-          price: 3500,
-          quantity: 1,
-          image: "https://via.placeholder.com/50",
-          checked: false,
-        },
-        {
-          name: "Cold Coffee",
-          price: 3500,
-          quantity: 1,
-          image: "https://via.placeholder.com/50",
-          checked: false,
-        },
-      ];
-
       // Render the cart items and update the order summary
       function renderCart() {
         const cartTableBody = document.getElementById("cart-items");
