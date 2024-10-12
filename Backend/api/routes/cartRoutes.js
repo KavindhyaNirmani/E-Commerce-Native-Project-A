@@ -1,8 +1,9 @@
 const express = require('express');
 const cartController = require('../controllers/cartController');  
 const { protect } = require('../middleware/authMiddleware');     
-
 const router = express.Router(); 
+
+
 
 // Add an item to the cart (Protected)
 router.post('/add', protect, cartController.addItemToCart);  

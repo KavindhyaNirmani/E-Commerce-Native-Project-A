@@ -3,15 +3,14 @@ const Cart = require('../models/cartModel');      // Import Cart model
 const CartItem = require('../models/cartItemModel'); // Import CartItem model
 
 
-// Cart Controller
-const cartController = {
+
 
     // Add item to the cart
-    addItemToCart: async (req, res) => {
+    exports.addItemToCart= async (req, res) => {
         const { item_id, quantity } = req.body;
         const user_id = req.user.user_id; // Assuming user info is available from auth middleware
 
-         // Log the values
+         // Log the values for debugging 
          console.log('item_id:', item_id);
          console.log('quantity:', quantity);
          console.log('user_id:', user_id); 
@@ -73,10 +72,10 @@ const cartController = {
             console.error('Error adding item to cart:', error.message);
             res.status(500).json({ message: 'Failed to add item to cart', error: error.message });
         }
-    },
+    };
 
     // Get all items in the user's cart
-    getCartItems: async (req, res) => {
+    exports.getCartItems= async (req, res) => {
         const user_id = req.user.user_id; // Assuming user info is available from auth middleware
 
         //log user_id for debugging 
@@ -107,7 +106,7 @@ const cartController = {
             console.error('Error fetching cart items:', error.message);
             res.status(500).json({ message: 'Failed to fetch cart items', error: error.message });
         }
-    }
-};
+    };
 
-module.exports = cartController;
+
+

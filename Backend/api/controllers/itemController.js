@@ -4,6 +4,8 @@ const fs =require('fs');//using for file system.It can readFiles(),writeFile(),a
 const path=require('path');
 const multer = require('multer');
 
+
+
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory=async(req,res)=>{
     const {category_name}=req.params;
@@ -33,6 +35,7 @@ exports.getItemsByCategory=async(req,res)=>{
 
 
 
+
 //Get all items (excluding deleted ones)
 exports.getAllItems=async(req,res)=>{
     try{
@@ -45,6 +48,8 @@ exports.getAllItems=async(req,res)=>{
         });
     }
 };
+
+
 
 
 // Fetch a single item by its ID
@@ -68,6 +73,7 @@ exports.getItemById = async (req, res) => {
         });
     }
 };
+
 
 
 
@@ -111,6 +117,7 @@ exports.addItem=async (req,res)=>{
         });
     }
 };
+
 
 
 
@@ -173,6 +180,7 @@ exports.updateItem = async (req, res) => {
         });
     }
 };
+
 
 
 
