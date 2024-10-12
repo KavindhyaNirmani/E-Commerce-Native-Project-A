@@ -1,59 +1,74 @@
-.admin-list{
-    background-image:linear-gradient(#6C6A6A,#1E1E1E) !important;
+.admin-list {
+  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
 }
 
-.left-section{
-    background-color: black;
-    height: 100vh;
+.left-section {
+  background-color: black;
+  height: 100vh;
 }
 
-.admin-list h3{
-    color: white;
-    padding: 10px;
-    
+.admin-list h3 {
+  color: white;
+  padding: 10px;
 }
 
-.custom-btn{
-    box-sizing: border-box;
-    background-color: yellow;
-    font-weight: 500;
+.custom-btn {
+  box-sizing: border-box;
+  background-color: yellow;
+  font-weight: 500;
 }
 
-.custom-btn:hover{
-    background-color: #9ba49b !important;
-    border: 1px solid #FAFF00 !important; 
-     transition: background-color 0.3s, color 0.3s !important;
+.custom-btn:hover {
+  background-color: #9ba49b !important;
+  border: 1px solid #faff00 !important;
+  transition: background-color 0.3s, color 0.3s !important;
 }
-
 
 /*add admin modal css*/
 
-body{
-    color: white;
+body {
+  color: white;
 }
 
-.modal-content{
-    background-color:#2d2d2d !important;
+.modal-content {
+  background-color: #2d2d2d !important;
 }
 
-.modal-dialog-custom{
-    max-width: 50%;
+.modal-dialog-custom {
+  max-width: 50%;
+}
+.btn-custom {
+  box-sizing: border-box;
+  background-color: yellow;
+  padding: 5px;
+  width: 100px;
+  font-weight: 500;
+}
+.custom-title {
+  box-sizing: border-box;
+}
 
+.button-section {
+  width: 100%;
+  gap: 30px;
+  display: flex;
+  justify-content: center;
 }
-.btn-custom{
-    box-sizing: border-box;
-    background-color: yellow;
-    padding: 5px;
-    width: 100px;
-    font-weight: 500;
+.container-fluid {
+  margin-left: 290px;
+  padding: 10px;
 }
-.custom-title{
-    box-sizing: border-box;
-}
-
-.button-section{
-    width: 100%;
-    gap: 30px;
-    display: flex;
+@media (max-width: 768px) {
+  .container-fluid {
+    margin-left: 0;
+    padding: 10px;
     justify-content: center;
+    margin: 0;
+    align-items: center;
+  }
+  #adminListContainer {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
 }
