@@ -14,7 +14,7 @@ const router=express.Router();//create a new instance of the Express Router
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
 
 
-const userImageAssetsPath = path.resolve(__dirname, '../../../Frontend/Assets/Images/UserImage');
+const userImageAssetsPath = path.resolve(__dirname, '../../../frontend/assets/images/user-image');
 console.log('Saving to:', userImageAssetsPath);
 
 const storage = multer.diskStorage({
@@ -38,7 +38,7 @@ router.post('/register',authController.register);
 //User/Admin login
 router.post('/login',authController.login);
 
-router.use('/Assets/Images/UserImage', express.static(userImageAssetsPath));
+router.use('/assets/images/user-image', express.static(userImageAssetsPath));
 
 //Admin creation(admin-only route)
 router.post('/add-admin',  upload.single('user_image'), authController.addAdmin);
