@@ -1,6 +1,6 @@
 const db = require('../../config/db');
-const Cart = require('../models/cartModel');      // Import Cart model
-const CartItem = require('../models/cartItemModel'); // Import CartItem model
+const Cart = require('../models/CartModel');      // Import Cart model
+const CartItem = require('../models/CartItemModel'); // Import CartItem model
 
 
 
