@@ -80,7 +80,7 @@
             <div class="row">
               <div class="col-sm-7">
 
-              <form method="POST" id="addAdminForm" class="needs-validation" novalidate>
+              <form method="POST" id="addAdminForm" class="needs-validation" novalidate enctype="multipart/form-data">
                   <div class="mb-3 row">
                     <label for="firstName" class=" col-sm-3 col-form-label">First Name</label>
                     <div class="col-sm-9">
@@ -165,11 +165,14 @@
                   </div>
 
                 </div>
-              <!--
+              
                 <div class="col-sm-5 pt-5">
                   <label for="adminImage" class="form-label">Upload Admin Image:</label>
                   <input type="file" class="form-control" id="adminImage" accept="image/*" required>
-                </div>-->
+                  <div class="invalid-feedback">
+                        Please fill the field!
+                      </div>
+                </div>
               
 
               <div class="d-flex button-section">
@@ -239,20 +242,24 @@ function displayAdmins(admins) {
 const appendNewAdminToTable =(admin)=>{
   const adminCard =`
   <div class="card" style="width: 18rem;">
-  <img class="card-img-top rounded-circle mt-3 mx-auto d-block" height="60" width="60">
+  <img class="card-img-top rounded-circle mt-3 mx-auto d-block" 
+  height="60" 
+  width="60"
+  src="${imageUrl}"
+  alt="Admin Image">
 
   <div class="card-body text-center">
-  <h5 class="card-title">${admin.firstName} ${admin.lastName}</h5>
+  <h5 class="card-title">${admin.first_name} ${admin.last_name}</h5>
   </div>
   <ul class="list-group list-group-flush">
 
-  <li class="list-group-item">First Name: ${admin.firstName}</li>
-  <li class="list-group-item">Last Name: ${admin.lastName}</li>
-  <li class="list-group-item">User Name: ${admin.userName}</li>
+  <li class="list-group-item">First Name: ${admin.first_name}</li>
+  <li class="list-group-item">Last Name: ${admin.last_name}</li>
+  <li class="list-group-item">User Name: ${admin.username}</li>
   <li class="list-group-item">Role: ${admin.role}</li>
   <li class="list-group-item">Email: ${admin.email}</li>
   <li class="list-group-item">Password: ${admin.password}</li>
-  <li class="list-group-item">Phone Number: ${admin.phoneNumber}</li>
+  <li class="list-group-item">Phone Number: ${admin.phone_no}</li>
   <li class="list-group-item">Address: ${admin.address}</li>
   </ul>
   <div class="card-body text-center">
@@ -275,6 +282,21 @@ $('#adminListContainer').append(adminCard);
     adminModal.show();
 });
 
+//image preview
+
+$('#adminImage').on('change', function(){
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $('#adminImagePreview').attr('src', e.target.result).removeClass('d-none');
+            }
+            reader.readAsDataURL(file);
+        } else {
+            $('#adminImagePreview').attr('src', '#').addClass('d-none');
+        }
+    });
+
 $('#addAdminForm').on('submit', function(event){
     event.preventDefault(); // Prevent default form submission
     var form = $(this)[0];
@@ -284,44 +306,50 @@ $('#addAdminForm').on('submit', function(event){
         event.stopPropagation();
     } else {
         // Collect form data
-        var formData = {
-            firstName: $('#firstName').val(),
-            lastName: $('#lastName').val(),
-            userName: $('#userName').val(),
-            role: $('#role').val(),
-            email: $('#email').val(),
-            password: $('#password').val(),
-            phoneNumber: $('#phoneNumber').val(),
-            address: $('#address').val(),
-            // Handle file upload if necessary
-            // You might need to handle the file differently, such as using FormData
+        var formData = new formData();
+        formData.append('firstName', $('firstName').val().trim());
+        formData.append('lastName', $('lastName').val().trim());
+        formData.append('userName', $('userName').val().trim());
+        formData.append('role', $('role').val().trim());
+        formData.append('email', $('email').val().trim());
+        formData.append('password', $('password').val().trim());
+        formData.append('phoneNumber', $('phoneNumber').val().trim());
+        formData.append('address', $('address').val().trim());
+        formData.append('firstName', $('firstName').val().trim());
+        const imageFile =('#adminImage')[0].files[0];
+        if(imageFile){
+          formData.append('user_image', imageFile);
+        }
+        
+            
+           
         };
 
         $.ajax({
-                        url:'http://localhost:5010/auth/add-admin',
-                        type: 'POST',
-                        data: JSON.stringify(formData),
-                        contentType: 'application/json',
-                        headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
-                        },
-                        success: function(response){ 
-                            console.log('Admin added successfully:', response);
-                            adminModal.hide();
-                            // Append the new admin to the admin list
-                            appendNewAdminToTable(response.admin);
-                        },
-                        error: function(xhr, status, error){
-                            // Handle error
-                            console.error('Error adding admin:', error);
-                            if(xhr.responseJSON && xhr.responseJSON.message){
-                                alert(xhr.responseJSON.message);
-                            } else {
-                                alert('Failed to add admin. Please try again.');
-                            }
-                        }
-                    });
-                }
+              url:'http://localhost:5010/auth/add-admin',
+              type: 'POST',
+              data: JSON.stringify(formData),
+              contentType: 'application/json',
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+              },
+              success: function(response){ 
+                  console.log('Admin added successfully:', response);
+                  adminModal.hide();
+                  // Append the new admin to the admin list
+                  appendNewAdminToTable(response.admin);
+              },
+              error: function(xhr, status, error){
+                  // Handle error
+                  console.error('Error adding admin:', error);
+                  if(xhr.responseJSON && xhr.responseJSON.message){
+                      alert(xhr.responseJSON.message);
+                  } else {
+                      alert('Failed to add admin. Please try again.');
+                  }
+              }
+          });
+      })
 
                 // Add Bootstrap validation classes
                 $(this).addClass('was-validated');
@@ -348,7 +376,7 @@ $('#addAdminForm').on('submit', function(event){
                     });
                 }
             });
-          });   
+           
 
     </script>
     
