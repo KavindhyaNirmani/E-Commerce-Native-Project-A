@@ -2,7 +2,7 @@
 .sidebar {
   background-color: black;
   width: 250px;
-  height: 100vh;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@
   margin-top: 40px;
 }
 .nav-links {
-  margin-top: 70px;
+  margin-top: 60px;
 }
 .nav-link {
   color: white;
@@ -50,63 +50,81 @@
 }
 /* Toggle Button */
 .toggle-container {
-  display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
   padding: 10px; /* Optional: Add some padding */
   border: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  margin-right: 20px;
+  padding-left: 0;
 }
 
 .toggle-btn {
-  color: black;
-  border: none;
-  padding: 10px;
+  color: #fad700;
   cursor: pointer;
   display: none;
   background-color: transparent;
   font-size: 24px; /* Adjust font size */
   font-weight: bolder;
-  background: none;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Very light border */
+  border: 1px solid #fad700; /* Very light border */
   padding: 5px;
   box-shadow: none;
-}
-
-.sidebar-frame {
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  border: none;
+  z-index: 1000;
 }
 
 /* Main content */
 .content {
-  margin-left: 250px;
-  padding: 20px;
+  margin-left: 300px;
+  padding: 10px;
+  margin: 10px;
 }
-
+body {
+  overflow-x: hidden;
+  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
+}
 /* Media Query for small screens */
 @media (max-width: 768px) {
   .sidebar {
     width: 0;
     padding: 0;
     overflow: hidden;
+    margin: 0;
   }
 
   .sidebar.show {
     width: 250px;
     padding: 4px;
+    z-index: 1000; /* Ensure sidebar is in front of the content */
+    overflow-y: hidden;
+    position: fixed;
   }
 
   .content {
     margin-left: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
   }
 
   .toggle-btn {
     display: block;
+    z-index: 1000;
   }
-}
-body {
-  background-color: #6c6a6a;
+  .nav-links {
+    margin-top: 20px;
+  }
+  .sidebar .logo {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .sidebar .logo-img {
+    width: 160px;
+    height: auto;
+    margin-top: 30px;
+  }
+  body {
+    overflow-x: hidden;
+  }
 }
