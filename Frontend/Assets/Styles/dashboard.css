@@ -1,3 +1,11 @@
+body {
+  overflow-x: hidden;
+  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
+}
+.content {
+  margin-left: 300px;
+  padding: 10px;
+}
 .container h2 {
   color: #fad700;
 }
@@ -112,23 +120,19 @@ p {
   text-align: left;
   padding: 0;
 }
-#beverageCard, #cakeCard, #pizzaCard{
+#beverageCard,
+#cakeCard,
+#pizzaCard {
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;
-  margin: 5px; /* Adjusted margin to reduce space */
   max-width: 150px;
   max-height: 170px;
   min-width: 80px;
   width: 100%;
-  max-width: 150px;
   margin: 0; /* Set margin to 0 for no gaps */
-  max-height: 170px;
   margin-bottom: 5px; /* Space between cards if needed */
 }
-
-
-
 .card-img-container {
   background-color: #1f0b0b;
   display: flex;
@@ -151,7 +155,7 @@ p {
 }
 
 /* Centering for small screens */
-@media (max-width: 576px) {
+@media (max-width: 1024px) {
   .row {
     display: flex;
     flex-wrap: wrap;
@@ -163,10 +167,11 @@ p {
     margin: 0; /* Set margin to 0 for no gaps */
   }
 
-  
-
   .card-img-container {
     height: 250px;
+  }
+  body {
+    margin-left: 300px;
   }
 }
 
@@ -189,6 +194,9 @@ p {
     margin-bottom: 3px; /* Adjust margin between cards */
     padding: 0; /* Remove padding for no extra space */
   }
+  body {
+    margin-left: 0;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -197,6 +205,9 @@ p {
     justify-content: center;
     min-width: fit-content;
     padding-left: 8%;
+  }
+  body {
+    margin-left: 300px;
   }
 }
 @media (max-width: 576px) {
