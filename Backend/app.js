@@ -48,6 +48,9 @@ app.use('/Assets/Images/Menu', express.static(menuAssetsPath));
 console.log(path.join(__dirname, 'Assets')); 
 
 
+const userImageAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/UserImage');
+app.use('/Assets/Images/UserImage', express.static(userImageAssetsPath));
+
 
 app.use((req,res,next)=>{
     const error= new Error('Not found');
