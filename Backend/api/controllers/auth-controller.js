@@ -4,7 +4,7 @@
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel');
+const User = require('../models/userModel');
 const multer = require('multer');
 const path = require('path');
 
@@ -94,6 +94,21 @@ function checkMissingFields(body, requiredFields) {
     return missingFields;
 }
 
+const absolutePath = path.join('D:/Code_Park_E_Com_Site/Frontend/Assets');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, absolutePath);  // Use absolute path to Frontend/Assets  
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);// Generate unique filename. Because if different time or different user add files with same name
+        cb(null, uniqueSuffix + '-' + file.originalname);  
+    }
+});
+
+
+
+
 
 
 // Add new admin (only admins can add another admin)
@@ -102,7 +117,6 @@ exports.addAdmin = async (req, res) => {
     console.log('File:', req.file); // Log the file to verify if it's being uploaded
 
     const { first_name, last_name, username, email, password, phone_no, address } = req.body;
-    const user_image =  `/Assets/Images/UserImage/${req.file.filename}`;
 
     try {
         // Check for missing fields
@@ -197,7 +211,6 @@ exports.deleteAdmin=async(req,res)=>{
 };
 
 
+const upload = multer({ storage: storage });
 
-
-
-
+exports.upload = upload;
