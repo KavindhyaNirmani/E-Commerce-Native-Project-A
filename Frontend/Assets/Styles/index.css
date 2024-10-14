@@ -115,7 +115,9 @@
   font-size: 34px;
   font-weight: bold;
 }
-#cakeCard, #pizzaCard, #beverageCard {
+#cakeCard,
+#pizzaCard,
+#beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
   overflow: hidden;
@@ -239,6 +241,7 @@
 }
 .container h2 {
   color: #fad700;
+  font-size: 36px;
 }
 /* Button Style */
 #viewMoreBtn {
@@ -266,7 +269,10 @@
   border: none;
   box-shadow: none;
 }
-
+#notOfferMessage {
+  color: #ffffff;
+  font-size: 12px;
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
   #viewMoreBtn {
