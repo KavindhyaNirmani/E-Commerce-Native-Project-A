@@ -11,19 +11,21 @@ const {protect,adminOnly}= require('../middleware/authMiddleware');
 
 const router=express.Router();//create a new instance of the Express Router
 
-const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
+//const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
 
+
+const userImageAssetsPath = path.resolve(__dirname, '../../../Frontend/Assets/Images/UserImage');
+console.log('Saving to:', userImageAssetsPath);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, absolutePath);  // Use absolute path to Frontend/Assets
+        cb(null, userImageAssetsPath);  
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);// Generate unique filename. Because if different time or different user add files with same name
-        cb(null, uniqueSuffix + '-' + file.originalname);  
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
-
 
 const upload =multer({storage:storage});
 
@@ -36,7 +38,7 @@ router.post('/register',authController.register);
 //User/Admin login
 router.post('/login',authController.login);
 
-router.use('/Assets/UserImage', express.static(absolutePath));
+router.use('/Assets/Images/UserImage', express.static(userImageAssetsPath));
 
 //Admin creation(admin-only route)
 router.post('/add-admin',  upload.single('user_image'), authController.addAdmin);
