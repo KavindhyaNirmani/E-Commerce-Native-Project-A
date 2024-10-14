@@ -55,8 +55,8 @@ body {
   justify-content: center;
 }
 .container-fluid {
-  margin-left: 290px;
-  padding: 10px;
+  margin-left: 300px;
+  padding: 0;
 }
 @media (max-width: 768px) {
   .container-fluid {
