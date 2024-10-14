@@ -41,15 +41,15 @@ next();
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
 
-const menuAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/Menu');
-app.use('/Assets/Images/Menu', express.static(menuAssetsPath));
+const menuAssetsPath = path.resolve(__dirname, '../frontend/assets/images/menu');
+app.use('/assets/images/menu', express.static(menuAssetsPath));
 
 
-console.log(path.join(__dirname, 'Assets')); 
+console.log(path.join(__dirname, 'assets')); 
 
 
-const userImageAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/UserImage');
-app.use('/Assets/Images/UserImage', express.static(userImageAssetsPath));
+const userImageAssetsPath = path.resolve(__dirname, '../frontend/assets/images/user-image');
+app.use('/assets/images/user-image', express.static(userImageAssetsPath));
 
 
 app.use((req,res,next)=>{
