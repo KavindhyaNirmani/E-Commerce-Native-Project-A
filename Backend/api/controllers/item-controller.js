@@ -1,5 +1,5 @@
-const Category=require('../models/categoryModel');
-const Item=require('../models/itemModel');
+const Category=require('../models/CategoryModel');
+const Item=require('../models/ItemModel');
 const fs =require('fs');//using for file system.It can readFiles(),writeFile(),appendFile(),etc.
 const path=require('path');
 const multer = require('multer');
