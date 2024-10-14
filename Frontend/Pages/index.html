@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="../Assets/Images/logo.png?v=1" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png?v=1" />
 
     <!--Bootstrap CSS-->
     <link
@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     />
     <!--Custom CSS-->
-    <link rel="stylesheet" href="../Assets/Styles/index.css" />
+    <link rel="stylesheet" href="../assets/styles/index.css" />
     <!--Google font-->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
@@ -45,7 +45,7 @@
     <div id="headerPlaceholder"></div>
 
     <script>
-      fetch("../Components/header.html")
+      fetch("../components/header.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("headerPlaceholder").innerHTML = data;
@@ -64,7 +64,7 @@
     >
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../Assets/Images/main-bg.png" class="masthead" alt="img1" />
+          <img src="../assets/images/main-bg.png" class="masthead" alt="img1" />
           <div class="carousel-caption carousel">
             <h2>Welcome To</h2>
             <h1>Gather & Grab!!</h1>
@@ -76,19 +76,19 @@
     <!--Features section-->
     <section class="features">
       <div class="feature">
-        <img src="../Assets/Images/feature-pizza.png" alt="Pizza" />
+        <img src="../assets/images/feature-pizza.png" alt="Pizza" />
         <h3>Fresh Pizza</h3>
         <p>We serve fresh, hand-tossed pizza with authentic ingredients.</p>
       </div>
       <div class="feature">
-        <img src="../Assets/Images/feature-delivery.png" alt="Delivery" />
+        <img src="../assets/images/feature-delivery.png" alt="Delivery" />
         <h3>Fast & Fresh Delivery</h3>
         <p>
           Get your pizzas delivered fresh and fast to satisfy your cravings.
         </p>
       </div>
       <div class="feature">
-        <img src="../Assets/Images/feature-dessert.png" alt="Dessert" />
+        <img src="../assets/images/feature-dessert.png" alt="Dessert" />
         <h3>Sweet Desserts</h3>
         <p>Our sweet treats will give you the perfect end to your meal.</p>
       </div>
@@ -115,7 +115,7 @@
           <div class="col-lg-6 col-md-5 col-12 mt-4 mt-md-0">
             <div class="about-img">
               <img
-                src="../Assets/Images/about-img.webp"
+                src="../assets/images/about-img.webp"
                 alt="about-img"
                 class="img-fluid"
               />
@@ -137,13 +137,13 @@
             <div class="card text-center" id="pizzaCard">
               <div class="card-img-container">
                 <img
-                  src="../Assets/Images/menu-pizza.jfif"
+                  src="../assets/images/menu-pizza.jfif"
                   class="card-img-top img-fluid"
                   alt="pizza"
                 />
               </div>
               <div class="card-body">
-                <a href="../Pages/pizza.html">
+                <a href="../pages/pizza.html">
                   <button class="btn btn-primary">Pizza</button>
                 </a>
               </div>
@@ -154,13 +154,13 @@
             <div class="card text-center" id="cakeCard">
               <div class="card-img-container">
                 <img
-                  src="../Assets/Images/menu-cake.png"
+                  src="../assets/images/menu-cake.png"
                   class="card-img-top img-fluid"
                   alt="pizza"
                 />
               </div>
               <div class="card-body">
-                <a href="../Pages/cake.html">
+                <a href="../pages/cake.html">
                   <button class="btn btn-primary">Cakes</button>
                 </a>
               </div>
@@ -171,13 +171,13 @@
             <div class="card text-center" id="beverageCard">
               <div class="card-img-container">
                 <img
-                  src="../Assets/Images/menu-beverage.png"
+                  src="../assets/images/menu-beverage.png"
                   class="card-img-top img-fluid"
                   alt="pizza"
                 />
               </div>
               <div class="card-body">
-                <a href="../Pages/beverages.html">
+                <a href="../pages/beverages.html">
                   <button class="btn btn-primary">Beverages</button>
                 </a>
               </div>
@@ -210,7 +210,7 @@
     <!-- Footer Section -->
     <div id="footerPlaceholder"></div>
     <script>
-      fetch("../Components/footer.html")
+      fetch("../components/footer.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("footerPlaceholder").innerHTML = data;

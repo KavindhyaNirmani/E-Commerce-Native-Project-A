@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="../Assets/Images/logo.png?v=1" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png?v=1" />
 
     <!--Bootstrap CSS-->
     <link
@@ -13,8 +13,8 @@
       crossorigin="anonymous"
     />
     <!--Custom CSS-->
-    <link rel="stylesheet" href="../Assets/Styles/dashboard.css" />
-    <link rel="stylesheet" href="../Components/Sidebar/sidebar.css" />
+    <link rel="stylesheet" href="../assets/styles/dashboard.css" />
+    <link rel="stylesheet" href="../components/sidebar/sidebar.css" />
     <!--Google
       font-->
 
@@ -48,7 +48,7 @@
     <div id="sidebar-placeholder"></div>
 
     <script>
-      fetch("../Components/Sidebar/sidebar.html")
+      fetch("../components/sidebar/sidebar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("sidebar-placeholder").innerHTML = data;
@@ -91,7 +91,7 @@
               <div class="card text-center" id="pizzaCard">
                 <div class="card-img-container">
                   <img
-                    src="../Assets/Images/menu-pizza.jfif"
+                    src="../assets/images/menu-pizza.jfif"
                     class="card-img-top img-fluid"
                     alt="pizza"
                   />
@@ -106,7 +106,7 @@
               <div class="card text-center" id="cakeCard">
                 <div class="card-img-container">
                   <img
-                    src="../Assets/Images/menu-cake.png"
+                    src="../assets/images/menu-cake.png"
                     class="card-img-top img-fluid"
                     alt="cake"
                   />
@@ -121,7 +121,7 @@
               <div class="card text-center" id="beverageCard">
                 <div class="card-img-container">
                   <img
-                    src="../Assets/Images/menu-beverage.png"
+                    src="../assets/images/menu-beverage.png"
                     class="card-img-top img-fluid"
                     alt="beverage"
                   />
