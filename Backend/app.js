@@ -8,8 +8,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 
-const authRoutes=require('./api/routes/authRoutes');
-const itemRoutes=require('./api/routes/itemRoutes');
+const authRoutes=require('./api/routes/auth-routes');
+const itemRoutes=require('./api/routes/item-routes');
+const cartRoutes=require('./api/routes/cart-routes');
 
 //middleware for logging requests and parsing the body
 app.use(morgan('dev'));
@@ -40,6 +41,7 @@ next();
 
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
+app.use('/cart',cartRoutes);
 
 const menuAssetsPath = path.resolve(__dirname, '../Frontend/Assets/Images/Menu');
 app.use('/Assets/Images/Menu', express.static(menuAssetsPath));

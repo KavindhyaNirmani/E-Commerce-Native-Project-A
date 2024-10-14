@@ -16,9 +16,10 @@ exports.protect = (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
-            console.log('Token:', token); 
+            console.log('Token received:', token); 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = decoded;
+            req.user = { user_id: decoded.userId, role: decoded.role };
+            console.log('User authenticated:', req.user);
             next();
         } catch (error) {
             console.error('Token verification failed:', error); 

@@ -1,12 +1,11 @@
 const express=require('express');
-const itemController=require('../controllers/itemController');
-const{protect,adminOnly}=require('../middleware/authMiddleware');
+const itemController=require('../controllers/item-controller');
+const{protect,adminOnly}=require('../middleware/auth-middleware');
 const multer= require('multer');
-
 const path = require('path');
-
-
 const router=express.Router();
+
+
 
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\Menu');
 
@@ -27,9 +26,10 @@ const upload =multer({storage:storage});
 
 
 
+
+
 //Fetch items by category(pizza,cake,beverage)
 router.get('/category/:category_name',itemController.getItemsByCategory);
-
 
 /// Fetch all items
 router.get('/', itemController.getAllItems);
@@ -50,6 +50,7 @@ router.put('/:item_id', upload.single('item_image'), itemController.updateItem);
 
 // Delete an item (soft delete)
 router.delete('/:item_id', itemController.deleteItem);
+
 
 
 module.exports=router;

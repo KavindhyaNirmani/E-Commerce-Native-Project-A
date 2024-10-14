@@ -5,11 +5,11 @@
 const express=require('express');
 const path=require('path');
 const multer=require('multer');
-const authController=require('../controllers/authController');
-const {protect,adminOnly}= require('../middleware/authMiddleware');
-
-
+const authController=require('../controllers/auth-controller');
+const {protect,adminOnly}= require('../middleware/auth-middleware');
 const router=express.Router();//create a new instance of the Express Router
+
+
 
 const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
 
@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 
 
 const upload =multer({storage:storage});
+
 
 
 
@@ -47,5 +48,8 @@ router.get('/admins',authController.getAllAdmins);
 
 //Delete an admin by Id
 router.delete('/admins/:user_id',protect,adminOnly,authController.deleteAdmin);
+
+
+
 module.exports=router;
 
