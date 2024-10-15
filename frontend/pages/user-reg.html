@@ -33,7 +33,7 @@
 
         <div class="col-sm-6 header pt-4 form-section" style="font-family: 'Lato', sans-serif;">
           <div class="px-2 py-0 ms-xl-2 text-center">
-            <img src="../Assets/Images/Logo_icon.png" class="d-md-none d-sm-none d-xs-block logo_icon" style="width: 100px; min-height: 100px;" >
+            <img src="../assets/images/logo.png" class="d-md-none d-sm-none d-xs-block logo_icon" style="width: 80px; min-height: 80px;" >
             <h1 class="fw-bold mb-0 pt-5  text-style">Start your delicious journey with us</h1>
             <h3 class="pb-2" style="color:#FAD700;">Sign up now!</h3>
           </div>
@@ -51,9 +51,9 @@
               </div>
 
               <div class="form-group row custom-padding">
-                <label for="username" class="col-md-3 col-form-label">Username</label>
+                <label for="userName" class="col-md-3 col-form-label">Username</label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                  <input type="text" class="form-control" id="userName" placeholder="Enter your username" required>
                   <div class="invalid-feedback">Please enter your username.</div>
                 </div>
               </div>
@@ -105,7 +105,7 @@
 
         // Get form values
         const email = document.getElementById('email').value;
-        const username = document.getElementById('username').value;
+        const username = document.getElementById('userName').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -133,7 +133,7 @@
 
           if (response.ok) {
           // Load the modal from the external file and show it
-          $('#success-modal-content').load('../pages/reg_success.html', function () {
+          $('#success-modal-content').load('../pages/reg-success.html', function () {
              
           $("#successModal").modal("show");
           })
