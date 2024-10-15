@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Management</title>
+    <!--Bootstrap CSS-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Add Bootstrap Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="../assets/styles/order-management.css" />
+    <link rel="stylesheet" href="../components/side-bar/sidebar.css" />
+  </head>
+  <body>
+    <!-- Placeholder for Sidebar -->
+    <div id="sidebar-placeholder"></div>
+
+    <script>
+      fetch("../components/side-bar/sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar-placeholder").innerHTML = data;
+
+          // After loading the sidebar, apply the active class to the current page's link
+          const currentPage = window.location.pathname.split("/").pop(); // Get the current file name
+          const links = document.querySelectorAll(".nav-link"); // Get all sidebar links
+
+          // Loop through all links and compare the last part of href with the current page
+          links.forEach((link) => {
+            const linkPage = link.getAttribute("href").split("/").pop(); // Get the last part of href
+            if (linkPage === currentPage) {
+              link.classList.add("active"); // Add the active class to the matching link
+            }
+          });
+
+          // Now add the toggle functionality after the sidebar is loaded
+          const toggleBtn = document.getElementById("toggleBtn");
+          const sidebar = document.querySelector(".sidebar");
+
+          toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("show");
+          });
+        })
+        .catch((error) => console.error("Error loading sidebar:", error));
+    </script>
+    <div class="content">
+      <div class="container mt-5">
+        <h2 class="text-warning">Order List</h2>
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="order-list">
+            <!-- Dynamic rows from the backend will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal for viewing order details -->
+      <div
+        class="modal fade"
+        id="orderModal"
+        tabindex="-1"
+        aria-labelledby="orderModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="orderId" class="form-label">Order ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="orderId"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="cusId" class="form-label">Customer ID</label>
+                  <input type="text" class="form-control" id="cusId" readonly />
+                </div>
+                <div class="mb-3">
+                  <label for="cusName" class="form-label">Customer Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cusName"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="orderItems" class="form-label">Items</label>
+                  <textarea
+                    class="form-control"
+                    id="orderItems"
+                    rows="3"
+                    readonly
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="totalPrice" class="form-label">Total Price</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="totalPrice"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="orderStatus" class="form-label"
+                    >Order Status</label
+                  >
+                  <select class="form-select" id="orderStatus">
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Canceled">Canceled</option>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="updateStatus()"
+                >
+                  Update Status
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let currentOrderId = null;
+      let currentRow = null;
+
+      // Function to populate modal with order details
+      function viewOrderDetails(order, rowElement) {
+        currentOrderId = order.id;
+        currentRow = rowElement;
+
+        document.getElementById("orderId").value = order.id;
+        document.getElementById("cusId").value = order.customerId;
+        document.getElementById("cusName").value = order.customerName;
+        document.getElementById("orderItems").value = order.items;
+        document.getElementById("totalPrice").value = order.totalPrice;
+        document.getElementById("orderStatus").value = order.status;
+
+        // Show the modal
+        new bootstrap.Modal(document.getElementById("orderModal")).show();
+      }
+
+      // Function to update the status of the order in the table
+      function updateStatus() {
+        const newStatus = document.getElementById("orderStatus").value;
+
+        // Update the status cell in the corresponding table row
+        currentRow.querySelector(".status-cell").innerText = newStatus;
+
+        // Here, you would send the updated status to the backend
+        // Example:
+        // fetch(`/api/orders/${currentOrderId}/status`, {
+        //   method: 'PUT',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({ status: newStatus })
+        // }).then(response => response.json()).then(data => console.log(data));
+
+        // Close the modal
+        bootstrap.Modal.getInstance(
+          document.getElementById("orderModal")
+        ).hide();
+      }
+
+      // Function to delete an order
+      function deleteOrder(orderId, rowElement) {
+        if (confirm("Are you sure you want to delete this order?")) {
+          // Remove the order row from the table
+          rowElement.remove();
+
+          // Here, you would also send a request to the backend to delete the order
+          // Example:
+          // fetch(`/api/orders/${orderId}`, { method: 'DELETE' })
+          //   .then(response => response.json())
+          //   .then(data => console.log('Order deleted', data));
+        }
+      }
+
+      // Sample data - Replace with real data from the backend
+      const orders = [
+        {
+          id: "001",
+          customerId: "1001",
+          customerName: "John Doe",
+          items: "Pizza, Burger",
+          totalPrice: "$20",
+          status: "Pending",
+        },
+      ];
+
+      const orderList = document.getElementById("order-list");
+      orders.forEach((order) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+        <td>${order.id}</td>
+        <td>${order.items}</td>
+        <td>${order.totalPrice}</td>
+        <td class="status-cell">${order.status}</td>
+        <td>
+          <div class="action-icons">
+            <button class="btn btn-warning" onclick='viewOrderDetails(${JSON.stringify(
+              order
+            )}, this.closest("tr"))'>
+              <i class="bi bi-eye"></i>
+            </button>
+            <button class="btn btn-danger" onclick='deleteOrder("${
+              order.id
+            }", this.closest("tr"))'>
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </td>
+      `;
+        orderList.appendChild(row);
+      });
+    </script>
+  </body>
+</html>

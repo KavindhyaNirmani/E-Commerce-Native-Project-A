@@ -1,0 +1,58 @@
+body {
+  background: linear-gradient(#6c6a6a, #1e1e1e);
+  color: #f0e68c;
+}
+.table th,
+.table td {
+  vertical-align: middle;
+}
+.table {
+  width: 90%;
+}
+.action-icons {
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  padding: 5px; /* Ensure padding remains consistent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent; /* No background to avoid button growing on hover */
+  gap: 10px;
+}
+.table tbody td {
+  background-color: #4d4d4d;
+}
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: #f1a501;
+  border: none;
+  color: black;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+  background-color: crimson;
+  border: none;
+  color: white;
+}
+.content {
+  margin-left: 300px;
+  padding: 10px;
+}
+.container {
+  margin: 260px;
+}
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
+  .content {
+    max-width: 100vw;
+  }
+  .action-icons {
+    max-width: 5px;
+    max-height: 5px;
+  }
+}
