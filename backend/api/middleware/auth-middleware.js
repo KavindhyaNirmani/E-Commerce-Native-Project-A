@@ -2,8 +2,6 @@
 
 //authMiddleware contains protect and adminOnly middleware for checking JWT and admin privileges.
 
-
-
 const jwt =require('jsonwebtoken');
 
 

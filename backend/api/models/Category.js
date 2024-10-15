@@ -1,7 +1,7 @@
 const db=require('../../config/db');
 
 
-class category{
+class Category{
     
     //Fetch category by name
     static async findByName(category_name){
@@ -29,4 +29,4 @@ class category{
 }
 
 
-module.exports=category;
+module.exports=Category;

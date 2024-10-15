@@ -37,6 +37,10 @@ next();
 
 });
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the e-commerce backend API!');
+    });
+
 
 
 app.use('/auth',authRoutes);
@@ -46,8 +50,6 @@ app.use('/cart',cartRoutes);
 const menuAssetsPath = path.resolve(__dirname, '../frontend/assets/images/menu');
 app.use('/assets/images/menu', express.static(menuAssetsPath));
 
-
-console.log(path.join(__dirname, 'assets')); 
 
 
 const userImageAssetsPath = path.resolve(__dirname, '../frontend/assets/images/user-image');

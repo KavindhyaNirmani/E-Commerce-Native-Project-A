@@ -50,6 +50,11 @@ router.get('/admins',authController.getAllAdmins);
 router.delete('/admins/:user_id',protect,adminOnly,authController.deleteAdmin);
 
 
+router.get('/', (req, res) => {
+    res.json({ message: "Auth routes are available for registration and login. Use /register or /login." });
+});
+
+
 
 module.exports=router;
 

@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/add', protect, cartController.addItemToCart);  
 
 // Get all items in the user's cart (Protected)
-router.get('/cart', protect, cartController.getCartItems);  
+router.get('/', protect, cartController.getCartItems);  
+
 
 module.exports = router;
