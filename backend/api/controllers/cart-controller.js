@@ -1,6 +1,6 @@
 const db = require('../../config/db');
-const Cart = require('../models/cartModel');      // Import Cart model
-const CartItem = require('../models/cartItemModel'); // Import CartItem model
+const Cart = require('../models/Cart');      // Import Cart model
+const CartItem = require('../models/CartItem'); // Import CartItem model
 
 
 
@@ -74,39 +74,29 @@ const CartItem = require('../models/cartItemModel'); // Import CartItem model
         }
     };
 
+
+    
+
     // Get all items in the user's cart
-    exports.getCartItems= async (req, res) => {
-        const user_id = req.user.user_id; // Assuming user info is available from auth middleware
+exports.getCartItems = async (req, res) => {
+    try {
+        // Assuming you have a way to get the user's ID from the request (e.g., from a JWT token)
+        const userId = req.user.id; // Adjust according to your authentication logic
+        
+        // Fetch the cart items from the database for the user
+        const cartItems = await CartItem.getItemsByCartId(userId);
 
-        //log user_id for debugging 
-        console.log('user_id:', user_id);
 
-        if (!user_id) {
-            return res.status(400).json({ message: 'User ID is required.' });
+        if (!cartItems || cartItems.length === 0) {
+            return res.status(404).json({ message: 'No items in cart' });
         }
 
-        try {
-            // Get cart items for the user
-            const [cartItems] = await db.execute(
-                `SELECT item.*, cart_items.quantity 
-                 FROM cart_items 
-                 JOIN item ON cart_items.item_id = item.item_id 
-                 JOIN cart ON cart_items.cart_id = cart.cart_id 
-                 WHERE cart.user_id = ?`,
-                [user_id]
-            );
-
-            if (cartItems.length === 0) {
-                return res.status(200).json({ message: 'Your cart is empty.' });
-            }
-
-            res.status(200).json(cartItems);
-
-        } catch (error) {
-            console.error('Error fetching cart items:', error.message);
-            res.status(500).json({ message: 'Failed to fetch cart items', error: error.message });
-        }
-    };
-
+        // Send the cart items in the response
+        res.status(200).json({ items: cartItems });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
 
 
