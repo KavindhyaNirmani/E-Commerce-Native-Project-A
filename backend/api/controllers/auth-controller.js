@@ -4,7 +4,7 @@
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel');
+const User = require('../models/User');
 const multer = require('multer');
 const path = require('path');
 
@@ -196,5 +196,3 @@ exports.deleteAdmin=async(req,res)=>{
     }
 
 };
-
-

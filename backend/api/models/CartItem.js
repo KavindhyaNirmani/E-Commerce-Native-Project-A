@@ -4,7 +4,7 @@ class CartItem{
     //Add a new item to the cart
     static async addItem (cartId,itemId,quantity){
         try{
-            const [result]=await db.execute('INSERT INTO cart_items (cart_id,item_id,quantity) VALUES (?,?,?)',[cartId,itemId,qunatity]               
+            const [result]=await db.execute('INSERT INTO cart_items (cart_id,item_id,quantity) VALUES (?,?,?)',[cartId,itemId,quantity]               
                 
             );
             return result.insertId;//Return the new cart_item's ID
