@@ -3,27 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gather and Grab</title>
+    <title>Gather and Grab - Cart</title>
     <link rel="icon" type="image/png" href="../Assets/Images/logo.png" />
-    <!--Bootstrap CSS-->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       crossorigin="anonymous"
     />
-    <!--Custom CSS-->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="../Assets/Styles/cart.css" />
-    <!--Google font-->
+    <!-- Google font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <!--Font-Awesome-->
+    <!-- Font-Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <!-- jQuery-->
+    <!-- jQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       crossorigin="anonymous"
@@ -39,15 +39,11 @@
     ></script>
   </head>
   <body
-    style="
-      font-family: 'Lato', sans-serif;
-      background-image: linear-gradient(#6c6a6a, #1e1e1e);
-      height: 100vh;
-    "
+    style="font-family: 'Lato', sans-serif; background-image: linear-gradient(#6c6a6a, #1e1e1e); height: 100vh;"
   >
     <div class="container">
       <div class="row">
-        <!--Cart table-->
+        <!-- Cart table -->
         <div class="col-lg-8">
           <h3>My Cart</h3>
           <p id="cart-message" class="empty-cart-message">Your Cart is Empty</p>
@@ -71,7 +67,8 @@
             Add item
           </button>
         </div>
-        <!--Order Summary-->
+        
+        <!-- Order Summary -->
         <div class="col-lg-4">
           <div class="order-summary">
             <h4>Order Summary</h4>
@@ -94,7 +91,6 @@
               <tr>
                 <td colspan="3">
                   <hr class="full-width-line" />
-                  <!-- Added horizontal line -->
                 </td>
               </tr>
               <tr>
@@ -105,23 +101,23 @@
                 </td>
               </tr>
             </table>
-            <button
-              class="btn-checkout"
-              onclick="window.location.href='checkout.html'"
-            >
+            <button class="btn-checkout" onclick="passItemsToCheckout()">
               Proceed to Checkout
             </button>
           </div>
         </div>
       </div>
     </div>
+
     <script>
+      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
       // Render the cart items and update the order summary
       function renderCart() {
         const cartTableBody = document.getElementById("cart-items");
         const cartMessage = document.getElementById("cart-message");
         const cartTable = document.getElementById("cart-table");
-        cartTableBody.innerHTML = ""; // Clear existing rows
+        cartTableBody.innerHTML = ""; 
 
         if (cartItems.length === 0) {
           cartMessage.style.display = "block";
@@ -159,13 +155,12 @@
                 2
               )}</td>
               <td>
-                  <i class="fa fa-trash-o" onclick="removeItem(${index})" id="trash-icon"></i>
+                  <i class="fa fa-trash-o" onclick="removeItem(${index})"></i>
               </td>
           `;
           cartTableBody.appendChild(row);
         });
 
-        // Re-attach event listeners for increase and decrease buttons after rendering
         const increaseButtons = document.querySelectorAll(".increase-btn");
         const decreaseButtons = document.querySelectorAll(".decrease-btn");
 
@@ -186,30 +181,27 @@
         updateOrderSummary();
       }
 
-      // Change the quantity of a cart item
       function changeQuantity(index, increment) {
         const quantity = cartItems[index].quantity + increment;
-
         if (quantity > 0) {
-          cartItems[index].quantity = quantity; // Update the quantity
+          cartItems[index].quantity = quantity;
+          saveCart();
         }
-
-        renderCart(); // Re-render the cart to update totals
+        renderCart();
       }
 
-      // Remove an item from the cart
       function removeItem(index) {
-        cartItems.splice(index, 1); // Remove the item from the array
-        renderCart(); // Re-render the cart to update the UI
+        cartItems.splice(index, 1);
+        saveCart();
+        renderCart();
       }
 
-      // Toggle the checkbox for an item
       function toggleCheckbox(index) {
-        cartItems[index].checked = !cartItems[index].checked; // Toggle checked status
-        updateOrderSummary(); // Update order summary after toggling
+        cartItems[index].checked = !cartItems[index].checked;
+        saveCart();
+        updateOrderSummary();
       }
 
-      // Update the order summary based on selected items
       function updateOrderSummary() {
         let itemCount = 0;
         let subTotal = 0;
@@ -221,7 +213,7 @@
           }
         });
 
-        const discount = 0; // Discount logic will come from backend
+        const discount = 0;
 
         document.getElementById("item-count").textContent = itemCount;
         document.getElementById("sub-total").textContent = subTotal.toFixed(2);
@@ -231,12 +223,21 @@
         ).toFixed(2);
       }
 
-      // Proceed to checkout function (dummy function for now)
-      function proceedToCheckout() {
-        alert("Proceeding to checkout...");
+      function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cartItems));
       }
 
-      // Initial render of the cart
+      function passItemsToCheckout() {
+        const selectedItems = cartItems.filter(item => item.checked);
+        if (selectedItems.length === 0) {
+          alert("No items selected for checkout!");
+          return;
+        }
+
+        localStorage.setItem("checkoutItems", JSON.stringify(selectedItems));
+        window.location.href = "checkout.html";
+      }
+
       renderCart();
     </script>
   </body>
