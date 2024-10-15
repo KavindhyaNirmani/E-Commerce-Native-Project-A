@@ -23,6 +23,7 @@ body {
 .table tbody td {
   background-color: #4d4d4d;
 }
+
 .btn-danger:hover,
 .btn-danger:focus,
 .btn-danger:active {
@@ -55,4 +56,45 @@ body {
     max-width: 5px;
     max-height: 5px;
   }
+}
+
+/*modal*/
+.modal-content {
+  background-color: #444649; /* Dark background for the modal */
+  color: #fff; /* White text */
+  border-radius: 8px; /* Smooth corners */
+}
+
+.modal-header,
+.modal-footer {
+  border: none; /* Remove borders from header and footer */
+}
+.modal-title {
+  color: #fad700;
+}
+.modal-body {
+  padding: 20px;
+}
+.btn-primary {
+  background-color: #fad700; /* Yellow button background */
+  border: none; /* No border */
+  color: #000; /* Black text */
+}
+
+.btn-primary:hover {
+  background-color: #e0c400; /* Darker yellow on hover */
+  color: #000;
+  font-weight: bold;
+}
+.close {
+  color: #ff0000; /* White close button */
+  background-color: transparent; /* Transparent background */
+  border: 1px;
+  border-color: #ff0000;
+  font-size: 50px;
+}
+
+.close:hover {
+  color: #fad700; /* Yellow on hover */
+  border-color: #fad700;
 }
