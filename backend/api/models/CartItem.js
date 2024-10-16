@@ -26,6 +26,8 @@ class CartItem{
     }
 
 
+
+
     //Delete an item from the cart
     static async deleteItem(cartItemId) {
         try {
@@ -37,7 +39,7 @@ class CartItem{
                 [cartItemId]
             );
 
-            console.log('DELETE result:', result); // Log the full result
+            console.log('DELETE result:', result); 
             return result.affectedRows; // Return affected rows count
 
         } catch (error) {
@@ -46,7 +48,30 @@ class CartItem{
         }
     }
 
+
+
+    static async updateItemQuantity(cartItemId, quantity) {
+        try {
+            console.log('Executing UPDATE query for:', cartItemId, 'with quantity:', quantity);
+    
+            const [result] = await db.execute(
+                'UPDATE cart_items SET quantity = ? WHERE cart_item_id = ?',
+                [quantity, cartItemId]
+            );
+    
+            console.log('UPDATE Result:', result); // Log the result of the query
+            return result.affectedRows; // Returns the number of rows affected
+        } catch (error) {
+            console.error('Error updating cart item:', error.message);
+            throw new Error('Error updating cart item: ' + error.message);
+        }
+    }
+
 }
+
+
+
+
 
 
 
