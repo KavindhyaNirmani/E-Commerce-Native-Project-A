@@ -1,210 +1,347 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required Meta Tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
     <title>Gather and Grab</title>
     <link rel="icon" type="image/png" href="../assets/images/logo.png?v=1" />
 
-    
     <!-- jQuery (if needed for other parts of your project) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="stylesheet" href="../assets/styles/item-management.css" />
-    <link rel="stylesheet" href="../components/side-bar/sidebar.css">
+    <link rel="stylesheet" href="../components/side-bar/sidebar.css" />
   </head>
-  <body style="background-image: linear-gradient(#6C6A6A, #1E1E1E); height:100%;">
-    
-    <section class="p-3">
-      <div class="row">
-        <div class="col-12">
-          <h6 class="mb-4">Add Item</h6>
+  <body
+    style="background-image: linear-gradient(#6c6a6a, #1e1e1e); height: 100%"
+  >
+    <!-- Placeholder for Sidebar -->
+    <div id="sidebar-placeholder"></div>
+
+    <script>
+      fetch("../components/side-bar/sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar-placeholder").innerHTML = data;
+
+          // After loading the sidebar, apply the active class to the current page's link
+          const currentPage = window.location.pathname.split("/").pop(); // Get the current file name
+          const links = document.querySelectorAll(".nav-link"); // Get all sidebar links
+
+          // Loop through all links and compare the last part of href with the current page
+          links.forEach((link) => {
+            const linkPage = link.getAttribute("href").split("/").pop(); // Get the last part of href
+            if (linkPage === currentPage) {
+              link.classList.add("active"); // Add the active class to the matching link
+            }
+          });
+
+          // Now add the toggle functionality after the sidebar is loaded
+          const toggleBtn = document.getElementById("toggleBtn");
+          const sidebar = document.querySelector(".sidebar");
+
+          toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("show");
+          });
+        })
+        .catch((error) => console.error("Error loading sidebar:", error));
+    </script>
+    <div class="content">
+      <section class="p-3">
+        <div class="row">
+          <div class="col-12">
+            <h6 class="mb-4">Add Item</h6>
+          </div>
         </div>
-      </div>
-    
-      <div class="row">
-        <div class="col-12">
-          <div class="table-container">
-            <table class="table table-striped table-hover text-center table-bordered">
-              <thead class="table-dark">
-                <tr> 
-                  <th>Item Name</th>
-                  <th>Item Description</th>
-                  <th>Price (Rs)</th>
-                  <th>Category</th>
-                  <th>Item Image</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="data">
-                <!-- Dynamic Content -->
-              </tbody>
-            </table>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="table-container">
+              <table
+                class="table table-striped table-hover text-center table-bordered"
+              >
+                <thead class="table-dark">
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th>Price (Rs)</th>
+                    <th>Category</th>
+                    <th>Item Image</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="data">
+                  <!-- Dynamic Content -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
+          Add Items <i class="bi bi-plus-circle"></i>
+        </button>
+      </section>
+
+      <!-- Modal Form for Add/Edit Items -->
+      <div
+        class="modal fade"
+        id="userForm"
+        tabindex="-1"
+        aria-labelledby="userFormLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="userFormLabel">Item Information</h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form id="myForm">
+                <div class="card image-holder">
+                  <label for="imgInput" class="upload">
+                    <i class="bi bi-plus-circle-dotted fs-1"></i>
+                    <input
+                      type="file"
+                      name="item_image"
+                      id="imgInput"
+                      accept="image/*"
+                      style="display: none"
+                    />
+                  </label>
+                  <img
+                    id="imgPreview"
+                    src=" "
+                    alt="Image Preview"
+                    width="200"
+                    height="200"
+                    class="img d-block mx-auto"
+                  />
+                </div>
+
+                <div class="inputField">
+                  <div>
+                    <label for="name" class="form-label">Item Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="description" class="form-label"
+                      >Item Description</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="description"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="price" class="form-label">Price (Rs)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control"
+                      id="price"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" class="form-select" required>
+                      <option value="">Select Category</option>
+                      <option value="pizza">Pizza</option>
+                      <option value="cake">Cake</option>
+                      <option value="beverage">Beverage</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" form="myForm" class="btn btn-primary">
+                Submit
+              </button>
+              <button type="reset" class="btn btn-danger">Discard</button>
+            </div>
           </div>
         </div>
       </div>
-      <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
-        Add Items <i class="bi bi-plus-circle"></i>
-      </button>
-    </section>
-    
-    <!-- Modal Form for Add/Edit Items -->
-    <div class="modal fade" id="userForm" tabindex="-1" aria-labelledby="userFormLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-    
-          <div class="modal-header">
-            <h4 class="modal-title" id="userFormLabel">Item Information</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-    
-          <div class="modal-body">
-            <form id="myForm">
-              <div class="card image-holder">
-                <label for="imgInput" class="upload">
-                  <i class="bi bi-plus-circle-dotted fs-1"></i>
-                  <input type="file" name="item_image" id="imgInput" accept="image/*" style="display: none;">
-                </label>
-                <img id="imgPreview" src=" " alt="Image Preview" width="200" height="200" class="img d-block mx-auto">
+
+      <!-- View Data Modal -->
+      <div
+        class="modal fade"
+        id="readData"
+        tabindex="-1"
+        aria-labelledby="readDataLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="readDataLabel">View Item</h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <div class="card imgholder mb-3">
+                <img
+                  id="viewImg"
+                  alt="Item Image"
+                  width="200"
+                  height="200"
+                  class="img d-block mx-auto"
+                />
               </div>
-    
+
               <div class="inputField">
-                <div>
-                  <label for="name" class="form-label">Item Name</label>
-                  <input type="text" id="name" class="form-control" required>
+                <div class="mb-3">
+                  <label for="viewName" class="form-label">Item Name</label>
+                  <input
+                    type="text"
+                    id="viewName"
+                    class="form-control"
+                    disabled
+                  />
                 </div>
-                
-                <div>
-                  <label for="description" class="form-label">Item Description</label>
-                  <input type="text" class="form-control" id="description" required>
+                <div class="mb-3">
+                  <label for="viewDescription" class="form-label"
+                    >Item Description</label
+                  >
+                  <input
+                    type="text"
+                    id="viewDescription"
+                    class="form-control"
+                    disabled
+                  />
                 </div>
-                
-                <div>
-                  <label for="price" class="form-label">Price (Rs)</label>
-                  <input type="number" step="0.01" class="form-control" id="price" required>
+                <div class="mb-3">
+                  <label for="viewPrice" class="form-label">Price (Rs)</label>
+                  <input
+                    type="number"
+                    id="viewPrice"
+                    class="form-control"
+                    disabled
+                  />
                 </div>
-                
-                <div>
-                  <label for="category" class="form-label">Category</label>
-                  <select id="category" class="form-select" required>
-                    <option value="">Select Category</option>
+                <div class="mb-3">
+                  <label for="viewCategory" class="form-label">Category</label>
+                  <select id="viewCategory" class="form-select" disabled>
                     <option value="pizza">Pizza</option>
                     <option value="cake">Cake</option>
                     <option value="beverage">Beverage</option>
                   </select>
-                </div>  
-              </div>    
-            </form>
-          </div>
-    
-          <div class="modal-footer">
-            <button type="submit" form="myForm" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-danger">Discard</button>
-          </div>
-    
-        </div>
-      </div>
-    </div>
-    
-    <!-- View Data Modal -->
-    <div class="modal fade" id="readData" tabindex="-1" aria-labelledby="readDataLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-    
-          <div class="modal-header">
-            <h4 class="modal-title" id="readDataLabel">View Item</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-    
-          <div class="modal-body">
-            <div class="card imgholder mb-3">
-              <img id="viewImg" alt="Item Image" width="200" height="200" class="img d-block mx-auto">
+                </div>
+              </div>
             </div>
-    
-            <div class="inputField">
-              <div class="mb-3">
-                <label for="viewName" class="form-label">Item Name</label>
-                <input type="text" id="viewName" class="form-control" disabled>
-              </div>
-              <div class="mb-3">
-                <label for="viewDescription" class="form-label">Item Description</label>
-                <input type="text" id="viewDescription" class="form-control" disabled>
-              </div>
-              <div class="mb-3">
-                <label for="viewPrice" class="form-label">Price (Rs)</label>
-                <input type="number" id="viewPrice" class="form-control" disabled>
-              </div>
-              <div class="mb-3">
-                <label for="viewCategory" class="form-label">Category</label>
-                <select id="viewCategory" class="form-select" disabled>
-                  <option value="pizza">Pizza</option>
-                  <option value="cake">Cake</option>
-                  <option value="beverage">Beverage</option>
-                </select>
-              </div>
-            </div>    
           </div>
-    
         </div>
       </div>
     </div>
-    
     <!-- JavaScript Logic -->
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('myForm');
-        const tableBody = document.getElementById('data');
-        const imgPreview = document.getElementById('imgPreview');
-        const imgInput = document.getElementById('imgInput');
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("myForm");
+        const tableBody = document.getElementById("data");
+        const imgPreview = document.getElementById("imgPreview");
+        const imgInput = document.getElementById("imgInput");
         let currentItemId = null;
-        const userFormModal = new bootstrap.Modal(document.getElementById('userForm'));
-        const readDataModal = new bootstrap.Modal(document.getElementById('readData'));
-        
+        const userFormModal = new bootstrap.Modal(
+          document.getElementById("userForm")
+        );
+        const readDataModal = new bootstrap.Modal(
+          document.getElementById("readData")
+        );
+
         // Your JWT Token (For demonstration purposes only)
-        const JWT_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyODE5ODQwOCwiZXhwIjoxNzI4MjA1NjA4fQ.zpPG9_VE1cNtOefGVn7e-anQ0mEucK331ffU03VKmrM';
-        
+        const JWT_TOKEN =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyODE5ODQwOCwiZXhwIjoxNzI4MjA1NjA4fQ.zpPG9_VE1cNtOefGVn7e-anQ0mEucK331ffU03VKmrM";
+
         // Function to load items from the API
         const loadItems = async () => {
           try {
-            const response = await fetch('http://localhost:5010/items', {
+            const response = await fetch("http://localhost:5010/items", {
               headers: {
-                'Authorization': `Bearer ${JWT_TOKEN}`
-              }
+                Authorization: `Bearer ${JWT_TOKEN}`,
+              },
             });
-            if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+            if (!response.ok)
+              throw new Error(
+                `Error: ${response.status} ${response.statusText}`
+              );
             const items = await response.json();
-            tableBody.innerHTML = '';
-            items.forEach(item => {
-              const newRow = document.createElement('tr');
+            tableBody.innerHTML = "";
+            items.forEach((item) => {
+              const newRow = document.createElement("tr");
               newRow.innerHTML = `
                 <td>${escapeHTML(item.item_name)}</td>
                 <td>${escapeHTML(item.item_description)}</td>
                 <td>${parseFloat(item.item_price).toFixed(2)}</td>
                 <td>${escapeHTML(item.category_id)}</td>
                 <td>
-                  <img src="http://localhost:5010${escapeHTML(item.item_image)}" alt="Item Image" width="40" height="40">
+                  <img src="http://localhost:5010${escapeHTML(
+                    item.item_image
+                  )}" alt="Item Image" width="40" height="40">
                 </td>
                 <td>
-                  <button class="btn " onclick="viewItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="viewItem('${encodeURIComponent(
+                    item.item_id
+                  )}')">
                     <i class="bi bi-eye"></i>
                   </button>
-                  <button class="btn " onclick="editItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="editItem('${encodeURIComponent(
+                    item.item_id
+                  )}')">
                     <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button class="btn " onclick="deleteItem('${encodeURIComponent(item.item_id)}')">
+                  <button class="btn " onclick="deleteItem('${encodeURIComponent(
+                    item.item_id
+                  )}')">
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
@@ -212,163 +349,211 @@
               tableBody.appendChild(newRow);
             });
           } catch (error) {
-            console.error('Error loading items:', error);
-            alert('Failed to load items. Please try again later.');
+            console.error("Error loading items:", error);
+            alert("Failed to load items. Please try again later.");
           }
         };
-    
+
         // Helper function to escape HTML to prevent XSS
         const escapeHTML = (str) => {
-          if (typeof str !== 'string') return str;
-          return str.replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
+          if (typeof str !== "string") return str;
+          return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
         };
-    
+
         // Function to view item details
         window.viewItem = async (item_id) => {
           try {
-            const response = await fetch(`http://localhost:5010/items/${item_id}`, {
-              headers: {
-                'Authorization': `Bearer ${JWT_TOKEN}`
+            const response = await fetch(
+              `http://localhost:5010/items/${item_id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${JWT_TOKEN}`,
+                },
               }
-            });
-            if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+            );
+            if (!response.ok)
+              throw new Error(
+                `Error: ${response.status} ${response.statusText}`
+              );
             const item = await response.json();
-            document.getElementById('viewImg').src = `http://localhost:5010${item.item_image}`;
-            document.getElementById('viewName').value = item.item_name;
-            document.getElementById('viewDescription').value = item.item_description;
-            document.getElementById('viewPrice').value = parseFloat(item.item_price).toFixed(2);
-            document.getElementById('viewCategory').value = item.category_id;
+            document.getElementById(
+              "viewImg"
+            ).src = `http://localhost:5010${item.item_image}`;
+            document.getElementById("viewName").value = item.item_name;
+            document.getElementById("viewDescription").value =
+              item.item_description;
+            document.getElementById("viewPrice").value = parseFloat(
+              item.item_price
+            ).toFixed(2);
+            document.getElementById("viewCategory").value = item.category_id;
             readDataModal.show();
           } catch (error) {
-            console.error('Error fetching item:', error);
-            alert('Failed to fetch item details. Please try again later.');
+            console.error("Error fetching item:", error);
+            alert("Failed to fetch item details. Please try again later.");
           }
         };
-    
+
         // Function to edit an item
         window.editItem = async (item_id) => {
           try {
-            const response = await fetch(`http://localhost:5010/items/${item_id}`, {
-              headers: {
-                'Authorization': `Bearer ${JWT_TOKEN}`
+            const response = await fetch(
+              `http://localhost:5010/items/${item_id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${JWT_TOKEN}`,
+                },
               }
-            });
-            if (!response.ok) throw new Error(`Error: ${response.status} ${response.statusText}`);
+            );
+            if (!response.ok)
+              throw new Error(
+                `Error: ${response.status} ${response.statusText}`
+              );
             const item = await response.json();
-            document.getElementById('name').value = item.item_name;
-            document.getElementById('description').value = item.item_description;
-            document.getElementById('price').value = parseFloat(item.item_price).toFixed(2);
-            document.getElementById('category').value = item.category_id; // Assuming category_id corresponds to category_name
-            document.getElementById('imgPreview').src = `http://localhost:5010${item.item_image}`;
+            document.getElementById("name").value = item.item_name;
+            document.getElementById("description").value =
+              item.item_description;
+            document.getElementById("price").value = parseFloat(
+              item.item_price
+            ).toFixed(2);
+            document.getElementById("category").value = item.category_id; // Assuming category_id corresponds to category_name
+            document.getElementById(
+              "imgPreview"
+            ).src = `http://localhost:5010${item.item_image}`;
             currentItemId = item_id;
             userFormModal.show();
           } catch (error) {
-            console.error('Error fetching item for edit:', error);
-            alert('Failed to fetch item for editing. Please try again later.');
+            console.error("Error fetching item for edit:", error);
+            alert("Failed to fetch item for editing. Please try again later.");
           }
         };
-    
+
         // Function to handle form submission for Add/Edit
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener("submit", async (e) => {
           e.preventDefault();
-          
-          const name = document.getElementById('name').value.trim();
-          const description = document.getElementById('description').value.trim();
-          const price = document.getElementById('price').value.trim();
-          const category = document.getElementById('category').value;
+
+          const name = document.getElementById("name").value.trim();
+          const description = document
+            .getElementById("description")
+            .value.trim();
+          const price = document.getElementById("price").value.trim();
+          const category = document.getElementById("category").value;
           const image = imgInput.files[0];
-    
+
           // Basic validation
           if (!name || !description || !price || !category) {
-            alert('Please fill in all required fields.');
+            alert("Please fill in all required fields.");
             return;
           }
-    
+
           const formData = new FormData();
-          formData.append('item_name', name);
-          formData.append('item_description', description);
-          formData.append('item_price', price);
-          formData.append('category_name', category);
+          formData.append("item_name", name);
+          formData.append("item_description", description);
+          formData.append("item_price", price);
+          formData.append("category_name", category);
           if (image) {
-            formData.append('item_image', image);
+            formData.append("item_image", image);
           }
-    
+
           try {
-            let url = 'http://localhost:5010/items';
-            let method = 'POST';
-    
+            let url = "http://localhost:5010/items";
+            let method = "POST";
+
             if (currentItemId) {
               // If editing, adjust URL and method
               url = `http://localhost:5010/items/${currentItemId}`;
-              method = 'PUT'; // or 'PATCH' depending on your API
+              method = "PUT"; // or 'PATCH' depending on your API
             }
-    
+
             const response = await fetch(url, {
               method: method,
               headers: {
-                'Authorization': `Bearer ${JWT_TOKEN}`
+                Authorization: `Bearer ${JWT_TOKEN}`,
               },
               body: formData,
             });
-    
+
             const result = await response.json();
-            console.log('Server response:', result);
-    
+            console.log("Server response:", result);
+
             if (response.ok) {
               loadItems();
               form.reset();
-              imgPreview.src = ''; // Reset image preview
+              imgPreview.src = ""; // Reset image preview
               currentItemId = null; // Reset currentItemId
               userFormModal.hide(); // Close modal
-              alert(`Item ${method === 'POST' ? 'added' : 'updated'} successfully.`);
+              alert(
+                `Item ${method === "POST" ? "added" : "updated"} successfully.`
+              );
             } else {
-              console.error('Error submitting form:', result.message || response.statusText);
-              alert(`Failed to ${method === 'POST' ? 'add' : 'update'} item: ${result.message || response.statusText}`);
+              console.error(
+                "Error submitting form:",
+                result.message || response.statusText
+              );
+              alert(
+                `Failed to ${method === "POST" ? "add" : "update"} item: ${
+                  result.message || response.statusText
+                }`
+              );
             }
           } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('An error occurred while submitting the form. Please try again later.');
+            console.error("Error submitting form:", error);
+            alert(
+              "An error occurred while submitting the form. Please try again later."
+            );
           }
         });
-    
+
         // Handle form reset (Discard button)
-        form.addEventListener('reset', () => {
-          imgPreview.src = ''; // Clear image preview on discard
+        form.addEventListener("reset", () => {
+          imgPreview.src = ""; // Clear image preview on discard
           currentItemId = null; // Reset currentItemId
         });
-    
+
         // Function to delete an item
         window.deleteItem = async (id) => {
-          if (confirm('Are you sure you want to delete this item?')) {
+          if (confirm("Are you sure you want to delete this item?")) {
             try {
-              const response = await fetch(`http://localhost:5010/items/${id}`, {
-                method: 'DELETE',
-                headers: {
-                  'Authorization': `Bearer ${JWT_TOKEN}`
+              const response = await fetch(
+                `http://localhost:5010/items/${id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${JWT_TOKEN}`,
+                  },
                 }
-              });
-    
+              );
+
               if (response.ok) {
                 loadItems();
-                alert('Item deleted successfully.');
+                alert("Item deleted successfully.");
               } else {
                 const result = await response.json();
-                console.error('Error deleting item:', result.message || response.statusText);
-                alert(`Failed to delete item: ${result.message || response.statusText}`);
+                console.error(
+                  "Error deleting item:",
+                  result.message || response.statusText
+                );
+                alert(
+                  `Failed to delete item: ${
+                    result.message || response.statusText
+                  }`
+                );
               }
             } catch (error) {
-              console.error('Error deleting item:', error);
-              alert('An error occurred while deleting the item. Please try again later.');
+              console.error("Error deleting item:", error);
+              alert(
+                "An error occurred while deleting the item. Please try again later."
+              );
             }
           }
         };
-    
+
         // Image Preview Handler
-        imgInput.addEventListener('change', () => {
+        imgInput.addEventListener("change", () => {
           const file = imgInput.files[0];
           if (file) {
             const reader = new FileReader();
@@ -377,14 +562,13 @@
             };
             reader.readAsDataURL(file);
           } else {
-            imgPreview.src = '';
+            imgPreview.src = "";
           }
         });
-    
+
         // Initial Load of Items
         loadItems();
       });
     </script>
-    
   </body>
 </html>
