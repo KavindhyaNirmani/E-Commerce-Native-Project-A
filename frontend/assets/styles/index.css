@@ -28,9 +28,13 @@
   top: clamp(10px, 2vw, 50px);
   left: clamp(10px, 2vw, 70px);
 }
+
 .carousel-item {
   max-height: 520px;
-  transition: transform 2s ease, opacity 1s ease-out;
+  transition: opacity 1s ease-in-out;
+}
+.carousel-item.active {
+  opacity: 1; /* Only the active item is fully visible */
 }
 /*Feature Section*/
 .features {
