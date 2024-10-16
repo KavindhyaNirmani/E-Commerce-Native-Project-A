@@ -170,10 +170,12 @@
               
                 <div class="col-sm-5 pt-5">
                   <label for="adminImage" class="form-label">Upload Admin Image:</label>
-                  <input type="file" class="form-control" id="adminImage" accept="image/*" required>
+                  <input type="file" class="form-control" id="adminImage" accept="image/*">
                   <div class="invalid-feedback">
                         Please fill the field!
                       </div>
+
+                  <img id="adminImagePreview" src="#" alt="Image Preview" class="d-none img-thumbnail mt-3" width="150" height="150">    
                 </div>
               
 
@@ -243,13 +245,13 @@ function displayAdmins(admins) {
 
 //function to append admins into admin list
 const appendNewAdminToTable =(admin)=>{
-  const imageUrl = admin.user_image ? admin.user_image : '../assets/images/logo.png';
+  //const adminId = admin.user_id;
+  const imageUrl = admin.user_image ? `http://localhost:5010/assets/images/user-image/${admin.user_image}` : '';
+
+
   const adminCard =`
   <div class="card" style="width: 18rem;">
-  <img class="card-img-top rounded-circle mt-3 mx-auto d-block p-3" 
- 
-  src="${imageUrl}"
-  alt="Admin Image">
+   ${admin.user_image ? `<img class="card-img-top rounded-circle mt-3 mx-auto d-block p-3" src="${imageUrl}" alt="Admin Image">` : ''} 
 
   <div class="card-body text-center">
   <h5 class="card-title">${admin.first_name} ${admin.last_name}</h5>
@@ -268,20 +270,20 @@ const appendNewAdminToTable =(admin)=>{
   <button class="btn btn-danger remove-admin-button" data-admin-id="${admin.user_id}">Remove Admin</button>
   </div>
 </div>
-`
+`;
 $('#adminListContainer').append(adminCard);
 };
-
 //function to append new admin after creation 
-
- fetchAdmins();
+  fetchAdmins();
 
 
   //show the modal 
     $('#addAdminButton').on('click', function(){
-    $('#addAdminForm')[0].reset();
-    $('#addAdminForm').removeClass('was-validated');
-    adminModal.show();
+
+      $('#addAdminForm')[0].reset();
+      $('#addAdminForm').removeClass('was-validated');
+      $('#adminImagePreview').attr('src', '#').addClass('d-none'); // Reset image preview
+      adminModal.show();
 });
 
 //image preview
@@ -309,27 +311,24 @@ $('#addAdminForm').on('submit', function(event){
     } else {
         // Collect form data
         var formData = new FormData();
-        formData.append('firstName', $('#firstName').val().trim());
-        formData.append('lastName', $('#lastName').val().trim());
-        formData.append('userName', $('#userName').val().trim());
+        formData.append('first_name', $('#firstName').val().trim());
+        formData.append('last_name', $('#lastName').val().trim());
+        formData.append('username', $('#userName').val().trim());
         formData.append('role', $('#role').val().trim());
         formData.append('email', $('#email').val().trim());
         formData.append('password', $('#password').val().trim());
-        formData.append('phoneNumber', $('#phoneNumber').val().trim());
+        formData.append('phone_no', $('#phoneNumber').val().trim());
         formData.append('address', $('#address').val().trim());
-        
+
         const imageFile =$('#adminImage')[0].files[0];
         if(imageFile){
           formData.append('user_image', imageFile);
         } else{
-          alert('Please select an image to upload')
+          alert('Please select an image to upload');
+          return;
         }
         
-            
-           
-        };
-
-        $.ajax({
+      $.ajax({
               url:'http://localhost:5010/auth/add-admin',
               type: 'POST',
               data: formData,
@@ -354,34 +353,34 @@ $('#addAdminForm').on('submit', function(event){
                   }
               }
           });
-      })
-
-                // Add Bootstrap validation classes
+      }
+               // Add Bootstrap validation classes
                 $(this).addClass('was-validated');
             });
 
-            // Handle remove admin
-            $(document).on('click', '.remove-admin-button', function(){
-                const adminId = $(this).data('data-admin-id');
-                if(confirm('Are you sure you want to remove this admin?')){
-                    $.ajax({
-                        url: `http://localhost:5010/auth/admins/${adminId}`,
-                        type: 'DELETE',
-                        headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
-                        },
-                        success: function(response){
-                            alert('Admin removed successfully');
-                            fetchAdmins(); // Refresh the admin list
-                        },
-                        error: function(xhr, status, error){
-                            console.error('Error removing admin:', error);
-                            alert('Failed to remove admin. Please try again.');
-                        }
-                    });
-                }
-            });
-           
+  // Handle remove admin
+  $(document).on('click', '.remove-admin-button', function(){
+      const adminId = $(this).data('admin-id');
+      const adminCard = $(this).closest('.card');
+      if(confirm('Are you sure you want to remove this admin?')){
+          $.ajax({
+              url: `http://localhost:5010/auth/admins/${adminId}`,
+              type: 'DELETE',
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming you store JWT in localStorage
+              },
+              success: function(response){
+                  alert('Admin removed successfully');
+                  fetchAdmins(); // Refresh the admin list
+              },
+              error: function(xhr, status, error){
+                  console.error('Error removing admin:', error);
+                  alert('Failed to remove admin. Please try again.');
+              }
+          });
+      }
+  });
+});
 
     </script>
     
