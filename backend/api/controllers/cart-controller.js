@@ -139,3 +139,42 @@ exports.deleteCartItem = async (req, res) => {
 
 
 
+
+exports.updateCartItem = async (req, res) => {
+    try {
+        const cartItemId = req.params.cartItemId; // Get cart item ID from URL params
+        const { quantity } = req.body; // Get the new quantity from request body
+
+        // Log the received values
+        console.log('Received cartItemId:', cartItemId);
+        console.log('Received quantity:', quantity);
+
+        // Input validation
+        if (!cartItemId) {
+            return res.status(400).json({ message: 'Cart Item ID is required.' });
+        }
+        if (quantity === undefined || quantity < 1) {
+            return res.status(400).json({ message: 'Valid quantity is required.' });
+        }
+
+        // Execute the update query
+        const affectedRows = await CartItem.updateItemQuantity(cartItemId, quantity);
+
+        console.log('Affected Rows:', affectedRows); // Log query result
+
+        if (affectedRows === 0) {
+            console.log('Cart item not found for ID:', cartItemId); // Debugging log
+            return res.status(404).json({ error: { message: 'Not found' } });
+        }
+
+        console.log('Cart item updated successfully.');
+        return res.status(200).json({ message: 'Cart item updated successfully.' });
+    } catch (error) {
+        console.error('Error updating cart item:', error.message);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+
+
+
