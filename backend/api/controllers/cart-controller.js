@@ -81,15 +81,22 @@ const CartItem = require('../models/CartItem'); // Import CartItem model
 exports.getCartItems = async (req, res) => {
     try {
         // Assuming you have a way to get the user's ID from the request (e.g., from a JWT token)
-        const userId = req.user.id; // Adjust according to your authentication logic
+        const userId = req.user.user_id; // Adjust according to your authentication logic
         
         // Fetch the cart items from the database for the user
-        const cartItems = await CartItem.getItemsByCartId(userId);
+        const cart = await Cart.getCartByUserId(userId);
 
+
+        if (!cart ) {
+            return res.status(404).json({ message: 'No Cart found this user' });
+        }
+
+        const cartItems = await CartItem.getItemsByCartId(cart.cart_id);
 
         if (!cartItems || cartItems.length === 0) {
             return res.status(404).json({ message: 'No items in cart' });
         }
+
 
         // Send the cart items in the response
         res.status(200).json({ items: cartItems });
