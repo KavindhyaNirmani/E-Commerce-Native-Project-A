@@ -1,6 +1,7 @@
 body {
   background: linear-gradient(#6c6a6a, #1e1e1e);
   color: #f0e68c;
+  height: 100vh;
 }
 .table th,
 .table td {
@@ -45,18 +46,6 @@ body {
 .container {
   margin: 260px;
 }
-@media (max-width: 768px) {
-  .container {
-    margin: 0;
-  }
-  .content {
-    max-width: 100vw;
-  }
-  .action-icons {
-    max-width: 5px;
-    max-height: 5px;
-  }
-}
 
 /*modal*/
 .modal-content {
@@ -97,4 +86,57 @@ body {
 .close:hover {
   color: #fad700; /* Yellow on hover */
   border-color: #fad700;
+}
+/* Remove the default appearance of the select dropdown */
+#orderStatus {
+  appearance: none; /* For modern browsers */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%225%22 viewBox=%220 0 10 5%22%3E%3Cpath fill=%22%23333%22 d=%22M0 0l5 5 5-5z%22/%3E%3C/svg%3E")
+    no-repeat right 10px center;
+  background-color: #fff; /* Change to your desired background */
+  padding-right: 30px; /* Add padding to make space for the arrow */
+}
+
+/* Ensure it looks nice on smaller screens */
+#orderStatus:focus {
+  border-color: #999; /* Add a border highlight on focus */
+  outline: none; /* Remove the default focus outline */
+}
+#order-id {
+  color: #fff;
+  font-weight: bold; /* Optional: make the text bold */
+  margin-bottom: 5px; /* Add some spacing below if needed */
+}
+
+/*responsive*/
+@media (max-width: 576px) {
+  #order-id {
+    font-size: 0.9rem; /* Make the Order ID text smaller on small screens */
+    padding-right: 5px; /* Adjust spacing */
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
+  .content {
+    max-width: 100vw;
+  }
+  .action-icons {
+    max-width: 5px;
+    max-height: 5px;
+  }
+  .modal-content {
+    font-size: 12px;
+  }
+  .totalPrice {
+    width: 90%;
+  }
+  .table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
 }
