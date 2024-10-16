@@ -107,3 +107,35 @@ exports.getCartItems = async (req, res) => {
 };
 
 
+exports.deleteCartItem = async (req, res) => {
+    try {
+        const cartItemId = req.params.cartItemId;
+        console.log('Deleting Cart Item with ID:', cartItemId);
+
+        if (!cartItemId) {
+            console.log('No Cart Item ID provided.');
+            return res.status(400).json({ message: 'Cart Item ID is required.' });
+        }
+
+        // Perform the deletion
+        const affectedRows = await CartItem.deleteItem(cartItemId);
+        console.log('Delete query result:', affectedRows);
+
+        // Check if the deletion was successful
+        if (affectedRows === 0) {
+            console.log('Cart item not found.');
+            return res.status(404).json({ message: 'Cart item not found.' });
+        }
+
+        console.log('Item removed from cart successfully.');
+        return res.status(200).json({ message: 'Item removed from cart successfully.' });
+
+    } catch (error) {
+        console.error('Error deleting item from cart:', error.message);
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+
+
+
