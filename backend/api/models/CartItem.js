@@ -24,6 +24,30 @@ class CartItem{
             throw new Error('Error fetching items in cart:'+error.message);
         }
     }
+
+
+    //Delete an item from the cart
+    static async deleteItem(cartItemId) {
+        try {
+            console.log('Executing DELETE query for cart_item_id:', cartItemId);
+
+            // Execute the DELETE query
+            const [result] = await db.execute(
+                'DELETE FROM cart_items WHERE cart_item_id = ?',
+                [cartItemId]
+            );
+
+            console.log('DELETE result:', result); // Log the full result
+            return result.affectedRows; // Return affected rows count
+
+        } catch (error) {
+            console.error('Error executing DELETE query:', error.message);
+            throw new Error('Error deleting item from cart: ' + error.message);
+        }
+    }
+
 }
+
+
 
 module.exports = CartItem;

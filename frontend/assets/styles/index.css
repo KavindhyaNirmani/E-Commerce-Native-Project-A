@@ -29,6 +29,13 @@
   left: clamp(10px, 2vw, 70px);
 }
 
+.carousel-item {
+  max-height: 520px;
+  transition: opacity 1s ease-in-out;
+}
+.carousel-item.active {
+  opacity: 1; /* Only the active item is fully visible */
+}
 /*Feature Section*/
 .features {
   display: flex;
