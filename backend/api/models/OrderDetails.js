@@ -10,6 +10,18 @@ class OrderDetails{
     }
 
 
+    //Get order details by orderID
+    static async getDetailsByOrderId(orderId){
+        const[rows]=await db.execute(
+            'SELECT*FROM order_details WHERE order_id=?',
+            [orderId]
+
+        );
+        //return the first row
+        return rows[0];
+    }
+
+
 
 
 }

@@ -6,13 +6,13 @@ exports.placeOrder = async (req, res) => {
     const { selectedItems, first_name, last_name, address, city, postal_code, phone_number, cart_id } = req.body;
     const userId = req.user.user_id;
 
-    // Log the entire request body for debugging
+    
     console.log('Request body:', req.body);
     console.log('User ID:', userId);
     console.log('Selected Items:', selectedItems);
 
     // Log the cart_id value to see if it's being received
-    console.log('Cart ID:', cart_id); // Add this line to check cart_id
+    console.log('Cart ID:', cart_id);
 
     // Check if cart_id is present in the request
     if (!cart_id) {
@@ -27,7 +27,7 @@ exports.placeOrder = async (req, res) => {
         const [orderResult] = await db.execute(
             `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id) 
              VALUES (?, 0, 'Pending', ?)`,
-            [userId, cart_id] // Use the cart_id variable
+            [userId, cart_id] 
         );
         const orderId = orderResult.insertId;
 
