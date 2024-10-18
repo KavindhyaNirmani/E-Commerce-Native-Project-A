@@ -3,6 +3,7 @@
 
 const http=require('http');
 const app = require('./app'); 
+const testDbConnection = require('./test-db-connection'); 
 
 const port = process.env.PORT || 5010;
 
