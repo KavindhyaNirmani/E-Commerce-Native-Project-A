@@ -25,6 +25,26 @@ class Order{
     }
 
 
+    //Get all orders for a user
+    static async getOrderByUser(userId){
+        return db.execute(
+          `SELECT * FROM \`order\` WHERE user_id = ? ORDER BY order_date DESC`,
+            [userId]  
+        );
+    }
+
+
+    //Get a specific order byID
+    static async getOrderById(orderId){
+        const[rows]=await db.execute(
+            'SELECT*FROM\'order\' WHERE order_id=?',
+            [orderId]
+        );
+        //return the first row
+        return rows[0];
+    }
+
+
 }
 
 module.exports=Order;
