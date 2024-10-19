@@ -14,12 +14,16 @@
       crossorigin="anonymous"
     />
     <!-- Bootstrap 5 icons CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
     <style>
       .navbar {
         background-color: black;
         height: 72px;
-        margin: 0.5rem;
+        margin: 0.5rem; 
+        
       }
 
       body {
@@ -36,14 +40,14 @@
       }
 
       .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='yellow' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23FFD700' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
       }
 
       .nav-link {
-        color: #FFD700 !important;
+        color: #ffd700 !important;
         font-weight: 500;
-        font-family: Lato;
         margin-top: 10px;
+        font-size: 16px;
       }
 
       .navbar-nav {
@@ -52,7 +56,7 @@
 
       .nav-link:hover,
       .nav-link.active {
-        color: #FAFF00 !important;
+        color: #faff00 !important;
       }
 
       .navbar-icons {
@@ -72,44 +76,71 @@
       }
     </style>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg">
+  <body style="font-family: 'Lato', sans-serif;">
+    <nav class="navbar navbar-expand-lg ">
       <div class="container-fluid">
         <a class="navbar-brand me-auto" href="../pages/index.html">
-          <img src="../assets/images/logo.png" alt="Logo" style="height: 50px" />
+          <img
+            src="../assets/images/logo.png"
+            alt="Logo"
+            style="height: 50px"
+          />
         </a>
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
           <div class="offcanvas-header">
-            <button 
-              type="button" 
-              class="btn-close text-reset" 
-              data-bs-dismiss="offcanvas" 
-              aria-label="Close" 
-              style="background-color: #FFD700; border-radius: 50%; opacity: 1;">
-            </button>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              style="
+                background-color: #ffd700;
+                border-radius: 50%;
+                opacity: 1;
+              "
+            ></button>
           </div>
 
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../pages/index.html#carouselExampleSlidesOnly">Home</a>
+                <a
+                  class="nav-link mx-lg-2"
+                  href="../pages/index.html#carouselExampleSlidesOnly"
+                  >Home</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../pages/index.html#about">About Us</a>
+                <a class="nav-link mx-lg-2" href="../pages/index.html#about"
+                  >About Us</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../pages/index.html#menu">Menu</a>
+                <a class="nav-link mx-lg-2" href="../pages/index.html#menu"
+                  >Menu</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-lg-2" href="../pages/index.html#promotion">Promotion</a>
+                <a
+                  class="nav-link mx-lg-2"
+                  href="../pages/index.html#promotion"
+                  >Promotion</a
+                >
               </li>
             </ul>
 
             <!-- Display Add User button only in mobile view -->
             <ul class="navbar-nav d-lg-none">
               <li class="nav-item">
-                <a class="nav-link" href="../pages/user-reg.html"><i class="bi bi-person-add" style="font-size: 1.5rem;"></i></a>
+                <a class="nav-link" href="../pages/user-reg.html">
+                  <i class="bi bi-person-add" style="font-size: 1.5rem;"></i>
+                </a>
               </li>
             </ul>
           </div>
@@ -117,11 +148,15 @@
 
         <ul class="navbar-icons">
           <li class="nav-item">
-            <a class="nav-link" href="../pages/cart.html"><i class="bi bi-cart" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="../pages/cart.html">
+              <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+            </a>
           </li>
           <!-- Display Add User button only on larger screens -->
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="../pages/user-reg.html"><i class="bi bi-person-add" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="../pages/user-reg.html">
+              <i class="bi bi-person-add" style="font-size: 1.5rem;"></i>
+            </a>
           </li>
         </ul>
 
@@ -131,7 +166,8 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>

@@ -1,7 +1,4 @@
-.content {
-  margin-left: 300px;
-  padding: 10px;
-}
+
 .h6,
 h6 {
   color: gold;
@@ -15,6 +12,7 @@ table tr td {
   vertical-align: middle;
   color: #fff;
 }
+
 #data {
   height: 20px;
 }
@@ -25,9 +23,10 @@ td button i {
 
 .btn {
   color: #fad700;
-  size: 120%;
+  font-size: 120%; /* Change 'size' to 'font-size' */
   display: inline;
 }
+
 .btn:hover {
   color: #faff00;
 }
@@ -35,12 +34,14 @@ td button i {
 .btn1 {
   background-color: #fad700;
   color: #000;
-  font-family: bold;
+  font-weight: bold; /* Change 'font-family' to 'font-weight' */
 }
+
 .btn1:hover {
   background-color: #faff00;
   color: #000;
 }
+
 .modal-content {
   width: 80%;
   background-image: linear-gradient(#6c6a6a, #1e1e1e);
@@ -50,6 +51,7 @@ td button i {
   background: #6c6a6a;
   color: #000;
 }
+
 .modal-body form {
   display: flex;
   justify-content: space-between;
@@ -58,8 +60,6 @@ td button i {
 }
 
 .modal-body form .image-holder {
-  /* flex-basis: 32%;
-    height: 100%;*/
   width: 200px;
   height: 200px;
   position: relative;
@@ -70,8 +70,8 @@ td button i {
 .imgholder .upload {
   position: absolute;
   bottom: 0;
-  left: 10;
-  width: 100%;
+  left: 10px; /* Changed from 10 to 10px for proper unit */
+  width: calc(100% - 20px); /* Adjusted width to account for padding */
   height: 100px;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
@@ -88,6 +88,7 @@ td button i {
 .imgholder .upload input {
   display: none;
 }
+
 .modal-body form .inputField {
   flex-basis: 68%;
   margin-left: 10px;
@@ -105,11 +106,80 @@ form .inputField > div label {
   font-size: 15px;
   font-weight: 500;
 }
+
 body {
   margin-left: 260px;
 }
+
+/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   body {
     margin-left: 0;
+  }
+
+  .content {
+    margin-left: 0; /* Remove left margin on smaller screens */
+  }
+
+  .modal-body form {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .modal-body form .image-holder {
+    width: 100%; /* Make image-holder full width */
+    height: auto; /* Let height adjust automatically */
+  }
+
+  .modal-body form .inputField {
+    flex-basis: 100%; /* Take full width */
+    margin-left: 0; /* Remove margin */
+  }
+
+  .inputField > div {
+    flex-direction: column; /* Stack labels and inputs */
+    align-items: flex-start; /* Align to the start */
+  }
+
+  .inputField > div label {
+    margin-bottom: 5px; /* Add some space between label and input */
+  }
+
+  td button i {
+    font-size: 16px; /* Adjust icon size for smaller screens */
+  }
+
+  .btn,
+  .btn1 {
+    font-size: 100%; /* Adjust button font size */
+  }
+
+  .modal-content {
+    width: 100%; /* Make modal full width */
+  }
+}
+
+@media (max-width: 480px) {
+  td button i {
+    font-size: 14px; /* Further adjust icon size for very small screens */
+  }
+
+  .btn,
+  .btn1 {
+    font-size: 90%; /* Reduce button font size */
+  }
+
+  .modal-body form .image-holder {
+    height: 150px; /* Adjust height for smaller screens */
+  }
+}
+
+@media (max-width: 320px) {
+  .content {
+    padding: 5px; /* Reduce padding for very small screens */
+  }
+
+  .modal-content {
+    width: 100%; /* Ensure modal is full width */
   }
 }

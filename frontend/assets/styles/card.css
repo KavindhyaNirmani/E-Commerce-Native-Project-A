@@ -21,9 +21,13 @@
             left: 50%;
             transform: translate(-50%, -50%); /* Centers the text over the image */
             font-size: 35px;
-            color: white;
             font-weight: bold;
             z-index: 1; /* Ensures the text is on top of the image */
+            
+            /* Gradient text */
+            background: linear-gradient(30deg, white, #FAD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
                 /* Features section */
@@ -140,6 +144,7 @@
                     font-weight: bold;
                     cursor: pointer;
                     border-radius: 25px;
+                    padding: 15px;
                 }
         
                 .add-to-cart:hover {
