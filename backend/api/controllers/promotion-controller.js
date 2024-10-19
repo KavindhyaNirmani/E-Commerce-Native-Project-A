@@ -1,82 +1,89 @@
-const db = require('../../config/db');
-const fs = require('fs');
-const path = require('path');
 
+const Promotion = require('../models/Promotion'); 
+const db=require('../../config/db');
 
-//add a new promotion(adminOnly)
-exports.addPromotion=async(req,res)=>{
-    const{title,promotion_description,discount_percentage,start_date,end_date}=req.body;
-    const promotionImage = req.file ? req.file.filename : null;
-
-
-    try{
-        await db.execute(
-            'INSERT INTO promotion(title,promotion_description,discount_percentage,promotion_image,start_date,end_date) VALUES (?,?,?,?,?,?)',
-            [title,promotion_description,discount_percentage,promotion_image,start_date,end_date]
-
-        );
-        res.status(201).json({
-            message:'Promotion added succefully'
-        });
-    }catch(error){
-        console.error('Error adding promotion:',error);
+// Get all active promotions
+exports.getAllPromotions = async (req, res) => {
+    try {
+        const promotions = await Promotion.findAll();
+        res.status(200).json(promotions);
+    } catch (error) {
+        console.error('Error fetching promotions:', error);
         res.status(500).json({
-            error:'Failed to add promotion'
+            message: 'Server error',
+            error: error.message
         });
     }
 };
 
-
-
-
-//get all active promotions
-exports.getPromotions=async(req,res)=>{
-    try{
-    const[promotion]=await db.execute(
-        `SELECT *, CONCAT('/assets/images/promotion/', promotion_image) AS promotion_image 
-        FROM promotion 
-        WHERE CURDATE() BETWEEN start_date AND end_date`
-
-    );
-    res.status.json(promotion);
-    }catch(error){
-        console.error('Error fetching promotions:',error);
-        res.status(500).json({
-            error:'Failed to fetch promotions'
-        });
-    }
-};
-
-
-// Delete a promotion and its image
-exports.deletePromotion = async (req, res) => {
+// Get a single promotion by its ID
+exports.getPromotionById = async (req, res) => {
     const { promotionId } = req.params;
 
     try {
-        // Get the image filename from the DB
-        const [result] = await db.execute(
-            `SELECT promotion_image FROM promotion WHERE promotion_id = ?`,
-            [promotionId]
-        );
+        const promotion = await Promotion.findById(promotionId);
 
-        if (result.length === 0) {
-            return res.status(404).json({ error: 'Promotion not found' });
+        if (!promotion) {
+            return res.status(404).json({
+                message: 'Promotion not found'
+            });
         }
 
-        const promotionImage = result[0].promotion_image;
-        const imagePath = path.join(__dirname, '../../frontend/assets/images/promotion', promotionImage);
+        res.status(200).json(promotion);
+    } catch (error) {
+        console.error('Error fetching promotion:', error);
+        res.status(500).json({
+            message: 'Server error',
+            error: error.message
+        });
+    }
+};
 
-        // Delete the image file from the folder
-        fs.unlink(imagePath, (err) => {
-            if (err) console.error('Error deleting image:', err);
+// Add a new promotion
+exports.addPromotion = async (req, res) => {
+    console.log('Add promotion request received');
+
+    const { title, promotion_description, discount_percentage, start_date, end_date } = req.body;
+    const promotion_image = req.file ? `/assets/images/promotion/${req.file.filename}` : null;
+
+    try {
+        const promotion = await Promotion.create({
+            title,
+            promotion_description,
+            discount_percentage,
+            promotion_image,
+            start_date,
+            end_date
         });
 
-        // Delete the promotion from the DB
-        await db.execute(`DELETE FROM promotion WHERE promotion_id = ?`, [promotionId]);
+        res.status(201).json({
+            message: "Promotion added successfully",
+            promotion
+        });
+    } catch (error) {
+        console.error('Error adding promotion:', error);
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
 
-        res.json({ message: 'Promotion deleted successfully' });
+// Delete a promotion by ID
+exports.deletePromotion = async (req, res) => {
+    const { promotionId } = req.params;
+
+    console.log(`Request to delete promotion with ID: ${promotionId}`); 
+
+    try {
+        const result = await Promotion.deleteById(promotionId);
+        console.log('Delete result:', result); 
+        res.status(204).send('Promotion deleted successfully'); 
     } catch (error) {
         console.error('Error deleting promotion:', error);
-        res.status(500).json({ error: 'Failed to delete promotion' });
+        res.status(500).json({
+            message: 'Server error',
+            error: error.message
+        });
     }
 };
