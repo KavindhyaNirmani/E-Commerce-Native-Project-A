@@ -18,13 +18,4 @@ connection.connect((err) => {
     }
     console.log('Connected to the database.');
 
-    // Perform a simple query to test the connection
-    connection.query('SELECT 1 + 1 AS solution', (err, results) => {
-        if (err) {
-            console.error('Error performing query:', err.message);
-            return;
-        }
-        console.log('Query result:', results[0].solution);
-        connection.end();
-    });
 });

@@ -11,6 +11,8 @@ const path = require('path');
 const authRoutes=require('./api/routes/auth-routes');
 const itemRoutes=require('./api/routes/item-routes');
 const cartRoutes=require('./api/routes/cart-routes');
+const orderRoutes=require('./api/routes/order-routes');
+const promotionRoutes=require('./api/routes/promotion-routes');
 
 //middleware for logging requests and parsing the body
 app.use(morgan('dev'));
@@ -46,6 +48,8 @@ app.get('/', (req, res) => {
 app.use('/auth',authRoutes);
 app.use('/items',itemRoutes);
 app.use('/cart',cartRoutes);
+app.use('/orders', orderRoutes);
+app.use('/promotion', promotionRoutes);
 
 const menuAssetsPath = path.resolve(__dirname, '../frontend/assets/images/menu');
 app.use('/assets/images/menu', express.static(menuAssetsPath));
@@ -71,6 +75,12 @@ app.use((error,req,res,next)=>{
     });
     
 });
+
+app.use('/promotion', promotionRoutes);
+
+
+
+
 
 
 
