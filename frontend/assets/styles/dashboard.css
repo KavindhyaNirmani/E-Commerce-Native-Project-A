@@ -91,6 +91,7 @@ body {
   color: black;
   border: 2px solid #fad700;
   font-weight: bolder;
+  margin-bottom: 20px;
 }
 
 .custom-yellow:hover,
@@ -104,6 +105,7 @@ body {
   background-color: transparent;
   color: #fad700;
   border: 2px solid #fad700; /* Border to match the 'outline' style */
+  margin-bottom: 20px;
 }
 
 .custom-yellow-outline:hover {
@@ -172,6 +174,13 @@ p {
   }
   body {
     margin-left: 300px;
+    height: 100%;
+  }
+  .custom-yellow {
+    margin-bottom: 20px;
+  }
+  .custom-yellow-outline {
+    margin-bottom: 20px;
   }
 }
 
@@ -196,6 +205,13 @@ p {
   }
   body {
     margin-left: 0;
+    height: 100%;
+  }
+  .custom-yellow {
+    margin-bottom: 20px;
+  }
+  .custom-yellow-outline {
+    margin-bottom: 20px;
   }
 }
 
@@ -235,5 +251,14 @@ p {
     display: flex; /* Center the image container */
     justify-content: center; /* Center the image within the container */
     align-items: center; /* Center the image vertically */
+  }
+  .custom-yellow {
+    margin-bottom: 20px;
+  }
+  .custom-yellow-outline {
+    margin-bottom: 20px;
+  }
+  body {
+    height: 100%;
   }
 }
