@@ -23,7 +23,7 @@ class User {
     static async findByUsername(username) {
         
         try {
-            const [result] = await db.execute('SELECT * FROM user WHERE username = ?', [username]);
+            const [result] = await db.execute('SELECT * FROM user WHERE username = ? AND is_deleted = 0', [username]);
             return result[0];
         } catch (error) {
             throw new Error('Error finding user by username: ' + error.message);
