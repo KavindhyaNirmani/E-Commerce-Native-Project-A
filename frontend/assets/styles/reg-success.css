@@ -9,7 +9,6 @@
 body {
   background-color: #b7b0b0 !important;
   color: #ffffff !important;
-
 }
 
 .modal-content {
@@ -18,7 +17,6 @@ body {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1) !important;
   max-width: 100%;
   padding: 0px;
-
 }
 
 .success-title {
@@ -36,31 +34,27 @@ body {
   margin: auto;
   text-align: center;
   padding: 10px 0;
-  background-color: #FAFF00 !important;
-  border-color: #FAFF00 !important;
+  background-color: #faff00 !important;
+  border-color: #faff00 !important;
   width: 100%;
   font-weight: bold;
   border-radius: 5px;
-
 }
 
 .btn:hover {
   background-color: #9ba49b !important;
   border-color: #9ba49b !important;
-
 }
 
-.a btn{
+.a btn {
   text-decoration: none !important;
   color: black !important;
-
 }
 
 .img-fluid {
   width: 50px;
   height: auto;
   margin-left: 45%;
-
 }
 
 .close_img {
@@ -71,10 +65,8 @@ body {
   right: 20px;
   transition: transform 0.2s ease;
   cursor: pointer;
-
 }
 
 .close_img:active {
   transform: scale(1.2);
-  
 }
