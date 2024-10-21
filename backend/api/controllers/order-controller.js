@@ -23,29 +23,30 @@ exports.placeOrder = async (req, res) => {
     try {
         console.log('Placing order for user:', userId);
 
+        // Check for an active promotion
+        const [promotion] = await db.execute(
+            `SELECT discount_percentage FROM promotion 
+             WHERE CURDATE() BETWEEN start_date AND end_date 
+             LIMIT 1`
+        );
+        const discountPercentage = promotion.length ? promotion[0].discount_percentage : 0;
+
+
         // Create a new order
         const [orderResult] = await db.execute(
-            `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id) 
-             VALUES (?, 0, 'Pending', ?)`,
+            `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount) 
+             VALUES (?, 0, 'Pending', ?,0,0)`,
             [userId, cart_id] 
         );
         const orderId = orderResult.insertId;
 
-        // Add selected items to order_items
+        // Calculate total amount and add items to the order
         let totalAmount = 0;
         for (const item of selectedItems) {
             const { item_id, quantity, item_price } = item;
+            const itemTotal = quantity * item_price;
+            totalAmount += itemTotal;
 
-            // Check for undefined values before proceeding
-            if (item_id === undefined || quantity === undefined || item_price === undefined) {
-                console.error('Undefined values in item:', item);
-                return res.status(400).json({ error: 'Invalid item data' });
-            }
-
-            const totalPrice = quantity * item_price;
-            totalAmount += totalPrice;
-
-            console.log('Adding item to order:', item);
             await db.execute(
                 `INSERT INTO order_items (order_id, item_id, quantity, item_price) 
                  VALUES (?, ?, ?, ?)`,
@@ -53,10 +54,14 @@ exports.placeOrder = async (req, res) => {
             );
         }
 
-        // Update the total amount of the order
+        // Calculate discount and final amount
+        const discountAmount = (totalAmount * discountPercentage) / 100;
+        const finalAmount = totalAmount - discountAmount;
+
+        // Update the order with the discount and final amount
         await db.execute(
-            'UPDATE `order` SET total_amount = ? WHERE order_id = ?',
-            [totalAmount, orderId]
+            `UPDATE \`order\` SET total_amount = ?, discount = ?, final_amount = ? WHERE order_id = ?`,
+            [totalAmount, discountAmount, finalAmount, orderId]
         );
 
         // Store delivery details in order_details
@@ -69,7 +74,9 @@ exports.placeOrder = async (req, res) => {
         res.json({
             message: 'Order placed successfully',
             orderId,
-            totalAmount
+            totalAmount,
+            discountAmount,
+            finalAmount
         });
     } catch (err) {
         console.error('Error while placing order:', err);

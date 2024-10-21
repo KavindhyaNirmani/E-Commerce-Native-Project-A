@@ -1,219 +1,202 @@
-         /* Hero section */
-         .hero {
-            position: relative; /* Allows text to overlay on the image */
-            text-align: center;
-            font-family: 'Lato', sans-serif;
-            height: 410px;
-            margin: 10px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            }
-        
-         .hero-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the section while maintaining its aspect ratio */
-            }
-        
-            @keyframes fadeInSlideDown {
-            0% {
-              opacity: 0;
-              transform: translate(0%, -100%); /* Start above the viewport */
-            }
-            100% {
-              opacity: 1;
-              transform: translate(-50%, -50%); /* Move to the centered position */
-            }
-            }
-              
-         .hero h1 {
-             position: absolute;
-             top: 20%;
-             left: 50%;
-             transform: translate(-50%, -50%);
-             font-size: 35px;
-             font-weight: bold;
-             color: white;
-             z-index: 1;
-             opacity: 0; /* Initial opacity */
-             animation: fadeInSlideDown 3s ease-out forwards; /* Apply the animation */
-            }
-              
-        
-                /* Features section */
-         .features {
-             display: flex;
-             flex-wrap: wrap;
-             justify-content: space-around;
-             font-family: 'Lato', sans-serif;
-             margin: 10px;
-             margin-top: 20px;
-             margin-bottom: 20px;
-             background-color: #1F0B0B;
-            }
-        
-         .feature {
-             flex: 1 1 300px;
-             max-width: 300px;
-             text-align: center;
-             margin: 10px;
-            }
-        
-         .feature img {
-             padding-top: 15px;
-             width: 100%;
-             height: auto;
-             max-width: 150px;
-             margin-bottom: 10px;
-            }
-        
-         .feature h3 {
-             font-size: 20px;
-             font-weight: bold;
-             margin-top: 10px;
-             color: white;
-            }
-        
-         .feature p {
-             font-size: 15px;
-             color: white;
-             font-weight: bold;
-            }
-        
-                /* Menu section */
-         .menu {
-             padding: 20px;
-             margin: 10px;
-             display: flex;
-             flex-wrap: wrap;
-             justify-content: space-between;
-            }
-        
-         .menu-item {
-             display: flex;
-             flex-direction: column;
-             justify-content: space-between;
-             text-align: center;
-             height: 450px;
-             padding: 10px;
-             border-radius: 20px;
-             background-color: #1F0B0B;
-             font-family: 'Lato', sans-serif;
-             transition: transform 0.3s ease;
-             position: relative;
-            }
-        
-        .menu-item:hover {
-             transform: scale(1.05);
-            }
-        
-        .menu-item img {
-             width: 100%;
-             height: 200px;
-             object-fit: cover;
-             margin-bottom: 20px;
-             border-radius: 15px;
-            }
-        
-        .menu-item h4 {
-             font-size: 17px;
-             margin-bottom: 10px;
-             color: white;
-             font-weight: bold;
-            }
-        
-        .menu-item h5 {
-             font-size: 17px;
-             font-weight: bold;
-             margin-bottom: 10px;
-             color: #FAD700;
-            }
-        
-        .menu-item p {
-             font-size: 14px;
-             padding-left: 15px;
-             padding-right: 15px;
-             margin-bottom: 120px;
-             color: white;
-            }
-        
-        .add-to-cart {
-             background-color: #FAD700;
-             position: absolute;
-             bottom: 20px;
-             left: 50%;
-             transform: translateX(-50%);
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             width: 60%;
-             height: 5%;
-             color: black;
-             border: none;
-             font-size: 13px;
-             font-weight: bold;
-             cursor: pointer;
-             border-radius: 25px;
-                    
-            }
-        
-         .add-to-cart:hover {
-             background-color: #FAFF00;
-            }
-        
-                /* Container for both buttons */
-         .button-container {
-             display: flex;
-             justify-content: space-between;
-             margin: 20px 0; /* Adjust space around buttons */
-            }
+/* Hero section */
+.hero {
+  position: relative; 
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  height: 410px;
+  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
-                /* Style for View More Button */
-         .view-all-btn {
-             background-color: #FAD700;
-             color: black;
-             font-size: 18px;
-             font-weight: bold;
-             cursor: pointer;
-             border-radius: 25px;
-             width: 125px;
-             height: 40px;
-             margin-right: 15px;
-             display: inline-block;
-            }
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
 
-               /* Style for Back Button */
-         .back-btn {
-             background-color: #FAD700;
-             color: black;
-             font-size: 18px;
-             font-weight: bold;
-             cursor: pointer;
-             border-radius: 25px;
-             width: 125px;
-             height: 40px;
-             margin-left: 15px;
-             display: inline-block;
-            }
+.hero h1 {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the text over the image */
+  font-size: 35px;
+  font-weight: bold;
+  z-index: 1; /* Ensures the text is on top of the image */
+}
 
-            /* Hover Effects */
-         .view-all-btn:hover, .back-btn:hover {
-             background-color: #FAFF00;
-            }
+/* Features section */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-family: "Lato", sans-serif;
+  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #1f0b0b;
+}
 
-             /* Responsive styling */
-        @media (max-width: 1024px) {
-         .menu-item {
-             flex: 1 1 calc(50% - 20px);
-             }
-            }
+.feature {
+  flex: 1 1 300px;
+  max-width: 300px;
+  text-align: center;
+  margin: 10px;
+}
 
-        
-        @media (max-width: 576px) {
-         .menu-item {
-             flex: 1 1 calc(50% - 10px);
-             margin: 20px;
-            /* 2 item per row on mobile */
-             }
-                }
-        
+.feature img {
+  padding-top: 15px;
+  width: 100%;
+  height: auto;
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+.feature p {
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Menu section */
+.menu {
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 450px;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #1f0b0b;
+  font-family: "Lato", sans-serif;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+}
+
+.menu-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.menu-item h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.menu-item h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fad700;
+}
+
+.menu-item p {
+  font-size: 14px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 120px;
+  color: #ffffff;
+}
+
+.add-to-cart {
+  background-color: #fad700;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 5%;
+  color: #000000;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+.add-to-cart:hover {
+  background-color: #faff00;
+}
+
+/* Container for both buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0; 
+}
+
+/* Style for View More Button */
+.view-all-btn {
+  background-color: #fad700;
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 125px;
+  height: 40px;
+  margin-right: 15px;
+  display: inline-block;
+}
+
+/* Style for Back Button */
+.back-btn {
+  background-color: #fad700;
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+  width: 125px;
+  height: 40px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+.view-all-btn:hover,
+.back-btn:hover {
+  background-color: #faff00;
+}
+
+/* Responsive styling */
+@media (max-width: 1024px) {
+  .menu-item {
+    flex: 1 1 calc(50% - 20px);
+    /* 2 items per row on tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .menu-item {
+    flex: 1 1 calc(100% - 20px);
+    /* 1 item per row on mobile */
+  }
+}
