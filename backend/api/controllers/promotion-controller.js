@@ -2,6 +2,8 @@
 const Promotion = require('../models/Promotion'); 
 const db=require('../../config/db');
 
+
+
 // Get all active promotions
 exports.getAllPromotions = async (req, res) => {
     try {
@@ -15,6 +17,8 @@ exports.getAllPromotions = async (req, res) => {
         });
     }
 };
+
+
 
 // Get a single promotion by its ID
 exports.getPromotionById = async (req, res) => {
@@ -38,6 +42,8 @@ exports.getPromotionById = async (req, res) => {
         });
     }
 };
+
+
 
 // Add a new promotion
 exports.addPromotion = async (req, res) => {
@@ -68,6 +74,8 @@ exports.addPromotion = async (req, res) => {
         });
     }
 };
+
+
 
 // Delete a promotion by ID
 exports.deletePromotion = async (req, res) => {
