@@ -5,6 +5,8 @@ const multer= require('multer');
 const path = require('path');
 
 const router = express.Router();
+
+
 // Set up the storage for images
 const promotionAssetsPath = path.resolve(__dirname, '../../../frontend/assets/images/promotion');
 const storage = multer.diskStorage({
@@ -19,15 +21,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+
 // Admin-only route to add promotions
 router.post('/', protect, adminOnly, upload.single('promotion_image'), promotionController.addPromotion);
 
 // Public route to get active promotions
 router.get('/', promotionController.getAllPromotions); 
+
 // Admin-only route to fetch a promotion by ID
 router.get('/:promotionId', promotionController.getPromotionById);
 
 // Admin-only route to delete a promotion by ID
 router.delete('/:promotionId', protect, adminOnly, promotionController.deletePromotion);
+
+
 
 module.exports = router;

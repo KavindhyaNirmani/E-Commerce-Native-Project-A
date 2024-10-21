@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gather & Grab - Checkout</title>
-  <link rel="icon" type="image/png" href="../Assets/Images/logo.png?v=1">
+  <link rel="icon" type="image/png" href="./assets/images/logo.png">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="../assets/styles/cart.css" />
-  <link rel="stylesheet" href="../assets/styles/checkout.css" />
+  <link rel="stylesheet" href="./assets/styles/cart.css" />
+  <link rel="stylesheet" href="./assets/styles/checkout.css" />
 
   <!-- Google Fonts -->
   <link
@@ -32,13 +32,13 @@
   />
 </head>
 <body
-    style="font-family: 'Lato', sans-serif; background-image: linear-gradient(#6c6a6a, #1e1e1e); min-height: 100vh;">
+    style="font-family: 'Lato', sans-serif; background-image: linear-gradient(#6c6a6a, #1e1e1e); height: 100%;">
 
   <!-- Navbar -->
   <div id="headerPlaceholder"></div>
   
   <script>
-      fetch('../components/header.html')
+      fetch('./header.html')
           .then(response => response.text())
           .then(data => {
               document.getElementById('headerPlaceholder').innerHTML = data;
@@ -129,8 +129,13 @@
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <input type="tel" name="mobileNumber" class="form-control" placeholder="Mobile Number" pattern="[0-9]{10}" required>
+            <div class="input-group">
+              <span class="input-group-text">+94</span>
+              <input type="tel" name="mobileNumber" class="form-control" placeholder="712345678" pattern="[0-9]{9}" required>
+            </div>
           </div>
+          
+
           <div class="col-md-6">
             <input type="email" name="emailAddress" class="form-control" placeholder="Email Address" required>
           </div>
@@ -163,7 +168,7 @@
   <!-- Footer Section -->
   <div id="footerPlaceholder"></div>
   <script>
-      fetch('../components/footer.html')
+      fetch('./footer.html')
           .then(response => response.text())
           .then(data => {
               document.getElementById('footerPlaceholder').innerHTML = data;

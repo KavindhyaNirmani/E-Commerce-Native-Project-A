@@ -35,11 +35,13 @@ body {
   display: flex;
   flex-direction: row;
 }
+
 .quantity-controls button:hover {
   background-color: #faf000;
   font-weight: bolder;
   color: #000000;
 }
+
 .quantity-controls .quantity {
   color: white;
   font-size: 14px; /* Adjusted for better visibility */
@@ -49,6 +51,7 @@ body {
 .empty-cart-message {
   color: #ffffff;
 }
+
 .table {
   background-color: #444444;
   color: azure;
@@ -75,6 +78,7 @@ body {
   align-items: center;
   border-bottom: 10px solid #6c6a6c;
 }
+
 #cart-table td {
   padding: 5px; /* Reduced padding for smaller devices */
   font-size: 12px; /* Further reduced text size */
@@ -82,6 +86,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .item-price,
 #totalPrice {
   color: #fad700 !important;
@@ -100,13 +105,16 @@ body {
   color: #fad700;
   font-size: 36px; /* Adjusted for small screens */
 }
+
 .order-summary table {
   width: 100%;
   height: auto;
 }
+
 .order-summary table tr {
   height: 10%;
 }
+
 /* Checkout Button */
 .btn-checkout {
   background-color: #fad700;
@@ -120,6 +128,7 @@ body {
   font-size: 14px; /* Adjusted font size for smaller screens */
   font-weight: bold;
 }
+
 .btn-add {
   background-color: #fad700;
   color: black;
@@ -132,11 +141,13 @@ body {
   font-size: 14px; /* Adjusted font size for smaller screens */
   font-weight: bold;
 }
+
 .btn-checkout:hover,
 .btn-add:hover {
-  background-color: #faf000;
+  background-color: #faff00;
   color: #000000;
 }
+
 /* Media Queries */
 @media screen and (max-width: 375px) {
   .container {

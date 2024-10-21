@@ -2,10 +2,12 @@ body {
   overflow-x: hidden;
   background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
 }
+
 .content {
   margin-left: 300px;
   padding: 10px;
 }
+
 .container h2 {
   color: #fad700;
 }
@@ -88,6 +90,7 @@ body {
 h2 {
   color: #fad700;
 }
+
 /*offer section*/
 .special-offer-img {
   width: 300px;
@@ -103,9 +106,11 @@ h2 {
   background-color: #000;
   color: #fad700;
 }
+
 #closeModal {
   color: #ffffff;
 }
+
 .modal-footer button {
   width: 100px;
   background-color: #fad700;
@@ -154,6 +159,7 @@ h2 {
   padding: 2px 8px;
   cursor: pointer;
 }
+
 .custom-yellow {
   background-color: #fad700; /* Set your custom yellow */
   color: black;
@@ -183,6 +189,47 @@ h2 {
 }
 p {
   color: #fad700;
+}
+/* Menu section */
+.menutopic h2 {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+}
+
+#beverageCard,
+#cakeCard,
+#pizzaCard {
+  background-color: #1f0b0b;
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 150px;
+  max-height: 170px;
+  min-width: 80px;
+  width: 100%;
+  margin: 0; /* Set margin to 0 for no gaps */
+  margin-bottom: 5px; /* Space between cards if needed */
+}
+
+.card-img-container {
+  background-color: #1f0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.col {
+  padding: 0; /* Remove padding to minimize space */
 }
 
 /* Centering for small screens */
