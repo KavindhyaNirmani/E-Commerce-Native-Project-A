@@ -2,15 +2,18 @@
   height: 90vh;
   width: 100%;
 }
+
 /*Welcome section*/
 #carouselExampleFade {
   margin: 8px; /* Adds 8px margin around the entire carousel */
 }
+
 .carousel-caption h2 {
   color: #ffffff;
   text-align: left;
   font-size: clamp(20px, 5vw, 60px);
 }
+
 .carousel-caption h1 {
   color: #fad700;
   text-align: left;
@@ -19,6 +22,7 @@
   font-weight: 1000;
   letter-spacing: 3px;
 }
+
 .carousel-caption {
   position: absolute;
   top: clamp(10px, 2vw, 50px);
@@ -90,11 +94,13 @@
   margin-top: 20px;
   font-size: 34px;
 }
+
 .about-text p {
   color: #ffffff;
   font-size: 18px;
   text-align: justify;
 }
+
 /*image side*/
 .about-img img {
   width: 70%;

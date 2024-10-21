@@ -20,7 +20,7 @@
     />
 
     <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png?v=1" />
+    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
 
     <!-- jQuery (if needed for other parts of your project) -->
     <script
@@ -35,8 +35,8 @@
       crossorigin="anonymous"
     ></script>
 
-    <link rel="stylesheet" href="../assets/styles/item-management.css" />
-    <link rel="stylesheet" href="../components/side-bar/sidebar.css" />
+    <link rel="stylesheet" href="./assets/styles/item-management.css" />
+    <link rel="stylesheet" href="./assets/styles/sidebar.css" />
   </head>
   <body style="font-family: 'Lato', sans-serif;
       background-image: linear-gradient(#6c6a6a, #1e1e1e);
@@ -47,7 +47,7 @@
     <div id="sidebar-placeholder"></div>
 
     <script>
-      fetch("../components/side-bar/sidebar.html")
+      fetch("./sidebar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("sidebar-placeholder").innerHTML = data;

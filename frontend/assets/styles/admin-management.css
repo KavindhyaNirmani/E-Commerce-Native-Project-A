@@ -37,6 +37,7 @@ body {
 .modal-dialog-custom {
   max-width: 50%;
 }
+
 .btn-custom {
   box-sizing: border-box;
   background-color: yellow;
@@ -44,6 +45,7 @@ body {
   width: 100px;
   font-weight: 500;
 }
+
 .custom-title {
   box-sizing: border-box;
 }
@@ -54,10 +56,12 @@ body {
   display: flex;
   justify-content: center;
 }
+
 .container-fluid {
   margin-left: 300px;
   padding: 0;
 }
+
 @media (max-width: 768px) {
   .container-fluid {
     margin-left: 0;

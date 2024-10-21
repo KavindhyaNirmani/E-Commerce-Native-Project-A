@@ -4,41 +4,38 @@
 *{
     box-sizing: border-box;
 }
-body{
-    background-image: linear-gradient(#6C6A6A,#1E1E1E);
-    
+body {
+    background-image: linear-gradient(#6C6A6A,#1E1E1E); 
     overflow-x: hidden;
    
 }
 
 .image-section {
     height: 100vh; /* Make it cover full viewport height */
-    
     z-index:-1 ;
 }
 
 /* Adjust the form section to not overlap with the image */
 .form-section {
-   
     overflow-y: auto; /* Allow vertical scrolling if necessary */
     height: 100vh; /* Full viewport height */
     padding: 20px; /* Add some padding if needed */
 }
 
-.row{
+.row {
     display: flex;
     flex-wrap: wrap;
 }
 
 
-.text-overlay{
+.text-overlay {
     position:absolute;
     top: 10px;
     right: 10px;
     padding: 20px;
 
 }
-.text-overlay h2{
+.text-overlay h2 {
     color: white;
     margin: 0;
     font-size:2.5rem;
@@ -47,12 +44,12 @@ body{
     font-weight: bold;
 }
 
-label{
+label {
     color: white;
     font-size: 18px;
     padding-left: 2px !important;
 }
-p{
+p {
     color: white; 
     display: flex; 
     justify-content: center;
@@ -60,17 +57,17 @@ p{
     
 }
 
-p a{
+p a {
     padding-left: 10px; 
     color: white; 
     text-decoration: underline;
     text-decoration-color:  white;
 }
 
-button{
+button {
     background-color: #FAD700 !important;
 }
-.custom-btn{
+.custom-btn {
     background-color: #FAD700 !important; 
     color: black; 
     font-size: 18px;
@@ -85,17 +82,17 @@ button{
     color: black;
    
 }
-p a{
+p a {
     padding-left: 10px; 
     color: white; 
     text-decoration: underline;
     text-decoration-color:  white;
 }
 
-p a:hover{
+p a:hover {
     color:#FAFF00;
 }
-.custom-padding{
+.custom-padding {
     padding: 10px !important;
 }
 /* Responsive behavior */
