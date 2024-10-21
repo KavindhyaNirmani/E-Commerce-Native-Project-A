@@ -15,9 +15,9 @@ body {
 
 /* Adjust the form section to not overlap with the image */
 .form-section {
-  overflow-y: auto; /* Allow vertical scrolling if necessary */
-  height: 100vh; /* Full viewport height */
-  padding: 20px; /* Add some padding if needed */
+  overflow-y: auto;
+  height: 100vh;
+  padding: 20px;
 }
 
 .row {
@@ -31,6 +31,7 @@ body {
   right: 10px;
   padding: 20px;
 }
+
 .text-overlay h2 {
   color: white;
   margin: 0;
@@ -45,6 +46,7 @@ label {
   font-size: 18px;
   padding-left: 2px !important;
 }
+
 p {
   color: white;
   display: flex;
@@ -62,6 +64,7 @@ p a {
 button {
   background-color: #fad700 !important;
 }
+
 .custom-btn {
   background-color: #fad700 !important;
   color: black;
@@ -76,6 +79,7 @@ button {
   background-color: #faff00 !important;
   color: black;
 }
+
 p a {
   padding-left: 10px;
   color: white;
@@ -86,9 +90,11 @@ p a {
 p a:hover {
   color: #faff00;
 }
+
 .custom-padding {
   padding: 10px !important;
 }
+
 /* Responsive behavior */
 @media (min-width: 530px) {
   .text-style {

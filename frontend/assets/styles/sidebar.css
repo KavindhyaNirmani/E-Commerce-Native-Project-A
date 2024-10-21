@@ -52,7 +52,7 @@
 
 /* Toggle Button */
 .toggle-container {
-  padding: 10px; /* Optional: Add some padding */
+  padding: 10px; 
   border: none;
   position: absolute;
   top: 10px;
@@ -67,9 +67,9 @@
   cursor: pointer;
   display: none;
   background-color: transparent;
-  font-size: 24px; /* Adjust font size */
+  font-size: 24px; 
   font-weight: bolder;
-  border: 1px solid #fad700; /* Very light border */
+  border: 1px solid #fad700; 
   padding: 5px;
   box-shadow: none;
   z-index: 1000;
