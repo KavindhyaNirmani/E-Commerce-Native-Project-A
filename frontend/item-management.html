@@ -305,7 +305,7 @@
         // Function to load items from the API
         const loadItems = async () => {
           try {
-            const response = await fetch("http://localhost:5010/items", {
+            const response = await fetch("https://ecom-back-t1.netfy.app/items", {
               headers: {
                 Authorization: `Bearer ${JWT_TOKEN}`,
               },
@@ -324,7 +324,7 @@
                 <td>${parseFloat(item.item_price).toFixed(2)}</td>
                 <td>${escapeHTML(item.category_id)}</td>
                 <td>
-                  <img src="http://localhost:5010${escapeHTML(
+                  <img src="https://ecom-back-t1.netfy.app${escapeHTML(
                     item.item_image
                   )}" alt="Item Image" width="40" height="40">
                 </td>
@@ -369,7 +369,7 @@
         window.viewItem = async (item_id) => {
           try {
             const response = await fetch(
-              `http://localhost:5010/items/${item_id}`,
+              `https://ecom-back-t1.netfy.app/items/${item_id}`,
               {
                 headers: {
                   Authorization: `Bearer ${JWT_TOKEN}`,
@@ -383,7 +383,7 @@
             const item = await response.json();
             document.getElementById(
               "viewImg"
-            ).src = `http://localhost:5010${item.item_image}`;
+            ).src = `https://ecom-back-t1.netfy.app${item.item_image}`;
             document.getElementById("viewName").value = item.item_name;
             document.getElementById("viewDescription").value =
               item.item_description;
@@ -402,7 +402,7 @@
         window.editItem = async (item_id) => {
           try {
             const response = await fetch(
-              `http://localhost:5010/items/${item_id}`,
+              `https://ecom-back-t1.netfy.app/items/${item_id}`,
               {
                 headers: {
                   Authorization: `Bearer ${JWT_TOKEN}`,
@@ -423,7 +423,7 @@
             document.getElementById("category").value = item.category_id; // Assuming category_id corresponds to category_name
             document.getElementById(
               "imgPreview"
-            ).src = `http://localhost:5010${item.item_image}`;
+            ).src = `https://ecom-back-t1.netfy.app${item.item_image}`;
             currentItemId = item_id;
             userFormModal.show();
           } catch (error) {
@@ -460,12 +460,12 @@
           }
 
           try {
-            let url = "http://localhost:5010/items";
+            let url = "https://ecom-back-t1.netfy.app/items";
             let method = "POST";
 
             if (currentItemId) {
               // If editing, adjust URL and method
-              url = `http://localhost:5010/items/${currentItemId}`;
+              url = `https://ecom-back-t1.netfy.app/items/${currentItemId}`;
               method = "PUT"; // or 'PATCH' depending on your API
             }
 
@@ -519,7 +519,7 @@
           if (confirm("Are you sure you want to delete this item?")) {
             try {
               const response = await fetch(
-                `http://localhost:5010/items/${id}`,
+                `https://ecom-back-t1.netfy.app/items/${id}`,
                 {
                   method: "DELETE",
                   headers: {

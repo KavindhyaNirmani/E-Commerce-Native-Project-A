@@ -101,7 +101,7 @@
       let cakeLimit = 4; // Initial limit for items to display
 
       // Fetch all pizza items and store them
-      fetch("http://localhost:5010/items/category/cake")
+      fetch("https://ecom-back-t1.netfy.app/items/category/cake")
         .then((response) => response.json())
         .then((data) => {
           allCakeData = data;
@@ -117,7 +117,7 @@
           menuItem.classList.add("col-md-3", "col-sm-6", "mb-4"); // Bootstrap grid classes
           menuItem.innerHTML = `
                     <div class="menu-item">
-                        <img src="http://localhost:5010${item.item_image}" alt="${item.item_name}">
+                        <img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${item.item_name}">
                         <h4>${item.item_name}</h4>
                         <h5>Rs: ${item.item_price}</h5>
                         <p>${item.item_description}</p>
