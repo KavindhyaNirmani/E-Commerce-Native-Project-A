@@ -38,10 +38,13 @@
     <link rel="stylesheet" href="./assets/styles/item-management.css" />
     <link rel="stylesheet" href="./assets/styles/sidebar.css" />
   </head>
-  <body style="font-family: 'Lato', sans-serif;
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
       background-image: linear-gradient(#6c6a6a, #1e1e1e);
-      height: 100%;">
-      
+      height: 100%;
+    "
+  >
     <!-- Placeholder for Sidebar -->
 
     <div id="sidebar-placeholder"></div>
@@ -74,167 +77,79 @@
         })
         .catch((error) => console.error("Error loading sidebar:", error));
     </script>
-    
-      <section class="p-3">
-        <div class="row">
-          <div class="col-12">
-            <h6 class="mb-4">Add Item</h6>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-12">
-            <div class="table-container">
-              <table
-                class="table table-striped table-hover text-center table-bordered"
-              >
-                <thead class="table-dark">
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Item Description</th>
-                    <th>Price (Rs)</th>
-                    <th>Category</th>
-                    <th>Item Image</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="data">
-                  <!-- Dynamic Content -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
-          Add Items <i class="bi bi-plus-circle"></i>
-        </button>
-      </section>
-
-      <!-- Modal Form for Add/Edit Items -->
-      <div
-        class="modal fade"
-        id="userForm"
-        tabindex="-1"
-        aria-labelledby="userFormLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="userFormLabel">Item Information</h4>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-
-            <div class="modal-body">
-              <form id="myForm">
-                <div class="card image-holder">
-                  <label for="imgInput" class="upload">
-                    <i class="bi bi-plus-circle-dotted fs-1"></i>
-                    <input
-                      type="file"
-                      name="item_image"
-                      id="imgInput"
-                      accept="image/*"
-                      style="display: none"
-                    />
-                  </label>
-                  <img
-                    id="imgPreview"
-                    src=" "
-                    alt="Image Preview"
-                    width="200"
-                    height="200"
-                    class="img d-block mx-auto"
-                  />
-                </div>
-
-                <div class="inputField">
-                  <div>
-                    <label for="name" class="form-label">Item Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      class="form-control"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label for="description" class="form-label"
-                      >Item Description</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="description"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label for="price" class="form-label">Price (Rs)</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="price"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" class="form-select" required>
-                      <option value="">Select Category</option>
-                      <option value="pizza">Pizza</option>
-                      <option value="cake">Cake</option>
-                      <option value="beverage">Beverage</option>
-                    </select>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div class="modal-footer">
-              <button type="submit" form="myForm" class="btn btn-primary">
-                Submit
-              </button>
-              <button type="reset" class="btn btn-danger">Discard</button>
-            </div>
-          </div>
+    <section class="p-3">
+      <div class="row">
+        <div class="col-12">
+          <h6 class="mb-4">Add Item</h6>
         </div>
       </div>
 
-      <!-- View Data Modal -->
-      <div
-        class="modal fade"
-        id="readData"
-        tabindex="-1"
-        aria-labelledby="readDataLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="readDataLabel">View Item</h4>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-container">
+            <table
+              class="table table-striped table-hover text-center table-bordered"
+            >
+              <thead class="table-dark">
+                <tr>
+                  <th>Item Name</th>
+                  <th>Item Description</th>
+                  <th>Price (Rs)</th>
+                  <th>Category</th>
+                  <th>Item Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="data">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
+        Add Items <i class="bi bi-plus-circle"></i>
+      </button>
+    </section>
 
-            <div class="modal-body">
-              <div class="card imgholder mb-3">
+    <!-- Modal Form for Add/Edit Items -->
+    <div
+      class="modal fade"
+      id="userForm"
+      tabindex="-1"
+      aria-labelledby="userFormLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="userFormLabel">Item Information</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="myForm">
+              <div class="card image-holder">
+                <label for="imgInput" class="upload">
+                  <i class="bi bi-plus-circle-dotted fs-1"></i>
+                  <input
+                    type="file"
+                    name="item_image"
+                    id="imgInput"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                </label>
                 <img
-                  id="viewImg"
-                  alt="Item Image"
+                  id="imgPreview"
+                  src=" "
+                  alt="Image Preview"
                   width="200"
                   height="200"
                   class="img d-block mx-auto"
@@ -242,49 +157,132 @@
               </div>
 
               <div class="inputField">
-                <div class="mb-3">
-                  <label for="viewName" class="form-label">Item Name</label>
-                  <input
-                    type="text"
-                    id="viewName"
-                    class="form-control"
-                    disabled
-                  />
+                <div>
+                  <label for="name" class="form-label">Item Name</label>
+                  <input type="text" id="name" class="form-control" required />
                 </div>
-                <div class="mb-3">
-                  <label for="viewDescription" class="form-label"
+
+                <div>
+                  <label for="description" class="form-label"
                     >Item Description</label
                   >
                   <input
                     type="text"
-                    id="viewDescription"
                     class="form-control"
-                    disabled
+                    id="description"
+                    required
                   />
                 </div>
-                <div class="mb-3">
-                  <label for="viewPrice" class="form-label">Price (Rs)</label>
+
+                <div>
+                  <label for="price" class="form-label">Price (Rs)</label>
                   <input
                     type="number"
-                    id="viewPrice"
+                    step="0.01"
                     class="form-control"
-                    disabled
+                    id="price"
+                    required
                   />
                 </div>
-                <div class="mb-3">
-                  <label for="viewCategory" class="form-label">Category</label>
-                  <select id="viewCategory" class="form-select" disabled>
+
+                <div>
+                  <label for="category" class="form-label">Category</label>
+                  <select id="category" class="form-select" required>
+                    <option value="">Select Category</option>
                     <option value="pizza">Pizza</option>
                     <option value="cake">Cake</option>
                     <option value="beverage">Beverage</option>
                   </select>
                 </div>
               </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" form="myForm" class="btn btn-primary">
+              Submit
+            </button>
+            <button type="reset" class="btn btn-danger">Discard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Data Modal -->
+    <div
+      class="modal fade"
+      id="readData"
+      tabindex="-1"
+      aria-labelledby="readDataLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="readDataLabel">View Item</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="card imgholder mb-3">
+              <img
+                id="viewImg"
+                alt="Item Image"
+                width="200"
+                height="200"
+                class="img d-block mx-auto"
+              />
+            </div>
+
+            <div class="inputField">
+              <div class="mb-3">
+                <label for="viewName" class="form-label">Item Name</label>
+                <input
+                  type="text"
+                  id="viewName"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+              <div class="mb-3">
+                <label for="viewDescription" class="form-label"
+                  >Item Description</label
+                >
+                <input
+                  type="text"
+                  id="viewDescription"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+              <div class="mb-3">
+                <label for="viewPrice" class="form-label">Price (Rs)</label>
+                <input
+                  type="number"
+                  id="viewPrice"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+              <div class="mb-3">
+                <label for="viewCategory" class="form-label">Category</label>
+                <select id="viewCategory" class="form-select" disabled>
+                  <option value="pizza">Pizza</option>
+                  <option value="cake">Cake</option>
+                  <option value="beverage">Beverage</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </div>
-   
+    </div>
+
     <!-- JavaScript Logic -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {

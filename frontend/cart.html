@@ -39,7 +39,11 @@
     ></script>
   </head>
   <body
-    style="font-family: 'Lato', sans-serif; background-image: linear-gradient(#6c6a6a, #1e1e1e); height: 100vh;"
+    style="
+      font-family: 'Lato', sans-serif;
+      background-image: linear-gradient(#6c6a6a, #1e1e1e);
+      height: 100vh;
+    "
   >
     <div class="container">
       <div class="row">
@@ -67,7 +71,7 @@
             Add item
           </button>
         </div>
-        
+
         <!-- Order Summary -->
         <div class="col-lg-4">
           <div class="order-summary">
@@ -110,7 +114,7 @@
     </div>
 
     <script>
-      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
       // Render the cart items and update the order summary
       function renderCart() {
@@ -227,7 +231,7 @@
       }
 
       function passItemsToCheckout() {
-        const selectedItems = cartItems.filter(item => item.checked);
+        const selectedItems = cartItems.filter((item) => item.checked);
         if (selectedItems.length === 0) {
           alert("No items selected for checkout!");
           return;
