@@ -9,15 +9,84 @@ body {
 .container h2 {
   color: #fad700;
 }
-/*menu section*/
+/* Menu section */
+.menutopic h2 {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+}
+#beverageCard,
+#cakeCard,
+#pizzaCard {
+  background-color: #1f0b0b;
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 150px;
+  max-height: 170px;
+  min-width: 80px;
+  width: 100%;
+  margin: 0; /* Set margin to 0 for no gaps */
+  margin-bottom: 5px; /* Space between cards if needed */
+}
+.card-img-container {
+  background-color: #1f0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.col {
+  padding: 0; /* Remove padding to minimize space */
+}
 .card h5 {
   text-align: center;
   color: #fad700;
 }
-/* Customize the button and table styling */
-.table td,
-.table th {
+
+/*Order Summary Section*/
+.order-summary-box {
+  background-color: #4d4d4d;
+  padding: 20px;
+  border-radius: 8px;
   color: white;
+  position: relative;
+  max-width: 150px; /* Set the maximum width */
+  margin: 0 auto; /* Center the box horizontally */
+  min-height: 150px;
+}
+
+.order-summary-box h4 {
+  color: white;
+}
+
+.arrow {
+  position: absolute;
+  right: 15px;
+  bottom: 20px;
+  font-size: 24px;
+  color: white;
+}
+
+.arrow-link {
+  text-decoration: none;
+}
+
+.arrow-link:hover .arrow {
+  color: #fad700;
+}
+
+h2 {
+  color: #fad700;
 }
 /*offer section*/
 .special-offer-img {
@@ -49,8 +118,7 @@ body {
   background-color: #fad700;
 }
 
-.form-control,
-.form-control-file {
+.form-control {
   background-color: #555;
   border: none;
   color: white;
@@ -115,45 +183,6 @@ body {
 }
 p {
   color: #fad700;
-}
-/* Menu section */
-.menutopic h2 {
-  margin: 0;
-  text-align: left;
-  padding: 0;
-}
-#beverageCard,
-#cakeCard,
-#pizzaCard {
-  background-color: #1f0b0b;
-  border-radius: 20px;
-  overflow: hidden;
-  max-width: 150px;
-  max-height: 170px;
-  min-width: 80px;
-  width: 100%;
-  margin: 0; /* Set margin to 0 for no gaps */
-  margin-bottom: 5px; /* Space between cards if needed */
-}
-.card-img-container {
-  background-color: #1f0b0b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  width: 100%;
-  height: 300px;
-  max-height: 300px;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.col {
-  padding: 0; /* Remove padding to minimize space */
 }
 
 /* Centering for small screens */
@@ -262,3 +291,4 @@ p {
     height: 100%;
   }
 }
+/*section*/
