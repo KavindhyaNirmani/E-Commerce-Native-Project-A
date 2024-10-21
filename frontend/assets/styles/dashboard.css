@@ -11,12 +11,14 @@ body {
 .container h2 {
   color: #fad700;
 }
+
 /* Menu section */
 .menutopic h2 {
   margin: 0;
   text-align: left;
   padding: 0;
 }
+
 #beverageCard,
 #cakeCard,
 #pizzaCard {
@@ -30,6 +32,7 @@ body {
   margin: 0; /* Set margin to 0 for no gaps */
   margin-bottom: 5px; /* Space between cards if needed */
 }
+
 .card-img-container {
   background-color: #1f0b0b;
   display: flex;
@@ -50,6 +53,7 @@ body {
 .col {
   padding: 0; /* Remove padding to minimize space */
 }
+
 .card h5 {
   text-align: center;
   color: #fad700;
@@ -190,6 +194,7 @@ h2 {
 p {
   color: #fad700;
 }
+
 /* Menu section */
 .menutopic h2 {
   margin: 0;
@@ -306,27 +311,27 @@ p {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center the row items */
+    justify-content: center; 
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; /* Set margin to 0 for no gaps */
-    display: flex; /* Ensure the column can center its contents */
-    justify-content: center; /* Center the card within the column */
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
   }
 
   #card {
-    width: 100%; /* Allow card to take the full width of the column */
-    max-width: 150px; /* Maintain max width */
-    margin-bottom: 5px; /* Space between cards */
+    width: 100%;
+    max-width: 150px; 
+    margin-bottom: 5px; 
   }
 
   .card-img-container {
     height: 250px;
-    display: flex; /* Center the image container */
-    justify-content: center; /* Center the image within the container */
-    align-items: center; /* Center the image vertically */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -338,4 +343,4 @@ p {
     height: 100%;
   }
 }
-/*section*/
+

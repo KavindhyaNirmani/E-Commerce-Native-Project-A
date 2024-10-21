@@ -22,7 +22,7 @@ td button i {
 
 .btn {
   color: #fad700;
-  font-size: 120%; /* Change 'size' to 'font-size' */
+  font-size: 120%; 
   display: inline;
 }
 
@@ -33,7 +33,7 @@ td button i {
 .btn1 {
   background-color: #fad700;
   color: #000000;
-  font-weight: bold; /* Change 'font-family' to 'font-weight' */
+  font-weight: bold; 
 }
 
 .btn1:hover {
@@ -117,7 +117,7 @@ body {
   }
 
   .content {
-    margin-left: 0; /* Remove left margin on smaller screens */
+    margin-left: 0; 
   }
 
   .modal-body form {
@@ -126,26 +126,26 @@ body {
   }
 
   .modal-body form .image-holder {
-    width: 100%; /* Make image-holder full width */
-    height: auto; /* Let height adjust automatically */
+    width: 100%; 
+    height: auto;
   }
 
   .modal-body form .inputField {
-    flex-basis: 100%; /* Take full width */
-    margin-left: 0; /* Remove margin */
+    flex-basis: 100%; 
+    margin-left: 0; 
   }
 
   .inputField > div {
-    flex-direction: column; /* Stack labels and inputs */
-    align-items: flex-start; /* Align to the start */
+    flex-direction: column; 
+    align-items: flex-start; 
   }
 
   .inputField > div label {
-    margin-bottom: 5px; /* Add some space between label and input */
+    margin-bottom: 5px; 
   }
 
   td button i {
-    font-size: 16px; /* Adjust icon size for smaller screens */
+    font-size: 16px;
   }
 
   .btn,

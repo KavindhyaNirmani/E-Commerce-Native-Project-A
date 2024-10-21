@@ -1,6 +1,6 @@
 /* Hero section */
 .hero {
-  position: relative; /* Allows text to overlay on the image */
+  position: relative; 
   text-align: center;
   font-family: "Lato", sans-serif;
   height: 410px;
@@ -12,7 +12,7 @@
 .hero-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures the image covers the section while maintaining its aspect ratio */
+  object-fit: cover; 
 }
 
 .hero h1 {
@@ -147,11 +147,10 @@
 }
 
 /* Container for both buttons */
-
 .button-container {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0; /* Adjust space around buttons */
+  margin: 20px 0; 
 }
 
 /* Style for View More Button */
@@ -182,7 +181,6 @@
   display: inline-block;
 }
 
-/* Hover Effects */
 .view-all-btn:hover,
 .back-btn:hover {
   background-color: #faff00;
