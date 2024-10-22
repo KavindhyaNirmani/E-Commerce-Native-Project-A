@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gather & Grab - Checkout</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/styles/cart.css" />
+    <link rel="stylesheet" href="./assets/styles/checkout.css" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font-Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha512-Sf+nV+eXWeKnr3QWUi58b5FwxGw2jXc5E5O+VXIk6+pqxWkUL3XKKm6Kx4XmzzkZ1fz8nQDL5Hsn3aFVb5e3wQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
+      background-image: linear-gradient(#6c6a6a, #1e1e1e);
+      height: 100%;
+    "
+  >
+    <!-- Navbar -->
+    <div id="headerPlaceholder"></div>
+
+    <script>
+      fetch("./header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("headerPlaceholder").innerHTML = data;
+          // Ensure the offcanvas background color is set after loading
+          const offcanvasNavbar = document.getElementById("offcanvasNavbar");
+          if (offcanvasNavbar) {
+            offcanvasNavbar.style.backgroundColor = "black";
+          }
+        })
+        .catch((error) => console.error("Error loading header:", error));
+    </script>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+      <div class="row">
+        <!-- Order Items -->
+        <div class="col-lg-8">
+          <h3 class="text-white">Order Items</h3>
+          <table id="checkout-table" class="table table-striped text-white">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody id="order-items"></tbody>
+          </table>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+          <div class="order-summary bg-dark text-white p-3 rounded">
+            <h4>Order Summary</h4>
+            <table class="table-borderless">
+              <tr>
+                <td>No. of Items</td>
+                <td>:</td>
+                <td><span id="item-count">0</span></td>
+              </tr>
+              <tr>
+                <td>Sub Total</td>
+                <td>:</td>
+                <td>Rs.<span id="sub-total">0.00</span></td>
+              </tr>
+              <tr>
+                <td>Discount</td>
+                <td>:</td>
+                <td>Rs.<span id="discount">0.00</span></td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <hr class="full-width-line" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Total </strong></td>
+                <td>:</td>
+                <td>
+                  <strong>Rs. <span id="total">0.00</span></strong>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Information Form -->
+    <div class="container my-5">
+      <div class="form-container bg-light p-4 rounded">
+        <div class="header-container mb-3">
+          <h4>Delivery Information</h4>
+        </div>
+
+        <form id="delivery-form">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <input
+                type="text"
+                name="firstName"
+                class="form-control"
+                placeholder="First Name"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                name="lastName"
+                class="form-control"
+                placeholder="Last Name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text">+94</span>
+                <input
+                  type="tel"
+                  name="mobileNumber"
+                  class="form-control"
+                  placeholder="712345678"
+                  pattern="[0-9]{9}"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <input
+                type="email"
+                name="emailAddress"
+                class="form-control"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input
+              type="text"
+              name="streetAddress"
+              class="form-control"
+              placeholder="Street Address"
+              required
+            />
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <input
+                type="text"
+                name="city"
+                class="form-control"
+                placeholder="City"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                name="province"
+                class="form-control"
+                placeholder="Province"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input
+              type="text"
+              name="postalCode"
+              class="form-control"
+              placeholder="Postal Code"
+              required
+            />
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div id="footerPlaceholder"></div>
+    <script>
+      fetch("./footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footerPlaceholder").innerHTML = data;
+        })
+        .catch((error) => console.error("Error loading footer:", error));
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Checkout Functionality JS -->
+    <script>
+      // Retrieve checkout items from localStorage
+      const checkoutItems =
+        JSON.parse(localStorage.getItem("checkoutItems")) || [];
+
+      // Render the order items and update the order summary
+      function renderCheckout() {
+        const orderItemsTableBody = document.getElementById("order-items");
+        orderItemsTableBody.innerHTML = ""; // Clear existing rows
+
+        if (checkoutItems.length === 0) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td colspan="5" class="text-center text-danger">No items selected for checkout.</td>
+        `;
+          orderItemsTableBody.appendChild(row);
+          updateOrderSummary();
+          return;
+        }
+
+        checkoutItems.forEach((item, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td><img src="${item.image}" alt="${
+            item.name
+          }" width="50" class="img-fluid"></td>
+          <td class="item-details">
+            ${item.name}<br><small class="item-price">Rs. ${item.price.toFixed(
+            2
+          )}</small>
+          </td>
+          <td>Rs. ${item.price.toFixed(2)}</td>
+          <td>${item.quantity}</td>
+          <td>
+            <i class="fa fa-trash-o delete-icon text-danger" onclick="removeItem(${index})" title="Remove Item" style="cursor: pointer;"></i>
+          </td>
+        `;
+          orderItemsTableBody.appendChild(row);
+        });
+
+        updateOrderSummary();
+      }
+
+      function updateOrderSummary() {
+        let itemCount = 0;
+        let subTotal = 0;
+
+        checkoutItems.forEach((item) => {
+          itemCount += item.quantity;
+          subTotal += item.price * item.quantity;
+        });
+
+        // Example discount logic: Flat Rs.150 discount if subTotal exceeds Rs.1000
+        let discount = 0;
+        if (subTotal > 1000) {
+          discount = 150;
+        }
+
+        const total = subTotal - discount;
+
+        document.getElementById("item-count").textContent = itemCount;
+        document.getElementById("sub-total").textContent = subTotal.toFixed(2);
+        document.getElementById("discount").textContent = discount.toFixed(2);
+        document.getElementById("total").textContent = total.toFixed(2);
+      }
+
+      function removeItem(index) {
+        if (confirm("Are you sure you want to remove this item?")) {
+          checkoutItems.splice(index, 1); // Remove the selected item
+          localStorage.setItem("checkoutItems", JSON.stringify(checkoutItems)); // Update localStorage
+          renderCheckout(); // Re-render the checkout
+        }
+      }
+
+      renderCheckout();
+    </script>
+  </body>
+</html>

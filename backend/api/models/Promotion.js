@@ -16,6 +16,8 @@ class Promotion {
         }
     }
 
+
+
     // Get all active promotions
     static async findAll() {
         try {
@@ -27,6 +29,8 @@ class Promotion {
         }
     }
 
+
+
     // Find promotion by ID
     static async findById(promotionId) {
         try {
@@ -37,14 +41,20 @@ class Promotion {
         }
     }
 
+
+
     // Delete a promotion by ID
     static async deleteById(promotionId) {
         try {
             await db.execute('DELETE FROM promotion WHERE promotion_id = ?', [promotionId]);
+
+           
         } catch (error) {
             throw new Error('Error deleting promotion: ' + error.message);
         }
     }
 }
+
+
 
 module.exports = Promotion;

@@ -2,23 +2,99 @@ body {
   overflow-x: hidden;
   background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
 }
+
 .content {
   margin-left: 300px;
   padding: 10px;
 }
+
 .container h2 {
   color: #fad700;
 }
-/*menu section*/
+
+/* Menu section */
+.menutopic h2 {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+}
+
+#beverageCard,
+#cakeCard,
+#pizzaCard {
+  background-color: #1f0b0b;
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 150px;
+  max-height: 170px;
+  min-width: 80px;
+  width: 100%;
+  margin: 0; /* Set margin to 0 for no gaps */
+  margin-bottom: 5px; /* Space between cards if needed */
+}
+
+.card-img-container {
+  background-color: #1f0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.col {
+  padding: 0; /* Remove padding to minimize space */
+}
+
 .card h5 {
   text-align: center;
   color: #fad700;
 }
-/* Customize the button and table styling */
-.table td,
-.table th {
+
+/*Order Summary Section*/
+.order-summary-box {
+  background-color: #4d4d4d;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  position: relative;
+  max-width: 150px; /* Set the maximum width */
+  margin: 0 auto; /* Center the box horizontally */
+  min-height: 150px;
+}
+
+.order-summary-box h4 {
   color: white;
 }
+
+.arrow {
+  position: absolute;
+  right: 15px;
+  bottom: 20px;
+  font-size: 24px;
+  color: white;
+}
+
+.arrow-link {
+  text-decoration: none;
+}
+
+.arrow-link:hover .arrow {
+  color: #fad700;
+}
+
+h2 {
+  color: #fad700;
+}
+
 /*offer section*/
 .special-offer-img {
   width: 300px;
@@ -34,9 +110,11 @@ body {
   background-color: #000;
   color: #fad700;
 }
+
 #closeModal {
   color: #ffffff;
 }
+
 .modal-footer button {
   width: 100px;
   background-color: #fad700;
@@ -49,8 +127,7 @@ body {
   background-color: #fad700;
 }
 
-.form-control,
-.form-control-file {
+.form-control {
   background-color: #555;
   border: none;
   color: white;
@@ -86,6 +163,7 @@ body {
   padding: 2px 8px;
   cursor: pointer;
 }
+
 .custom-yellow {
   background-color: #fad700; /* Set your custom yellow */
   color: black;
@@ -116,12 +194,14 @@ body {
 p {
   color: #fad700;
 }
+
 /* Menu section */
 .menutopic h2 {
   margin: 0;
   text-align: left;
   padding: 0;
 }
+
 #beverageCard,
 #cakeCard,
 #pizzaCard {
@@ -135,6 +215,7 @@ p {
   margin: 0; /* Set margin to 0 for no gaps */
   margin-bottom: 5px; /* Space between cards if needed */
 }
+
 .card-img-container {
   background-color: #1f0b0b;
   display: flex;
@@ -230,27 +311,27 @@ p {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center the row items */
+    justify-content: center; 
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; /* Set margin to 0 for no gaps */
-    display: flex; /* Ensure the column can center its contents */
-    justify-content: center; /* Center the card within the column */
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
   }
 
   #card {
-    width: 100%; /* Allow card to take the full width of the column */
-    max-width: 150px; /* Maintain max width */
-    margin-bottom: 5px; /* Space between cards */
+    width: 100%;
+    max-width: 150px; 
+    margin-bottom: 5px; 
   }
 
   .card-img-container {
     height: 250px;
-    display: flex; /* Center the image container */
-    justify-content: center; /* Center the image within the container */
-    align-items: center; /* Center the image vertically */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -262,3 +343,4 @@ p {
     height: 100%;
   }
 }
+

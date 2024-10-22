@@ -2,15 +2,18 @@
   height: 90vh;
   width: 100%;
 }
+
 /*Welcome section*/
 #carouselExampleFade {
-  margin: 8px; /* Adds 8px margin around the entire carousel */
+  margin: 8px; 
 }
+
 .carousel-caption h2 {
   color: #ffffff;
   text-align: left;
   font-size: clamp(20px, 5vw, 60px);
 }
+
 .carousel-caption h1 {
   color: #fad700;
   text-align: left;
@@ -19,6 +22,7 @@
   font-weight: 1000;
   letter-spacing: 3px;
 }
+
 .carousel-caption {
   position: absolute;
   top: clamp(10px, 2vw, 50px);
@@ -26,19 +30,20 @@
 }
 
 .carousel-item.active {
-  opacity: 1; /* Only the active item is fully visible */
+  opacity: 1; 
 }
+
 .carousel-item {
-  max-height: 520px; /* Fixed height for the entire carousel section */
-  overflow: hidden; /* Prevents overflow from larger images */
+  max-height: 520px; 
+  overflow: hidden; 
   transition: opacity 5s ease-in;
 }
 
 /* Carousel Images */
 .carousel-item img {
-  width: 100%; /* Make the images take the full width of the carousel */
-  height: 520px; /* Fixed height to prevent section height changes */
-  object-fit: cover; /* Ensures the image covers the entire area, maintaining aspect ratio */
+  width: 100%; 
+  height: 520px; 
+  object-fit: cover; 
 }
 
 /*Feature Section*/
@@ -90,11 +95,13 @@
   margin-top: 20px;
   font-size: 34px;
 }
+
 .about-text p {
   color: #ffffff;
   font-size: 18px;
   text-align: justify;
 }
+
 /*image side*/
 .about-img img {
   width: 70%;
@@ -124,10 +131,10 @@
 #beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
-  margin: 0 auto; /* Center the card within the column */
+  margin: 0 auto; 
   width: 100%;
-  max-width: 320px; /* Set max width for default screen sizes */
-  height: 320px; /* Set the height to match the width */
+  max-width: 320px; 
+  height: 320px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -228,6 +235,7 @@
   border: none;
   box-shadow: none;
 }
+
 #notOfferMessage {
   color: #ffffff;
   font-size: 12px;
