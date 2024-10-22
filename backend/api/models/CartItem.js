@@ -46,6 +46,7 @@ class CartItem {
     }
   }
 
+  //update the item quantity
   static async updateItemQuantity(cartItemId, quantity) {
     try {
       console.log(

@@ -166,6 +166,7 @@ function checkMissingFields(body, requiredFields) {
   return missingFields;
 }
 
+//Fetch all admins
 exports.getAllAdmins = async (req, res) => {
   try {
     const admins = await User.findAllAdmins();
@@ -182,6 +183,7 @@ exports.getAllAdmins = async (req, res) => {
   }
 };
 
+//delete an admin
 exports.deleteAdmin = async (req, res) => {
   const { user_id } = req.params;
   try {

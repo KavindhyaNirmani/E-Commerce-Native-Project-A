@@ -8,7 +8,8 @@ const router = express.Router();
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\Menu');
 
 const menuAssetsPath = path.resolve(
-  __dirname,"../../../frontend/assets/images/menu"
+  __dirname,
+  "../../../frontend/assets/images/menu"
 );
 console.log("Saving to:", menuAssetsPath);
 

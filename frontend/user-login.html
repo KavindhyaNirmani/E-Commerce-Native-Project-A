@@ -152,14 +152,17 @@
           try {
             console.log("Sending data to the server:", { username, password });
 
-            const response = await fetch("https://ecom-back-t1.netfy.app/auth/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              // Send both username and Password to the server
-              body: JSON.stringify({ username, password }),
-            });
+            const response = await fetch(
+              "https://ecom-back-t1.netfy.app/auth/login",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                // Send both username and Password to the server
+                body: JSON.stringify({ username, password }),
+              }
+            );
 
             const data = await response.json();
             console.log("Response from server:", data);
@@ -173,7 +176,7 @@
 
               // Redirect based on user role
               if (data.role === "admin") {
-                window.location.href = "./admin-management.html"; // Redirect admin
+                window.location.href = "./dashboard.html"; // Redirect admin
               } else if (data.role === "user") {
                 window.location.href = "./index.html"; // Redirect user to homepage
               }

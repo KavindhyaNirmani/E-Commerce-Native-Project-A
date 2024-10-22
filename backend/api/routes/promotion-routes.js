@@ -8,7 +8,8 @@ const router = express.Router();
 
 // Set up the storage for images
 const promotionAssetsPath = path.resolve(
-  __dirname,"../../../frontend/assets/images/promotion"
+  __dirname,
+  "../../../frontend/assets/images/promotion"
 );
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
