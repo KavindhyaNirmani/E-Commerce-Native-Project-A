@@ -86,8 +86,9 @@
 .about {
   background-color: #484242;
   padding: 40px 0;
-  margin: 8px;
+  margin: 5px;
 }
+
 /*text side*/
 .about-text h2 {
   color: #fad700;
@@ -96,7 +97,12 @@
   font-size: 34px;
 }
 
-.about-text p {
+.about h5 {
+  color: #fad700;
+  margin-top: 5px;
+}
+
+.about p {
   color: #ffffff;
   font-size: 18px;
   text-align: justify;
@@ -205,10 +211,12 @@
 .button-container {
   margin-top: 20px;
 }
+
 .container h2 {
   color: #fad700;
   font-size: 36px;
 }
+
 /* Button Style */
 #viewMoreBtn {
   background-color: #fad700;
@@ -251,8 +259,9 @@
   .about-text h2 {
     font-size: 24px;
   }
-  .about-text p {
+  .about p {
     font-size: 14px;
+    margin: 3px 3px 0 3px;
   }
 }
 
