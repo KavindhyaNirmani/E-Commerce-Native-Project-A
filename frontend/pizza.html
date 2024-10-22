@@ -31,7 +31,7 @@
     <div id="headerPlaceholder"></div>
 
     <script>
-      fetch("./header.html")
+      fetch("./assets/widgets/header.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("headerPlaceholder").innerHTML = data;
@@ -96,7 +96,7 @@
     <!-- Footer Section -->
     <div id="footerPlaceholder"></div>
     <script>
-      fetch("./footer.html")
+      fetch("./assets/widgets/footer.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("footerPlaceholder").innerHTML = data;
