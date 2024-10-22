@@ -201,7 +201,9 @@ exports.deleteOrder = async (req, res) => {
   const { orderId } = req.params;
 
   try {
-    await db.execute(`UPDATE \`order\` SET is_deleted = 1 WHERE order_id = ?`, [orderId]);
+    await db.execute(`UPDATE \`order\` SET is_deleted = 1 WHERE order_id = ?`, [
+      orderId,
+    ]);
     res.json({ message: "Order deleted successfully." });
   } catch (error) {
     res.status(500).json({ error: error.message });

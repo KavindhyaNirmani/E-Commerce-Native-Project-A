@@ -16,7 +16,7 @@ class Order {
   static async updateTotalAmount(orderId, totalAmount) {
     return db.execute(`UPDATE \`order\` SET total_amount=? WHERE order_id=?`, [
       totalAmount,
-      orderId, 
+      orderId,
     ]);
   }
 
@@ -48,7 +48,8 @@ class Order {
   //Count orders by status
   static async countOrdersByStatus(status) {
     const [results] = await db.execute(
-      "SELECT COUNT(*) AS count FROM 'order' WHERE order_status=?",[status]
+      "SELECT COUNT(*) AS count FROM 'order' WHERE order_status=?",
+      [status]
     );
     return results[0].count;
   }
