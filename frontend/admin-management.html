@@ -275,7 +275,7 @@
           try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:5010/auth/admins", {
+            const response = await fetch("https://ecom-back-t1.netfy.app/auth/admins", {
               method: "GET",
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -318,7 +318,7 @@
         const appendNewAdminToTable = (admin) => {
           //const adminId = admin.user_id;
           const imageUrl = admin.user_image
-            ? `http://localhost:5010/assets/images/user-image/${admin.user_image}`
+            ? `https://ecom-back-t1.netfy.app/assets/images/user-image/${admin.user_image}`
             : "";
 
           const adminCard = `
@@ -407,7 +407,7 @@
             }
 
             $.ajax({
-              url: "http://localhost:5010/auth/add-admin",
+              url: "https://ecom-back-t1.netfy.app/auth/add-admin",
               type: "POST",
               data: formData,
               processData: false,
@@ -442,7 +442,7 @@
           const adminCard = $(this).closest(".card");
           if (confirm("Are you sure you want to remove this admin?")) {
             $.ajax({
-              url: `http://localhost:5010/auth/admins/${adminId}`,
+              url: `https://ecom-back-t1.netfy.app/auth/admins/${adminId}`,
               type: "DELETE",
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"), // Assuming you store JWT in localStorage
