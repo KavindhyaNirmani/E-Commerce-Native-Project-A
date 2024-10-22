@@ -139,3 +139,73 @@ exports.getOrderDetails = async (req, res) => {
     });
   }
 };
+
+//Get all orders for admin Management
+exports.getAllOrders = async (req, res) => {
+  try {
+    const [orders] = await db.execute(
+      "SELECT o.order_id, i.item_name, oi.item_price AS final_price, o.order_status FROM `order` o JOIN order_items oi ON o.order_id = oi.order_id JOIN item i ON oi.item_id = i.item_id"
+    );
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+// Get order statistics
+exports.getOrderStatistics = async (req, res) => {
+  try {
+    const totalCount = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\``
+    );
+    const pendingCount = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Pending'`
+    );
+    const successfulCount = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Successful'`
+    );
+    const failedCount = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Failed'`
+    );
+
+    res.json({
+      totalOrders: totalCount[0][0].count,
+      pendingOrders: pendingCount[0][0].count,
+      successfulOrders: successfulCount[0][0].count,
+      failedOrders: failedCount[0][0].count,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Update order status
+exports.updateOrderStatus = async (req, res) => {
+  const { orderId, newStatus } = req.body;
+
+  try {
+    await db.execute(
+      `UPDATE \`order\` SET order_status = ? WHERE order_id = ?`,
+      [newStatus, orderId]
+    );
+    res.json({ message: "Order status updated successfully." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete an order
+exports.deleteOrder = async (req, res) => {
+  const { orderId } = req.params;
+
+  try {
+    await db.execute(`UPDATE \`order\` SET is_deleted = 1 WHERE order_id = ?`, [
+      orderId,
+    ]);
+    res.json({ message: "Order deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
