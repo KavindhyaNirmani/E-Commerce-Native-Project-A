@@ -3,30 +3,47 @@
   width: 100%;
 }
 
-.masthead {
-  width: 100%;
-  display: block;
-  min-height: 30vh;
-  background-size: cover;
-  max-height: 60vh;
+/*Welcome section*/
+#carouselExampleFade {
+  margin: 8px; 
 }
+
 .carousel-caption h2 {
   color: #ffffff;
   text-align: left;
   font-size: clamp(20px, 5vw, 60px);
 }
+
 .carousel-caption h1 {
   color: #fad700;
   text-align: left;
   font-size: clamp(30px, 7vw, 80px);
-  font-size: oblique;
+  font-style: oblique;
   font-weight: 1000;
   letter-spacing: 3px;
 }
+
 .carousel-caption {
   position: absolute;
   top: clamp(10px, 2vw, 50px);
   left: clamp(10px, 2vw, 70px);
+}
+
+.carousel-item.active {
+  opacity: 1; 
+}
+
+.carousel-item {
+  max-height: 520px; 
+  overflow: hidden; 
+  transition: opacity 5s ease-in;
+}
+
+/* Carousel Images */
+.carousel-item img {
+  width: 100%; 
+  height: 520px; 
+  object-fit: cover; 
 }
 
 /*Feature Section*/
@@ -34,8 +51,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 8px;
   background-color: #1f0b0b;
 }
 
@@ -70,7 +86,9 @@
 .about {
   background-color: #484242;
   padding: 40px 0;
+  margin: 5px;
 }
+
 /*text side*/
 .about-text h2 {
   color: #fad700;
@@ -78,11 +96,18 @@
   margin-top: 20px;
   font-size: 34px;
 }
-.about-text p {
+
+.about h5 {
+  color: #fad700;
+  margin-top: 5px;
+}
+
+.about p {
   color: #ffffff;
   font-size: 18px;
   text-align: justify;
 }
+
 /*image side*/
 .about-img img {
   width: 70%;
@@ -93,129 +118,76 @@
   display: block;
   margin: 0 auto;
 }
-@media (max-width: 768px) {
-  .about-text h2 {
-    font-size: 24px;
-  }
-  .about-text p {
-    font-size: 14px;
-  }
-}
 
-/*Menu section*/
+/* Menu Section */
 .menutopic {
   background-color: transparent;
   color: #fad700;
-  min-width: fit-content;
-  max-width: 350px;
   padding: 5px 10px;
   border-radius: 50px;
-  margin: 0 auto;
-  justify-content: center;
+  text-align: center;
   font-size: 34px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
+
+/* Cards */
 #cakeCard,
 #pizzaCard,
 #beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
-  overflow: hidden;
-  margin: 5%;
-  margin-bottom: 10px;
-  max-width: 320px;
-  min-width: 200px;
-  margin-top: 0;
-  justify-content: center;
+  margin: 0 auto; 
+  width: 100%;
+  max-width: 320px; 
+  height: 320px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Card Image Container */
 .card-img-container {
   background-color: #1f0b0b;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   width: 100%;
-  height: 300px;
-  max-height: 300px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  padding: 10px;
 }
+
 .card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+  object-fit: cover; /* Ensure image scales properly and doesn't stretch */
 }
 
+/* Buttons inside cards */
 .card .btn {
   background-color: #fad700;
   color: #000000;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 8px 20px;
+  border-radius: 15px;
   font-weight: bolder;
   width: 55%;
   cursor: pointer;
   min-width: fit-content;
+  margin-bottom: 10px;
 }
+
 .card .btn:hover,
-.card .btn:focus,
+.card .btn:focus {
+  background-color: #faf000 !important;
+  color: #000000 !important;
+}
+
 .card .btn:active {
-  background-color: #faf000;
-  color: #000000;
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
-
-/*for screens between 320px and 576px */
-@media (max-width: 576px) {
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .col {
-    flex: 0 0 auto;
-    margin-bottom: 10px; /* Space between cards */
-  }
-
-  #card {
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
-    margin: 0 auto;
-  }
-
-  .card-img-container {
-    height: 250px;
-  }
-}
-
-/*for screens up to 768px */
-@media (max-width: 768px) {
-  .menutopic h2 {
-    font-size: 24px;
-    justify-content: center;
-  }
-  .menu-padding {
-    padding: 10px 0;
-  }
-  .card-img-container {
-    height: 250px;
-  }
-
-  .col {
-    margin-bottom: 3px;
-  }
-}
-@media (min-width: 1440px) {
-  .row {
-    max-width: 1200px;
-    justify-content: center;
-    min-width: fit-content;
-    padding-left: 8%;
-  }
+  background-color: #faf000 !important;
+  color: #000000 !important;
 }
 
 /* Offer Section */
@@ -239,10 +211,12 @@
 .button-container {
   margin-top: 20px;
 }
+
 .container h2 {
   color: #fad700;
   font-size: 36px;
 }
+
 /* Button Style */
 #viewMoreBtn {
   background-color: #fad700;
@@ -269,10 +243,12 @@
   border: none;
   box-shadow: none;
 }
+
 #notOfferMessage {
   color: #ffffff;
   font-size: 12px;
 }
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   #viewMoreBtn {
@@ -280,12 +256,68 @@
     width: 130px;
     font-size: 12px;
   }
+  .about-text h2 {
+    font-size: 24px;
+  }
+  .about p {
+    font-size: 14px;
+    margin: 3px 3px 0 3px;
+  }
 }
 
+/*for screens between 320px and 576px */
 @media (max-width: 576px) {
+  .carousel-item img {
+    height: 250px; /* Adjust height for smaller screens to maintain proportionality */
+  }
   #viewMoreBtn {
     padding: 5px 12px;
     width: 110px;
     font-size: 12px;
+  }
+}
+
+/* For screens 425px and smaller */
+@media (max-width: 425px) {
+  #cakeCard,
+  #pizzaCard,
+  #beverageCard {
+    max-width: 280px; /* Reduce the card size */
+    height: 280px; /* Reduce the height proportionally */
+  }
+
+  .card-img-container {
+    height: 240px; /* Adjust image container height */
+  }
+}
+
+/* For screens 375px and smaller */
+@media (max-width: 375px) {
+  #cakeCard,
+  #pizzaCard,
+  #beverageCard {
+    max-width: 260px; /* Reduce the card size further */
+    height: 260px; /* Adjust height proportionally */
+  }
+
+  .card-img-container {
+    height: 220px; /* Adjust image container height */
+  }
+}
+
+/* For screens smaller than 320px */
+@media (max-width: 320px) {
+  #cakeCard,
+  #pizzaCard,
+  #beverageCard {
+    max-width: 240px; /* Reduce the card width more for tiny screens */
+    height: 240px; /* Reduce height accordingly */
+  }
+
+  .card-img-container {
+    height: 200px; /* Reduce image height for very small screens */
+  }
+  .carousel-item img {
+    height: 200px; /* Further reduce height for very small screens */
   }
 }

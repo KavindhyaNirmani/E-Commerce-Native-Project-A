@@ -14,7 +14,7 @@
 
 .custom-btn {
   box-sizing: border-box;
-  background-color: yellow;
+  background-color: #fad700;
   font-weight: 500;
 }
 
@@ -25,7 +25,6 @@
 }
 
 /*add admin modal css*/
-
 body {
   color: white;
 }
@@ -37,13 +36,15 @@ body {
 .modal-dialog-custom {
   max-width: 50%;
 }
+
 .btn-custom {
   box-sizing: border-box;
-  background-color: yellow;
+  background-color: #fad700;
   padding: 5px;
   width: 100px;
   font-weight: 500;
 }
+
 .custom-title {
   box-sizing: border-box;
 }
@@ -54,10 +55,12 @@ body {
   display: flex;
   justify-content: center;
 }
+
 .container-fluid {
   margin-left: 300px;
   padding: 0;
 }
+
 @media (max-width: 768px) {
   .container-fluid {
     margin-left: 0;
@@ -66,6 +69,7 @@ body {
     margin: 0;
     align-items: center;
   }
+
   #adminListContainer {
     justify-content: center;
     align-items: center;
