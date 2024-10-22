@@ -14,7 +14,7 @@
     />
     <!--Custom CSS-->
     <link rel="stylesheet" href="./assets/styles/dashboard.css" />
-    <link rel="stylesheet" href="./assets/styles/sidebar.css" />
+    <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
     <!--Google
       font-->
 
@@ -48,7 +48,7 @@
     <div id="sidebar-placeholder"></div>
 
     <script>
-      fetch("./sidebar.html")
+      fetch("./assets/widgets/side-bar/sidebar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("sidebar-placeholder").innerHTML = data;
