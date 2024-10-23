@@ -1,4 +1,5 @@
 const Promotion = require("../models/Promotion");
+const PromotionRule = require("../models/PromotionRule");
 const db = require("../../config/db");
 
 // Get all active promotions
@@ -40,39 +41,73 @@ exports.getPromotionById = async (req, res) => {
 
 // Add a new promotion
 exports.addPromotion = async (req, res) => {
-  console.log("Add promotion request received");
-
   const {
     title,
     promotion_description,
-    discount_percentage,
     start_date,
     end_date,
+    categories,
+    rules,
   } = req.body;
   const promotion_image = req.file
     ? `/assets/images/promotion/${req.file.filename}`
     : null;
 
   try {
-    const promotion = await Promotion.create({
-      title,
-      promotion_description,
-      discount_percentage,
-      promotion_image,
-      start_date,
-      end_date,
+    const promotion = await Promotion.create(
+      {
+        title,
+        promotion_description,
+        promotion_image,
+        start_date,
+        end_date,
+        categories: categories,
+      },
+      rules
+    );
+
+    res
+      .status(201)
+      .json({ message: "Promotion added successfully", promotion });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error adding promotion", error: error.message });
+  }
+};
+
+//Apply promotion logic to the order
+exports.applyPromotion = async (req, res) => {
+  const { total_price, categories } = req.body;
+
+  try {
+    const promotions = await Promotion.findAll();
+    let discount = 0;
+
+    promotions.forEach((promo) => {
+      const promoCategories = promo.categories;
+
+      if (promoCategories === categories) {
+        promo.rules.forEach((rule) => {
+          if (total_price >= rule.min_price) {
+            discount = Math.max(discount, rule.discount_percentage);
+          }
+        });
+      }
     });
 
-    res.status(201).json({
-      message: "Promotion added successfully",
-      promotion,
+    const final_price = total_price - (total_price * discount) / 100;
+
+    res.status(200).json({
+      message: `Applied ${discount}% discount`,
+      original_price: total_price,
+      final_price,
+      discount_percentage: discount,
     });
   } catch (error) {
-    console.error("Error adding promotion:", error);
-    res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({ message: "Error applying promotion", error: error.message });
   }
 };
 
