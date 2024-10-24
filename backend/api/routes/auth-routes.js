@@ -10,15 +10,15 @@ const { protect, adminOnly } = require("../middleware/auth-middleware");
 const router = express.Router(); //create a new instance of the Express Router
 
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
-const userImageAssetsPath = path.resolve(
+const userImagePath = path.resolve(
   __dirname,
-  "../../../frontend/assets/images/user-image"
+  "../../images/user-image"
 );
-console.log("Saving to:", userImageAssetsPath);
+console.log("Saving to:", userImagePath);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, userImageAssetsPath);
+    cb(null, userImagePath);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -34,7 +34,7 @@ router.post("/register", authController.register);
 //User/Admin login
 router.post("/login", authController.login);
 
-router.use("/assets/images/user-image", express.static(userImageAssetsPath));
+router.use("/assets/images/user-image", express.static(userImagePath));
 
 //Admin creation(admin-only route)
 router.post("/add-admin", upload.single("user_image"), authController.addAdmin);

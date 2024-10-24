@@ -45,17 +45,23 @@ app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
 app.use("/promotion", promotionRoutes);
 
-const menuAssetsPath = path.resolve(
+const menuPath = path.resolve(
   __dirname,
-  "../frontend/assets/images/menu"
+  "./images/menu"
 );
-app.use("/assets/images/menu", express.static(menuAssetsPath));
+app.use("/assets/images/menu", express.static(menuPath));
 
-const userImageAssetsPath = path.resolve(
+const userImagePath = path.resolve(
   __dirname,
-  "../frontend/assets/images/user-image"
+  "./images/user-image"
 );
-app.use("/assets/images/user-image", express.static(userImageAssetsPath));
+app.use("/assets/images/user-image", express.static(userImagePath));
+
+const promotionPath = path.resolve(
+  __dirname,
+  "./images/promotion"
+);
+app.use("/assets/images/promotion", express.static(promotionPath));
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
