@@ -32,9 +32,11 @@ exports.placeOrder = async (req, res) => {
 
     // Check for an active promotion
     const [promotion] = await db.execute(
-      `SELECT discount_percentage FROM promotion 
-             WHERE CURDATE() BETWEEN start_date AND end_date 
-             LIMIT 1`
+      `SELECT pr.discount_percentage 
+       FROM promotion p
+       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
+       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
+       LIMIT 1`
     );
     const discountPercentage = promotion.length
       ? promotion[0].discount_percentage
@@ -144,9 +146,19 @@ exports.getOrderDetails = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   try {
     const [orders] = await db.execute(
-      "SELECT o.order_id, i.item_name, oi.item_price AS final_price, o.order_status FROM `order` o JOIN order_items oi ON o.order_id = oi.order_id JOIN item i ON oi.item_id = i.item_id"
+      "SELECT o.order_id, GROUP_CONCAT(i.item_name SEPARATOR ', ') AS item_names, SUM(oi.item_price) AS total_final_price, o.order_status FROM `order` o JOIN order_items oi ON o.order_id = oi.order_id JOIN item i ON oi.item_id = i.item_id GROUP BY o.order_id"
     );
-    res.json(orders);
+
+    // Formatting the results to a more structured response
+    const formattedOrders = orders.map(order => ({
+      order_id: order.order_id,
+      item_names: order.item_names,
+      total_final_price: order.total_final_price,
+      order_status: order.order_status,
+    }));
+
+    res.json(formattedOrders);
+    
   } catch (error) {
     res.status(500).json({
       error: error.message,
