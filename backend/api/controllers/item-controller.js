@@ -73,7 +73,7 @@ exports.addItem = async (req, res) => {
   console.log("Add item request received");
 
   const { item_name, item_description, item_price, category_name } = req.body;
-  const item_image = `/assets/images/menu/${req.file.filename}`;
+  const item_image = `/images/menu/${req.file.filename}`;
 
   try {
     //Find category by name
@@ -110,7 +110,7 @@ exports.addItem = async (req, res) => {
 exports.updateItem = async (req, res) => {
   const { item_id } = req.params;
   const { item_name, item_description, item_price, category_name } = req.body;
-  let item_image = req.file ? `/assets/images/menu/${req.file.filename}` : null; // Ensure file is optional
+  let item_image = req.file ? `/images/menu/${req.file.filename}` : null; // Ensure file is optional
 
   try {
     // Find the category by name

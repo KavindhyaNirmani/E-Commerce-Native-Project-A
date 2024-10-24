@@ -1,6 +1,7 @@
 body {
   overflow-x: hidden;
   background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
+  height: 100%;
 }
 
 .content {
@@ -67,7 +68,7 @@ body {
   color: white;
   position: relative;
   max-width: 150px; /* Set the maximum width */
-  margin: 0 auto; /* Center the box horizontally */
+  margin: 0; /* Center the box horizontally */
   min-height: 150px;
 }
 
@@ -92,7 +93,7 @@ body {
 }
 
 h2 {
-  color: #fad700;
+  color: #ffffff;
 }
 
 /*offer section*/
@@ -256,6 +257,7 @@ p {
   body {
     margin-left: 300px;
     height: 100%;
+    overflow-x: hidden;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -287,6 +289,7 @@ p {
   body {
     margin-left: 0;
     height: 100%;
+    overflow-x: hidden;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -305,32 +308,33 @@ p {
   }
   body {
     margin-left: 300px;
+    overflow-x: hidden;
   }
 }
 @media (max-width: 576px) {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; 
-    display: flex; 
-    justify-content: center; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
   }
 
   #card {
     width: 100%;
-    max-width: 150px; 
-    margin-bottom: 5px; 
+    max-width: 150px;
+    margin-bottom: 5px;
   }
 
   .card-img-container {
     height: 250px;
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
     align-items: center;
   }
   .custom-yellow {
@@ -341,6 +345,6 @@ p {
   }
   body {
     height: 100%;
+    overflow-x: hidden;
   }
 }
-
