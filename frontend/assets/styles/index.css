@@ -36,7 +36,7 @@
 .carousel-item {
   max-height: 520px; 
   overflow: hidden; 
-  transition: opacity 5s ease-in;
+  transition: opacity 2ms ease-in;
 }
 
 /* Carousel Images */
@@ -102,7 +102,7 @@
   margin-top: 5px;
 }
 
-.about p {
+.about p, li{
   color: #eeeded;
   font-size: 14px;
   text-align: justify;
