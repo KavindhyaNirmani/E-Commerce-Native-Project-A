@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gather and Grab - Order Management</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png?v=1" />
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
     <!--Bootstrap CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -56,8 +56,8 @@
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Item Name</th>
-              <th>Total Price</th>
+              <th>Customer Name</th>
+              <th>Price</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -79,16 +79,22 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title" id="orderDetailsModalLabel">Order Details</h3>
-              <span id="order-id" class="ml-auto pr-3">Order ID:</span>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h3 class="modal-title" id="orderDetailsModalLabel">
+                Order Details
+              </h3>
+              <span id="orderId" class="ml-auto pr-3">Order ID:</span>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <!-- Dynamic content will be inserted here -->
               <p id="customer-id">Customer ID:</p>
-              <p id="customer-name">Customer Name:</p>
+              <p id="customer-name">Item Name:</p>
               <p id="customer-phone">Phone:</p>
               <p id="customer-address">Address:</p>
               <!-- Order Items Table -->
@@ -110,16 +116,23 @@
               <p id="delivery-fee">Delivery Fee:</p>
               <p id="discount">Discount:</p>
               <label for="totalPrice">Total:</label>
-              <input type="text" id="totalPrice" class="form-control" readonly />
+              <input
+                type="text"
+                id="totalPrice"
+                class="form-control"
+                readonly />
               <!-- Order Status Dropdown -->
               <label for="orderStatus">Order Status:</label>
               <select id="orderStatus" class="form-control">
                 <option>Pending</option>
-                <option>Shipped</option>
-                <option>Delivered</option>
+                <option>successful</option>
+                <option>Failed</option>
               </select>
               <!-- Update Status Button -->
-              <button type="button" id="updateStatusBtn" class="btn btn-primary mt-3">
+              <button
+                type="button"
+                id="updateStatusBtn"
+                class="btn btn-primary mt-3">
                 Update Status
               </button>
             </div>
@@ -136,7 +149,9 @@
       // Fetch all orders for admin management from the backend API
       async function fetchOrdersFromBackend() {
         try {
-          const response = await fetch("https://ecom-back-t1.netfy.app/orders/admin/orders");
+          const response = await fetch(
+            "https://ecom-back-t1.netfy.app/orders/admin/orders"
+          );
           if (!response.ok) throw new Error("Failed to fetch orders.");
           const data = await response.json(); // Assuming the API returns JSON
           return data;
@@ -154,14 +169,18 @@
         orderList.empty(); // Clear the existing order list
 
         orders.forEach((order) => {
-          const firstItemName = order.items && order.items.length > 0 ? order.items[0].name : 'No items';
-          const total = typeof order.total === "number" ? order.total.toFixed(2) : '0.00';
+          const firstItemName =
+            order.items && order.items.length > 0
+              ? order.items[0].name
+              : "No items";
+          const total =
+            typeof order.total === "number" ? order.total.toFixed(2) : "0.00";
 
           const row = `
             <tr data-order-id="${order.order_id}">
               <td>${order.order_id}</td>
-              <td>${firstItemName}</td>
-              <td>$${order.total_amount}</td>
+              <td>${order.item_names}</td>
+              <td>Rs. ${order.total_final_price}</td>
               <td class="order-status">${order.order_status}</td>
               <td>
                 <button class="btn btn-warning btn-sm view-btn" data-order-id="${order.order_id}" title="View">
@@ -179,7 +198,9 @@
       // Fetch order details by order ID from the backend
       async function fetchOrderDetails(orderId) {
         try {
-          const response = await fetch(`https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`);
+          const response = await fetch(
+            `https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`
+          );
           if (!response.ok) throw new Error("Failed to fetch order details.");
           return await response.json(); // Assuming the API returns JSON
         } catch (error) {
@@ -194,50 +215,69 @@
         currentOrderId = orderId;
 
         if (order) {
-          $("#order-id").text(`Order ID: ${orderId}`);
+          $("#orderId").text(`Order ID: ${order.order_id}`);
           $("#customer-id").text(`Customer ID: ${order.user_id}`);
-          $("#customer-name").text(`Customer Name: ${order.customerName}`);
-          $("#customer-phone").text(`Phone: ${order.phone}`);
-          $("#customer-address").text(`Address: ${order.address}`);
+          $("#customer-name").text(
+            `Customer Name: ${order_details.first_name}`
+          );
+          $("#customer-phone").text(`Phone: ${order_details.phone_number}`);
+          $("#customer-address").text(`Address: ${order_details.address}`);
 
           let itemsHtml = "";
           order.items.forEach((item) => {
             itemsHtml += `
-              <tr>
-                <td>${item.name}</td>
-                <td>${item.quantity}</td>
-                <td>$${item.price.toFixed(2)}</td>
-                <td>$${item.total.toFixed(2)}</td>
-              </tr>`;
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.quantity}</td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>$${item.total.toFixed(2)}</td>
+        </tr>`;
           });
           $("#order-items").html(itemsHtml);
 
           $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
-          $("#delivery-fee").text(`Delivery Fee: $${order.deliveryFee.toFixed(2)}`);
+          $("#delivery-fee").text(
+            `Delivery Fee: $${order.deliveryFee.toFixed(2)}`
+          );
           $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
           $("#totalPrice").val(`$${order.total.toFixed(2)}`);
-          $("#orderStatus").val(order.status);
+          $("#orderStatus").val(order.order_status);
         }
       }
 
-      // Update order status using the backend API
-      async function updateOrderStatus(orderId, newStatus) {
-        try {
-          const response = await fetch("https://ecom-back-t1.netfy.app/orders/admin/order-status", {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ orderId, status: newStatus }),
-          });
-          if (!response.ok) throw new Error("Failed to update order status.");
-          const updatedOrder = await response.json(); // Assuming the API returns the updated order
 
-          // Update the status in the table without reloading the page
-          const orderRow = $(`tr[data-order-id="${orderId}"]`);
-          orderRow.find(".order-status").text(updatedOrder.status);
-        } catch (error) {
-          console.error(error);
+
+     // Update order status using the backend API
+async function updateOrderStatus(orderId, newStatus) {
+    try {
+        const response = await fetch(
+            "https://ecom-back-t1.netfy.app/orders/admin/order-status",
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ order_id: orderId, order_status: newStatus }),
+            }
+        );
+
+        // Check if the response status is OK
+        if (!response.ok) {
+            const errorDetails = await response.json(); // Get error details if available
+            throw new Error(`Failed to update order status. ${errorDetails.message || response.statusText}`);
         }
-      }
+
+        const updatedOrder = await response.json(); // Assuming the API returns the updated order
+
+        // Update the status in the table
+        const orderRow = $(`tr[data-order-id="${orderId}"]`);
+        orderRow.find(".order-status").text(updatedOrder.order_status);
+        alert("Order status updated successfully!");
+    } catch (error) {
+        console.error(error);
+        alert(error.message); // Display the error message to the user
+    }
+}
+
+
 
       $(document).ready(async function () {
         // Load the initial order list
@@ -252,17 +292,45 @@
         });
 
         // Handle delete button clicks
-        $(document).on("click", ".delete-btn", function () {
+        $(document).on("click", ".delete-btn", async function () {
           const orderId = $(this).data("order-id");
-          // Here, you can call your API to delete the order and then remove the row from the DOM
+          const confirmation = confirm(
+            "Are you sure you want to delete this order?"
+          );
+
+          if (confirmation) {
+            try {
+              const response = await fetch(
+                `https://ecom-back-t1.netfy.app/orders/admin/delete/${orderId}`,
+                {
+                  method: "DELETE",
+                }
+              );
+
+              if (response.ok) {
+                alert("Order deleted successfully!");
+
+                // Remove the corresponding row from the DOM
+                $(this).closest("tr").remove(); // Remove the entire row
+
+                // Optionally, you can also refresh the order list if needed
+                // fetchAndRenderOrders(); // Uncomment this line if you want to refresh the list
+              } else {
+                alert("Failed to delete order.");
+              }
+            } catch (error) {
+              console.error("Error deleting order:", error);
+              alert("An error occurred while deleting the order.");
+            }
+          }
         });
 
         // Handle update status button click in modal
-        $("#updateStatusBtn").click(async function () {
-          const newStatus = $("#orderStatus").val();
-          await updateOrderStatus(currentOrderId, newStatus);
-          $("#orderDetailsModal").modal("hide");
-        });
+        // Event listener for the "Update Status" button
+document.getElementById("updateStatusBtn").addEventListener("click", async () => {
+  const newStatus = document.getElementById("orderStatus").value;
+  await updateOrderStatus(currentOrderId, newStatus);
+});
       });
     </script>
   </body>
