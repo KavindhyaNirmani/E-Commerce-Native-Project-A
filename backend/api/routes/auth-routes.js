@@ -34,7 +34,7 @@ router.post("/register", authController.register);
 //User/Admin login
 router.post("/login", authController.login);
 
-router.use("/assets/images/user-image", express.static(userImagePath));
+router.use("/images/user-image", express.static(userImagePath));
 
 //Admin creation(admin-only route)
 router.post("/add-admin", upload.single("user_image"), authController.addAdmin);

@@ -110,7 +110,7 @@ exports.addAdmin = async (req, res) => {
     phone_no,
     address,
   } = req.body;
-  const user_image = `/assets/images/user-image/${req.file.filename}`;
+  const user_image = `/images/user-image/${req.file.filename}`;
 
   try {
     // Check for missing fields
