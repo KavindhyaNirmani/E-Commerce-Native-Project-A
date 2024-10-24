@@ -29,7 +29,7 @@ router.get("/", itemController.getAllItems);
 // Fetch a single item by its ID
 router.get("/:item_id", itemController.getItemById);
 
-router.use("/assets/images/menu", express.static(menuPath));
+router.use("/images/menu", express.static(menuPath));
 
 // Add a new item (with image upload)
 //router.post('/', protect, adminOnly, upload.single('item_image'), itemController.addItem);

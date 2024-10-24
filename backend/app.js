@@ -49,19 +49,19 @@ const menuPath = path.resolve(
   __dirname,
   "./images/menu"
 );
-app.use("/assets/images/menu", express.static(menuPath));
+app.use("/images/menu", express.static(menuPath));
 
 const userImagePath = path.resolve(
   __dirname,
   "./images/user-image"
 );
-app.use("/assets/images/user-image", express.static(userImagePath));
+app.use("/images/user-image", express.static(userImagePath));
 
 const promotionPath = path.resolve(
   __dirname,
   "./images/promotion"
 );
-app.use("/assets/images/promotion", express.static(promotionPath));
+app.use("/images/promotion", express.static(promotionPath));
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

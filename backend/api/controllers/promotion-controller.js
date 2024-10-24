@@ -50,7 +50,7 @@ exports.addPromotion = async (req, res) => {
     rules,
   } = req.body;
   const promotion_image = req.file
-    ? `/assets/images/promotion/${req.file.filename}`
+    ? `/images/promotion/${req.file.filename}`
     : null;
 
   try {
