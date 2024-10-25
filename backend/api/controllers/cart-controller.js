@@ -4,19 +4,18 @@ const CartItem = require("../models/CartItem"); // Import CartItem model
 
 // Add item to the cart
 exports.addItemToCart = async (req, res) => {
-  const { item_id, quantity } = req.body;
+  const { item_id } = req.body;
   const user_id = req.user.user_id; // Assuming user info is available from auth middleware
 
   // Log the values for debugging
   console.log("item_id:", item_id);
-  console.log("quantity:", quantity);
   console.log("user_id:", user_id);
 
   // Validate input
-  if (!item_id || !quantity) {
+  if (!item_id) {
     return res
       .status(400)
-      .json({ message: "Item ID and quantity are required." });
+      .json({ message: "Item ID is required." });
   }
 
   if (!user_id) {
@@ -49,19 +48,12 @@ exports.addItemToCart = async (req, res) => {
       [cart_id, item_id]
     );
 
-    if (existingCartItem.length > 0) {
-      // If item already exists in the cart, update the quantity
-      await db.execute(
-        "UPDATE cart_items SET quantity = quantity + ? WHERE cart_id = ? AND item_id = ?",
-        [quantity, cart_id, item_id]
-      );
-      return res.status(200).json({ message: "Cart updated successfully." });
-    }
+    
 
     // If item does not exist, add it to the cart
     await db.execute(
-      "INSERT INTO cart_items (cart_id, item_id, quantity) VALUES (?, ?, ?)",
-      [cart_id || null, item_id || null, quantity || null]
+      "INSERT INTO cart_items (cart_id, item_id) VALUES (?, ?)",
+      [cart_id || null, item_id || null]
     );
 
     res.status(201).json({ message: "Item added to cart successfully." });
@@ -78,10 +70,12 @@ exports.getCartItems = async (req, res) => {
   try {
     // Assuming you have a way to get the user's ID from the request (e.g., from a JWT token)
     const userId = req.user.user_id; // Adjust according to your authentication logic
+    console.log("Fetching cart items for userId:", userId);
 
     // Fetch the cart items from the database for the user
     const cart = await Cart.getCartByUserId(userId);
-
+    console.log("Cart found:", cart);
+    
     if (!cart) {
       return res.status(404).json({ message: "No Cart found this user" });
     }
