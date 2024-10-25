@@ -1,4 +1,5 @@
-.h6,
+/* table */
+
 h6 {
   color: #fad700;
 }
@@ -20,6 +21,14 @@ td button i {
   font-size: 20px;
 }
 
+.btn-custom {
+  display: none;
+  border: #fad700;
+  padding: 5px;
+  width: 100px;
+  font-weight: 500;
+}
+
 .btn {
   color: #fad700;
   font-size: 120%; 
@@ -33,13 +42,17 @@ td button i {
 .btn1 {
   background-color: #fad700;
   color: #000000;
-  font-weight: bold; 
+  font-weight:700;
+  border-radius: 5px; 
+  border-style: none;
 }
 
 .btn1:hover {
   background-color: #faff00;
   color: #000000;
 }
+
+ /* add/edit form */
 
 .modal-content {
   width: 80%;
@@ -51,11 +64,17 @@ td button i {
   color: #000000;
 }
 
+.modal-title{
+  color: #fad700;
+}
+
+
 .modal-body form {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 0;
+  padding: 5px;
+  
 }
 
 .modal-body form .image-holder {
