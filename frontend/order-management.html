@@ -113,7 +113,6 @@
               </table>
               <!-- Subtotal, Delivery Fee, Discount, and Total -->
               <p id="subtotal">Subtotal:</p>
-              <p id="delivery-fee">Delivery Fee:</p>
               <p id="discount">Discount:</p>
               <label for="totalPrice">Total:</label>
               <input
@@ -210,40 +209,49 @@
       }
 
       // Populate modal with order details from backend API
-      async function populateModal(orderId) {
+async function populateModal(orderId) {
+    try {
+        // Fetch the order details
         const order = await fetchOrderDetails(orderId);
         currentOrderId = orderId;
 
         if (order) {
-          $("#orderId").text(`Order ID: ${order.order_id}`);
-          $("#customer-id").text(`Customer ID: ${order.user_id}`);
-          $("#customer-name").text(
-            `Customer Name: ${order_details.first_name}`
-          );
-          $("#customer-phone").text(`Phone: ${order_details.phone_number}`);
-          $("#customer-address").text(`Address: ${order_details.address}`);
+            // Populate the order details in the modal
+            $("#orderId").text(`Order ID: ${order.order_id}`);
+            $("#customer-id").text(`Customer ID: ${order.user_id}`);
+            $("#customer-name").text(`Customer Name: ${order.first_name} ${order.last_name}`);
+            $("#customer-phone").text(`Phone: ${order.phone_number}`);
+            $("#customer-address").text(`Address: ${order.address}, ${order.city}, ${order.postal_code}`);
 
-          let itemsHtml = "";
-          order.items.forEach((item) => {
-            itemsHtml += `
-        <tr>
-          <td>${item.name}</td>
-          <td>${item.quantity}</td>
-          <td>$${item.price.toFixed(2)}</td>
-          <td>$${item.total.toFixed(2)}</td>
-        </tr>`;
-          });
-          $("#order-items").html(itemsHtml);
+            // Populate the order items in the modal
+            let itemsHtml = "";
+            order.items.forEach((item) => {
+                itemsHtml += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>$${(item.quantity * item.price).toFixed(2)}</td>
+                    </tr>`;
+            });
+            $("#order-items").html(itemsHtml);
 
-          $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
-          $("#delivery-fee").text(
-            `Delivery Fee: $${order.deliveryFee.toFixed(2)}`
-          );
-          $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
-          $("#totalPrice").val(`$${order.total.toFixed(2)}`);
-          $("#orderStatus").val(order.order_status);
+            // Populate subtotal, delivery fee, discount, and total
+            $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
+            $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
+            $("#totalPrice").val(`$${order.total_final_price.toFixed(2)}`);
+            $("#orderStatus").val(order.order_status);
+        } else {
+            console.error("Order details not found.");
+            alert("Order details not available.");
         }
-      }
+    } catch (error) {
+        console.error("Error fetching order details:", error);
+        alert("Failed to fetch order details.");
+    }
+}
+
+
 
 
 

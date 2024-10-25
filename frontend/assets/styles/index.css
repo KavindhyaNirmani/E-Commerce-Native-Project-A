@@ -34,8 +34,7 @@
   color: #fad700;
   text-align: left;
   font-size: clamp(30px, 7vw, 80px);
-  font-style: oblique;
-  font-weight: 1000;
+  font-weight: 900;
   letter-spacing: 3px;
 }
 
