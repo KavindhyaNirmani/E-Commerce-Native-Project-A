@@ -14,7 +14,7 @@
     />
     <!--Custom CSS-->
     <link rel="stylesheet" href="./assets/styles/dashboard.css" />
-    <link rel="stylesheet" href="./assets/styles/sidebar.css" />
+    <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
     <!--Google
       font-->
 
@@ -39,6 +39,7 @@
   </head>
   <body
     style="
+    font-family: 'Lato', sans-serif;
       background-color: linear-gradient(#6c6a6a, #1e1e1e);
       color: #fad700;
       height: 100vh;
@@ -48,7 +49,7 @@
     <div id="sidebar-placeholder"></div>
 
     <script>
-      fetch("./sidebar.html")
+      fetch("./assets/widgets/side-bar/sidebar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("sidebar-placeholder").innerHTML = data;
@@ -164,7 +165,7 @@
           <div class="col-lg-3 col-md-6 col-6 mb-4">
             <!-- Adjusted for responsiveness -->
             <div class="order-summary-box text-center">
-              <p>Successfull Orders:</p>
+              <p>Successful Orders:</p>
               <h4 id="successfull-orders">0</h4>
             </div>
           </div>
@@ -297,7 +298,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order details from the backend API
-        fetch("/api/orders/summary") // Replace with your actual API endpoint
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") // Replace with your actual API endpoint
           .then((response) => response.json())
           .then((data) => {
             // Update the order summaries with the data from the API
@@ -306,7 +307,7 @@
             document.getElementById("pending-orders").textContent =
               data.pendingOrders;
             document.getElementById("successfull-orders").textContent =
-              data.successfullOrders;
+              data.successfulOrders;
             document.getElementById("failed-orders").textContent =
               data.failedOrders;
           })
