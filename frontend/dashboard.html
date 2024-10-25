@@ -165,7 +165,7 @@
           <div class="col-lg-3 col-md-6 col-6 mb-4">
             <!-- Adjusted for responsiveness -->
             <div class="order-summary-box text-center">
-              <p>Successfull Orders:</p>
+              <p>Successful Orders:</p>
               <h4 id="successfull-orders">0</h4>
             </div>
           </div>
@@ -298,7 +298,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order details from the backend API
-        fetch("/api/orders/summary") // Replace with your actual API endpoint
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") // Replace with your actual API endpoint
           .then((response) => response.json())
           .then((data) => {
             // Update the order summaries with the data from the API
@@ -307,7 +307,7 @@
             document.getElementById("pending-orders").textContent =
               data.pendingOrders;
             document.getElementById("successfull-orders").textContent =
-              data.successfullOrders;
+              data.successfulOrders;
             document.getElementById("failed-orders").textContent =
               data.failedOrders;
           })

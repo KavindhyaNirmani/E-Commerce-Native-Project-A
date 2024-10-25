@@ -7,13 +7,13 @@ const path = require("path");
 const router = express.Router();
 
 // Set up the storage for images
-const promotionAssetsPath = path.resolve(
+const promotionPath = path.resolve(
   __dirname,
-  "../../../frontend/assets/images/promotion"
+  "../../images/promotion"
 );
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, promotionAssetsPath);
+    cb(null, promotionPath);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}-${

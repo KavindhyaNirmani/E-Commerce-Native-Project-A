@@ -3,9 +3,25 @@
   width: 100%;
 }
 
+#headerPlaceholder {
+  position: sticky;
+  z-index: 1000;
+  margin-bottom: 25px;
+}
+
+#topBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #6c6a6a;
+  z-index: 999;
+}
+
 /*Welcome section*/
 #carouselExampleFade {
-  margin: 8px; 
+  margin: 8px;
+  padding-top: 70px;
 }
 
 .carousel-caption h2 {
@@ -30,21 +46,20 @@
 }
 
 .carousel-item.active {
-  opacity: 1; 
+  opacity: 1;
 }
 
 .carousel-item {
-  max-height: 520px; 
-  overflow: hidden; 
-  transition: opacity 0.1s ease-in-out  !important; /* 0.1 seconds for a very fast transition */
-
+  max-height: 520px;
+  overflow: hidden;
+  transition: opacity 2ms ease-in;
 }
 
 /* Carousel Images */
 .carousel-item img {
-  width: 100%; 
-  height: 520px; 
-  object-fit: cover; 
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
 }
 
 /*Feature Section*/
@@ -103,7 +118,8 @@
   margin-top: 5px;
 }
 
-.about p {
+.about p,
+li {
   color: #eeeded;
   font-size: 14px;
   text-align: justify;
@@ -138,10 +154,10 @@
 #beverageCard {
   background-color: #1f0b0b;
   border-radius: 20px;
-  margin: 0 auto; 
+  margin: 0 auto;
   width: 100%;
-  max-width: 320px; 
-  height: 320px; 
+  max-width: 320px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
