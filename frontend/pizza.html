@@ -142,12 +142,10 @@
                 `;
           menu.appendChild(menuItem);
         });
-
-        // Attach event listeners to "Add to Cart" buttons
-        const addToCartButtons = document.querySelectorAll(".add-to-cart");
-        addToCartButtons.forEach((button) => {
-          button.addEventListener("click", handleAddToCartClick);
-        });
+        document.querySelectorAll(".add-to-cart").forEach((button) => {
+                button.addEventListener("click", handleAddToCart);
+            });
+        
       }
 
       // Handle "View More" button click
@@ -166,60 +164,58 @@
             document.getElementById("viewMoreBtn").style.display = "none";
           }
         });
+        
+        async function handleAddToCart(event) {
+            const item = JSON.parse(event.target.getAttribute("data-item"));
+            const token = localStorage.getItem("token");
 
-      // Check if user is logged in (you can customize this logic)
-      function isUserLoggedIn() {
-        return localStorage.getItem("isLoggedIn") === "true"; // Assume 'isLoggedIn' in localStorage represents login status
-      }
+            if (!token) {
 
-      // Function to handle adding item to cart or redirecting to login
-function handleAddToCartClick(event) {
-  if (isUserLoggedIn()) {
-    // User is logged in, proceed to add item to cart
-    addToCart(event);
-  } else {
-    // User is not logged in, redirect to user-login.html
-    window.location.href = "./user-reg.html";
-  }
-}
+                localStorage.setItem("redirectAfterLogin", "index.html#menu");
+                window.location.href = "user-reg.html";
+                return;
+            }
 
-// Function to add item to cart by calling backend API
-function addToCart(event) {
-  const button = event.target;
-  const itemData = button.getAttribute("data-item");
-  const item = JSON.parse(itemData);
+            await addToCart(item);
+        }
 
-  // Prepare the data to send to the backend
-  const cartItem = {
-    name: item.item_name,
-    image: item.item_image,
-    price: parseFloat(item.item_price),
-    quantity: 1, // Default quantity for adding to cart
-  };
+        async function addToCart(item) {
+            const token = localStorage.getItem("token");
+            console.log('Adding item to cart:', item);
+            console.log('Using token:', token);
 
-  // Make an API call to add the item to the cart
-  fetch("https://ecom-back-t1.netfy.app/api/cart", {
-    method: "POST", // You may need to adjust this based on your API
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(cartItem),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to add item to the cart");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Successfully added to cart, now redirect to cart.html
-      window.location.href = "./cart.html";
-    })
-    .catch((error) => {
-      console.error("Error adding item to cart:", error);
-    });
-}
+            try {
+                const response = await fetch("https://ecom-back-t1.netfy.app/cart/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        item_id: item.item_id,
+                    })
+                });
 
+                console.log('Response Status:', response.status);
+
+                if (!response.ok) {
+                    const errorResponse = await response.json();
+                    console.error('Error Response:', errorResponse);
+                    alert(`Error adding item to cart: ${errorResponse.message || "Unknown error"}`);
+                    throw new Error('Error adding item to cart');
+                }
+
+                const responseData = await response.json();
+                console.log('Response Data:', responseData);
+                alert(`${item.item_name} has been added to your cart.`);
+
+                // Redirect to the cart page after successfully adding the item
+                window.location.href = "cart.html"; // Redirect to cart after successful addition
+            } catch (error) {
+                console.error('There was an error adding the item to your cart:', error);
+                alert("There was an error adding the item to your cart. Please try again.");
+            }
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
