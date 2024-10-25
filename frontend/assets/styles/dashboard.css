@@ -62,18 +62,23 @@ body {
 
 /*Order Summary Section*/
 .order-summary-box {
-  background-color: #4d4d4d;
+  background-color: #232323;
   padding: 20px;
   border-radius: 8px;
   color: white;
   position: relative;
-  max-width: 150px; /* Set the maximum width */
+  max-width: 210px; /* Set the maximum width */
   margin: 0; /* Center the box horizontally */
   min-height: 150px;
 }
 
 .order-summary-box h4 {
   color: white;
+  font-size: 36px;
+}
+
+.order-summary-box p {
+  font-size: 20px;
 }
 
 .arrow {
@@ -90,10 +95,6 @@ body {
 
 .arrow-link:hover .arrow {
   color: #fad700;
-}
-
-h2 {
-  color: #ffffff;
 }
 
 /*offer section*/
@@ -346,5 +347,10 @@ p {
   body {
     height: 100%;
     overflow-x: hidden;
+  }
+}
+@media (max-width: 320px) {
+  .order-summary-box p {
+    font-size: 16px;
   }
 }
