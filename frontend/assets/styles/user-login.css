@@ -49,9 +49,10 @@ input:focus {
 
 button {
   background-color: #fad700 !important;
+  
 }
 
-.cus-hover {
+.cus-button {
   background-color: #fad700 !important;
   color: black;
   font-size: 18px;
@@ -59,9 +60,12 @@ button {
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
+  width: 100%;
+  margin:0 auto ;
+ 
 }
 
-.cus-hover:hover {
+.cus-button:hover {
   background-color: #faff00 !important;
   color: black;
 }
@@ -92,5 +96,18 @@ p a:hover {
 
   .custom-padding {
     padding: 10px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .h2-padding{
+  margin-bottom: 50px;
+  }
+}
+
+
+@media (min-width: 2560px) {
+  .p-custom{
+    padding-top: 150px;
   }
 }
