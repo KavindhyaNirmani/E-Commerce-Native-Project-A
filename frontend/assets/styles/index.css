@@ -36,7 +36,8 @@
 .carousel-item {
   max-height: 520px; 
   overflow: hidden; 
-  transition: opacity 5s ease-in;
+  transition: opacity 0.1s ease-in-out  !important; /* 0.1 seconds for a very fast transition */
+
 }
 
 /* Carousel Images */
