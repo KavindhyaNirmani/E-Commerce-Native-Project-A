@@ -95,12 +95,13 @@ p a:hover {
   padding: 10px !important;
 }
 
-/* Responsive behavior */
-@media (min-width: 530px) {
-  .text-style {
-    font-size: 20px;
-  }
+.invalid-feedback {
+  font-size: medium;
+  font-weight: 700;
+  font-family: "Lato", sans-serif !important;
 }
+
+/* Responsive behavior */
 
 @media (min-width: 568px) and (max-width: 922px) {
   .image-section {
@@ -128,5 +129,20 @@ p a:hover {
   }
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 1440px) {
+  .reg-form-section {
+    padding-top: 50px !important;
+  }
 }
+
+@media (max-width: 768px) {
+  .logo_icon {
+    margin-top: 10px !important;
+  }
+
+  .text-style {
+    padding-top: 20px !important;
+    font-size: 25px;
+  }
+}
+
