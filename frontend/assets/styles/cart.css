@@ -54,6 +54,8 @@ body {
 
 .table {
   background-color: #444444;
+  height: 80vh;
+  overflow-y: scroll;
   color: azure;
   font-size: 12px; 
   border-spacing: 0 10px; 
