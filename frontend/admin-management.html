@@ -80,7 +80,7 @@
         aria-hidden="true"
       >
         <div class="modal-dialog modal-dialog-custom">
-          <div class="modal-content">
+          <div class="modal-content modal-content-custom" >
             <div class="pt-3 px-3">
               <h5 class="modal-title custom-title" id="adminModalLabel">
                 Admin Profile
@@ -89,6 +89,7 @@
 
             <div class="modal-body">
               <div class="row">
+                <div class="col-7">
                 <form
                   method="POST"
                   id="addAdminForm"
@@ -216,6 +217,9 @@
                       <div class="invalid-feedback">Please fill the field!</div>
                     </div>
                   </div>
+                </div>
+
+                <div class="col-5">
 
                   <label for="adminImage" class="form-label"
                     >Upload Admin Image:</label
@@ -225,6 +229,7 @@
                     class="form-control"
                     id="adminImage"
                     accept="image/*"
+                    
                   />
                   <div class="invalid-feedback">Please fill the field!</div>
 
@@ -236,6 +241,7 @@
                     width="150"
                     height="150"
                   />
+                </div>
 
                   <div class="d-flex button-section">
                     <button type="submit" class="btn btn-custom">Submit</button>
@@ -246,13 +252,7 @@
                     >
                       Discard
                     </button>
-                    <button
-                      type="button "
-                      class="btn btn-custom"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
+                    
                   </div>
                 </form>
               </div>
@@ -322,17 +322,17 @@
             : "";
 
           const adminCard = `
-  <div class="card" style="width: 18rem;">
+  <div class="card card-style" style="width: 15rem;">
    ${
      admin.user_image
-       ? `<img class="card-img-top rounded-circle mt-3 mx-auto d-block p-3" src="${imageUrl}" alt="Admin Image">`
+       ? `<img class="card-img-top rounded-circle mt-2  d-block p-3 img-style" src="${imageUrl}" alt="Admin Image">`
        : ""
    } 
 
   <div class="card-body text-center">
   <h5 class="card-title">${admin.first_name} ${admin.last_name}</h5>
   </div>
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-custom">
 
   <li class="list-group-item">First Name: ${admin.first_name}</li>
   <li class="list-group-item">Last Name: ${admin.last_name}</li>
