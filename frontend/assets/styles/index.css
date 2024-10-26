@@ -19,7 +19,42 @@
 }
 
 /*Welcome section*/
-#carouselExampleFade {
+/* Carousel Zoom and Fade */
+.carousel-item {
+  transition: opacity 0.75s ease-in-out;
+  max-height: 520px;
+  overflow: hidden;
+}
+.carousel-item.active{
+opacity: 0.5;
+}
+.zoom-image {
+  animation: zoomEffect 10s ease-in-out infinite;
+}
+
+@keyframes zoomEffect {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Adjust the scale for desired zoom level */
+  }
+}
+#yumzyCarousel{
+  margin: 8px;
+  padding-top: 70px;
+}
+.carousel-caption h1 {
+  color: #fad700;
+  text-align: center;
+  font-size: clamp(30px, 7vw, 80px);
+  font-style: oblique;
+  font-weight: 1000;
+  font-family: "cookie", cursive;
+  position: relative;
+  letter-spacing: 5px;
+}
+/*#carouselExampleFade {
   margin: 8px;
   padding-top: 70px;
 }
@@ -41,7 +76,7 @@
   font-family: "Playwrite GB S", cursive;
 }
 .carousel-caption p {
-  margin-top: 45px;
+  
   font-family: "Smooch", cursive;
   font-weight: 400;
   font-style: italic;
@@ -62,7 +97,7 @@
   overflow: hidden;
   transition: opacity 2ms ease-in;
 }
-
+*/
 /* Carousel Images */
 .carousel-item img {
   width: 100%;
