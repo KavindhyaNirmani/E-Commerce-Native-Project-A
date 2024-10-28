@@ -117,7 +117,6 @@
 
 /*Feature Section*/
 
-
 /*.features {
   display: flex;
   flex-wrap: wrap;
@@ -202,12 +201,19 @@ li {
   font-weight: bold;
   margin-bottom: 20px;
 }
-
+.menu-card {
+  margin: 5px 0 0 0;
+  padding: 0;
+  border-style: solid;
+  border-color: #000000;
+  text-align: center;
+}
 /* Cards */
 #cakeCard,
 #pizzaCard,
 #beverageCard {
-  background-color: #1f0b0b;
+  border-color: #000000;
+  border-width: 2px;
   border-radius: 20px;
   margin: 0 auto;
   width: 100%;
@@ -220,7 +226,6 @@ li {
 
 /* Card Image Container */
 .card-img-container {
-  background-color: #1f0b0b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,7 +233,9 @@ li {
   height: 100%;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
-  padding: 10px;
+  padding: 0;
+  border-width: 2px;
+  border-color: #000000;
 }
 
 .menu-card img {
@@ -239,26 +246,27 @@ li {
 
 /* Buttons inside cards */
 .menu-card .btn {
-  background-color: #fad700;
-  color: #000000;
-  border: none;
+  background-color: transparent;
+  color: #fad700;
+  border-width: 2px;
+  border-color: #fad700;
   padding: 8px 20px;
   border-radius: 15px;
   font-weight: bolder;
   width: 55%;
   cursor: pointer;
   min-width: fit-content;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 0;
 }
 
 .menu-card .btn:hover,
 .menu-card .btn:focus {
-  background-color: #faf000 !important;
+  background-color: #fad700 !important;
   color: #000000 !important;
 }
 
 .menu-card .btn:active {
-  background-color: #faf000 !important;
+  background-color: #fad700 !important;
   color: #000000 !important;
 }
 
@@ -335,7 +343,7 @@ li {
     font-size: 14px;
     margin: 3px 3px 0 3px;
   }
-  .carousel-caption h1{
+  .carousel-caption h1 {
     font-size: 72px;
   }
 }
@@ -350,10 +358,10 @@ li {
     width: 110px;
     font-size: 12px;
   }
-  .card{
+  .card {
     margin: 5px;
   }
-   .carousel-caption h5,
+  .carousel-caption h5,
   p {
     font-size: 12px;
   }
@@ -374,8 +382,6 @@ li {
   .card-img-container {
     height: 240px; /* Adjust image container height */
   }
-  
-  
 }
 
 /* For screens 375px and smaller */
@@ -404,5 +410,4 @@ li {
   .card-img-container {
     height: 200px; /* Reduce image height for very small screens */
   }
-  
 }
