@@ -55,6 +55,7 @@
   text-align: center;
   font-size: clamp(20px, 5vw, 60px);
   font-family: "Courier New", Courier, monospace;
+  margin: 40px 0 0 0;
 }
 .carousel-caption {
   position: absolute;
@@ -156,7 +157,7 @@
 .about {
   background-color: #484242;
   padding: 40px 0;
-  margin: 5px;
+  margin: 0;
 }
 
 /*text side*/
@@ -230,14 +231,14 @@ li {
   padding: 10px;
 }
 
-.card img {
+.menu-card img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Ensure image scales properly and doesn't stretch */
 }
 
 /* Buttons inside cards */
-.card .btn {
+.menu-card .btn {
   background-color: #fad700;
   color: #000000;
   border: none;
@@ -250,13 +251,13 @@ li {
   margin-bottom: 10px;
 }
 
-.card .btn:hover,
-.card .btn:focus {
+.menu-card .btn:hover,
+.menu-card .btn:focus {
   background-color: #faf000 !important;
   color: #000000 !important;
 }
 
-.card .btn:active {
+.menu-card .btn:active {
   background-color: #faf000 !important;
   color: #000000 !important;
 }
@@ -316,7 +317,7 @@ li {
 }
 
 #notOfferMessage {
-  color: #ffffff;
+  color: #000000;
   font-size: 12px;
 }
 
@@ -352,6 +353,13 @@ li {
   .card{
     margin: 5px;
   }
+   .carousel-caption h5,
+  p {
+    font-size: 12px;
+  }
+  .carousel-item img {
+    height: 300px; /* Further reduce height for very small screens */
+  }
 }
 
 /* For screens 425px and smaller */
@@ -366,10 +374,7 @@ li {
   .card-img-container {
     height: 240px; /* Adjust image container height */
   }
-   .carousel-caption h5,
-  p {
-    font-size: 12px;
-  }
+  
   
 }
 
@@ -399,11 +404,5 @@ li {
   .card-img-container {
     height: 200px; /* Reduce image height for very small screens */
   }
-  .carousel-item img {
-    height: 200px; /* Further reduce height for very small screens */
-  }
-  .carousel-caption h5,
-  p {
-    font-size: 12px;
-  }
+  
 }
