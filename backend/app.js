@@ -12,6 +12,7 @@ const itemRoutes = require("./api/routes/item-routes");
 const cartRoutes = require("./api/routes/cart-routes");
 const orderRoutes = require("./api/routes/order-routes");
 const promotionRoutes = require("./api/routes/promotion-routes");
+const feedbackRoutes = require("./api/routes/feedback-routes");
 
 //middleware for logging requests and parsing the body
 app.use(morgan("dev"));
@@ -44,6 +45,7 @@ app.use("/items", itemRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
 app.use("/promotion", promotionRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 const menuPath = path.resolve(
   __dirname,
