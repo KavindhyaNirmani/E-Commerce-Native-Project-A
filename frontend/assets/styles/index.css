@@ -19,7 +19,54 @@
 }
 
 /*Welcome section*/
-#carouselExampleFade {
+/* Carousel Zoom and Fade */
+.carousel-item {
+  transition: opacity 0.75s ease-in-out;
+  max-height: 520px;
+  overflow: hidden;
+}
+.carousel-item.active {
+  opacity: 0.5;
+}
+.zoom-image {
+  animation: zoomEffect 10s ease-in-out infinite;
+}
+
+@keyframes zoomEffect {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Adjust the scale for desired zoom level */
+  }
+}
+#yumzyCarousel {
+  margin: 8px;
+  padding-top: 70px;
+}
+.carousel-caption h1 {
+  color: #fad700;
+  text-align: center;
+  font-size: clamp(40px, 9vw, 100px);
+  font-style: oblique;
+  font-weight: 1000;
+  font-family: "cookie", cursive;
+  letter-spacing: 5px;
+}
+.carousel-caption h2 {
+  color: #ffffff;
+  text-align: center;
+  font-size: clamp(20px, 5vw, 60px);
+  font-family: "Courier New", Courier, monospace;
+}
+.carousel-caption {
+  position: absolute;
+  top: clamp(10px, 2vw, 50px);
+  left: clamp(10px, 2vw, 70px);
+}
+
+/*#carouselExampleFade {
   margin: 8px;
   padding-top: 70px;
 }
@@ -41,7 +88,7 @@
   font-family: "Playwrite GB S", cursive;
 }
 .carousel-caption p {
-  margin-top: 45px;
+  
   font-family: "Smooch", cursive;
   font-weight: 400;
   font-style: italic;
@@ -62,7 +109,7 @@
   overflow: hidden;
   transition: opacity 2ms ease-in;
 }
-
+*/
 /* Carousel Images */
 .carousel-item img {
   width: 100%;
@@ -289,6 +336,9 @@ li {
     font-size: 14px;
     margin: 3px 3px 0 3px;
   }
+  .carousel-caption h1{
+    font-size: 72px;
+  }
 }
 
 /*for screens between 320px and 576px */
@@ -314,6 +364,10 @@ li {
 
   .card-img-container {
     height: 240px; /* Adjust image container height */
+  }
+   .carousel-caption h5,
+  p {
+    font-size: 12px;
   }
 }
 
@@ -345,5 +399,9 @@ li {
   }
   .carousel-item img {
     height: 200px; /* Further reduce height for very small screens */
+  }
+  .carousel-caption h5,
+  p {
+    font-size: 12px;
   }
 }
