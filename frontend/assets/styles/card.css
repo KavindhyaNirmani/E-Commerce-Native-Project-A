@@ -18,8 +18,7 @@
   text-align: center;
   font-family: "Lato", sans-serif;
   height: 410px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0 20px 0;
   padding-top: 70px;
 }
 
@@ -59,8 +58,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   font-family: "Lato", sans-serif;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 20px 0 20px 0;
   background-color: #1f0b0b;
 }
 
