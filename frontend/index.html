@@ -28,7 +28,7 @@
   <body
     style="
       font-family: 'Lato', sans-serif;
-      background-image: linear-gradient(#6c6a6a, #1e1e1e);
+      background: none;
       height: 100%;
     ">
     <div id="topBar"></div>
@@ -133,7 +133,9 @@
     </div>
   -->
     <!--Features section-->
-    <section class="features">
+    <feature-section></feature-section>
+    
+   <!-- <section class="features">
       <div class="feature">
         <img src="./assets/images/feature-pizza.png" alt="Pizza" />
         <h3>Fresh Pizza</h3>
@@ -151,7 +153,7 @@
         <h3>Sweet Desserts</h3>
         <p>Our sweet treats will give you the perfect end to your meal.</p>
       </div>
-    </section>
+    </section> -->
 
     <!--About section-->
 
@@ -314,7 +316,11 @@
       });
     </script>
     <!-- Custom JS -->
+     <script src="./assets/js/feature.js"></script>
     <script>
+
+
+      
       let allOfferData = []; // Store all offer images
       let offerLimit = 1; // Initially show 1 offer image
 

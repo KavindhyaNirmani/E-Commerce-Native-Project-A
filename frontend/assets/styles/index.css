@@ -22,7 +22,7 @@
 /* Carousel Zoom and Fade */
 .carousel-item {
   transition: opacity 0.75s ease-in-out;
-  max-height: 520px;
+  max-height: 100%;
   overflow: hidden;
 }
 .carousel-item.active {
@@ -40,10 +40,6 @@
   50% {
     transform: scale(1.1); /* Adjust the scale for desired zoom level */
   }
-}
-#yumzyCarousel {
-  margin: 8px;
-  padding-top: 70px;
 }
 .carousel-caption h1 {
   color: #fad700;
@@ -113,13 +109,15 @@
 /* Carousel Images */
 .carousel-item img {
   width: 100%;
-  height: 520px;
+  height: 100vh;
   object-fit: cover;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 /*Feature Section*/
-.features {
+
+
+/*.features {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -153,7 +151,7 @@
   color: white;
   font-family: Lato;
 }
-
+*/
 /*About Section*/
 .about {
   background-color: #484242;
@@ -351,6 +349,9 @@ li {
     width: 110px;
     font-size: 12px;
   }
+  .card{
+    margin: 5px;
+  }
 }
 
 /* For screens 425px and smaller */
@@ -369,6 +370,7 @@ li {
   p {
     font-size: 12px;
   }
+  
 }
 
 /* For screens 375px and smaller */
