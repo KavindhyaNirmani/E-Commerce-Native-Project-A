@@ -11,10 +11,10 @@ class featureSection extends HTMLElement {
         .card {
           margin: 5px 0 0 0;
           padding: 0;
-          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
           text-align: center;  
           opacity: 0; /* Initially hidden */
-          transform: translateX(-150px); /* Shifted to the right */
+          transform: translatey(150px); /* Shifted to the right */
           transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
         }
         .card.visible {

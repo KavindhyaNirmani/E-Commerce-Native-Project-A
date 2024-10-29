@@ -38,11 +38,11 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1); /* Adjust the scale for desired zoom level */
+    transform: scale(1.1); 
   }
 }
 .carousel-caption h1 {
-  color: #fad700;
+  color: #fccb45;
   text-align: center;
   font-size: clamp(40px, 9vw, 100px);
   font-style: oblique;
@@ -62,51 +62,6 @@
   top: clamp(10px, 2vw, 50px);
   left: clamp(10px, 2vw, 70px);
 }
-
-/*#carouselExampleFade {
-  margin: 8px;
-  padding-top: 70px;
-}
-
-.carousel-caption h2 {
-  color: #ffffff;
-  text-align: center;
-  font-size: clamp(20px, 5vw, 60px);
-  font-family: "Courier New", Courier, monospace;
-}
-
-.carousel-caption h1 {
-  color: #fad700;
-  text-align: center;
-  font-size: clamp(30px, 7vw, 80px);
-  font-style: oblique;
-  font-weight: 400;
-  letter-spacing: 5px;
-  font-family: "Playwrite GB S", cursive;
-}
-.carousel-caption p {
-  
-  font-family: "Smooch", cursive;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.carousel-caption {
-  position: absolute;
-  top: clamp(10px, 2vw, 50px);
-  left: clamp(10px, 2vw, 70px);
-}
-
-.carousel-item.active {
-  opacity: 1;
-}
-
-.carousel-item {
-  max-height: 520px;
-  overflow: hidden;
-  transition: opacity 2ms ease-in;
-}
-*/
 /* Carousel Images */
 .carousel-item img {
   width: 100%;
@@ -116,65 +71,31 @@
 }
 
 /*Feature Section*/
-
-/*.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 8px;
-  background-color: #1f0b0b;
-}
-
-.feature {
-  flex: 1 1 300px;
-  max-width: 300px;
-  text-align: center;
-  margin: 10px;
-}
-
-.feature img {
-  width: 130px;
-  height: auto;
-  max-width: 150px;
-  margin-top: 10px;
-}
-
-.feature h3 {
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: white;
-  font-family: Lato;
-}
-
-.feature p {
-  font-size: 1rem;
-  color: white;
-  font-family: Lato;
-}
-*/
 /*About Section*/
 .about {
-  background-color: #484242;
   padding: 40px 0;
   margin: 0;
+  width: 100%;
+  height: auto;
 }
 
 /*text side*/
 .about-text h2 {
-  color: #fad700;
+  color: #fccb45 !important;
   font-weight: bold;
   margin-top: 20px;
   font-size: 34px;
 }
 
 .about h5 {
-  color: #fad700;
+  color: #fccb45;
   margin-top: 5px;
+  font-weight: bold;
 }
 
 .about p,
 li {
-  color: #eeeded;
+  color: #000000;
   font-size: 14px;
   text-align: justify;
 }
@@ -191,9 +112,14 @@ li {
 }
 
 /* Menu Section */
+.our-menu {
+  background-color: #1e1e1e;
+  margin: 0;
+  padding-bottom: 20px;
+}
 .menutopic {
   background-color: transparent;
-  color: #fad700;
+  color: #fccb45;
   padding: 5px 10px;
   border-radius: 50px;
   text-align: center;
@@ -204,17 +130,16 @@ li {
 .menu-card {
   margin: 5px 0 0 0;
   padding: 0;
-  border-style: solid;
-  border-color: #000000;
   text-align: center;
 }
 /* Cards */
 #cakeCard,
 #pizzaCard,
 #beverageCard {
+  background-color: #1f0b0b;
   border-color: #000000;
   border-width: 2px;
-  border-radius: 20px;
+  border-radius: 25px;
   margin: 0 auto;
   width: 100%;
   max-width: 320px;
@@ -241,15 +166,14 @@ li {
 .menu-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure image scales properly and doesn't stretch */
+  object-fit: cover; 
 }
 
 /* Buttons inside cards */
 .menu-card .btn {
   background-color: transparent;
-  color: #fad700;
-  border-width: 2px;
-  border-color: #fad700;
+  color: #fccb45;
+  border: none;
   padding: 8px 20px;
   border-radius: 15px;
   font-weight: bolder;
@@ -261,13 +185,16 @@ li {
 
 .menu-card .btn:hover,
 .menu-card .btn:focus {
-  background-color: #fad700 !important;
-  color: #000000 !important;
+  background-color: transparent !important;
+  border: 2px groove #fccb45;
+  color: #fccb45 !important;
 }
 
 .menu-card .btn:active {
-  background-color: #fad700 !important;
-  color: #000000 !important;
+  background-color: transparent !important;
+  border: 2px #fccb45;
+  border-style: groove;
+  color: #fccb45 !important;
 }
 
 /* Offer Section */
@@ -293,13 +220,13 @@ li {
 }
 
 .container h2 {
-  color: #fad700;
+  color: #fccb45;
   font-size: 36px;
 }
 
 /* Button Style */
 #viewMoreBtn {
-  background-color: #fad700;
+  background-color: #fccb45;
   color: #000000;
   border: none;
   padding: 8px 18px;
@@ -317,7 +244,7 @@ li {
 #viewMoreBtn:hover,
 #viewMoreBtn:focus,
 #viewMoreBtn:active {
-  background-color: #faf000;
+  background-color: #fccb45;
   color: #000000;
   outline: none;
   border: none;
@@ -351,7 +278,7 @@ li {
 /*for screens between 320px and 576px */
 @media (max-width: 576px) {
   .carousel-item img {
-    height: 250px; /* Adjust height for smaller screens to maintain proportionality */
+    height: 250px; 
   }
   #viewMoreBtn {
     padding: 5px 12px;
@@ -366,7 +293,7 @@ li {
     font-size: 12px;
   }
   .carousel-item img {
-    height: 300px; /* Further reduce height for very small screens */
+    height: 300px; 
   }
 }
 
@@ -375,12 +302,12 @@ li {
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 280px; /* Reduce the card size */
-    height: 280px; /* Reduce the height proportionally */
+    max-width: 280px; 
+    height: 280px; 
   }
 
   .card-img-container {
-    height: 240px; /* Adjust image container height */
+    height: 240px; 
   }
 }
 
@@ -389,12 +316,12 @@ li {
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 260px; /* Reduce the card size further */
-    height: 260px; /* Adjust height proportionally */
+    max-width: 260px; 
+    height: 260px; 
   }
 
   .card-img-container {
-    height: 220px; /* Adjust image container height */
+    height: 220px; 
   }
 }
 
@@ -403,11 +330,11 @@ li {
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 240px; /* Reduce the card width more for tiny screens */
-    height: 240px; /* Reduce height accordingly */
+    max-width: 240px; 
+    height: 240px; 
   }
 
   .card-img-container {
-    height: 200px; /* Reduce image height for very small screens */
+    height: 200px; 
   }
 }

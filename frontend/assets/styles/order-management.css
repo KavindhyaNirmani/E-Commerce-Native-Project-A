@@ -3,26 +3,25 @@ body {
   color: #f0e68c;
   height: 100vh;
 }
-.table th,
-.table td {
-  vertical-align: middle;
-}
+
 .table {
   width: 90%;
 }
+
+.table tbody td {
+  background-color: #4d4d4d;
+}
+
 .action-icons {
-  width: 40px; /* Set a fixed width */
-  height: 40px; /* Set a fixed height */
-  padding: 5px; /* Ensure padding remains consistent */
+  width: 40px;
+  height: 40px;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
-  background: transparent; /* No background to avoid button growing on hover */
+  background: transparent;
   gap: 10px;
-}
-.table tbody td {
-  background-color: #4d4d4d;
 }
 
 .btn-danger:hover,
@@ -32,6 +31,7 @@ body {
   border: none;
   color: black;
 }
+
 .btn-warning:hover,
 .btn-warning:focus,
 .btn-warning:active {
@@ -39,54 +39,60 @@ body {
   border: none;
   color: white;
 }
+
 .content {
   margin-left: 300px;
   padding: 10px;
 }
+
 .container {
   margin: 260px;
 }
 
 /*modal*/
 .modal-content {
-  background-color: #444649; /* Dark background for the modal */
-  color: #fff; /* White text */
-  border-radius: 8px; /* Smooth corners */
+  background-color: #444649;
+  color: #fff;
+  border-radius: 8px;
 }
 
 .modal-header,
 .modal-footer {
-  border: none; /* Remove borders from header and footer */
+  border: none;
 }
+
 .modal-title {
   color: #fad700;
 }
+
 .modal-body {
   padding: 20px;
 }
+
 .btn-primary {
-  background-color: #fad700; /* Yellow button background */
-  border: none; /* No border */
-  color: #000; /* Black text */
+  background-color: #fccb45;
+  border: none;
+  color: #000;
 }
 
 .btn-primary:hover {
-  background-color: #e0c400; /* Darker yellow on hover */
+  background-color: #fad700;
   color: #000;
   font-weight: bold;
 }
+
 .close {
-  color: #ff0000; /* White close button */
-  background-color: transparent; /* Transparent background */
-  border: 1px;
-  border-color: #ff0000;
+  color: #ff0000;
+  background-color: transparent;
+  border: 1px #ff0000;
   font-size: 50px;
 }
 
 .close:hover {
-  color: #fad700; /* Yellow on hover */
+  color: #fad700;
   border-color: #fad700;
 }
+
 /* Remove the default appearance of the select dropdown */
 #orderStatus {
   appearance: none; /* For modern browsers */
@@ -94,28 +100,30 @@ body {
   -moz-appearance: none; /* For Firefox */
   background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%225%22 viewBox=%220 0 10 5%22%3E%3Cpath fill=%22%23333%22 d=%22M0 0l5 5 5-5z%22/%3E%3C/svg%3E")
     no-repeat right 10px center;
-  background-color: #fff; /* Change to your desired background */
-  padding-right: 30px; /* Add padding to make space for the arrow */
+  background-color: #fff;
+  padding-right: 30px;
 }
 
 /* Ensure it looks nice on smaller screens */
 #orderStatus:focus {
-  border-color: #999; /* Add a border highlight on focus */
-  outline: none; /* Remove the default focus outline */
+  border-color: #999;
+  outline: none;
 }
+
 #order-id {
   color: #fff;
-  font-weight: bold; /* Optional: make the text bold */
-  margin-bottom: 5px; /* Add some spacing below if needed */
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 /*responsive*/
 @media (max-width: 576px) {
   #order-id {
-    font-size: 0.9rem; /* Make the Order ID text smaller on small screens */
-    padding-right: 5px; /* Adjust spacing */
+    font-size: 14px;
+    padding-right: 5px;
   }
 }
+
 @media (max-width: 768px) {
   .container {
     margin: 0;
