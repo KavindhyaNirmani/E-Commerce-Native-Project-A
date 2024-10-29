@@ -19,15 +19,25 @@ exports.sendFeedback=async(req,res)=>{
             text: `Name: ${name}\nEmail: ${email}\nContact Number: ${contactNumber}\n\nMessage:\n${message}`,
         };
 
+        // Auto-reply mail options to the user
+        const autoReplyOptions = {
+            from: 'yumzyfooddealer@gmail.com',
+            to: email,
+            subject: 'Thank you for your feedback!',
+            text: `Dear ${name},\n\nThank you for reaching out to us! We have received your feedback and will get back to you shortly if needed.\n\nBest regards,\nYumzy Food Dealer Team`,
+        };
+
         await transporter.sendMail(mailOptions);
-        resizeBy.status(200).json({
-            message:'Feedback sent successfully!'
+        await transporter.sendMail(autoReplyOptions);
+
+        res.status(200).json({
+            message:'Feedback sent successfully and confirmation email sent to the user!'
         });
         
     }catch(error){
         console.error('Error sending feedback',error);
         res.status(500).json({
-            error:'Failed to send feedback'
+            error:'Failed to send feedback or confirmation email'
         });
     }
 };
