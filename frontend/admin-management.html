@@ -54,49 +54,47 @@
         .catch((error) => console.error("Error loading sidebar:", error));
     </script>
 
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-10 admin-list">
-            <h3>Admin List</h3>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-10 admin-list">
+          <h3>Admin List</h3>
 
-            <div id="adminListContainer" class="d-flex flex-wrap gap-3">
-              <!--Admin list will dispaly here-->
-            </div>
-
-            <button id="addAdminButton" class="btn custom-btn mt-5">
-              Add a new admin
-            </button>
+          <div id="adminListContainer" class="d-flex flex-wrap gap-3">
+            <!--Admin list will dispaly here-->
           </div>
+
+          <button id="addAdminButton" class="btn custom-btn mt-5">
+            Add a new admin
+          </button>
         </div>
       </div>
+    </div>
 
-      <!--Add admin model-->
-      <div
-        class="modal fade"
-        id="adminModal"
-        tabindex="-1"
-        aria-labelledby="adminModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-custom">
-          <div class="modal-content modal-content-custom" >
-            <div class="pt-3 px-3">
-              <h5 class="modal-title custom-title" id="adminModalLabel">
-                Admin Profile
-              </h5>
-            </div>
+    <!--Add admin model-->
+    <div
+      class="modal fade"
+      id="adminModal"
+      tabindex="-1"
+      aria-labelledby="adminModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-custom">
+        <div class="modal-content modal-content-custom">
+          <div class="pt-3 px-3">
+            <h5 class="modal-title custom-title" id="adminModalLabel">
+              Admin Profile
+            </h5>
+          </div>
 
-            <div class="modal-body">
-              <div class="row">
+          <div class="modal-body">
+            <form
+                method="POST"
+                id="addAdminForm"
+                class="needs-validation"
+                novalidate
+                enctype="multipart/form-data"
+              ><div class="row">
                 <div class="col-7">
-                <form
-                  method="POST"
-                  id="addAdminForm"
-                  class="needs-validation"
-                  novalidate
-                  enctype="multipart/form-data"
-                >
                   <div class="mb-3 row">
                     <label for="firstName" class="col-sm-3 col-form-label"
                       >First Name</label
@@ -220,7 +218,6 @@
                 </div>
 
                 <div class="col-5">
-
                   <label for="adminImage" class="form-label"
                     >Upload Admin Image:</label
                   >
@@ -229,7 +226,6 @@
                     class="form-control"
                     id="adminImage"
                     accept="image/*"
-                    
                   />
                   <div class="invalid-feedback">Please fill the field!</div>
 
@@ -243,19 +239,17 @@
                   />
                 </div>
 
-                  <div class="d-flex button-section">
-                    <button type="submit" class="btn btn-custom">Submit</button>
-                    <button
-                      type="button"
-                      class="btn btn-custom"
-                      data-bs-dismiss="modal"
-                    >
-                      Discard
-                    </button>
-                    
-                  </div>
-                </form>
-              </div>
+                <div class="d-flex button-section">
+                  <button type="submit" class="btn btn-custom">Submit</button>
+                  <button
+                    type="button"
+                    class="btn btn-custom"
+                    data-bs-dismiss="modal"
+                  >
+                    Discard
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -275,13 +269,16 @@
           try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("https://ecom-back-t1.netfy.app/auth/admins", {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-            });
+            const response = await fetch(
+              "https://ecom-back-t1.netfy.app/auth/admins",
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
 
             const data = await response.json();
 
