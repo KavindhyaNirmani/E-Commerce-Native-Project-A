@@ -20,6 +20,11 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Cedarville+Cursive&family=Cookie&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Smooch&display=swap"
       rel="stylesheet" />
+      <!--Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
     <!-- jQuery-->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -147,69 +152,64 @@
     <feature-section></feature-section>
 
     <!--About section-->
-
-    <section class="about section-padding">
-      <div class="container" id="about">
-        <div class="row align-items-center">
-          <!--text side-->
-          <div class="col-lg-6 col-md-7 col-12">
-            <div class="about-text">
-              <h2>About Our Restaurant</h2>
-              <p>
-                At Gather and Grab, we’re passionate about making your food
+    <section class="about-section">
+    <div class="container">
+        <div class="row">
+            <!-- Left side images with unordered layout -->
+            <div class="col-md-6 about-images">
+                <img src="./assets/images/about-img.webp" alt="Restaurant Image 1" class="img1">
+                <img src="./assets/images/bg1.jpg" alt="Restaurant Image 2" class="img2">
+                <img src="./assets/images/bg3.jpg" alt="Restaurant Image 3" class="img3">
+                <img src="./assets/images/bg2.jpg" alt="Restaurant Image 4" class="img4">
+            </div>
+            <!-- Right side text -->
+            <div class="col-md-6 about-text">
+                <h2>Welcome to Yumzy.!</h2>
+                <p>At Yumzy, we’re passionate about making your food
                 experience effortless and enjoyable. From cheesy pizzas to
                 mouthwatering cakes and refreshing beverages, our menu has
                 something for everyone. With a focus on quality ingredients and
                 exceptional service, we make it easy for you to order your
                 favorite dishes and have them delivered right to your doorstep.
-                Whether it’s a casual meal or a special celebration, Gather and
-                Grab is here to satisfy your cravings and make every moment
-                delicious!
-              </p>
+                Whether it’s a casual meal or a special celebration, Yumzy is here to satisfy your cravings and make every moment
+                delicious!</p>
+               <i class="fa fa-angle-double-down" onclick="toggleContent()" aria-hidden="true" id="readMore"></i>
             </div>
-          </div>
-          <!--image side-->
-          <div class="col-lg-6 col-md-5 col-12 mt-4 mt-md-0">
-            <div class="about-img">
-              <img
-                src="./assets/images/about-img.webp"
-                alt="about-img"
-                class="img-fluid" />
-            </div>
-          </div>
-          <h5>Our Mission</h5>
-          <p>
-            At Gather and Grab, our mission is simple: to connect people with
-            the food they love, in the easiest and most convenient way possible.
-            We understand how busy life can get, and that’s why we’ve built a
-            platform where great meals are just a click away. Whether you’re in
-            the mood for comfort food or something sweet, we’re here to make
-            your dining experience effortless and enjoyable.
-          </p>
-
-          <h5>Why Choose Us?</h5>
-
-          <ul>
-            <li>
-              <strong>Wide Variety : </strong> From savory pizzas to indulgent
-              cakes and thirst-quenching beverages, we offer a diverse selection
-              of dishes for every taste and occasion.
-            </li>
-            <li>
-              <strong>Quality Ingredients : </strong> We believe that great food
-              starts with the best ingredients. Our meals are crafted using
-              fresh, high-quality products to ensure every bite is packed with
-              flavor.
-            </li>
-            <li>
-              <strong>Easy Ordering :</strong> Our user-friendly platform allows
-              you to browse, select, and order your favorite meals with ease,
-              whether you’re at home or on the go.
-            </li>
-          </ul>
         </div>
-      </div>
-    </section>
+
+        <!-- Additional Content to show in single column below the main content -->
+        <div class="additional-content">
+            <h5>Our Mission</h5>
+            <p>
+                At Yumzy, our mission is simple: to connect people with
+                the food they love, in the easiest and most convenient way possible.
+                We understand how busy life can get, and that’s why we’ve built a
+                platform where great meals are just a click away. Whether you’re in
+                the mood for comfort food or something sweet, we’re here to make
+                your dining experience effortless and enjoyable.
+            </p>
+
+            <h5>Why Choose Us?</h5>
+
+            <ul>
+                <li><strong>Wide Variety:</strong> From savory pizzas to indulgent
+                    cakes and thirst-quenching beverages, we offer a diverse selection
+                    of dishes for every taste and occasion.
+                </li>
+                <li><strong>Quality Ingredients:</strong> We believe that great food
+                    starts with the best ingredients. Our meals are crafted using
+                    fresh, high-quality products to ensure every bite is packed with
+                    flavor.
+                </li>
+                <li><strong>Easy Ordering:</strong> Our user-friendly platform allows
+                    you to browse, select, and order your favorite meals with ease,
+                    whether you’re at home or on the go.
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
 
     <!-- Menu Section -->
     <section class="our-menu">
@@ -311,6 +311,16 @@
     <script>
       let allOfferData = []; // Store all offer images
       let offerLimit = 1; // Initially show 1 offer image
+
+      //show read more content
+      function toggleContent() {
+    const additionalContent = document.querySelector('.additional-content');
+
+    // Toggle visibility of additional content
+    additionalContent.style.display = additionalContent.style.display === 'none' || additionalContent.style.display === '' ? 'block' : 'none';
+}
+
+
 
       // Fetch all offers and store them
       fetch("https://ecom-back-t1.netfy.app/offers") // Replace with your actual API endpoint
