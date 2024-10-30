@@ -1,8 +1,6 @@
 const Category = require("../models/Category");
 const Item = require("../models/Item");
-const fs = require("fs"); //using for file system.It can readFiles(),writeFile(),appendFile(),etc.
-const path = require("path");
-const multer = require("multer");
+
 
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory = async (req, res) => {

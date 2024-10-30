@@ -4,7 +4,6 @@ const express = require("express");
 const app = express(); //Initalizing the express application
 const morgan = require("morgan"); //a middleware for logging http requests and responses
 const bodyParser = require("body-parser");
-const multer = require("multer");
 const path = require("path");
 
 const authRoutes = require("./api/routes/auth-routes");
@@ -21,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 //CORS setup
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   res.header(

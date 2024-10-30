@@ -5,8 +5,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const multer = require("multer");
-const path = require("path");
 
 // Register a new user (only user can register via form)
 exports.register = async (req, res) => {
@@ -110,7 +108,7 @@ exports.addAdmin = async (req, res) => {
     phone_no,
     address,
   } = req.body;
-  const user_image = `/images/user-image/${req.file.filename}`;
+  const user_image = req.file ? `/images/user-image/${req.file.filename}` : null;
 
   try {
     // Check for missing fields
@@ -146,7 +144,8 @@ exports.addAdmin = async (req, res) => {
       password: hashedPassword,
       phone_no: phone_no || null,
       address: address || null,
-      user_image: req.file ? req.file.filename : null, // Assign the file name from multer
+      //user_image: req.file ? req.file.filename : null, // Assign the file name from multer
+      user_image,
       role: "admin",
     };
 
@@ -158,17 +157,6 @@ exports.addAdmin = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
-// Function to check for missing fields
-function checkMissingFields(body, requiredFields) {
-  const missingFields = [];
-  requiredFields.forEach((field) => {
-    if (!body[field]) {
-      missingFields.push(field);
-    }
-  });
-  return missingFields;
-}
 
 //Fetch all admins
 exports.getAllAdmins = async (req, res) => {

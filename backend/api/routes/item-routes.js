@@ -24,7 +24,7 @@ const upload = multer({ storage: storage });
 router.get("/category/:category_name", itemController.getItemsByCategory);
 
 /// Fetch all items
-router.get("/", itemController.getAllItems);
+router.get("/", protect,adminOnly,itemController.getAllItems);
 
 // Fetch a single item by its ID
 router.get("/:item_id", itemController.getItemById);
