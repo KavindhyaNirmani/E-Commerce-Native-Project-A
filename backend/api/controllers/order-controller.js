@@ -124,10 +124,10 @@ exports.getOrderDetails = async (req, res) => {
     );
 
     const [orderItems] = await db.execute(
-      `SELECT oi.*, i.item_name 
-             FROM order_items oi 
-             JOIN item i ON oi.item_id = i.item_id 
-             WHERE oi.order_id = ?`,
+      `SELECT orderItem.*, itm.item_name 
+             FROM order_items orderItem 
+             JOIN item itm ON orderItem.item_id = itm.item_id 
+             WHERE orderItem.order_id = ?`,
       [orderId]
     );
 
@@ -146,7 +146,7 @@ exports.getOrderDetails = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   try {
     const [orders] = await db.execute(
-      "SELECT o.order_id, GROUP_CONCAT(i.item_name SEPARATOR ', ') AS item_names, SUM(oi.item_price) AS total_final_price, o.order_status FROM `order` o JOIN order_items oi ON o.order_id = oi.order_id JOIN item i ON oi.item_id = i.item_id GROUP BY o.order_id"
+      "SELECT ord.order_id, GROUP_CONCAT(itm.item_name SEPARATOR ', ') AS item_names, SUM(orderItem.item_price) AS total_final_price, ord.order_status FROM `order` ord JOIN order_items orderItem ON ord.order_id = orderItem.order_id JOIN item itm ON orderItem.item_id = itm.item_id GROUP BY ord.order_id"
     );
 
     // Formatting the results to a more structured response

@@ -50,7 +50,9 @@ exports.login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: "Username and password are required" });
+    return res
+      .status(400)
+      .json({ message: "Username and password are required" });
   }
 
   try {
@@ -89,10 +91,7 @@ exports.login = async (req, res) => {
   }
 };
 
-function checkMissingFields(body, requiredFields) {
-  const missingFields = requiredFields.filter((field) => !body[field]);
-  return missingFields;
-}
+const checkMissingFields = (body, requiredFields) =>requiredFields.filter((field) => !body[field]);
 
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
@@ -108,7 +107,9 @@ exports.addAdmin = async (req, res) => {
     phone_no,
     address,
   } = req.body;
-  const user_image = req.file ? `/images/user-image/${req.file.filename}` : null;
+  const user_image = req.file
+    ? `/images/user-image/${req.file.filename}`
+    : null;
 
   try {
     // Check for missing fields

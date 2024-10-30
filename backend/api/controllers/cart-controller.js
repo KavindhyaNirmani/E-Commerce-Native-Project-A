@@ -38,7 +38,7 @@ exports.addItemToCart = async (req, res) => {
     } else {
       // If the user already has a cart, use its cart_id
       cart_id = userCart[0].cart_id;
-    };
+    }
 
     // Check if the item is already in the cart
     const [existingCartItem] = await db.execute(

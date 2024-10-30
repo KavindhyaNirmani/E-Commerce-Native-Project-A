@@ -4,7 +4,7 @@ class OrderItems {
   //Insert items into the order_items table
   static async addItemToOrder(orderId, itemId, quantity, itemPrice) {
     return db.execute(
-      "INSER INTO order_items (order_id,item_id,quantity,item_price) VALUES (?,?,?,?)",
+      "INSERT INTO order_items (order_id,item_id,quantity,item_price) VALUES (?,?,?,?)",
       [orderId, itemId, quantity, itemPrice]
     );
   }

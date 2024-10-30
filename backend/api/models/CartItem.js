@@ -18,7 +18,7 @@ class CartItem {
   static async getItemsByCartId(cartId) {
     try {
       const [result] = await db.execute(
-        "SELECT ci.cart_item_id,ci.quantity,i.item_name,i.item_price,i.item_image FROM cart_items ci JOIN item i ON ci.item_id= i.item_id WHERE ci.cart_id=?",
+        "SELECT ci.cart_item_id,ci.quantity,itm.item_name,itm.item_price,itm.item_image FROM cart_items ci JOIN item itm ON ci.item_id= itm.item_id WHERE ci.cart_id=?",
         [cartId]
       );
       return result; //return the list of cart items
