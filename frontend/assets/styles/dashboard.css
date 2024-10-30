@@ -10,7 +10,7 @@ body {
 }
 
 .container h2 {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Menu section */
@@ -56,7 +56,7 @@ body {
 
 .card h5 {
   text-align: center;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /*Order Summary Section*/
@@ -93,9 +93,11 @@ body {
 }
 
 .arrow-link:hover .arrow {
-  color: #fad700;
+  color: #c59d5f;
 }
-
+.order-title{
+  color: #c59d5f;
+}
 /*offer section*/
 .special-offer-img {
   width: 300px;
@@ -104,12 +106,12 @@ body {
 
 .modal-content {
   background-color: #666;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .modal-header {
   background-color: #000;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 #closeModal {
@@ -118,14 +120,14 @@ body {
 
 .modal-footer button {
   width: 100px;
-  background-color: #fad700;
+  background-color: #c59d5f;
   border: none;
   color: black;
   font-weight: bold;
 }
 
 .modal-footer button:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
 }
 
 .form-control {
@@ -137,7 +139,7 @@ body {
 .form-control:focus {
   box-shadow: none;
   background-color: #444;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Special offer section styles */
@@ -166,9 +168,9 @@ body {
 }
 
 .custom-yellow {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
-  border: 2px solid #fad700;
+  border: 2px solid #c59d5f;
   font-weight: bolder;
   margin-bottom: 20px;
 }
@@ -176,24 +178,24 @@ body {
 .custom-yellow:hover,
 .custom-yellow:active {
   background-color: #666;
-  color: #fad700;
+  color: #c59d5f;
   font-weight: bold;
 }
 
 .custom-yellow-outline {
   background-color: transparent;
-  color: #fad700;
-  border: 2px solid #fad700;
+  color: #c59d5f;
+  border: 2px solid #c59d5f;
   margin-bottom: 20px;
 }
 
 .custom-yellow-outline:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
   font-weight: bold;
 }
 p {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Menu section */

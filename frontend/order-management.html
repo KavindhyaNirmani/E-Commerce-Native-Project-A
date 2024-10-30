@@ -1,25 +1,25 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gather and Grab</title>
     <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
-    <!--Bootstrap CSS-->
+    <!--Bootstrap CSS--
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet" />
-    <!--Icons -->
+    <!--Icons --
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-    <!-- Custom CSS -->
+    <!-- Custom CSS --
     <link rel="stylesheet" href="./assets/styles/order-management.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
   </head>
   <body>
-    <!-- Placeholder for Sidebar -->
+    <!-- Placeholder for Sidebar --
     <div id="sidebar-placeholder"></div>
 
     <script>
@@ -64,12 +64,12 @@
             </tr>
           </thead>
           <tbody id="order-list">
-            <!-- Dynamic rows from the backend will be inserted here -->
+            <!-- Dynamic rows from the backend will be inserted here --
           </tbody>
         </table>
       </div>
 
-      <!-- Modal for viewing order details -->
+      <!-- Modal for viewing order details --
       <div
         class="modal fade"
         id="orderDetailsModal"
@@ -93,12 +93,12 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- Dynamic content will be inserted here -->
+              <!-- Dynamic content will be inserted here --
               <p id="customer-id">Customer ID:</p>
               <p id="customer-name">Item Name:</p>
               <p id="customer-phone">Phone:</p>
               <p id="customer-address">Address:</p>
-              <!-- Order Items Table -->
+              <!-- Order Items Table --
               <table class="table table-dark table-striped">
                 <thead>
                   <tr>
@@ -109,10 +109,10 @@
                   </tr>
                 </thead>
                 <tbody id="order-items">
-                  <!-- Items will be dynamically populated -->
+                  <!-- Items will be dynamically populated --
                 </tbody>
               </table>
-              <!-- Subtotal, Delivery Fee, Discount, and Total -->
+              <!-- Subtotal, Delivery Fee, Discount, and Total --
               <p id="subtotal">Subtotal:</p>
               <p id="discount">Discount:</p>
               <label for="totalPrice">Total:</label>
@@ -121,14 +121,14 @@
                 id="totalPrice"
                 class="form-control"
                 readonly />
-              <!-- Order Status Dropdown -->
+              <!-- Order Status Dropdown --
               <label for="orderStatus">Order Status:</label>
               <select id="orderStatus" class="form-control">
                 <option>Pending</option>
                 <option>successful</option>
                 <option>Failed</option>
               </select>
-              <!-- Update Status Button -->
+              <!-- Update Status Button --
               <button
                 type="button"
                 id="updateStatusBtn"
@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    <!-- jQuery and Bootstrap JS -->
+    <!-- jQuery and Bootstrap JS --
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
@@ -348,4 +348,272 @@ async function populateModal(orderId) {
       });
     </script>
   </body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/styles/order-management.css" />
+    <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
+  </head>
+  <body>
+    <!-- Sidebar Placeholder -->
+    <div id="sidebar-placeholder"></div>
+    <script>
+      fetch("./assets/widgets/side-bar/sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar-placeholder").innerHTML = data;
+
+          // After loading the sidebar, apply the active class to the current page's link
+          const currentPage = window.location.pathname.split("/").pop(); // Get the current file name
+          const links = document.querySelectorAll(".nav-link"); // Get all sidebar links
+
+          // Loop through all links and compare the last part of href with the current page
+          links.forEach((link) => {
+            const linkPage = link.getAttribute("href").split("/").pop(); // Get the last part of href
+            if (linkPage === currentPage) {
+              link.classList.add("active"); // Add the active class to the matching link
+            }
+          });
+
+          // Now add the toggle functionality after the sidebar is loaded
+          const toggleBtn = document.getElementById("toggleBtn");
+          const sidebar = document.querySelector(".sidebar");
+
+          toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("show");
+          });
+        })
+        .catch((error) => console.error("Error loading sidebar:", error));
+    </script>
+
+    <!-- Content Container -->
+    <div class="content">
+      <div class="container mt-5">
+        <h2 class="order-title">Order List</h2>
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="order-list">
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Order Details Modal -->
+      <div
+        class="modal fade"
+        id="orderDetailsModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="orderDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="orderDetailsModalLabel">
+                Order Details
+              </h3>
+              <span id="orderId" class="ml-auto pr-3">Order ID:</span>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p id="customer-id">Customer ID:</p>
+              <p id="customer-name">Customer Name:</p>
+              <p id="customer-phone">Phone:</p>
+              <p id="customer-address">Address:</p>
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="order-items">
+                  <!-- Items will be dynamically populated -->
+                </tbody>
+              </table>
+              <p id="subtotal">Subtotal:</p>
+              <p id="discount">Discount:</p>
+              <label for="totalPrice">Total:</label>
+              <input type="text" id="totalPrice" class="form-control" readonly />
+              <label for="orderStatus">Order Status:</label>
+              <select id="orderStatus" class="form-control">
+                <option>Pending</option>
+                <option>Successful</option>
+                <option>Failed</option>
+              </select>
+              <button type="button" id="updateStatusBtn" class="btn btn-primary mt-3">
+                Update Status
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery, Bootstrap, and Axios -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      // Fetch and render all orders using Axios
+      async function fetchOrders() {
+        try {
+          const response = await axios.get("https://ecom-back-t1.netfy.app/orders/admin/orders");
+          renderOrderList(response.data);
+        } catch (error) {
+          console.error("Failed to fetch orders:", error);
+        }
+      }
+
+      // Render orders in the table
+      function renderOrderList(orders) {
+        const orderList = $("#order-list");
+        orderList.empty();
+
+        orders.forEach((order) => {
+          const row = `
+            <tr data-order-id="${order.order_id}">
+              <td>${order.order_id}</td>
+              <td>${order.item_names}</td>
+              <td>Rs. ${order.total_final_price}</td>
+              <td class="order-status">${order.order_status}</td>
+              <td>
+                <button class="btn btn-warning btn-sm view-btn" data-order-id="${order.order_id}" title="View">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-danger btn-sm delete-btn" data-order-id="${order.order_id}" title="Delete">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>`;
+          orderList.append(row);
+        });
+      }
+
+      // Fetch and populate order details in modal
+      async function populateModal(orderId) {
+        try {
+          const response = await axios.get(`https://ecom-back-t1.netfy.app/orders/order-details/${order_id}`);
+          const order = response.data;
+
+          $("#orderId").text(`Order ID: ${order.order_id}`);
+          $("#customer-id").text(`Customer ID: ${order.user_id}`);
+          $("#customer-name").text(`Customer Name: ${order.first_name} ${order.last_name}`);
+          $("#customer-phone").text(`Phone: ${order.phone_number}`);
+          $("#customer-address").text(`Address: ${order.address}, ${order.city}, ${order.postal_code}`);
+
+          // Populate items
+          let itemsHtml = "";
+          order.items.forEach((item) => {
+            itemsHtml += `
+              <tr>
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>$${(item.quantity * item.price).toFixed(2)}</td>
+              </tr>`;
+          });
+          $("#order-items").html(itemsHtml);
+
+          // Set price values
+          $("#subtotal").text(`Subtotal: $${order.total_price.toFixed(2)}`);
+          $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
+          $("#totalPrice").val(`$${order.final_total_price.toFixed(2)}`);
+          $("#orderStatus").val(order.order_status);
+        } catch (error) {
+          console.error("Failed to fetch order details:", error);
+          alert("Order details not available.");
+        }
+      }
+
+      // Update order status using Axios
+      async function updateOrderStatus(orderId, newStatus) {
+        try {
+          const response = await axios.put(
+            "https://ecom-back-t1.netfy.app/orders/admin/order-status",
+            { order_id: orderId, order_status: newStatus }
+          );
+
+          if (response.status === 200) {
+            const updatedOrder = response.data;
+            $(`tr[data-order-id="${orderId}"] .order-status`).text(updatedOrder.order_status);
+            alert("Order status updated successfully!");
+          } else {
+            throw new Error("Failed to update order status.");
+          }
+        } catch (error) {
+          console.error("Error updating order status:", error);
+          alert("Failed to update order status.");
+        }
+      }
+
+      $(document).ready(async function () {
+        await fetchOrders();
+
+        $(document).on("click", ".view-btn", async function () {
+          const orderId = $(this).data("order-id");
+          await populateModal(orderId);
+          $("#orderDetailsModal").modal("show");
+        });
+
+        $(document).on("click", ".delete-btn", async function () {
+          const orderId = $(this).data("order-id");
+          const confirmation = confirm("Are you sure you want to delete this order?");
+          if (confirmation) {
+            try {
+              const response = await axios.delete(`https://ecom-back-t1.netfy.app/orders/admin/delete/${order_id}`);
+              if (response.status === 200) {
+                alert("Order deleted successfully!");
+                $(this).closest("tr").remove();
+              } else {
+                alert("Failed to delete order.");
+              }
+            } catch (error) {
+              console.error("Error deleting order:", error);
+              alert("An error occurred while deleting the order.");
+            }
+          }
+        });
+
+        $("#updateStatusBtn").click(async function () {
+          const newStatus = $("#orderStatus").val();
+          const orderId = $("#orderId").text().replace("Order ID: ", "");
+          await updateOrderStatus(orderId, newStatus);
+        });
+      });
+    </script>
+  </body>
 </html>
+
