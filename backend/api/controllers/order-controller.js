@@ -126,7 +126,7 @@ exports.getOrderDetails = async (req, res) => {
     const [orderItems] = await db.execute(
       `SELECT orderItem.*, itm.item_name 
              FROM order_items orderItem 
-             JOIN item item ON orderItem.item_id = item.item_id 
+             JOIN item itm ON orderItem.item_id = itm.item_id 
              WHERE orderItem.order_id = ?`,
       [orderId]
     );
