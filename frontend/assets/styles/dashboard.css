@@ -1,7 +1,7 @@
 body {
   overflow-x: hidden;
-  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
   height: 100%;
+  background: linear-gradient(#6c6a6c, #1e1e1e) !important;
 }
 
 .content {
@@ -30,8 +30,7 @@ body {
   max-height: 170px;
   min-width: 80px;
   width: 100%;
-  margin: 0; /* Set margin to 0 for no gaps */
-  margin-bottom: 5px; /* Space between cards if needed */
+  margin: 0 0 5px 0;
 }
 
 .card-img-container {
@@ -52,7 +51,7 @@ body {
 }
 
 .col {
-  padding: 0; /* Remove padding to minimize space */
+  padding: 0;
 }
 
 .card h5 {
@@ -62,13 +61,13 @@ body {
 
 /*Order Summary Section*/
 .order-summary-box {
-  background-color: #232323;
+  background-color: #505050;
   padding: 20px;
   border-radius: 8px;
   color: white;
   position: relative;
-  max-width: 210px; /* Set the maximum width */
-  margin: 0; /* Center the box horizontally */
+  max-width: 210px;
+  margin: 0;
   min-height: 150px;
 }
 
@@ -167,7 +166,7 @@ body {
 }
 
 .custom-yellow {
-  background-color: #fad700; /* Set your custom yellow */
+  background-color: #fad700;
   color: black;
   border: 2px solid #fad700;
   font-weight: bolder;
@@ -176,7 +175,7 @@ body {
 
 .custom-yellow:hover,
 .custom-yellow:active {
-  background-color: #666; /* Slightly darker yellow on hover */
+  background-color: #666;
   color: #fad700;
   font-weight: bold;
 }
@@ -184,7 +183,7 @@ body {
 .custom-yellow-outline {
   background-color: transparent;
   color: #fad700;
-  border: 2px solid #fad700; /* Border to match the 'outline' style */
+  border: 2px solid #fad700;
   margin-bottom: 20px;
 }
 
@@ -214,8 +213,7 @@ p {
   max-height: 170px;
   min-width: 80px;
   width: 100%;
-  margin: 0; /* Set margin to 0 for no gaps */
-  margin-bottom: 5px; /* Space between cards if needed */
+  margin-bottom: 5px;
 }
 
 .card-img-container {
@@ -236,7 +234,7 @@ p {
 }
 
 .col {
-  padding: 0; /* Remove padding to minimize space */
+  padding: 0;
 }
 
 /* Centering for small screens */
@@ -244,12 +242,12 @@ p {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Centering the row items */
+    justify-content: center;
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; /* Set margin to 0 for no gaps */
+    margin: 0;
   }
 
   .card-img-container {
@@ -284,8 +282,8 @@ p {
   }
 
   .col {
-    margin-bottom: 3px; /* Adjust margin between cards */
-    padding: 0; /* Remove padding for no extra space */
+    margin-bottom: 3px;
+    padding: 0;
   }
   body {
     margin-left: 0;
