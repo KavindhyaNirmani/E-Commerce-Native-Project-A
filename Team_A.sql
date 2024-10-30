@@ -28,8 +28,6 @@ CREATE TABLE `cart` (
   `user_id` int NOT NULL,
   PRIMARY KEY (`cart_id`),
   KEY `fk_CART_USER1_idx` (`user_id`),
-  CONSTRAINT `fk_CART_USER1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `fk_user_id_new` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -53,7 +51,6 @@ DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
   `cart_item_id` int NOT NULL AUTO_INCREMENT,
   `quantity` int DEFAULT NULL,
-  `item_price` decimal(10,0) DEFAULT NULL,
   `item_id` int NOT NULL,
   `cart_id` int NOT NULL,
   PRIMARY KEY (`cart_item_id`),
@@ -142,6 +139,8 @@ CREATE TABLE `order` (
   `order_status` enum('Pending','Successfull','Failed') DEFAULT 'Pending',
   `cart_id` int NOT NULL,
   `user_id` int NOT NULL,
+  `discount` decimal(10,2) DEFAULT '0.00',
+  `final_amount` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`order_id`),
   KEY `fk_ORDER_CART1_idx` (`cart_id`,`user_id`),
   CONSTRAINT `fk_ORDER_CART1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
@@ -172,7 +171,7 @@ CREATE TABLE `order_details` (
   `order_id` int NOT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
   `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`order_detail_id`),
   KEY `fk_ORDER_DETAILS_ORDER1_idx` (`order_id`),
   CONSTRAINT `fk_ORDER_DETAILS_ORDER1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
@@ -220,31 +219,31 @@ LOCK TABLES `order_items` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `payment`
+-- Table structure for table `promotion`
 --
 
-DROP TABLE IF EXISTS `payment`;
+DROP TABLE IF EXISTS `promotion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payment` (
-  `PAYMENT_id` int NOT NULL AUTO_INCREMENT,
-  `amount_paid` decimal(10,0) DEFAULT NULL,
-  `payment_date` datetime DEFAULT NULL,
-  `payment_status` enum('Pending','Successfull','Failed') DEFAULT NULL,
-  `order_id` int NOT NULL,
-  PRIMARY KEY (`PAYMENT_id`),
-  KEY `fk_PAYMENT_ORDER1_idx` (`order_id`),
-  CONSTRAINT `fk_PAYMENT_ORDER1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`)
+CREATE TABLE `promotion` (
+  `promotion_id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `promotion_description` varchar(255) DEFAULT NULL,
+  `discount_percentage` decimal(5,2) NOT NULL,
+  `promotion_image` varchar(255) DEFAULT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  PRIMARY KEY (`promotion_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `payment`
+-- Dumping data for table `promotion`
 --
 
-LOCK TABLES `payment` WRITE;
-/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+LOCK TABLES `promotion` WRITE;
+/*!40000 ALTER TABLE `promotion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promotion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -256,21 +255,18 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `role` enum('Admin','Customer') DEFAULT 'Customer',
+  `role` enum('user','admin') DEFAULT 'user',
   `user_image` varchar(255) DEFAULT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `is_deleted` tinyint DEFAULT '0',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `password_UNIQUE` (`password`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `is_deleted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +275,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'devini1999','Devini@9911','$2y$10$XFLjH87LdoE4s1bhAD7GJea9gBlrhJ0FYKaDAwYw9B3rs13ZUXRsi','Admin',NULL,NULL,NULL,NULL,NULL,0),(2,'NipuPrabodi','Nipuni#2024','$2y$10$AWolf0gPmP.1P9amXMzlH.Wews4keSk1PqjNiI93pBlCWcSPbrb9i','Admin',NULL,NULL,NULL,NULL,NULL,0),(3,'JayaniKodithuwakku','Jayan9900&','$2y$10$bUUS/HDhrHgDYl7TrBtG/./QU/UBaG6fo7AHe7hNna7bAacMCFWaa','Admin',NULL,NULL,NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -292,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-09 14:47:12
+-- Dump completed on 2024-10-19 10:42:28

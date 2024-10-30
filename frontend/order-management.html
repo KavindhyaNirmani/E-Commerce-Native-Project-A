@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+    <!--Bootstrap CSS-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <!--Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/styles/order-management.css" />
+    <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
+  </head>
+  <body>
+    <!-- Placeholder for Sidebar -->
+    <div id="sidebar-placeholder"></div>
+
+    <script>
+      fetch("./assets/widgets/side-bar/sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar-placeholder").innerHTML = data;
+
+          // After loading the sidebar, apply the active class to the current page's link
+          const currentPage = window.location.pathname.split("/").pop();
+          const links = document.querySelectorAll(".nav-link");
+
+          links.forEach((link) => {
+            const linkPage = link.getAttribute("href").split("/").pop();
+            if (linkPage === currentPage) {
+              link.classList.add("active");
+            }
+          });
+
+          // Now add the toggle functionality after the sidebar is loaded
+          const toggleBtn = document.getElementById("toggleBtn");
+          const sidebar = document.querySelector(".sidebar");
+
+          toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("show");
+          });
+        })
+        .catch((error) => console.error("Error loading sidebar:", error));
+    </script>
+
+    <div class="content">
+      <div class="container mt-5">
+        <h2 class="text-warning">Order List</h2>
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="order-list">
+            <!-- Dynamic rows from the backend will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal for viewing order details -->
+      <div
+        class="modal fade"
+        id="orderDetailsModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="orderDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="orderDetailsModalLabel">
+                Order Details
+              </h3>
+              <span id="orderId" class="ml-auto pr-3">Order ID:</span>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- Dynamic content will be inserted here -->
+              <p id="customer-id">Customer ID:</p>
+              <p id="customer-name">Item Name:</p>
+              <p id="customer-phone">Phone:</p>
+              <p id="customer-address">Address:</p>
+              <!-- Order Items Table -->
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="order-items">
+                  <!-- Items will be dynamically populated -->
+                </tbody>
+              </table>
+              <!-- Subtotal, Delivery Fee, Discount, and Total -->
+              <p id="subtotal">Subtotal:</p>
+              <p id="discount">Discount:</p>
+              <label for="totalPrice">Total:</label>
+              <input
+                type="text"
+                id="totalPrice"
+                class="form-control"
+                readonly />
+              <!-- Order Status Dropdown -->
+              <label for="orderStatus">Order Status:</label>
+              <select id="orderStatus" class="form-control">
+                <option>Pending</option>
+                <option>successful</option>
+                <option>Failed</option>
+              </select>
+              <!-- Update Status Button -->
+              <button
+                type="button"
+                id="updateStatusBtn"
+                class="btn btn-primary mt-3">
+                Update Status
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Fetch all orders for admin management from the backend API
+      async function fetchOrdersFromBackend() {
+        try {
+          const response = await fetch(
+            "https://ecom-back-t1.netfy.app/orders/admin/orders"
+          );
+          if (!response.ok) throw new Error("Failed to fetch orders.");
+          const data = await response.json(); // Assuming the API returns JSON
+          return data;
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
+
+      let currentOrderId = null; // To store the current order ID when the modal is opened
+
+      // Function to render the order list
+      function renderOrderList(orders) {
+        const orderList = $("#order-list");
+        orderList.empty(); // Clear the existing order list
+
+        orders.forEach((order) => {
+          const firstItemName =
+            order.items && order.items.length > 0
+              ? order.items[0].name
+              : "No items";
+          const total =
+            typeof order.total === "number" ? order.total.toFixed(2) : "0.00";
+
+          const row = `
+            <tr data-order-id="${order.order_id}">
+              <td>${order.order_id}</td>
+              <td>${order.item_names}</td>
+              <td>Rs. ${order.total_final_price}</td>
+              <td class="order-status">${order.order_status}</td>
+              <td>
+                <button class="btn btn-warning btn-sm view-btn" data-order-id="${order.order_id}" title="View">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-danger btn-sm delete-btn" data-order-id="${order.order_id}" title="Delete">
+                 <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>`;
+          orderList.append(row);
+        });
+      }
+
+      // Fetch order details by order ID from the backend
+      async function fetchOrderDetails(orderId) {
+        try {
+          const response = await fetch(
+            `https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`
+          );
+          if (!response.ok) throw new Error("Failed to fetch order details.");
+          return await response.json(); // Assuming the API returns JSON
+        } catch (error) {
+          console.error(error);
+          return null;
+        }
+      }
+
+      // Populate modal with order details from backend API
+async function populateModal(orderId) {
+    try {
+        // Fetch the order details
+        const order = await fetchOrderDetails(orderId);
+        currentOrderId = orderId;
+
+        if (order) {
+            // Populate the order details in the modal
+            $("#orderId").text(`Order ID: ${order.order_id}`);
+            $("#customer-id").text(`Customer ID: ${order.user_id}`);
+            $("#customer-name").text(`Customer Name: ${order.first_name} ${order.last_name}`);
+            $("#customer-phone").text(`Phone: ${order.phone_number}`);
+            $("#customer-address").text(`Address: ${order.address}, ${order.city}, ${order.postal_code}`);
+
+            // Populate the order items in the modal
+            let itemsHtml = "";
+            order.items.forEach((item) => {
+                itemsHtml += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>$${(item.quantity * item.price).toFixed(2)}</td>
+                    </tr>`;
+            });
+            $("#order-items").html(itemsHtml);
+
+            // Populate subtotal, delivery fee, discount, and total
+            $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
+            $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
+            $("#totalPrice").val(`$${order.total_final_price.toFixed(2)}`);
+            $("#orderStatus").val(order.order_status);
+        } else {
+            console.error("Order details not found.");
+            alert("Order details not available.");
+        }
+    } catch (error) {
+        console.error("Error fetching order details:", error);
+        alert("Failed to fetch order details.");
+    }
+}
+
+
+
+      // Update order status using the backend API
+      async function updateOrderStatus(orderId, newStatus) {
+        try {
+          const response = await fetch(
+            "https://ecom-back-t1.netfy.app/orders/admin/order-status",
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                order_id: orderId,
+                order_status: newStatus,
+              }),
+            }
+          );
+
+          // Check if the response status is OK
+          if (!response.ok) {
+            const errorDetails = await response.json(); // Get error details if available
+            throw new Error(
+              `Failed to update order status. ${
+                errorDetails.message || response.statusText
+              }`
+            );
+          }
+
+          const updatedOrder = await response.json(); // Assuming the API returns the updated order
+
+          // Update the status in the table
+          const orderRow = $(`tr[data-order-id="${orderId}"]`);
+          orderRow.find(".order-status").text(updatedOrder.order_status);
+          alert("Order status updated successfully!");
+        } catch (error) {
+          console.error(error);
+          alert(error.message); // Display the error message to the user
+        }
+      }
+
+      $(document).ready(async function () {
+        // Load the initial order list
+        const orders = await fetchOrdersFromBackend();
+        renderOrderList(orders);
+
+        // Handle view button clicks
+        $(document).on("click", ".view-btn", async function () {
+          const orderId = $(this).data("order-id");
+          await populateModal(orderId);
+          $("#orderDetailsModal").modal("show");
+        });
+
+        // Handle delete button clicks
+        $(document).on("click", ".delete-btn", async function () {
+          const orderId = $(this).data("order-id");
+          const confirmation = confirm(
+            "Are you sure you want to delete this order?"
+          );
+
+          if (confirmation) {
+            try {
+              const response = await fetch(
+                `https://ecom-back-t1.netfy.app/orders/admin/delete/${orderId}`,
+                {
+                  method: "DELETE",
+                }
+              );
+
+              if (response.ok) {
+                alert("Order deleted successfully!");
+
+                // Remove the corresponding row from the DOM
+                $(this).closest("tr").remove(); // Remove the entire row
+
+                // Optionally, you can also refresh the order list if needed
+                // fetchAndRenderOrders(); // Uncomment this line if you want to refresh the list
+              } else {
+                alert("Failed to delete order.");
+              }
+            } catch (error) {
+              console.error("Error deleting order:", error);
+              alert("An error occurred while deleting the order.");
+            }
+          }
+        });
+
+        // Handle update status button click in modal
+        // Event listener for the "Update Status" button
+        document
+          .getElementById("updateStatusBtn")
+          .addEventListener("click", async () => {
+            const newStatus = document.getElementById("orderStatus").value;
+            await updateOrderStatus(currentOrderId, newStatus);
+          });
+      });
+    </script>
+  </body>
+</html>

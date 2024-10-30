@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gather and Grab</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+
+    <!--Bootstrap CSS-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous" />
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="./assets/styles/dashboard.css" />
+    <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
+    <!--Google
+      font-->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+    <!-- jQuery-->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"></script>
+    <!-- Popper.js and Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+      crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"></script>
+  </head>
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
+      height: 100vh;
+      background: linear-gradient(#6c6a6c, #1e1e1e) !important;
+    ">
+    <!-- Placeholder for Sidebar -->
+    <div id="sidebar-placeholder"></div>
+
+    <script>
+      fetch("./assets/widgets/side-bar/sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("sidebar-placeholder").innerHTML = data;
+
+          // After loading the sidebar, apply the active class to the current page's link
+          const currentPage = window.location.pathname.split("/").pop(); // Get the current file name
+          const links = document.querySelectorAll(".nav-link"); // Get all sidebar links
+
+          // Loop through all links and compare the last part of href with the current page
+          links.forEach((link) => {
+            const linkPage = link.getAttribute("href").split("/").pop(); // Get the last part of href
+            if (linkPage === currentPage) {
+              link.classList.add("active"); // Add the active class to the matching link
+            }
+          });
+
+          // Now add the toggle functionality after the sidebar is loaded
+          const toggleBtn = document.getElementById("toggleBtn");
+          const sidebar = document.querySelector(".sidebar");
+
+          toggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("show");
+          });
+        })
+        .catch((error) => console.error("Error loading sidebar:", error));
+    </script>
+
+    <div class="content">
+      <!-- Menu section -->
+      <section class="our menu-padding" style="margin-top: 10px">
+        <div class="container" id="menu">
+          <div class="menutopic text-center">
+            <h2>Menu Category</h2>
+          </div>
+          <div
+            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-3">
+            <!-- Pizza -->
+            <div class="col">
+              <div class="card text-center" id="pizzaCard">
+                <div class="card-img-container">
+                  <img
+                    src="./assets/images/menu-pizza.jpg"
+                    class="card-img-top img-fluid"
+                    alt="pizza" />
+                </div>
+                <div class="card-body">
+                  <h5>Pizza</h5>
+                </div>
+              </div>
+            </div>
+            <!-- Cake -->
+            <div class="col">
+              <div class="card text-center" id="cakeCard">
+                <div class="card-img-container">
+                  <img
+                    src="./assets/images/menu-cake.jpg"
+                    class="card-img-top img-fluid"
+                    alt="cake" />
+                </div>
+                <div class="card-body">
+                  <h5>Cake</h5>
+                </div>
+              </div>
+            </div>
+            <!-- Beverages -->
+            <div class="col">
+              <div class="card text-center" id="beverageCard">
+                <div class="card-img-container">
+                  <img
+                    src="./assets/images/menu-beverages.jpg"
+                    class="card-img-top img-fluid"
+                    alt="beverage" />
+                </div>
+                <div class="card-body">
+                  <h5>Beverages</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Order Summary Section -->
+      <div class="container my-5">
+        <h2 class="text-warning">Order Summary</h2>
+        <div class="row">
+          <!-- Total Orders -->
+          <div class="col-lg-3 col-md-6 col-6 mb-4">
+            <!-- Adjusted for responsiveness -->
+            <div class="order-summary-box text-center">
+              <p>Total Orders:</p>
+              <h4 id="total-orders">0</h4>
+              <a href="order-management.html" class="arrow-link">
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Pending Orders -->
+          <div class="col-lg-3 col-md-6 col-6 mb-4">
+            <!-- Adjusted for responsiveness -->
+            <div class="order-summary-box text-center">
+              <p>Pending Orders:</p>
+              <h4 id="pending-orders">0</h4>
+            </div>
+          </div>
+
+          <!-- Successfull Orders -->
+          <div class="col-lg-3 col-md-6 col-6 mb-4">
+            <!-- Adjusted for responsiveness -->
+            <div class="order-summary-box text-center">
+              <p>Successful Orders:</p>
+              <h4 id="successfull-orders">0</h4>
+            </div>
+          </div>
+
+          <!-- Failed Orders -->
+          <div class="col-lg-3 col-md-6 col-6 mb-4">
+            <!-- Adjusted for responsiveness -->
+            <div class="order-summary-box text-center">
+              <p>Failed Orders:</p>
+              <h4 id="failed-orders">0</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Special Offers Section -->
+      <div class="container my-4">
+        <h2>Special Offers</h2>
+        <div id="special-offer-gallery" class="text-center mt-5">
+          <!-- Offer images will be dynamically loaded here -->
+        </div>
+        <div class="text-center my-2 mt-3">
+          <button id="add-offer-btn" class="btn custom-yellow ml-2">
+            Add New
+          </button>
+          <button id="view-more-btn" class="btn custom-yellow-outline ml-2">
+            View More
+          </button>
+        </div>
+      </div>
+
+      <!-- Popup Modal for Adding New Offer -->
+      <div
+        class="modal fade"
+        id="addOfferModal"
+        tabindex="-1"
+        aria-labelledby="addOfferModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addOfferModalLabel">Add New Offer</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="closeModal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="offerForm">
+                <div class="form-group">
+                  <label for="offerTitle">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="offerTitle"
+                    placeholder="Enter offer details"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label for="offerDetail">Description</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="offerDetail"
+                    placeholder="Enter offer details"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label for="offerDiscount">Discount</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="offerDiscount"
+                    placeholder="Enter offer details"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label for="offerImage">Upload Image</label><br />
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="offerImage"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label for="startDate">Start Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="startDate"
+                    placeholder="Enter offer details"
+                    required />
+                </div>
+                <div class="form-group">
+                  <label for="endDate">End Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="endDate"
+                    placeholder="Enter offer details"
+                    required />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn" id="submitOfferBtn">
+                Submit
+              </button>
+              <button type="button" class="btn" data-bs-dismiss="modal">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let offers = []; 
+      let showOffers = false; 
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Fetch order details from the backend API
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") 
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the order summaries with the data from the API
+            document.getElementById("total-orders").textContent =
+              data.totalOrders;
+            document.getElementById("pending-orders").textContent =
+              data.pendingOrders;
+            document.getElementById("successfull-orders").textContent =
+              data.successfulOrders;
+            document.getElementById("failed-orders").textContent =
+              data.failedOrders;
+          })
+          .catch((error) => {
+            console.error("Error fetching order data:", error);
+          });
+      });
+
+      // Handle modal popup for adding new offer
+      document
+        .getElementById("add-offer-btn")
+        .addEventListener("click", function () {
+          $("#addOfferModal").modal("show");
+        });
+
+      // Handle adding new offer logic
+      document
+        .getElementById("submitOfferBtn")
+        .addEventListener("click", function () {
+          const offerDetail = document.getElementById("offerDetail").value;
+          const offerImage = document.getElementById("offerImage").files[0];
+
+          if (offerImage) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              // Push new offer details into the array
+              offers.push({ detail: offerDetail, image: e.target.result });
+              displayOffers(); 
+              $("#addOfferModal").modal("hide"); 
+            };
+            reader.readAsDataURL(offerImage); 
+          }
+        });
+
+      // Function to display offers
+      function displayOffers() {
+        const gallery = document.getElementById("special-offer-gallery");
+        gallery.innerHTML = ""; 
+
+        // Check if there are offers
+        if (offers.length === 0) {
+          gallery.innerHTML = "<p>No special offers yet.</p>"; 
+          return; // Exit the function
+        }
+
+        // Always show the first offer, if available
+        if (offers.length > 0) {
+          const firstOffer = offers[0];
+          gallery.innerHTML += `<div class="offer-img-container">
+                    <img src="${firstOffer.image}" alt="Offer" class="special-offer-img" />
+                    <button class="delete-btn" onclick="deleteOffer(0)">X</button>
+                    <p>${firstOffer.detail}</p>
+                </div>`;
+        }
+
+        // Show remaining offers only when the toggle is active
+        if (showOffers) {
+          for (let i = 1; i < offers.length; i++) {
+            const offer = offers[i];
+            gallery.innerHTML += `<div class="offer-img-container">
+                        <img src="${offer.image}" alt="Offer" class="special-offer-img" />
+                        <button class="delete-btn" onclick="deleteOffer(${i})">X</button>
+                        <p>${offer.detail}</p>
+                    </div>`;
+          }
+        }
+      }
+
+      // Function to toggle offers visibility
+      document.getElementById("view-more-btn").onclick = function () {
+        showOffers = !showOffers; 
+        this.textContent = showOffers ? "Hide Offers" : "View More"; 
+        displayOffers(); 
+      };
+
+      // Function to delete an offer
+      function deleteOffer(index) {
+        offers.splice(index, 1); 
+        displayOffers(); 
+      }
+
+      // Initial display of offers (if any)
+      displayOffers();
+    </script>
+  </body>
+</html>
