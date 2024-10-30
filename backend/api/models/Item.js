@@ -1,6 +1,4 @@
 const db = require("../../config/db");
-const fs = require("fs");
-const path = require("path");
 
 class Item {
   //Find item by category
