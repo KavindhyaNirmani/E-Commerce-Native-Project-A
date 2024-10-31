@@ -52,8 +52,3 @@ html {
   text-align: center;
   cursor: pointer;
 }
-
-.hero-text button:hover {
-  background-color: #555;
-  color: white;
-}
