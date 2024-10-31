@@ -155,8 +155,12 @@
             console.log("Response from server:", data);
 
             if (response.ok) {
-              localStorage.setItem("token", data.token);
+              localStorage.setItem("authToken", data.token);
               localStorage.setItem("role", data.role);
+
+              // Log the stored token for debugging
+              console.log("Stored token:", localStorage.getItem("token"));
+
 
               // Display a success message
               alert("Login successful!");

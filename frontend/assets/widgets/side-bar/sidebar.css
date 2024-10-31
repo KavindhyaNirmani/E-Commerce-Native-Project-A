@@ -15,7 +15,7 @@
 }
 
 .sidebar .logo-img {
-  width: 180px;
+  width: 160px;
   height: auto;
   margin-top: 40px;
 }
@@ -38,13 +38,13 @@
 }
 
 .nav-link:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
   font-weight: bold;
 }
 
 .nav-link.active {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
   font-weight: bold;
 }
@@ -62,13 +62,13 @@
 }
 
 .toggle-btn {
-  color: #fad700;
+  color: #c59d5f;
   cursor: pointer;
   display: none;
   background-color: transparent;
   font-size: 24px;
   font-weight: bolder;
-  border: 1px solid #fad700;
+  border: 1px solid #c59d5f;
   padding: 5px;
   box-shadow: none;
   z-index: 1000;
@@ -76,9 +76,8 @@
 
 /* Main content */
 .content {
-  margin-left: 300px;
   padding: 10px;
-  margin: 10px;
+  margin: 10px 10px 10px 0;
 }
 
 body {
@@ -103,7 +102,6 @@ body {
   }
 
   .content {
-    margin-left: 0;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -122,9 +120,9 @@ body {
     margin-bottom: 0;
   }
   .sidebar .logo-img {
-    width: 160px;
+    width: 140px;
     height: auto;
-    margin-top: 30px;
+    margin: 30px 0 35px 0;
   }
   body {
     overflow-x: hidden;

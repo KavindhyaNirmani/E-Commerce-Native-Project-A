@@ -4,7 +4,6 @@ const express = require("express");
 const app = express(); //Initalizing the express application
 const morgan = require("morgan"); //a middleware for logging http requests and responses
 const bodyParser = require("body-parser");
-const multer = require("multer");
 const path = require("path");
 
 const authRoutes = require("./api/routes/auth-routes");
@@ -12,6 +11,7 @@ const itemRoutes = require("./api/routes/item-routes");
 const cartRoutes = require("./api/routes/cart-routes");
 const orderRoutes = require("./api/routes/order-routes");
 const promotionRoutes = require("./api/routes/promotion-routes");
+const feedbackRoutes = require("./api/routes/feedback-routes");
 
 //middleware for logging requests and parsing the body
 app.use(morgan("dev"));
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 //CORS setup
-app.use((req, res, next) => {
+app.use((req, res,next) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   res.header(
@@ -44,6 +44,7 @@ app.use("/items", itemRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
 app.use("/promotion", promotionRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 const menuPath = path.resolve(
   __dirname,

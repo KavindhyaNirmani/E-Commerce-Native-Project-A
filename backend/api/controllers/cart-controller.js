@@ -13,9 +13,7 @@ exports.addItemToCart = async (req, res) => {
 
   // Validate input
   if (!item_id) {
-    return res
-      .status(400)
-      .json({ message: "Item ID is required." });
+    return res.status(400).json({ message: "Item ID is required." });
   }
 
   if (!user_id) {
@@ -48,7 +46,9 @@ exports.addItemToCart = async (req, res) => {
       [cart_id, item_id]
     );
 
-    
+    if (existingCartItem.length > 0) {
+      return res.status(400).json({ message: "Item is already in the cart." });
+    }
 
     // If item does not exist, add it to the cart
     await db.execute(
@@ -75,7 +75,7 @@ exports.getCartItems = async (req, res) => {
     // Fetch the cart items from the database for the user
     const cart = await Cart.getCartByUserId(userId);
     console.log("Cart found:", cart);
-    
+
     if (!cart) {
       return res.status(404).json({ message: "No Cart found this user" });
     }

@@ -40,7 +40,7 @@ class Order {
   //Get all orders with item names and final prices
   static async getAllOrders() {
     const [results] = await db.execute(
-      "SELECT o.order_id,i.item_name,oi.item_price AS final_price,o.order_status FROM 'order' 0 JOIN order_items oi ON o.order_id=oi.order_id JOIN item i ON oi.item_id=i.item_id"
+      "SELECT ord.order_id,itm.item_name,orderItem.item_price AS final_price,ord.order_status FROM 'order' ord JOIN order_items orderItem ON ord.order_id=orderItem.order_id JOIN item itm ON orderItem.item_id=itm.item_id"
     );
     return results;
   }

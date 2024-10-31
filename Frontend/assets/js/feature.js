@@ -13,13 +13,13 @@ class featureSection extends HTMLElement {
           padding: 0;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
           text-align: center;  
-          opacity: 0; /* Initially hidden */
-          transform: translatey(150px); /* Shifted to the right */
-          transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+          opacity: 0; 
+          transform: translatey(150px); 
+          transition: opacity 1s ease, transform 1s ease; 
         }
         .card.visible {
-          opacity: 1; /* Fade-in effect */
-          transform: translateX(0); /* Move to original position */
+          opacity: 1; 
+          transform: translateX(0); 
         }
         .card-image {
           width: 130px;
@@ -28,6 +28,15 @@ class featureSection extends HTMLElement {
           display: block;
           margin: 15px auto;
         }
+          .card-image:hover{
+          -webkit-transform: scale(-1);
+          transform:scalex(-1);
+          transition: 1.5s;
+          }
+         
+          .card-title:hover {
+          color: #c59d5f;
+          }
         </style>
         <div class="row">
           <div class="col-sm-3 mb-sm-0">
@@ -35,7 +44,7 @@ class featureSection extends HTMLElement {
               <img class="card-image" src="./assets/images/feature-delivery.png" alt="Delivery" />
               <div class="card-body">
                 <h5 class="card-title">24/7 Service</h5>
-                <p class="card-text">Enjoy delicious meals anytime! We’re open 24/7 to satisfy cravings, day or night.</p>
+               
               </div>
             </div>
           </div>
@@ -44,7 +53,7 @@ class featureSection extends HTMLElement {
               <img class="card-image" src="./assets/images/feature-pizza.png" alt="Pizza" />
               <div class="card-body">
                 <h5 class="card-title">Fresh Pizza</h5>
-                <p class="card-text">We serve fresh and hand-tossed pizza with authentic ingredients.</p>
+                
               </div>
             </div>
           </div>
@@ -53,7 +62,7 @@ class featureSection extends HTMLElement {
               <img class="card-image" src="./assets/images/feature-delivery.png" alt="Delivery" />
               <div class="card-body">
                 <h5 class="card-title">Fast & Fresh Delivery</h5>
-                <p class="card-text">Get your pizzas delivered fresh and fast to satisfy your cravings.</p>
+                
               </div>
             </div>
           </div>
@@ -62,7 +71,7 @@ class featureSection extends HTMLElement {
               <img class="card-image" src="./assets/images/feature-dessert.png" alt="Dessert" />
               <div class="card-body">
                 <h5 class="card-title">Sweet Desserts</h5>
-                <p class="card-text">Our sweet treats will give you the perfect end to your meal.</p>
+               
               </div>
             </div>
           </div>

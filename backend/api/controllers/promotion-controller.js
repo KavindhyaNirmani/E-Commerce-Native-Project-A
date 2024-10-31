@@ -1,6 +1,4 @@
 const Promotion = require("../models/Promotion");
-const PromotionRule = require("../models/PromotionRule");
-const db = require("../../config/db");
 
 // Get all active promotions
 exports.getAllPromotions = async (req, res) => {

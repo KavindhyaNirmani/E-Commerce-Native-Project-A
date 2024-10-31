@@ -24,10 +24,10 @@ const upload = multer({ storage: storage });
 router.get("/category/:category_name", itemController.getItemsByCategory);
 
 /// Fetch all items
-router.get("/", itemController.getAllItems);
+router.get("/", protect,adminOnly,itemController.getAllItems);
 
 // Fetch a single item by its ID
-router.get("/:item_id", itemController.getItemById);
+router.get("/:item_id", protect,itemController.getItemById);
 
 router.use("/images/menu", express.static(menuPath));
 
@@ -37,9 +37,9 @@ router.use("/images/menu", express.static(menuPath));
 router.post("/", upload.single("item_image"), itemController.addItem);
 
 // Update an item (with image upload)
-router.put("/:item_id", upload.single("item_image"), itemController.updateItem);
+router.put("/:item_id", upload.single("item_image"), protect,adminOnly, itemController.updateItem);
 
 // Delete an item (soft delete)
-router.delete("/:item_id", itemController.deleteItem);
+router.delete("/:item_id", protect,adminOnly, itemController.deleteItem);
 
 module.exports = router;
