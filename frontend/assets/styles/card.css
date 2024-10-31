@@ -1,155 +1,102 @@
-
-
-/* Hero section */
-.hero {
-  position: relative;
-  text-align: center;
-  font-family: "Lato", sans-serif;
-  height: 410px;
-  margin: 20px 0 20px 0;
-  padding-top: 70px;
+.food-card {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  overflow: hidden;
 }
 
-.hero-img {
+.card-container {
+  padding: 10px;
+  max-width: 400px;
+}
+
+.food-card img {
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Overlay Styling - only covers the image */
+.image-container {
+  position: relative;
+  align-items: center;
+  margin: 10px;
+  width: 95%;
+  height: 70%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-@keyframes fadeInSlideDown {
-  0% {
-    opacity: 0;
-    transform: translate(0, -100%); /* Start above the viewport */
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%); /* Move to the centered position */
-  }
-}
-
-.hero h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 35px;
-  font-weight: bold;
-  color: white;
-  z-index: 1;
-  opacity: 0; /* Initial opacity */
-  animation: fadeInSlideDown 2s ease-out forwards; /* Apply the animation */
-}
-
-/* Features section */
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  font-family: "Lato", sans-serif;
-  margin-top: 20px 0 20px 0;
-  background-color: #1f0b0b;
-}
-
-.feature {
-  flex: 1 1 300px;
-  max-width: 300px;
-  text-align: center;
-  margin: 10px;
-}
-
-.feature img {
-  padding-top: 15px;
-  width: 100%;
-  height: auto;
-  max-width: 150px;
-  margin-bottom: 10px;
-}
-
-.feature h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: #ffffff;
-}
-
-.feature p {
-  font-size: 15px;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-/* Menu section */
-
-.menu-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  height: 450px;
-  padding: 10px;
-  border-radius: 20px;
-  background-color: #1f0b0b;
-  font-family: "Lato", sans-serif;
-  transition: transform 0.3s ease;
-  position: relative;
-}
-
-.menu-item:hover {
-  transform: scale(1.05);
-}
-
-.menu-item img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 20px;
-  border-radius: 15px;
-}
-
-.menu-item h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.menu-item h5 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #fad700;
-}
-
-.menu-item p {
-  font-size: 14px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-bottom: 120px;
-  color: #ffffff;
-}
-
-.add-to-cart {
-  background-color: #fad700;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60%;
-  height: 5%;
-  color: #000000;
-  border: none;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 25px;
-  padding: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+  font-size: 1rem;
 }
 
-.add-to-cart:hover {
-  background-color: #faff00;
+/* Hover Effects */
+.food-card:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.food-card:hover .overlay {
+  opacity: 1;
+}
+
+/* Item details */
+
+.item-details {
+  padding: 10px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-name {
+  padding-top: 10px;
+  color: #000000;
+  margin-left: 10px;
+}
+
+.item-price {
+  color: #c59d5f;
+  margin-left: 10px;
+}
+
+.order-btn {
+  border: 2px solid #c59d5f;
+  height: 45px;
+  border-radius: 10px;
+  background-color: white;
+  color: #c59d5f;
+  padding: 0 28px; /* Adjust padding for centered text */
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: -35px;
+  float: right;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-btn:hover {
+  background-color: #c59d5f;
+  color: white;
 }
 
 /* Container for both buttons */
