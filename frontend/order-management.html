@@ -197,62 +197,72 @@
 
       // Fetch order details by order ID from the backend
       async function fetchOrderDetails(orderId) {
-        try {
-          const response = await fetch(
-            `https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`
-          );
-          if (!response.ok) throw new Error("Failed to fetch order details.");
-          return await response.json(); // Assuming the API returns JSON
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      }
+    const token = localStorage.getItem('authToken'); // Retrieve the token from storage
+    console.log("Token before fetching order details:", token); // Debugging
 
-      // Populate modal with order details from backend API
-async function populateModal(orderId) {
     try {
-        // Fetch the order details
-        const order = await fetchOrderDetails(orderId);
-        currentOrderId = orderId;
+        const response = await fetch(`https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}` // Add the authorization header
+            }
+        });
 
-        if (order) {
-            // Populate the order details in the modal
-            $("#orderId").text(`Order ID: ${order.order_id}`);
-            $("#customer-id").text(`Customer ID: ${order.user_id}`);
-            $("#customer-name").text(`Customer Name: ${order.first_name} ${order.last_name}`);
-            $("#customer-phone").text(`Phone: ${order.phone_number}`);
-            $("#customer-address").text(`Address: ${order.address}, ${order.city}, ${order.postal_code}`);
-
-            // Populate the order items in the modal
-            let itemsHtml = "";
-            order.items.forEach((item) => {
-                itemsHtml += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.quantity}</td>
-                        <td>$${item.price.toFixed(2)}</td>
-                        <td>$${(item.quantity * item.price).toFixed(2)}</td>
-                    </tr>`;
-            });
-            $("#order-items").html(itemsHtml);
-
-            // Populate subtotal, delivery fee, discount, and total
-            $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
-            $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
-            $("#totalPrice").val(`$${order.total_final_price.toFixed(2)}`);
-            $("#orderStatus").val(order.order_status);
-        } else {
-            console.error("Order details not found.");
-            alert("Order details not available.");
+        if (!response.ok) {
+            const errorText = await response.text(); // Get error details if available
+            throw new Error(`Failed to fetch order details for ID ${orderId}. Status: ${response.status}. Response: ${errorText}`);
         }
+
+        const data = await response.json();
+        console.log("Fetched order details:", data); // Log the full response for debugging
+        return data;
     } catch (error) {
         console.error("Error fetching order details:", error);
-        alert("Failed to fetch order details.");
+        alert(`An error occurred while fetching order details for Order ID ${orderId}. Error: ${error.message}. Please try again later.`);
+        return null;
     }
 }
 
 
+  // Populate modal with order details from backend API
+  async function populateModal(orderId) {
+    try {
+        const order = await fetchOrderDetails(orderId);
+        currentOrderId = orderId;
+
+        console.log("Fetched order for ID:", orderId, order); // Debugging
+
+        if (!order || !order.orderDetails || !order.orderItems) {
+            console.error("Missing order or details in response:", order);
+            alert("Order details not available. Please check back later or contact support.");
+            return;
+        }
+
+        // Populate modal elements with order data
+        $("#orderId").text(`Order ID: ${order.orderDetails.order_id}`);
+        $("#customer-id").text(`Customer ID: ${order.orderDetails.user_id || "N/A"}`);
+        $("#customer-name").text(`Customer Name: ${order.orderDetails.first_name || "N/A"} ${order.orderDetails.last_name || "N/A"}`);
+        $("#customer-phone").text(`Phone: ${order.orderDetails.phone_number || "N/A"}`);
+        $("#customer-address").text(`Address: ${order.orderDetails.address || "N/A"}, ${order.orderDetails.city || "N/A"}, ${order.orderDetails.postal_code || "N/A"}`);
+        
+        let itemsHtml = order.orderItems.map(item => `
+            <tr>
+                <td>${item.item_name || "Unknown Item"}</td>
+                <td>${item.quantity || "0"}</td>
+                <td>Rs. ${parseFloat(item.item_price).toFixed(2) || "0.00"}</td>
+                <td>Rs. ${(item.quantity * parseFloat(item.item_price)).toFixed(2) || "0.00"}</td>
+            </tr>`).join('');
+        $("#order-items").html(itemsHtml);
+
+        $("#subtotal").text(`Subtotal: Rs. ${parseFloat(order.orderDetails.total_price).toFixed(2) || "0.00"}`);
+        $("#discount").text(`Discount: Rs. ${parseFloat(order.orderDetails.discount).toFixed(2) || "0.00"}`);
+        $("#totalPrice").val(`Rs. ${parseFloat(order.orderDetails.final_total_price).toFixed(2) || "0.00"}`);
+        $("#orderStatus").val(order.orderDetails.order_status || "Pending");
+    } catch (error) {
+        console.error("Error in populateModal:", error.message);
+        alert("An error occurred while populating order details. Please try again later.");
+    }
+}
 
       // Update order status using the backend API
       async function updateOrderStatus(orderId, newStatus) {
