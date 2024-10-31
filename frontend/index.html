@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+    <title>YumZy - Food & Beverages</title>
+    <link rel="icon" type="image/png" href="./assets/images/yumzy-icon.png" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -28,11 +28,11 @@
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       crossorigin="anonymous"></script>
-    <!-- Popper.js and Bootstrap JS -->
+
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </head>
-  <body style="font-family: 'Lato', sans-serif; background: none; height: 100%">
+  <body style="font-family: 'lato', sans-serif; background: none; height: 100%">
     <!-- Navbar -->
     <div id="headerPlaceholder"></div>
 
@@ -290,7 +290,6 @@
     </section>
 
     <!-- Offer section -->
-    <!-- Special Offer Section -->
     <div class="container my-5" id="promotion">
       <h2 class="text-center mb-4">Special Offers</h2>
 
@@ -327,8 +326,8 @@
     <!-- Custom JS -->
     <script src="./assets/js/feature.js"></script>
     <script>
-      let allOfferData = []; // Store all offer images
-      let offerLimit = 1; // Initially show 1 offer image
+      let allOfferData = [];
+      let offerLimit = 1;
 
       //show read more content
       function toggleContent() {
@@ -343,7 +342,7 @@
       }
 
       // Fetch all offers and store them
-      fetch("https://ecom-back-t1.netfy.app/offers") // Replace with your actual API endpoint
+      fetch("https://ecom-back-t1.netfy.app/offers")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -354,17 +353,17 @@
           allOfferData = data;
 
           if (allOfferData.length === 0) {
-            displayNoOffersMessage(); // Display "No offers yet" if no data
+            displayNoOffersMessage();
           } else {
-            displayOfferItems(allOfferData.slice(0, offerLimit)); // Show 1 image initially
+            displayOfferItems(allOfferData.slice(0, offerLimit)); // Showing 1 image initially
             if (allOfferData.length > offerLimit) {
-              document.getElementById("viewMoreBtn").style.display = "block"; // Show "View More" button if more images exist
+              document.getElementById("viewMoreBtn").style.display = "block";
             }
           }
         })
         .catch((error) => {
           console.error("Error loading offers data:", error);
-          displayNoOffersMessage(); // Display "No offers yet" if there is an error fetching offers
+          displayNoOffersMessage();
         });
 
       // Function to display offer items
@@ -376,7 +375,7 @@
 
         items.forEach((item) => {
           const offerItem = document.createElement("div");
-          offerItem.classList.add("col-md-4", "col-sm-6", "mb-4"); // Bootstrap grid classes
+          offerItem.classList.add("col-md-4", "col-sm-6", "mb-4");
           offerItem.innerHTML = `
       <div class="offer-item">
           <img src="${item.offer_image}" alt="Special Offer">
@@ -400,9 +399,9 @@
       document
         .getElementById("viewMoreBtn")
         .addEventListener("click", function () {
-          const additionalOffers = allOfferData.slice(offerLimit); // Load all remaining items
-          displayOfferItems(additionalOffers); // Display all images
-          document.getElementById("viewMoreBtn").style.display = "none"; // Hide button after showing all offers
+          const additionalOffers = allOfferData.slice(offerLimit);
+          displayOfferItems(additionalOffers);
+          document.getElementById("viewMoreBtn").style.display = "none";
         });
     </script>
   </body>
