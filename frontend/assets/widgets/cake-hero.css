@@ -24,15 +24,31 @@ html {
   color: white;
 }
 
-.hero-text button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 10px 25px;
-  color: black;
-  background-color: #ddd;
+.hero-text h1 {
   text-align: center;
-  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: clamp(10px, 2vw, 50px);
+  font-style: oblique;
+  font-weight: 500;
+  font-family: "cookie", cursive;
+}
+
+.hero-text p {
+  text-align: center;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0.5;
+  font-size: clamp(10px, 2vw, 50px);
+  font-style: oblique;
+  font-weight: 500;
+  font-family: "cookie", cursive;
 }
 
 .hero-text button:hover {
