@@ -220,25 +220,25 @@ async function populateModal(orderId) {
             // Populate the order details in the modal
             $("#orderId").text(`Order ID: ${order.order_id}`);
             $("#customer-id").text(`Customer ID: ${order.user_id}`);
-            $("#customer-name").text(`Customer Name: ${order.first_name} ${order.last_name}`);
-            $("#customer-phone").text(`Phone: ${order.phone_number}`);
-            $("#customer-address").text(`Address: ${order.address}, ${order.city}, ${order.postal_code}`);
+            $("#customer-name").text(`Customer Name: ${order_details.first_name} ${order_details.last_name}`);
+            $("#customer-phone").text(`Phone: ${order_details.phone_number}`);
+            $("#customer-address").text(`Address: ${order_details.address}, ${order_details.city}, ${order_details.postal_code}`);
 
             // Populate the order items in the modal
             let itemsHtml = "";
-            order.items.forEach((item) => {
+            order.item.forEach((item) => {
                 itemsHtml += `
                     <tr>
-                        <td>${item.name}</td>
-                        <td>${item.quantity}</td>
-                        <td>$${item.price.toFixed(2)}</td>
-                        <td>$${(item.quantity * item.price).toFixed(2)}</td>
+                        <td>${item.item_name}</td>
+                        <td>${order_items.quantity}</td>
+                        <td>$${order_items.item_price.toFixed(2)}</td>
+                        <td>$${(order_items.quantity * order_items.item_price).toFixed(2)}</td>
                     </tr>`;
             });
             $("#order-items").html(itemsHtml);
 
             // Populate subtotal, delivery fee, discount, and total
-            $("#subtotal").text(`Subtotal: $${order.subtotal.toFixed(2)}`);
+            $("#subtotal").text(`Subtotal: $${order.total_amount.toFixed(2)}`);
             $("#discount").text(`Discount: $${order.discount.toFixed(2)}`);
             $("#totalPrice").val(`$${order.total_final_price.toFixed(2)}`);
             $("#orderStatus").val(order.order_status);
