@@ -72,7 +72,7 @@
         .catch((error) => console.error("Error loading footer:", error));
 
       let allCakeData = [];
-      let cakeLimit = 4;
+      let cakeLimit = 3;
 
       fetch("https://ecom-back-t1.netfy.app/items/category/cake")
         .then((response) => response.json())
@@ -93,8 +93,7 @@
                         <div class="image-container">
                         <img src="https://ecom-back-t1.netfy.app${
                           item.item_image
-                        }" 
-                        alt=" ">
+                        }" alt="${item.item_name}" >
                         <div class="overlay">
                           <p>${item.item_description}</p>
                           </div>

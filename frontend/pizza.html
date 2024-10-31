@@ -84,49 +84,58 @@
         .catch((error) => console.error("Error loading footer:", error));
     </script>
 
-    <!-- JS to load pizza items dynamically and handle "View More" functionality -->
+  
     <script>
-      let allPizzaData = []; // Store all pizza items
-      let pizzaLimit = 4; // Initial limit for items to display
+      let allPizzaData = []; 
+      let pizzaLimit = 3; 
 
       // Fetch all pizza items and store them
       fetch("https://ecom-back-t1.netfy.app/items/category/pizza")
         .then((response) => response.json())
         .then((data) => {
           allPizzaData = data;
-          displayPizzaItems(allPizzaData.slice(0, pizzaLimit)); // Show only limited items initially
+          displayPizzaItems(allPizzaData.slice(0, pizzaLimit)); 
         })
         .catch((error) => console.error("Error loading menu data:", error));
 
-      // Function to display pizza items dynamically
+     
       function displayPizzaItems(items) {
         const menu = document.getElementById("pizzaMenu");
         items.forEach((item) => {
           const menuItem = document.createElement("div");
-          menuItem.classList.add("col-md-3", "col-sm-6", "mb-4"); // Bootstrap grid classes
+          menuItem.classList.add("col-lg-4", "col-md-6", "mb-4"); // Bootstrap grid classes
           menuItem.innerHTML = `
-                    <div class="menu-item">
+                    <div class="card-container">
+                      <div class="food-card">
+                        <div class="image-container">
                         <img src="https://ecom-back-t1.netfy.app${
                           item.item_image
                         }" alt="${item.item_name}" >
-                        <div class="card-body d-flex flex-column">
-                            <h4 >${item.item_name}</h4>
-                            <h5 >Rs: ${item.item_price}</h5>
-                            <p >${item.item_description}</p>
-                            <button class="add-to-cart" data-item='${JSON.stringify(
+                        <div class="overlay">
+                          <p>${item.item_description}</p>
+                          </div>
+                          </div>
+                            <div class="item-name"><h5>${
+                              item.item_name
+                            }</h5></div>
+                            <div class="item-price"><h6>Rs: ${
+                              item.item_price
+                            }</h6></div>
+                            
+                            <button class="order-btn" data-item='${JSON.stringify(
                               item
-                            )}'>Add to Cart</button>
-                        </div>
+                            )}'>Order Now</button>
+                       </div>
+                       </div> 
                     </div>
                 `;
           menu.appendChild(menuItem);
         });
-        document.querySelectorAll(".add-to-cart").forEach((button) => {
-                button.addEventListener("click", handleAddToCart);
-            });
-        
-      }
 
+        document.querySelectorAll(".order-btn").forEach((button) => {
+          button.addEventListener("click", handleAddToCart);
+        });
+      }
       // Handle "View More" button click
       document
         .getElementById("viewMoreBtn")
