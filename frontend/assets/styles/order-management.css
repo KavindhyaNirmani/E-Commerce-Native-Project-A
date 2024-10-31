@@ -1,9 +1,11 @@
 body {
   background: linear-gradient(#6c6a6a, #1e1e1e);
-  color: #f0e68c;
+  color: #c59d5f;
   height: 100vh;
 }
-
+.order-title{
+  color: #c59d5f;
+}
 .table {
   width: 90%;
 }
@@ -27,7 +29,7 @@ body {
 .btn-danger:hover,
 .btn-danger:focus,
 .btn-danger:active {
-  background-color: #f1a501;
+  background-color: #c59d5f;
   border: none;
   color: black;
 }
@@ -62,7 +64,7 @@ body {
 }
 
 .modal-title {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .modal-body {
@@ -70,13 +72,13 @@ body {
 }
 
 .btn-primary {
-  background-color: #fccb45;
+  background-color: #c59d5f;
   border: none;
   color: #000;
 }
 
 .btn-primary:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: #000;
   font-weight: bold;
 }
@@ -89,8 +91,8 @@ body {
 }
 
 .close:hover {
-  color: #fad700;
-  border-color: #fad700;
+  color: #c59d5f;
+  border-color: #c59d5f;
 }
 
 /* Remove the default appearance of the select dropdown */

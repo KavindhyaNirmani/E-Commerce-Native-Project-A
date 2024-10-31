@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+    <title>YumZy - Food & Beverages</title>
+    <link rel="icon" href="./assets/images/yumzy-icon.png" type="image/png">
+
 
     <!--Bootstrap CSS-->
     <link
@@ -36,7 +37,7 @@
     style="
       font-family: 'Lato', sans-serif;
       height: 100vh;
-      background: linear-gradient(#6c6a6c, #1e1e1e) !important;
+      background-color: #1e1e1e !important;
     ">
     <!-- Placeholder for Sidebar -->
     <div id="sidebar-placeholder"></div>
@@ -81,53 +82,33 @@
             class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-3">
             <!-- Pizza -->
             <div class="col">
-              <div class="card text-center" id="pizzaCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-pizza.jpg"
-                    class="card-img-top img-fluid"
-                    alt="pizza" />
-                </div>
-                <div class="card-body">
-                  <h5>Pizza</h5>
-                </div>
-              </div>
+             <div class="col-4 text-center">
+                        <img src="./assets/images/menu-pizza.jpg" alt="Pizza" class="category-image">
+                        <div class="category-name">Pizza</div>
+                    </div>
             </div>
             <!-- Cake -->
             <div class="col">
-              <div class="card text-center" id="cakeCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-cake.jpg"
-                    class="card-img-top img-fluid"
-                    alt="cake" />
-                </div>
-                <div class="card-body">
-                  <h5>Cake</h5>
-                </div>
-              </div>
+             <div class="col-4 text-center">
+                        <img src="./assets/images/menu-cake.jpg" alt="Pizza" class="category-image">
+                        <div class="category-name">Pizza</div>
+                    </div>
             </div>
             <!-- Beverages -->
             <div class="col">
-              <div class="card text-center" id="beverageCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-beverages.jpg"
-                    class="card-img-top img-fluid"
-                    alt="beverage" />
-                </div>
-                <div class="card-body">
-                  <h5>Beverages</h5>
-                </div>
-              </div>
+              <div class="col-4 text-center">
+                        <img src="./assets/images/menu-beverages.jpg" alt="Pizza" class="category-image">
+                        <div class="category-name">Pizza</div>
+                    </div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Order Summary Section -->
+
       <div class="container my-5">
-        <h2 class="text-warning">Order Summary</h2>
+        <h2 class="order-title">Order Summary</h2>
         <div class="row">
           <!-- Total Orders -->
           <div class="col-lg-3 col-md-6 col-6 mb-4">
@@ -135,9 +116,7 @@
             <div class="order-summary-box text-center">
               <p>Total Orders:</p>
               <h4 id="total-orders">0</h4>
-              <a href="order-management.html" class="arrow-link">
-                <span class="arrow">→</span>
-              </a>
+              
             </div>
           </div>
 
@@ -168,7 +147,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
       <!-- Special Offers Section -->
       <div class="container my-4">
@@ -278,24 +257,40 @@
       let showOffers = false; 
 
       document.addEventListener("DOMContentLoaded", () => {
-        // Fetch order details from the backend API
-        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") 
-          .then((response) => response.json())
-          .then((data) => {
-            // Update the order summaries with the data from the API
-            document.getElementById("total-orders").textContent =
-              data.totalOrders;
-            document.getElementById("pending-orders").textContent =
-              data.pendingOrders;
-            document.getElementById("successfull-orders").textContent =
-              data.successfulOrders;
-            document.getElementById("failed-orders").textContent =
-              data.failedOrders;
-          })
-          .catch((error) => {
-            console.error("Error fetching order data:", error);
-          });
+    // Fetch order details from the backend API
+    fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") 
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the order summaries with the data from the API
+        document.getElementById("total-orders").textContent = data.totalOrders;
+        document.getElementById("pending-orders").textContent = data.pendingOrders;
+        document.getElementById("successfull-orders").textContent = data.successfulOrders;
+        document.getElementById("failed-orders").textContent = data.failedOrders;
+      })
+      .catch((error) => {
+        console.error("Error fetching order data:", error);
       });
+  });
+
+      //document.addEventListener("DOMContentLoaded", () => {
+        // Fetch order details from the backend API
+     //   fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics") 
+      //    .then((response) => response.json())
+      //    .then((data) => {
+            // Update the order summaries with the data from the API
+      //      document.getElementById("total-orders").textContent =
+        //      data.totalOrders;
+        //    document.getElementById("pending-orders").textContent =
+       //       data.pendingOrders;
+      //      document.getElementById("successfull-orders").textContent =
+      //        data.successfulOrders;
+      //      document.getElementById("failed-orders").textContent =
+      //        data.failedOrders;
+      //    })
+      //    .catch((error) => {
+        //    console.error("Error fetching order data:", error);
+     //     });
+   //   });
 
       // Handle modal popup for adding new offer
       document

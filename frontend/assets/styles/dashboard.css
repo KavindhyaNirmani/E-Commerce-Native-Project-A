@@ -1,7 +1,7 @@
 body {
   overflow-x: hidden;
   height: 100%;
-  background: linear-gradient(#6c6a6c, #1e1e1e) !important;
+  background-color: #1e1e1e !important;
 }
 
 .content {
@@ -10,7 +10,7 @@ body {
 }
 
 .container h2 {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Menu section */
@@ -19,82 +19,48 @@ body {
   text-align: left;
   padding: 0;
 }
-
-#beverageCard,
-#cakeCard,
-#pizzaCard {
-  background-color: #1f0b0b;
-  border-radius: 20px;
-  overflow: hidden;
-  max-width: 150px;
-  max-height: 170px;
-  min-width: 80px;
-  width: 100%;
-  margin: 0 0 5px 0;
-}
-
-.card-img-container {
-  background-color: #1f0b0b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  width: 100%;
-  height: 300px;
-  max-height: 300px;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.col {
-  padding: 0;
-}
-
-.card h5 {
-  text-align: center;
-  color: #fad700;
-}
+        .category-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .category-name {
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            color: #c59d5f;
+        }
 
 /*Order Summary Section*/
 .order-summary-box {
-  background-color: #505050;
-  padding: 20px;
-  border-radius: 8px;
-  color: white;
-  position: relative;
-  max-width: 210px;
-  margin: 0;
-  min-height: 150px;
-}
-
-.order-summary-box h4 {
+      background-color: transparent;
+      border: 2px solid #ffffff;
+       box-shadow: 0 4px 10px rgba(165, 154, 154, 0.6);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+    }
+    .order-title {
+      
+      font-weight: bold;
+      margin-bottom: 20px;
+       color: #c59d5f;
+    }
+    .order-summary-box h4 {
   color: white;
   font-size: 36px;
 }
-
-.order-summary-box p {
-  font-size: 20px;
+.order-summary-box p{
+  font-weight: bold;
 }
-
-.arrow {
-  position: absolute;
-  right: 15px;
-  bottom: 20px;
-  font-size: 24px;
-  color: white;
-}
-
-.arrow-link {
-  text-decoration: none;
-}
-
-.arrow-link:hover .arrow {
-  color: #fad700;
-}
+    .chart-container {
+      background-color: #e9ecef;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
 
 /*offer section*/
 .special-offer-img {
@@ -104,12 +70,12 @@ body {
 
 .modal-content {
   background-color: #666;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .modal-header {
   background-color: #000;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 #closeModal {
@@ -118,14 +84,14 @@ body {
 
 .modal-footer button {
   width: 100px;
-  background-color: #fad700;
+  background-color: #c59d5f;
   border: none;
   color: black;
   font-weight: bold;
 }
 
 .modal-footer button:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
 }
 
 .form-control {
@@ -137,7 +103,7 @@ body {
 .form-control:focus {
   box-shadow: none;
   background-color: #444;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Special offer section styles */
@@ -166,34 +132,34 @@ body {
 }
 
 .custom-yellow {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
-  border: 2px solid #fad700;
+  border: 2px solid #c59d5f;
   font-weight: bolder;
   margin-bottom: 20px;
 }
 
 .custom-yellow:hover,
 .custom-yellow:active {
-  background-color: #666;
-  color: #fad700;
+  background-color: transparent;
+  color: #c59d5f;
   font-weight: bold;
 }
 
 .custom-yellow-outline {
   background-color: transparent;
-  color: #fad700;
-  border: 2px solid #fad700;
+  color: #c59d5f;
+  border: 2px solid #c59d5f;
   margin-bottom: 20px;
 }
 
 .custom-yellow-outline:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
   font-weight: bold;
 }
 p {
-  color: #fad700;
+  color: #ffffff;
 }
 
 /* Menu section */
@@ -250,9 +216,6 @@ p {
     margin: 0;
   }
 
-  .card-img-container {
-    height: 250px;
-  }
   body {
     margin-left: 300px;
     height: 100%;
@@ -275,10 +238,6 @@ p {
 
   .menu-padding {
     padding: 10px 0;
-  }
-
-  .card-img-container {
-    height: 250px;
   }
 
   .col {
@@ -322,19 +281,6 @@ p {
     margin: 0;
     display: flex;
     justify-content: center;
-  }
-
-  #card {
-    width: 100%;
-    max-width: 150px;
-    margin-bottom: 5px;
-  }
-
-  .card-img-container {
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .custom-yellow {
     margin-bottom: 20px;
