@@ -41,7 +41,7 @@ class featureSection extends HTMLElement {
         <div class="row">
           <div class="col-sm-3 mb-sm-0">
             <div class="card">
-              <img class="card-image" src="./assets/images/feature-delivery.png" alt="Delivery" />
+              <img class="card-image" src="./assets/images/feature-24h-service.png" alt="24h-service" />
               <div class="card-body">
                 <h5 class="card-title">24/7 Service</h5>
                
@@ -61,7 +61,7 @@ class featureSection extends HTMLElement {
             <div class="card">
               <img class="card-image" src="./assets/images/feature-delivery.png" alt="Delivery" />
               <div class="card-body">
-                <h5 class="card-title">Fast & Fresh Delivery</h5>
+                <h5 class="card-title">Fast Delivery</h5>
                 
               </div>
             </div>
