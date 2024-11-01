@@ -6,6 +6,9 @@ const router = express.Router();
 //Place an order
 router.post("/place", protect, orderController.placeOrder);
 
+// Calculate order summary for selected items
+router.post("/order-summary", protect, orderController.calculateOrderSummary);
+
 //Get all orders for a user
 router.get("/user-orders", protect, orderController.getUserOrders);
 
