@@ -266,7 +266,12 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order details from the backend API
-        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics")
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+    method: "GET",
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("authToken")}` 
+    }
+})
           .then((response) => response.json())
           .then((data) => {
             // Update the order summaries with the data from the API

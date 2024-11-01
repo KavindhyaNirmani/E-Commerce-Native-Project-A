@@ -154,8 +154,13 @@
       async function fetchOrdersFromBackend() {
         try {
           const response = await fetch(
-            "https://ecom-back-t1.netfy.app/orders/admin/orders"
-          );
+            "https://ecom-back-t1.netfy.app/orders/admin/orders",{
+    method: "GET",
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("authToken")}` // Ensure you're using the same key
+    }
+})
+          
           if (!response.ok) throw new Error("Failed to fetch orders.");
           const data = await response.json(); // Assuming the API returns JSON
           return data;
