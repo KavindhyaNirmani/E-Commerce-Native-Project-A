@@ -13,7 +13,8 @@
     <!--Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/order-management.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
@@ -154,13 +155,15 @@
       async function fetchOrdersFromBackend() {
         try {
           const response = await fetch(
-            "https://ecom-back-t1.netfy.app/orders/admin/orders",{
-    method: "GET",
-    headers: {
-        "Authorization": `Bearer ${localStorage.getItem("authToken")}` // Ensure you're using the same key
-    }
-})
-          
+            "https://ecom-back-t1.netfy.app/orders/admin/orders",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              },
+            }
+          );
+
           if (!response.ok) throw new Error("Failed to fetch orders.");
           const data = await response.json(); // Assuming the API returns JSON
           return data;
@@ -317,7 +320,7 @@
 
       // Update order status using the backend API
       async function updateOrderStatus(orderId, newStatus) {
-        const token = localStorage.getItem("authToken"); 
+        const token = localStorage.getItem("authToken");
         console.log("Token before updating order status:", token);
         try {
           const response = await fetch(
