@@ -96,6 +96,49 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
+// Calculate order summary for selected items in the cart
+exports.calculateOrderSummary = async (req, res) => {
+  const { selectedItems } = req.body; 
+
+  try {
+    if (!selectedItems || selectedItems.length === 0) {
+      return res.status(400).json({ error: "No items selected" });
+    }
+
+    // Check for an active promotion
+    const [promotion] = await db.execute(
+      `SELECT pr.discount_percentage 
+       FROM promotion p
+       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
+       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
+       LIMIT 1`
+    );
+    const discountPercentage = promotion.length ? promotion[0].discount_percentage : 0;
+
+    let totalAmount = 0;
+    let totalQuantity = 0;
+
+    selectedItems.forEach(item => {
+      const { quantity, item_price } = item;
+      totalAmount += quantity * item_price;
+      totalQuantity += quantity;
+    });
+
+    const discountAmount = (totalAmount * discountPercentage) / 100;
+    const finalAmount = totalAmount - discountAmount;
+
+    res.json({
+      totalItems: totalQuantity,
+      totalAmount,
+      discountAmount,
+      finalAmount,
+    });
+  } catch (err) {
+    console.error("Error while calculating order summary:", err);
+    res.status(500).json({ error: "Failed to calculate order summary" });
+  }
+};
+
 //Fetch all orders for an user
 exports.getUserOrders = async (req, res) => {
   const userId = req.user.user_id;
