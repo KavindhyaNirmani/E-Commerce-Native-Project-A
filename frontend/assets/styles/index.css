@@ -119,7 +119,7 @@
 .about-text p {
   color: #343a40;
   text-align: justify;
-  font-size: 16px !important;
+  font-size: 18px !important;
 }
 
 #readMore {
@@ -131,6 +131,8 @@
 .additional-content {
   display: none;
   margin: 0;
+  text-align: justify;
+  font-size: 18px;
 }
 .additional-content h5 {
   color: #c59d5f;

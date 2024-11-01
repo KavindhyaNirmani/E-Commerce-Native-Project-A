@@ -4,57 +4,53 @@
   box-sizing: border-box;
 }
 body {
-  padding: 20px;
-  overflow: hidden;
-  background-color: white !important;
+  overflow: auto;
+  background-color: none !important;
+  height: 100vh;
 }
 
 .container-fluid {
   background: url("../images/reg-bg-img.jpg") no-repeat center center/cover;
-  border-radius: 30px;
-  opacity: 0.8;
-  height: 100vh;
+  opacity: 1;
 }
 
 .header {
   padding-bottom: 20px;
-  font-size:xx-large;
+  font-size: xx-large;
 }
 
 .form-title {
   display: flex;
   justify-content: center;
+  color: #c59d5f;
 }
 
 .form-style {
   padding-top: 10px;
-  padding-bottom: 10px;
   display: flex;
-  margin: auto;
   border-radius: 10px;
-  border: 2px solid white;
+  justify-content: center;
   margin: auto;
-  background-color: rgba(0, 0, 0.1, 0.8);
-  width: 500px;
-  height: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 500%;
+}
+
+.input-group {
+  border-radius: 5px;
 }
 
 .form-group {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
 }
 
 .form-group label {
   display: flex;
-  justify-content: right;
+  justify-content: left;
+  padding-left: 4px;
   color: white;
   font-size: 18px;
-}
-
-.input-group{
-  display: flex;
-  justify-self: unset;
 }
 
 p {
@@ -69,12 +65,11 @@ p a {
   color: white;
   text-decoration: underline;
   text-decoration-color: white;
-  color: white;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 button {
-  background-color: #fccb45;
+  background-color: #c59d5f !important;
 }
 
 .custom-btn {
@@ -88,43 +83,66 @@ button {
 }
 
 .custom-btn:hover {
-  background-color: #fdb560 !important;
+  background-color: #fdb560  !important;
   color: black;
 }
 
 p a:hover {
-  color: #faff00;
+  color: #c59d5f;
+  transition: background-color 0.3s, color 0.3s;
+
 }
 
 .invalid-feedback {
   font-size: medium;
   font-weight: 500;
   font-family: "Lato", sans-serif !important;
+  padding-bottom: 0 !important;
 }
 
 /* Responsive behavior */
 
-@media (min-width: 568px) and (max-width: 922px) {
-  .image-section {
+@media (min-width: 560px) {
+  body {
+    padding: 20px;
+    overflow: hidden;
     height: 100vh;
   }
-}
 
-@media (min-width: 922px) {
-  .body {
-    max-height: 500px;
-    overflow: scroll;
+  .header {
+    padding-bottom: 50px;
+  }
+  .container-fluid {
+    border-radius: 10px;
+    padding-bottom: 20px;
+    height: 100%;
   }
 }
 
-@media (max-width: 425px) {
-  .body {
-    max-height: 400px;
-    overflow: hidden;
+@media (max-width: 560px) {
+  .form-group {
+    flex-direction: column;
+    text-align: left !important;
   }
 
-  .header h1{
-    font-size: 10px !important;
+  .form-group label {
+    align-self: flex-start;
+    padding-left: 0;
+    color: white;
+    font-size: 18px;
+  }
+
+  .input-group {
+    display: flex;
+    align-items: left;
+    align-self: flex-start;
+    padding-left: 0;
+    justify-content: center;
+    width: 100;
+  }
+
+  .invalid-feedback {
+    padding-bottom: 2px !important;
   }
 }
 
@@ -147,6 +165,5 @@ p a:hover {
 
   .text-style {
     padding-top: 20px !important;
-    font-size: 25px;
   }
 }
