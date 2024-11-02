@@ -327,6 +327,39 @@
       }
 
       fetchCartItems();
+
+      // Define the function to get selected items
+      function getSelectedItems() {
+        const selectedItems = [];
+        const checkboxes = document.querySelectorAll(".item-checkbox:checked");
+
+        checkboxes.forEach((checkbox) => {
+          const id = checkbox.getAttribute("data-id");
+          const price = parseFloat(checkbox.getAttribute("data-price"));
+          const quantity = parseInt(
+            document.getElementById(`quantity-${id}`).textContent
+          );
+          const itemName = checkbox
+            .closest("tr")
+            .querySelector("td:nth-child(3)").textContent;
+
+          selectedItems.push({
+            id: id,
+            name: itemName,
+            price: price,
+            quantity: quantity,
+            total: price * quantity,
+          });
+        });
+
+        return selectedItems;
+      }
+
+      // Define the function to pass items to checkout
+      function passItemsToCheckout() {
+        const selectedItems = getSelectedItems();
+        console.log(selectedItems); // Log the array to the console
+      }
     </script>
   </body>
 </html>
