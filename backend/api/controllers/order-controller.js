@@ -96,6 +96,49 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
+// Calculate order summary for selected items in the cart
+exports.calculateOrderSummary = async (req, res) => {
+  const { selectedItems } = req.body; 
+
+  try {
+    if (!selectedItems || selectedItems.length === 0) {
+      return res.status(400).json({ error: "No items selected" });
+    }
+
+    // Check for an active promotion
+    const [promotion] = await db.execute(
+      `SELECT pr.discount_percentage 
+       FROM promotion p
+       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
+       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
+       LIMIT 1`
+    );
+    const discountPercentage = promotion.length ? promotion[0].discount_percentage : 0;
+
+    let totalAmount = 0;
+    let totalQuantity = 0;
+
+    selectedItems.forEach(item => {
+      const { quantity, item_price } = item;
+      totalAmount += quantity * item_price;
+      totalQuantity += quantity;
+    });
+
+    const discountAmount = (totalAmount * discountPercentage) / 100;
+    const finalAmount = totalAmount - discountAmount;
+
+    res.json({
+      totalItems: totalQuantity,
+      totalAmount,
+      discountAmount,
+      finalAmount,
+    });
+  } catch (err) {
+    console.error("Error while calculating order summary:", err);
+    res.status(500).json({ error: "Failed to calculate order summary" });
+  }
+};
+
 //Fetch all orders for an user
 exports.getUserOrders = async (req, res) => {
   const userId = req.user.user_id;
@@ -119,17 +162,19 @@ exports.getOrderDetails = async (req, res) => {
 
   try {
     const [orderDetails] = await db.execute(
-      "SELECT * FROM order_details WHERE order_id=?",
+      "SELECT od.*, ord.user_id, ord.total_amount AS total_price, ord.discount, ord.final_amount AS final_total_price, ord.order_status FROM order_details od JOIN \`order\` ord ON od.order_id = ord.order_id WHERE od.order_id = ?",
       [orderId]
     );
 
     const [orderItems] = await db.execute(
-      `SELECT orderItem.*, itm.item_name 
-             FROM order_items orderItem 
-             JOIN item itm ON orderItem.item_id = itm.item_id 
-             WHERE orderItem.order_id = ?`,
+      `SELECT oi.order_item_id,oi.quantity,oi.item_price,oi.item_id,oi.order_id,itm.item_name FROM order_items oi JOIN item itm ON oi.item_id=itm.item_id WHERE oi.order_id=?`,
       [orderId]
     );
+
+    // Check if the order exists
+    if (orderDetails.length === 0) {
+      return res.status(404).json({ message: "Order not found" });
+    }
 
     res.json({
       orderDetails: orderDetails[0],
@@ -146,7 +191,7 @@ exports.getOrderDetails = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   try {
     const [orders] = await db.execute(
-      "SELECT ord.order_id, GROUP_CONCAT(itm.item_name SEPARATOR ', ') AS item_names, SUM(orderItem.item_price) AS total_final_price, ord.order_status FROM `order` ord JOIN order_items orderItem ON ord.order_id = orderItem.order_id JOIN item itm ON orderItem.item_id = itm.item_id GROUP BY ord.order_id"
+      "SELECT ord.order_id, GROUP_CONCAT(itm.item_name SEPARATOR ', ') AS item_names, ord.final_amount AS total_final_price, ord.order_status FROM `order` ord JOIN order_items orderItem ON ord.order_id = orderItem.order_id JOIN item itm ON orderItem.item_id = itm.item_id GROUP BY ord.order_id"
     );
 
     // Formatting the results to a more structured response

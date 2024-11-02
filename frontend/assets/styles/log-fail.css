@@ -7,7 +7,6 @@
 }
 
 body {
-  background-color: #b7b0b0 !important ;
   color: #ffffff !important;
 }
 
@@ -34,16 +33,17 @@ body {
   margin: auto;
   text-align: center;
   padding: 10px 0;
-  background-color: #fccb45 !important;
-  border-color: #fccb45 !important;
+  background-color: #c59d5f !important;
+  border-color: #c59d5f !important;
   font-weight: bold;
   width: 100%;
   border-radius: 5px;
 }
 
 .btn:hover {
-  background-color: #b7b0b0 !important;
+  background-color: transparent !important;
   color: #ffffff !important;
+  border-color: #c59d5f;
 }
 
 .img-fluid {

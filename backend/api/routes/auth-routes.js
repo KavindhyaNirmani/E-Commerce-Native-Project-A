@@ -37,10 +37,10 @@ router.post("/login", authController.login);
 router.use("/images/user-image", express.static(userImagePath));
 
 //Admin creation(admin-only route)
-router.post("/add-admin", upload.single("user_image"), authController.addAdmin);
+router.post("/add-admin", upload.single("user_image"), protect,adminOnly,authController.addAdmin);
 
 //Get all admins
-router.get("/admins", authController.getAllAdmins);
+router.get("/admins",protect,adminOnly, authController.getAllAdmins);
 
 //Delete an admin by Id
 router.delete(

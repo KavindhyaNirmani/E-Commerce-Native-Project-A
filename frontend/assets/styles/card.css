@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px;
   opacity: 0;
   transition: opacity 0.3s ease;
   color: white;
@@ -82,7 +83,7 @@
   border-radius: 10px;
   background-color: white;
   color: #c59d5f;
-  padding: 0 28px; /* Adjust padding for centered text */
+  padding: 0 28px;
   text-align: center;
   font-size: 16px;
   cursor: pointer;
@@ -105,38 +106,26 @@
   justify-content: space-between;
   margin: 20px 0;
 }
-
-/* Style for View More Button */
-.view-all-btn {
-  background-color: #fad700;
-  color: #000000;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 25px;
-  width: 125px;
-  height: 40px;
-  margin-right: 15px;
+a {
+  text-decoration: none;
   display: inline-block;
+  padding: 8px 16px;
 }
 
-/* Style for Back Button */
-.back-btn {
-  background-color: #fad700;
-  color: #000000;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 25px;
-  width: 125px;
-  height: 40px;
-  margin-left: 15px;
-  display: inline-block;
+a:hover {
+  border: 3px solid #c59d5f !important;
+  background-color: #ffffff !important;
+  color: #c59d5f !important;
 }
 
-.view-all-btn:hover,
-.back-btn:hover {
-  background-color: #faff00;
+.btn-secondary-previous {
+  background-color: #c59d5f !important;
+  color: #ffffff !important;
+}
+
+.btn-secondary-next {
+  background-color: #c59d5f !important;
+  color: #ffffff !important;
 }
 
 /* Responsive styling */
