@@ -1,31 +1,27 @@
-.admin-list {
-  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
-}
-
-.left-section {
-  background-color: black;
-  height: 100vh;
+body {
+  background-color: #1e1e1e;
+  padding-bottom: 30px;
 }
 
 .admin-list h3 {
-  color: white;
+  color: #c59d5f;
   padding: 10px;
+  
 }
 
 .custom-btn {
   box-sizing: border-box;
-  background-color: #fad700;
+  background-color: #c59d5f;
   font-weight: 500;
 }
 
 .custom-btn:hover {
-  background-color: #FAF400 !important;
-  border: 1px solid #faf700 !important;
-  transition: background-color 0.3s, color 0.3s !important;
+  background-color: #fdb560 !important;
+  transition: r 0.3s, color 0.3s !important;
+  border-color: black;
 }
 
 /*add admin modal css*/
-
 
 .modal-content-custom {
   background-color: #2d2d2d !important;
@@ -34,33 +30,30 @@
 
 .modal-dialog-custom {
   max-width: 50%;
-  
 }
-.card-style{
+.card-style {
   background-color: #2d2d2d !important;
   color: white;
 }
 
-
 .img-style {
-    width: 10rem;
-    height: 10rem; 
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    
-  }
+  width: 10rem;
+  height: 10rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
 
-.list-custom{
+.list-custom {
   background-color: #1e1e1e !important;
 }
-.card-body{
+.card-body {
   background-color: #2d2d2d !important;
 }
 
 .btn-custom {
   box-sizing: border-box;
-  background-color: #fad700;
+  background-color: #c59d5f;
   padding: 5px;
   width: 100px;
   font-weight: 500;
