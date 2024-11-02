@@ -138,7 +138,7 @@
 
       async function handleAddToCart(event) {
         const item = JSON.parse(event.target.getAttribute("data-item"));
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
 
         if (!token) {
           localStorage.setItem("redirectAfterLogin", "index.html#menu");
@@ -150,7 +150,7 @@
       }
 
       async function addToCart(item) {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         console.log("Adding item to cart:", item);
         console.log("Using token:", token);
 
