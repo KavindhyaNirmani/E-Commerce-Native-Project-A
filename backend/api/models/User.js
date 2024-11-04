@@ -72,7 +72,7 @@ class User {
           phone_no || null,
           address || null,
           user_image || null,
-          role || "admin",
+          role || null,
         ]
       );
     } catch (error) {
@@ -84,8 +84,8 @@ class User {
   static async findAllAdmins() {
     try {
       const [results] = await db.execute(
-        "SELECT * FROM user WHERE role = ? AND is_deleted = 0",
-        ["admin"]
+        "SELECT * FROM user WHERE role IN (?,?) AND is_deleted = 0",
+        ["admin","super admin"]
       );
 
       return results;
