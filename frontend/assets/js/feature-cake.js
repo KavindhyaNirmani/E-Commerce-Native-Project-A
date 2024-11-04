@@ -18,16 +18,17 @@ class featureSection extends HTMLElement {
             transition: opacity 1s ease, transform 1s ease; 
           }
           .card.visible {
+            
             opacity: 1; 
             transform: translateX(0); 
           }
           .card-image {
-            width: 250px;
-            border-radius:10px;
-            height: 150px;
-            
-            display: block;
-            margin: 15px auto;
+          width: 150px;
+          height: auto;
+          max-width: 150px;
+          display: block;
+          border-radius:10px;
+          margin: 10px auto;
           }
             .card-image:hover{
             -webkit-transform: scale(-1);
@@ -44,7 +45,7 @@ class featureSection extends HTMLElement {
               <div class="card">
                 <img class="card-image" src="./assets/images/cake-feature-img1.jpg" alt="24h-service" />
                 <div class="card-body">
-                  <h5 class="card-title">Wedding Cake</h5>
+                  <h5 class="card-title">Wedding </h5>
                  
                 </div>
               </div>
@@ -53,7 +54,7 @@ class featureSection extends HTMLElement {
               <div class="card">
                 <img class="card-image" src="./assets/images/cake-feature-img2.jpg" alt="Pizza" />
                 <div class="card-body">
-                  <h5 class="card-title">Christmas Cake</h5>
+                  <h5 class="card-title">Christmas</h5>
                   
                 </div>
               </div>
@@ -62,7 +63,7 @@ class featureSection extends HTMLElement {
               <div class="card">
                 <img class="card-image" src="./assets/images/feature-cake-img3.jpg" alt="Delivery" />
                 <div class="card-body">
-                  <h5 class="card-title">BirthDay Cake</h5>
+                  <h5 class="card-title">BirthDay</h5>
                   
                 </div>
               </div>
@@ -71,7 +72,7 @@ class featureSection extends HTMLElement {
               <div class="card">
                 <img class="card-image" src="./assets/images/feature-cake-img4.jpg" alt="Dessert" />
                 <div class="card-body">
-                  <h5 class="card-title">Customize Cake</h5>
+                  <h5 class="card-title">Customize</h5>
                  
                 </div>
               </div>
