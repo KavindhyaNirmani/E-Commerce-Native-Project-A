@@ -5,7 +5,7 @@ class Item {
   static async findByCategory(category_id) {
     try {
       const [results] = await db.execute(
-        "SELECT*FROM item WHERE category_id=?",
+        "SELECT*FROM item WHERE category_id=? AND is_deleted = 0",
         [category_id]
       );
       return results;

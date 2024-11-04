@@ -31,7 +31,7 @@ static async transferSelectedItemsToOrder(selectedItemIds, orderId, userId) {
        JOIN item itm ON ci.item_id = itm.item_id 
        WHERE ci.cart_item_id IN (?) 
          AND c.user_id = ? 
-         AND ci.is_deleted = 0`,
+         AND ci.is_deleted = 0 AND ci.selected = 1`,
       [selectedItemIds, userId]
     );
 
