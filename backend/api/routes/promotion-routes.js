@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect, adminOnly } = require("../middleware/auth-middleware");
+const { protect, adminOrSuperAdmin } = require("../middleware/auth-middleware");
 const promotionController = require("../controllers/promotion-controller");
 const multer = require("multer");
 const path = require("path");
@@ -43,7 +43,7 @@ const upload = multer({
 router.post(
   "/",
   protect,
-  adminOnly,
+  adminOrSuperAdmin,
   upload.single("promotion_image"),
   promotionController.addPromotion
 );
@@ -54,13 +54,13 @@ router.post("/apply", promotionController.applyPromotion);
 router.get("/", promotionController.getAllPromotions);
 
 // Admin-only route to fetch a promotion by ID
-router.get("/:promotionId", protect,adminOnly, promotionController.getPromotionById);
+router.get("/:promotionId", protect,adminOrSuperAdmin, promotionController.getPromotionById);
 
 // Admin-only route to delete a promotion by ID
 router.delete(
   "/:promotionId",
   protect,
-  adminOnly,
+  adminOrSuperAdmin,
   promotionController.deletePromotion
 );
 

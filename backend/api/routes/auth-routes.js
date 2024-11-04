@@ -6,7 +6,7 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const authController = require("../controllers/auth-controller");
-const { protect, adminOnly } = require("../middleware/auth-middleware");
+const { protect,superAdminOnly, adminOrSuperAdmin,adminOnly} = require("../middleware/auth-middleware");
 const router = express.Router(); //create a new instance of the Express Router
 
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
@@ -36,17 +36,18 @@ router.post("/login", authController.login);
 
 router.use("/images/user-image", express.static(userImagePath));
 
-//Admin creation(admin-only route)
-router.post("/add-admin", upload.single("user_image"), protect,adminOnly,authController.addAdmin);
+//Admin creation(-super-admin-only route)
+router.post('/add-admin',  upload.single('user_image'), protect,superAdminOnly,authController.addAdmin);
+
 
 //Get all admins
-router.get("/admins",protect,adminOnly, authController.getAllAdmins);
+router.get('/admins',protect,adminOrSuperAdmin,authController.getAllAdmins);
 
 //Delete an admin by Id
 router.delete(
   "/admins/:user_id",
   protect,
-  adminOnly,
+  superAdminOnly,
   authController.deleteAdmin
 );
 

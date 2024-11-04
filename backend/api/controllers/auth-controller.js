@@ -106,6 +106,7 @@ exports.addAdmin = async (req, res) => {
     password,
     phone_no,
     address,
+    role,
   } = req.body;
   const user_image = req.file
     ? `/images/user-image/${req.file.filename}`
@@ -119,6 +120,7 @@ exports.addAdmin = async (req, res) => {
       "username",
       "email",
       "password",
+      "role",
     ]);
     if (missingFields.length > 0) {
       return res.status(400).json({
@@ -145,9 +147,10 @@ exports.addAdmin = async (req, res) => {
       password: hashedPassword,
       phone_no: phone_no || null,
       address: address || null,
+      role:role||null,
       //user_image: req.file ? req.file.filename : null, // Assign the file name from multer
       user_image,
-      role: "admin",
+      
     };
 
     await User.createAdmin(newAdmin);

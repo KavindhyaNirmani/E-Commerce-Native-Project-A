@@ -1,7 +1,6 @@
 const Category = require("../models/Category");
 const Item = require("../models/Item");
 
-
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory = async (req, res) => {
   const { category_name } = req.params;
