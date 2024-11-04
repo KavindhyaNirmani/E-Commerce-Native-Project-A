@@ -324,13 +324,12 @@
         console.log("Token before updating order status:", token);
         try {
           const response = await fetch(
-            "https://ecom-back-t1.netfy.app/orders/admin/order-status",
+           `https://ecom-back-t1.netfy.app/orders/admin/order-status/${orderId}`,
             {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json",Authorization: `Bearer ${token}` },
               body: JSON.stringify({
-                order_id: orderId,
-                order_status: newStatus,
+                newStatus
               }),
             }
           );
