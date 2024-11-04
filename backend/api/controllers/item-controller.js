@@ -28,7 +28,7 @@ exports.getItemsByCategory = async (req, res) => {
   }
 };
 
-//Get all items (excluding deleted ones)
+//Get all items for admin (excluding deleted ones)
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll();

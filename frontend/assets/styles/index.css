@@ -3,8 +3,6 @@
   width: 100%;
 }
 
-
-
 /*Welcome section*/
 /* Carousel Zoom and Fade */
 .carousel-item {
@@ -121,10 +119,10 @@
 .about-text p {
   color: #343a40;
   text-align: justify;
-  font-size: 16px !important;
+  font-size: 18px !important;
 }
 
-#readMore{
+#readMore {
   font-size: larger;
   justify-content: center;
   align-items: center;
@@ -133,8 +131,10 @@
 .additional-content {
   display: none;
   margin: 0;
+  text-align: justify;
+  font-size: 18px;
 }
-.additional-content h5{
+.additional-content h5 {
   color: #c59d5f;
   font-weight: bold;
 }
@@ -297,7 +297,7 @@
     text-align: justify;
     font-size: 14px !important;
   }
-  .about-text p{
+  .about-text p {
     font-size: 14px !important;
   }
 }
@@ -311,11 +311,12 @@
   .carousel-caption h1 {
     font-size: 72px;
   }
-  .about-section{
+  .about-section {
     margin: 20px 50px 20px 50px;
   }
   .additional-content p,
-  li, h5 {
+  li,
+  h5 {
     padding: 0 20px 0 20px;
   }
 }

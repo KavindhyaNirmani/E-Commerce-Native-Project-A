@@ -54,7 +54,7 @@ router.post("/apply", promotionController.applyPromotion);
 router.get("/", promotionController.getAllPromotions);
 
 // Admin-only route to fetch a promotion by ID
-router.get("/:promotionId", promotionController.getPromotionById);
+router.get("/:promotionId", protect,adminOnly, promotionController.getPromotionById);
 
 // Admin-only route to delete a promotion by ID
 router.delete(
