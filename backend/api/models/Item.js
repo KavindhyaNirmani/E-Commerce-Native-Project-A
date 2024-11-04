@@ -18,7 +18,7 @@ class Item {
   static async findAll() {
     try {
       const [results] = await db.execute(
-        "SELECT * FROM item WHERE is_deleted = 0"
+        "SELECT itm.item_id, itm.item_name, itm.item_description, itm.item_price, itm.item_image, c.category_name FROM item itm JOIN category c ON itm.category_id = c.category_id WHERE itm.is_deleted = 0 "
       );
       return results;
     } catch (error) {
