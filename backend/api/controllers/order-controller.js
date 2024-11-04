@@ -7,7 +7,6 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
   console.log("Incoming request body:", req.body);
   console.log("User ID:", userId);
 
-  // Validate selectedCartItemIds
   if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
     return res.status(400).json({ error: "No items selected for checkout" });
   }
@@ -15,25 +14,34 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
   console.log("Selected Cart Item IDs:", selectedCartItemIds);
 
   try {
+
+    const placeholders = selectedCartItemIds.map(() => '?').join(',');
+const query = `
+  UPDATE cart_items
+  SET selected = 1
+  WHERE cart_item_id IN (${placeholders})
+    AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
+`;
+
+await db.execute(query, [...selectedCartItemIds, userId]);
+
     // Fetch selected items
     const [selectedItems] = await db.execute(
       `SELECT ci.cart_item_id, ci.quantity, itm.item_id, itm.item_name, itm.item_price
        FROM cart_items ci 
        JOIN cart c ON ci.cart_id = c.cart_id 
        JOIN item itm ON ci.item_id = itm.item_id 
-       WHERE ci.cart_item_id IN (?) AND c.user_id = ? AND ci.is_deleted = 0`,
-      [selectedCartItemIds, userId]
+       WHERE ci.selected = 1  AND c.user_id = ? AND ci.is_deleted = 0`,
+      [ userId]
     );
 
     console.log("Selected Items Retrieved:", selectedItems);
 
-    // Check if any items were found
     if (selectedItems.length === 0) {
       console.log("No items found for the provided IDs.");
       return res.status(404).json({ error: "Selected items not found in the cart or have been deleted." });
     }
 
-    // Optionally return the selected items
     return res.status(200).json({ items: selectedItems });
 
   } catch (error) {
@@ -41,6 +49,32 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
     return res.status(500).json({ error: "Failed to transfer selected items to checkout" });
   }
 };
+
+// Fetch selected items in checkout
+exports.getSelectedItemsInCheckout = async (req, res) => {
+  const userId = req.user.user_id; 
+  try {
+  
+    const [selectedItems] = await db.execute(
+      `SELECT ci.*, itm.item_name, itm.item_price 
+       FROM cart_items ci 
+       JOIN cart c ON ci.cart_id = c.cart_id 
+       JOIN item itm ON ci.item_id = itm.item_id 
+       WHERE c.user_id = ? AND ci.is_deleted = 0 AND ci.selected = 1`,
+      [userId]
+    );
+
+    if (selectedItems.length === 0) {
+      return res.status(404).json({ error: "No selected items found in checkout." });
+    }
+
+    res.json({ items: selectedItems });
+  } catch (error) {
+    console.error("Error fetching selected items in checkout:", error);
+    res.status(500).json({ error: "Failed to fetch selected items." });
+  }
+};
+
 
 //place an order
 exports.placeOrder = async (req, res) => {
@@ -140,11 +174,24 @@ exports.placeOrder = async (req, res) => {
 
 // Calculate order summary for selected items in the cart
 exports.calculateOrderSummary = async (req, res) => {
-  const { selectedItems } = req.body; 
+  const { selectedCartItemIds } = req.body; 
+
+  if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    return res.status(400).json({ error: "No items selected" });
+  }
 
   try {
-    if (!selectedItems || selectedItems.length === 0) {
-      return res.status(400).json({ error: "No items selected" });
+    const placeholders = selectedCartItemIds.map(() => '?').join(',');
+    const [selectedItems] = await db.execute(
+      `SELECT ci.quantity, itm.item_price, itm.item_name
+       FROM cart_items ci
+       JOIN item itm ON ci.item_id = itm.item_id
+       WHERE ci.cart_item_id IN (${placeholders}) AND ci.is_deleted = 0`,
+      selectedCartItemIds
+    );
+
+    if (selectedItems.length === 0) {
+      return res.status(404).json({ error: "Selected items not found or already deleted" });
     }
 
     // Check for an active promotion
