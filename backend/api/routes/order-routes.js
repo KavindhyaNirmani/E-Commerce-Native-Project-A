@@ -28,7 +28,7 @@ router.get("/admin/orders", protect,adminOnly, orderController.getAllOrders);
 router.get("/admin/statistics", protect,adminOnly, orderController.getOrderStatistics);
 
 // Route for admins to update the status of a specific order
-router.put("/admin/order-status", protect,adminOnly, orderController.updateOrderStatus);
+router.put("/admin/order-status/:orderId", protect,adminOnly, orderController.updateOrderStatus);
 
 // Route for admins to delete a specific order by its ID
 router.delete("/admin/delete/:orderId", protect,adminOnly, orderController.deleteOrder);
