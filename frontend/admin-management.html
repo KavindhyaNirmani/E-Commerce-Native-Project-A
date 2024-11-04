@@ -463,7 +463,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                  'Authorization': 'Bearer ' + localStorage.getItem('authToken'),
                 },
                 success: function (response) {
                   alert("Admin removed successfully");
