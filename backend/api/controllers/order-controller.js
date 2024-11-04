@@ -304,16 +304,16 @@ exports.getAllOrders = async (req, res) => {
 exports.getOrderStatistics = async (req, res) => {
   try {
     const totalCount = await db.execute(
-      `SELECT COUNT(*) AS count FROM \`order\``
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE is_deleted=0`
     );
     const pendingCount = await db.execute(
-      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Pending'`
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Pending' AND is_deleted=0`
     );
     const successfulCount = await db.execute(
-      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Successful'`
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Successful' AND is_deleted=0`
     );
     const failedCount = await db.execute(
-      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Failed'`
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Failed' AND is_deleted=0`
     );
 
     res.json({
