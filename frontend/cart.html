@@ -63,7 +63,6 @@
       <div class="row">
         <!-- Cart table -->
         <div class="col-lg-8">
-          <h3>My Cart</h3>
           <table id="cart-table" class="table table-striped">
             <thead>
               <tr>
@@ -143,7 +142,7 @@
 
     <script>
       async function fetchCartItems() {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
 
         if (!token) {
           document.getElementById("cart-message").textContent =
@@ -247,6 +246,12 @@
       }
 
       async function changeQuantity(cartItemId, change) {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          alert("You need to log in to change item quantities.");
+          return;
+        }
+
         const quantityElement = document.getElementById(
           `quantity-${cartItemId}`
         );
@@ -255,24 +260,44 @@
 
         if (currentQuantity < 1) return; // Prevents negative quantity
 
-        quantityElement.textContent = currentQuantity;
+        try {
+          const response = await fetch(
+            `https://ecom-back-t1.netfy.app/cart/update/${cartItemId}`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ quantity: currentQuantity }),
+            }
+          );
 
-        const price = parseFloat(
-          document
-            .querySelector(`.item-checkbox[data-id='${cartItemId}']`)
-            .getAttribute("data-price")
-        );
-        const totalElement = document.getElementById(`total-${cartItemId}`);
-        totalElement.textContent = (price * currentQuantity).toFixed(2);
+          if (!response.ok) {
+            const errorResponse = await response.text();
+            console.error("Error updating item quantity:", errorResponse);
+            alert("Error updating item quantity. Please try again.");
+            return;
+          }
 
-        updateOrderSummary();
+          quantityElement.textContent = currentQuantity;
+          const itemPrice = parseFloat(
+            document.querySelector(`[data-id="${cartItemId}"]`).dataset.price
+          );
+          document.getElementById(`total-${cartItemId}`).textContent = (
+            currentQuantity * itemPrice
+          ).toFixed(2);
+          updateOrderSummary();
+        } catch (error) {
+          console.error("Error updating item quantity:", error);
+          alert("Error updating item quantity. Please try again.");
+        }
       }
 
       async function removeItem(cartItemId) {
-        const token = localStorage.getItem("token");
-
+        const token = localStorage.getItem("authToken");
         if (!token) {
-          alert("You need to log in to remove items from your cart.");
+          alert("You need to log in to remove items from the cart.");
           return;
         }
 
@@ -287,23 +312,54 @@
             }
           );
 
-          if (response.ok) {
-            console.log(`Item with ID ${cartItemId} removed successfully.`);
-            fetchCartItems();
-          } else {
+          if (!response.ok) {
             const errorResponse = await response.text();
-            console.error("Error removing item:", errorResponse);
-            alert(`Error removing item: ${errorResponse}`);
+            console.error("Error deleting cart item:", errorResponse);
+            alert("Error deleting item. Please try again.");
+            return;
           }
+
+          fetchCartItems();
         } catch (error) {
-          console.error("There was an error removing the item:", error);
-          alert("There was an error removing the item. Please try again.");
+          console.error("Error deleting cart item:", error);
+          alert("Error deleting item. Please try again.");
         }
       }
 
-      window.onload = function () {
-        fetchCartItems();
-      };
+      fetchCartItems();
+
+      // Define the function to get selected items
+      function getSelectedItems() {
+        const selectedItems = [];
+        const checkboxes = document.querySelectorAll(".item-checkbox:checked");
+
+        checkboxes.forEach((checkbox) => {
+          const id = checkbox.getAttribute("data-id");
+          const price = parseFloat(checkbox.getAttribute("data-price"));
+          const quantity = parseInt(
+            document.getElementById(`quantity-${id}`).textContent
+          );
+          const itemName = checkbox
+            .closest("tr")
+            .querySelector("td:nth-child(3)").textContent;
+
+          selectedItems.push({
+            id: id,
+            name: itemName,
+            price: price,
+            quantity: quantity,
+            total: price * quantity,
+          });
+        });
+
+        return selectedItems;
+      }
+
+      // Define the function to pass items to checkout
+      function passItemsToCheckout() {
+        const selectedItems = getSelectedItems();
+        console.log(selectedItems); // Log the array to the console
+      }
     </script>
   </body>
 </html>
