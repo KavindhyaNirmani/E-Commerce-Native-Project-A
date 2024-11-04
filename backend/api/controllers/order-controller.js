@@ -329,12 +329,15 @@ exports.getOrderStatistics = async (req, res) => {
 
 // Update order status
 exports.updateOrderStatus = async (req, res) => {
-  const { orderId, newStatus } = req.body;
+  const orderId = req.params.orderId;
+  const {newStatus } = req.body;
+
+  console.log('Updating order:', orderId, 'with new status:', newStatus);
 
   try {
     await db.execute(
       `UPDATE \`order\` SET order_status = ? WHERE order_id = ?`,
-      [newStatus, orderId]
+      [newStatus.orderId]
     );
     res.json({ message: "Order status updated successfully." });
   } catch (error) {
