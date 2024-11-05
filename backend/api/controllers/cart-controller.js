@@ -4,7 +4,7 @@ const CartItem = require("../models/CartItem"); // Import CartItem model
 
 // Add item to the cart
 exports.addItemToCart = async (req, res) => {
-  const { item_id,quantity} = req.body;
+  const { item_id, quantity } = req.body;
   const user_id = req.user.user_id; // Assuming user info is available from auth middleware
 
   // Log the values for debugging
@@ -22,7 +22,9 @@ exports.addItemToCart = async (req, res) => {
   }
 
   if (quantity == null || quantity <= 0) {
-    return res.status(400).json({ message: "Quantity must be greater than 0." });
+    return res
+      .status(400)
+      .json({ message: "Quantity must be greater than 0." });
   }
 
   try {
@@ -56,13 +58,15 @@ exports.addItemToCart = async (req, res) => {
         "UPDATE cart_items SET quantity = quantity + ? WHERE cart_id = ? AND item_id = ?",
         [quantity, cart_id, item_id]
       );
-      return res.status(200).json({ message: "Item quantity updated in the cart." });
+      return res
+        .status(200)
+        .json({ message: "Item quantity updated in the cart." });
     }
 
     // If item does not exist, add it to the cart
     await db.execute(
       "INSERT INTO cart_items (cart_id, item_id,quantity) VALUES (?, ?,?)",
-      [cart_id || null, item_id || null,quantity||null]
+      [cart_id || null, item_id || null, quantity || null]
     );
 
     res.status(201).json({ message: "Item added to cart successfully." });
