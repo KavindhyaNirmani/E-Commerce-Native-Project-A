@@ -14,16 +14,18 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
   console.log("Selected Cart Item IDs:", selectedCartItemIds);
 
   try {
-
-    const placeholders = selectedCartItemIds.map(() => '?').join(',');
-const query = `
+    const placeholders = selectedCartItemIds.map(() => "?").join(",");
+    const query = `
   UPDATE cart_items
   SET selected = 1
   WHERE cart_item_id IN (${placeholders})
     AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
 `;
-
-await db.execute(query, [...selectedCartItemIds, userId]);
+    console.log("Executing query to update selected items:", query, [
+      ...selectedCartItemIds,
+      userId,
+    ]);
+    await db.execute(query, [...selectedCartItemIds, userId]);
 
     // Fetch selected items
     const [selectedItems] = await db.execute(
@@ -32,29 +34,36 @@ await db.execute(query, [...selectedCartItemIds, userId]);
        JOIN cart c ON ci.cart_id = c.cart_id 
        JOIN item itm ON ci.item_id = itm.item_id 
        WHERE ci.selected = 1  AND c.user_id = ? AND ci.is_deleted = 0`,
-      [ userId]
+      [userId]
     );
 
     console.log("Selected Items Retrieved:", selectedItems);
 
     if (selectedItems.length === 0) {
       console.log("No items found for the provided IDs.");
-      return res.status(404).json({ error: "Selected items not found in the cart or have been deleted." });
+      return res
+        .status(404)
+        .json({
+          error: "Selected items not found in the cart or have been deleted.",
+        });
     }
 
     return res.status(200).json({ items: selectedItems });
-
   } catch (error) {
-    console.error("Error while transferring selected items to checkout:", error);
-    return res.status(500).json({ error: "Failed to transfer selected items to checkout" });
+    console.error(
+      "Error while transferring selected items to checkout:",
+      error
+    );
+    return res
+      .status(500)
+      .json({ error: "Failed to transfer selected items to checkout" });
   }
 };
 
 // Fetch selected items in checkout
 exports.getSelectedItemsInCheckout = async (req, res) => {
-  const userId = req.user.user_id; 
+  const userId = req.user.user_id;
   try {
-  
     const [selectedItems] = await db.execute(
       `SELECT ci.*, itm.item_name, itm.item_price 
        FROM cart_items ci 
@@ -65,7 +74,9 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
     );
 
     if (selectedItems.length === 0) {
-      return res.status(404).json({ error: "No selected items found in checkout." });
+      return res
+        .status(404)
+        .json({ error: "No selected items found in checkout." });
     }
 
     res.json({ items: selectedItems });
@@ -75,6 +86,69 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
   }
 };
 
+// Calculate order summary for selected items in the cart
+exports.calculateOrderSummary = async (selectedCartItemIds) => {
+  if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    return res.status(400).json({ error: "No items selected" });
+  }
+
+  try {
+    const placeholders = selectedCartItemIds.map(() => "?").join(",");
+    const [selectedItems] = await db.execute(
+      `SELECT ci.quantity, itm.item_price, itm.item_name
+       FROM cart_items ci
+       JOIN item itm ON ci.item_id = itm.item_id
+       WHERE ci.cart_item_id IN (${placeholders}) AND ci.is_deleted = 0`,
+      selectedCartItemIds
+    );
+
+    if (selectedItems.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Selected items not found or already deleted" });
+    }
+
+    // Check for an active promotion
+    const [promotion] = await db.execute(
+      `SELECT pr.discount_percentage 
+       FROM promotion p
+       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
+       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
+       LIMIT 1`
+    );
+    const discountPercentage = promotion.length
+      ? promotion[0].discount_percentage
+      : 0;
+
+    let totalAmount = 0;
+    let totalQuantity = 0;
+
+    selectedItems.forEach((item) => {
+      const { quantity, item_price } = item;
+      totalAmount += quantity * item_price;
+      totalQuantity += quantity;
+    });
+
+    const discountAmount = (totalAmount * discountPercentage) / 100;
+    const finalAmount = totalAmount - discountAmount;
+
+    console.log("Calculated Order Summary:", {
+      totalAmount,
+      discountAmount,
+      finalAmount,
+    });
+
+    return {
+      totalAmount,
+      discountAmount,
+      finalAmount,
+      totalQuantity,
+    };
+  } catch (err) {
+    console.error("Error while calculating order summary:", err);
+    res.status(500).json({ error: "Failed to calculate order summary" });
+  }
+};
 
 //place an order
 exports.placeOrder = async (req, res) => {
@@ -87,85 +161,112 @@ exports.placeOrder = async (req, res) => {
     postal_code,
     phone_number,
     cart_id,
-    totalAmount,      
-    discountAmount, 
-    finalAmount   
   } = req.body;
   const userId = req.user.user_id;
 
-  console.log("Request body:", req.body);
-  console.log("User ID:", userId);
-  console.log("Selected Items:", selectedCartItemIds);
-
-  // Log the cart_id value to see if it's being received
-  console.log("Cart ID:", cart_id);
-
-  // Check if cart_id is present in the request
-  if (!cart_id) {
-    console.error("Cart ID is undefined");
-    return res.status(400).json({ error: "Cart ID is required" });
+  if (
+    !cart_id ||
+    !selectedCartItemIds ||
+    !Array.isArray(selectedCartItemIds) ||
+    selectedCartItemIds.length === 0
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Cart ID and selected item IDs are required." });
   }
 
-  if (!selectedCartItemIds || !Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
-    return res.status(400).json({ error: "Selected cart item IDs are required and cannot be empty" });
-  }
-
-  if (!first_name || !last_name || !address || !city || !postal_code || !phone_number) {
-    return res.status(400).json({ error: "All delivery details must be provided" });
+  if (
+    !first_name ||
+    !last_name ||
+    !address ||
+    !city ||
+    !postal_code ||
+    !phone_number
+  ) {
+    return res
+      .status(400)
+      .json({ error: "All delivery details must be provided" });
   }
 
   let connection;
   try {
     console.log("Placing order for user:", userId);
 
-    connection = await db.getConnection(); 
+    connection = await db.getConnection();
     await connection.beginTransaction();
+    console.log("Transaction started.");
 
-    console.log("Inserting order with values:", {
-      userId,
-      totalAmount,
-      cart_id,
-      discountAmount,
-      finalAmount
-    });
+    const placeholders = selectedCartItemIds.map(() => "?").join(",");
 
-    // Fetch item details based on selectedCartItemIds
-    const [items] = await db.execute(
+    console.log("Placing order for user:", userId);
+    console.log("Selected Cart Item IDs:", selectedCartItemIds);
+    console.log("Cart ID:", cart_id);
+
+    const [items] = await connection.execute(
       `SELECT ci.item_id, ci.quantity, itm.item_price 
        FROM cart_items ci 
+       JOIN cart c ON ci.cart_id = c.cart_id 
        JOIN item itm ON ci.item_id = itm.item_id 
-       WHERE ci.cart_item_id IN (?) AND ci.cart_id = ? AND ci.is_deleted = 0 AND ci.selected = 1`,
-      [selectedCartItemIds, cart_id]
+       WHERE ci.cart_item_id IN (${placeholders}) 
+         AND ci.cart_id = ? 
+         AND ci.is_deleted = 0 
+         AND ci.selected = 1 
+         AND c.user_id = ?`,
+      [...selectedCartItemIds, cart_id, userId]
     );
 
+    console.log("Fetched items for order:", items);
+
     // Validate quantities
-    const invalidItems = items.filter(item => item.quantity === null || item.quantity <= 0);
+    const invalidItems = items.filter(
+      (item) => item.quantity === null || item.quantity <= 0
+    );
     if (invalidItems.length > 0) {
-      console.warn("Items with invalid or missing quantities found:", invalidItems);
-      return res.status(400).json({ error: "Some items have invalid or missing quantities." });
+      console.warn(
+        "Items with invalid or missing quantities found:",
+        invalidItems
+      );
+      return res
+        .status(400)
+        .json({ error: "Some items have invalid or missing quantities." });
     }
 
+    // Calculate total amounts by calling the existing function
+    const { totalAmount, discountAmount, finalAmount } =
+      await exports.calculateOrderSummary(selectedCartItemIds);
+
     // Create a new order
-    const [orderResult] = await db.execute(
+    const [orderResult] = await connection.execute(
       `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount) 
-             VALUES (?, 0, 'Pending', ?,0,0)`,
-      [userId, cart_id]
+             VALUES (?, ?, 'Pending', ?,?,?)`,
+      [userId, totalAmount, cart_id, discountAmount, finalAmount]
     );
     const orderId = orderResult.insertId;
 
     // Add items to the order
     for (const item of items) {
       const { item_id, quantity, item_price } = item;
+      console.log("Attempting to insert into order_items:", {
+        orderId,
+        item_id,
+        quantity,
+        item_price,
+      });
 
-    await db.execute(
-      `INSERT INTO order_items (order_id, item_id, quantity, item_price) 
-               VALUES (?, ?, ?, ?)`,
-      [orderId, item_id, quantity, item_price]
-    );
-  }
+      try {
+        await connection.execute(
+          `INSERT INTO order_items (order_id, item_id, quantity, item_price) VALUES (?, ?, ?, ?)`,
+          [orderId, item_id, quantity, item_price]
+        );
+        console.log("Inserted item successfully:", { orderId, item_id });
+      } catch (insertError) {
+        console.error("Error inserting item into order_items:", insertError);
+        throw insertError;
+      }
+    }
 
     // Store delivery details in order_details
-    await db.execute(
+    await connection.execute(
       `INSERT INTO order_details (order_id, address, city, postal_code, phone_number, first_name, last_name) 
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [orderId, address, city, postal_code, phone_number, first_name, last_name]
@@ -179,70 +280,14 @@ exports.placeOrder = async (req, res) => {
       discountAmount,
       finalAmount,
     });
-  } catch (err) {
-    if (connection) await connection.rollback(); 
-    console.error("Error while placing order:", err);
+  } catch (error) {
+    if (connection) await connection.rollback();
+    console.error("Error while placing order:", error);
     res.status(500).json({
       error: "Failed to place order",
     });
-  }finally {
-    if (connection) connection.release(); // Release the connection back to the pool
-  }
-};
-
-// Calculate order summary for selected items in the cart
-exports.calculateOrderSummary = async (req, res) => {
-  const { selectedCartItemIds } = req.body; 
-
-  if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
-    return res.status(400).json({ error: "No items selected" });
-  }
-
-  try {
-    const placeholders = selectedCartItemIds.map(() => '?').join(',');
-    const [selectedItems] = await db.execute(
-      `SELECT ci.quantity, itm.item_price, itm.item_name
-       FROM cart_items ci
-       JOIN item itm ON ci.item_id = itm.item_id
-       WHERE ci.cart_item_id IN (${placeholders}) AND ci.is_deleted = 0`,
-      selectedCartItemIds
-    );
-
-    if (selectedItems.length === 0) {
-      return res.status(404).json({ error: "Selected items not found or already deleted" });
-    }
-
-    // Check for an active promotion
-    const [promotion] = await db.execute(
-      `SELECT pr.discount_percentage 
-       FROM promotion p
-       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
-       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
-       LIMIT 1`
-    );
-    const discountPercentage = promotion.length ? promotion[0].discount_percentage : 0;
-
-    let totalAmount = 0;
-    let totalQuantity = 0;
-
-    selectedItems.forEach(item => {
-      const { quantity, item_price } = item;
-      totalAmount += quantity * item_price;
-      totalQuantity += quantity;
-    });
-
-    const discountAmount = (totalAmount * discountPercentage) / 100;
-    const finalAmount = totalAmount - discountAmount;
-
-    res.json({
-      totalItems: totalQuantity,
-      totalAmount,
-      discountAmount,
-      finalAmount,
-    });
-  } catch (err) {
-    console.error("Error while calculating order summary:", err);
-    res.status(500).json({ error: "Failed to calculate order summary" });
+  } finally {
+    if (connection) connection.release();
   }
 };
 
@@ -269,7 +314,7 @@ exports.getOrderDetails = async (req, res) => {
 
   try {
     const [orderDetails] = await db.execute(
-      "SELECT od.*, ord.user_id, ord.total_amount AS total_price, ord.discount, ord.final_amount AS final_total_price, ord.order_status FROM order_details od JOIN \`order\` ord ON od.order_id = ord.order_id WHERE od.order_id = ?",
+      "SELECT od.*, ord.user_id, ord.total_amount AS total_price, ord.discount, ord.final_amount AS final_total_price, ord.order_status FROM order_details od JOIN `order` ord ON od.order_id = ord.order_id WHERE od.order_id = ?",
       [orderId]
     );
 
@@ -302,7 +347,7 @@ exports.getAllOrders = async (req, res) => {
     );
 
     // Formatting the results to a more structured response
-    const formattedOrders = orders.map(order => ({
+    const formattedOrders = orders.map((order) => ({
       order_id: order.order_id,
       item_names: order.item_names,
       total_final_price: order.total_final_price,
@@ -310,7 +355,6 @@ exports.getAllOrders = async (req, res) => {
     }));
 
     res.json(formattedOrders);
-    
   } catch (error) {
     res.status(500).json({
       error: error.message,
@@ -348,9 +392,9 @@ exports.getOrderStatistics = async (req, res) => {
 // Update order status
 exports.updateOrderStatus = async (req, res) => {
   const orderId = req.params.orderId;
-  const {newStatus } = req.body;
+  const { newStatus } = req.body;
 
-  console.log('Updating order:', orderId, 'with new status:', newStatus);
+  console.log("Updating order:", orderId, "with new status:", newStatus);
 
   try {
     await db.execute(

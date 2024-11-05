@@ -21,6 +21,6 @@ const promisePool = pool.promise();
 
 module.exports = {
   pool: promisePool,
-  getConnection: () => promisePool.getConnection(), 
+  getConnection: () => promisePool.getConnection(),
   execute: (...args) => promisePool.execute(...args),
 };

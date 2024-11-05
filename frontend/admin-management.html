@@ -428,7 +428,7 @@
                 processData: false,
                 contentType: false,
                 headers: {
-                  Authorization: "Bearer " + localStorage.getItem("authToken"), // Assuming you store JWT in localStorage
+                  Authorization: "Bearer " + localStorage.getItem("authToken"),
                 },
                 success: function (response) {
                   console.log("Admin added successfully:", response);
