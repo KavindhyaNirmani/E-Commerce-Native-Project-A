@@ -21,7 +21,7 @@ class OrderItems {
   }
 
 // Transfer selected items from cart to order
-static async transferSelectedItemsToOrder(selectedItemIds, orderId, userId) {
+static async transferSelectedItemsToOrder(selectedCartItemIds, orderId, userId) {
   try {
     
     const [items] = await db.execute(
@@ -32,7 +32,7 @@ static async transferSelectedItemsToOrder(selectedItemIds, orderId, userId) {
        WHERE ci.cart_item_id IN (?) 
          AND c.user_id = ? 
          AND ci.is_deleted = 0 AND ci.selected = 1`,
-      [selectedItemIds, userId]
+      [selectedCartItemIds, userId]
     );
 
     if (items.length === 0) {

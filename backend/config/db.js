@@ -19,4 +19,8 @@ const pool = mysql.createPool({
 // Use promise-based API for async/await support
 const promisePool = pool.promise();
 
-module.exports = pool.promise();
+module.exports = {
+  pool: promisePool,
+  getConnection: () => promisePool.getConnection(), 
+  execute: (...args) => promisePool.execute(...args),
+};
