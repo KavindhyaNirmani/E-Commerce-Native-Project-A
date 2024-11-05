@@ -1,6 +1,6 @@
 class featureSection extends HTMLElement {
-    connectedCallback() {
-      this.innerHTML = `
+  connectedCallback() {
+    this.innerHTML = `
             <style>
             .row {
               display: flex;
@@ -22,12 +22,13 @@ class featureSection extends HTMLElement {
               transform: translateX(0); 
             }
             .card-image {
-              width: 250px;
-              border-radius:10px;
-              height: 150px;
-              
-              display: block;
-              margin: 15px auto;
+          width: 150px;
+          height: auto;
+          max-width: 150px;
+          display: block;
+          border-radius:10px;
+          margin: 10px auto;
+          
             }
               .card-image:hover{
               -webkit-transform: scale(-1);
@@ -60,7 +61,7 @@ class featureSection extends HTMLElement {
               </div>
               <div class="col-sm-3">
                 <div class="card">
-                  <img class="card-image" src="./assets/images/feature-pizza-img2.jpg" alt="Delivery" />
+                  <img class="card-image" src="./assets/images/feature-pizza-img1.jpg" alt="Delivery" />
                   <div class="card-body">
                     <h5 class="card-title">Customized Pizza</h5>
                     
@@ -69,7 +70,7 @@ class featureSection extends HTMLElement {
               </div>
               <div class="col-sm-3">
                 <div class="card">
-                  <img class="card-image" src="./assets/images/feature-pizza-img1.jpg" alt="Dessert" />
+                  <img class="card-image" src="./assets/images/feature-pizza-img3.jpg" alt="Dessert" />
                   <div class="card-body">
                     <h5 class="card-title">Enjoy With Family</h5>
                    
@@ -78,26 +79,25 @@ class featureSection extends HTMLElement {
               </div>
             </div>
         `;
-  
-      // Add Intersection Observer with re-trigger on scroll
-      const cards = this.querySelectorAll(".card");
-  
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            } else {
-              entry.target.classList.remove("visible");
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-  
-      cards.forEach((card) => observer.observe(card));
-    }
+
+    // Add Intersection Observer with re-trigger on scroll
+    const cards = this.querySelectorAll(".card");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          } else {
+            entry.target.classList.remove("visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
   }
-  
-  customElements.define("feature-section", featureSection);
-  
+}
+
+customElements.define("feature-section", featureSection);

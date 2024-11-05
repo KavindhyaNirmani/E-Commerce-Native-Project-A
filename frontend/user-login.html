@@ -162,13 +162,13 @@
               localStorage.setItem("role", data.role);
 
               // Log the stored token for debugging
-              console.log("Stored token:", localStorage.getItem("token"));
+              console.log("Stored token:", localStorage.getItem("authToken"));
 
               // Display a success message
               alert("Login successful!");
 
               // Redirect based on user role
-              if (data.role === "admin") {
+              if (data.role === "admin"  || data.role === "super admin") {
                 window.location.href = "./dashboard.html"; // Redirect admin
               } else if (data.role === "user") {
                 window.location.href = "./#menu"; // Redirect user to homepage

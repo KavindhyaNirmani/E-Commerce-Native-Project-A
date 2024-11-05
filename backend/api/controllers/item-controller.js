@@ -1,7 +1,6 @@
 const Category = require("../models/Category");
 const Item = require("../models/Item");
 
-
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory = async (req, res) => {
   const { category_name } = req.params;
@@ -29,7 +28,7 @@ exports.getItemsByCategory = async (req, res) => {
   }
 };
 
-//Get all items (excluding deleted ones)
+//Get all items for admin (excluding deleted ones)
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll();
