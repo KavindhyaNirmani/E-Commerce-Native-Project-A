@@ -79,7 +79,7 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
 //place an order
 exports.placeOrder = async (req, res) => {
   const {
-    selectedItems,
+    selectedCartItemIds,
     first_name,
     last_name,
     address,
@@ -87,12 +87,15 @@ exports.placeOrder = async (req, res) => {
     postal_code,
     phone_number,
     cart_id,
+    totalAmount,      
+    discountAmount, 
+    finalAmount   
   } = req.body;
   const userId = req.user.user_id;
 
   console.log("Request body:", req.body);
   console.log("User ID:", userId);
-  console.log("Selected Items:", selectedItems);
+  console.log("Selected Items:", selectedCartItemIds);
 
   // Log the cart_id value to see if it's being received
   console.log("Cart ID:", cart_id);
@@ -103,20 +106,44 @@ exports.placeOrder = async (req, res) => {
     return res.status(400).json({ error: "Cart ID is required" });
   }
 
+  if (!selectedCartItemIds || !Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    return res.status(400).json({ error: "Selected cart item IDs are required and cannot be empty" });
+  }
+
+  if (!first_name || !last_name || !address || !city || !postal_code || !phone_number) {
+    return res.status(400).json({ error: "All delivery details must be provided" });
+  }
+
+  let connection;
   try {
     console.log("Placing order for user:", userId);
 
-    // Check for an active promotion
-    const [promotion] = await db.execute(
-      `SELECT pr.discount_percentage 
-       FROM promotion p
-       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
-       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
-       LIMIT 1`
+    connection = await db.getConnection(); 
+    await connection.beginTransaction();
+
+    console.log("Inserting order with values:", {
+      userId,
+      totalAmount,
+      cart_id,
+      discountAmount,
+      finalAmount
+    });
+
+    // Fetch item details based on selectedCartItemIds
+    const [items] = await db.execute(
+      `SELECT ci.item_id, ci.quantity, itm.item_price 
+       FROM cart_items ci 
+       JOIN item itm ON ci.item_id = itm.item_id 
+       WHERE ci.cart_item_id IN (?) AND ci.cart_id = ? AND ci.is_deleted = 0 AND ci.selected = 1`,
+      [selectedCartItemIds, cart_id]
     );
-    const discountPercentage = promotion.length
-      ? promotion[0].discount_percentage
-      : 0;
+
+    // Validate quantities
+    const invalidItems = items.filter(item => item.quantity === null || item.quantity <= 0);
+    if (invalidItems.length > 0) {
+      console.warn("Items with invalid or missing quantities found:", invalidItems);
+      return res.status(400).json({ error: "Some items have invalid or missing quantities." });
+    }
 
     // Create a new order
     const [orderResult] = await db.execute(
@@ -126,29 +153,16 @@ exports.placeOrder = async (req, res) => {
     );
     const orderId = orderResult.insertId;
 
-    // Calculate total amount and add items to the order
-    let totalAmount = 0;
-    for (const item of selectedItems) {
+    // Add items to the order
+    for (const item of items) {
       const { item_id, quantity, item_price } = item;
-      const itemTotal = quantity * item_price;
-      totalAmount += itemTotal;
 
-      await db.execute(
-        `INSERT INTO order_items (order_id, item_id, quantity, item_price) 
-                 VALUES (?, ?, ?, ?)`,
-        [orderId, item_id, quantity, item_price]
-      );
-    }
-
-    // Calculate discount and final amount
-    const discountAmount = (totalAmount * discountPercentage) / 100;
-    const finalAmount = totalAmount - discountAmount;
-
-    // Update the order with the discount and final amount
     await db.execute(
-      `UPDATE \`order\` SET total_amount = ?, discount = ?, final_amount = ? WHERE order_id = ?`,
-      [totalAmount, discountAmount, finalAmount, orderId]
+      `INSERT INTO order_items (order_id, item_id, quantity, item_price) 
+               VALUES (?, ?, ?, ?)`,
+      [orderId, item_id, quantity, item_price]
     );
+  }
 
     // Store delivery details in order_details
     await db.execute(
@@ -157,6 +171,7 @@ exports.placeOrder = async (req, res) => {
       [orderId, address, city, postal_code, phone_number, first_name, last_name]
     );
 
+    await connection.commit();
     res.json({
       message: "Order placed successfully",
       orderId,
@@ -165,10 +180,13 @@ exports.placeOrder = async (req, res) => {
       finalAmount,
     });
   } catch (err) {
+    if (connection) await connection.rollback(); 
     console.error("Error while placing order:", err);
     res.status(500).json({
       error: "Failed to place order",
     });
+  }finally {
+    if (connection) connection.release(); // Release the connection back to the pool
   }
 };
 
