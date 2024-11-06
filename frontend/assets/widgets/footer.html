@@ -89,6 +89,10 @@
         text-align: center;
       }
 
+      .contact-info p[data-bs-toggle="modal"] {
+  cursor: pointer;
+}
+
       /* Mobile adjustments */
       @media (max-width: 768px) {
         .footer-navbar {
@@ -148,7 +152,7 @@
           >
             <h5>Contact Us</h5>
             <p>Phone: +94586923568</p>
-            <p>Email: yamzyfooddealer@gmail.com</p>
+            <p data-bs-toggle="modal" data-bs-target="#contactModal" onclick="openCantactForm()">Email: yamzyfooddealer@gmail.com</p>
           </div>
         </div>
 
