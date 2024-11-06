@@ -9,6 +9,9 @@ router.post("/checkout/transfer-selected", protect, orderController.transferSele
 //route to fetch selected items in checkout
 router.get('/checkout/selected-items', protect,orderController.getSelectedItemsInCheckout);
 
+// Route to remove items from checkout
+router.post("/checkout/remove-items-from-checkout",protect, orderController.removeItemsFromCheckout);
+
 //Place an order
 router.post("/place", protect, orderController.placeOrder);
 

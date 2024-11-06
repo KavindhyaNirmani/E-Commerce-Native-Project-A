@@ -4,12 +4,11 @@ const CartItem = require("../models/CartItem"); // Import CartItem model
 
 // Add item to the cart
 exports.addItemToCart = async (req, res) => {
-  const { item_id, quantity } = req.body;
+  const { item_id } = req.body;
   const user_id = req.user.user_id; // Assuming user info is available from auth middleware
 
   // Log the values for debugging
   console.log("item_id:", item_id);
-  console.log("quantity:", quantity);
   console.log("user_id:", user_id);
 
   // Validate input
@@ -21,12 +20,8 @@ exports.addItemToCart = async (req, res) => {
     return res.status(400).json({ message: "User ID is required." });
   }
 
-  if (quantity == null || quantity <= 0) {
-    return res
-      .status(400)
-      .json({ message: "Quantity must be greater than 0." });
-  }
-
+  const quantity = 1;
+  
   try {
     // First, check if a cart exists for the user. If not, create one
     const [userCart] = await db.execute(

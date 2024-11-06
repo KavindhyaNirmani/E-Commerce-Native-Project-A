@@ -86,6 +86,49 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
   }
 };
 
+// Remove selected items from checkout and return them to the cart as unselected
+exports.removeItemsFromCheckout = async (req, res) => {
+  const { selectedCartItemIds } = req.body; 
+  const userId = req.user.user_id; 
+
+  // Validate input
+  if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    return res.status(400).json({ message: "No items provided for removal from checkout." });
+  }
+
+  try {
+    console.log("Removing items from checkout:", selectedCartItemIds, "for user ID:", userId);
+
+    // Prepare the SQL placeholders for the item IDs
+    const placeholders = selectedCartItemIds.map(() => "?").join(",");
+
+    // Update the `selected` status of the items to `0` (unselected)
+    const query = `
+      UPDATE cart_items
+      SET selected = 0
+      WHERE cart_item_id IN (${placeholders})
+        AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
+        AND selected = 1
+    `;
+
+    // Execute the query
+    const [result] = await db.execute(query, [...selectedCartItemIds, userId]);
+
+    // Check if any rows were affected (i.e., items were actually updated)
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "No selected items found for removal." });
+    }
+
+    // Respond with a success message
+    console.log("Items removed from checkout and marked as unselected.");
+    res.status(200).json({ message: "Items successfully removed from checkout and marked as unselected." });
+  } catch (error) {
+    console.error("Error while removing items from checkout:", error.message);
+    res.status(500).json({ message: "Failed to remove items from checkout.", error: error.message });
+  }
+};
+
+
 // Calculate order summary for selected items in the cart
 exports.calculateOrderSummary = async (selectedCartItemIds) => {
   if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
@@ -237,8 +280,8 @@ exports.placeOrder = async (req, res) => {
 
     // Create a new order
     const [orderResult] = await connection.execute(
-      `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount) 
-             VALUES (?, ?, 'Pending', ?,?,?)`,
+      `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount,order_date) 
+             VALUES (?, ?, 'Pending', ?,?,?,Now())`,
       [userId, totalAmount, cart_id, discountAmount, finalAmount]
     );
     const orderId = orderResult.insertId;
