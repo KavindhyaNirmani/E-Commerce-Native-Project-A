@@ -10,7 +10,7 @@ router.post("/checkout/transfer-selected", protect, orderController.transferSele
 router.get('/checkout/selected-items', protect,orderController.getSelectedItemsInCheckout);
 
 // Route to remove items from checkout
-router.post("/checkout/remove-items-from-checkout",protect, orderController.removeItemsFromCheckout);
+router.post("/checkout/remove-items-from-checkout/:selectedCartItemId",protect, orderController.removeItemsFromCheckout);
 
 //Place an order
 router.post("/place", protect, orderController.placeOrder);
@@ -29,6 +29,9 @@ router.get("/admin/orders", protect,adminOrSuperAdmin, orderController.getAllOrd
 
 // Route for admins to fetch order statistics (total, pending, successful, failed orders)
 router.get("/admin/statistics", protect,adminOrSuperAdmin, orderController.getOrderStatistics);
+
+// Route to get weekly order summary
+router.get('/weekly-order-summary', orderController.getWeeklyOrderSummary);
 
 // Route for admins to update the status of a specific order
 router.put("/admin/order-status/:orderId", protect,adminOrSuperAdmin, orderController.updateOrderStatus);

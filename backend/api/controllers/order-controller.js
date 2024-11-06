@@ -88,31 +88,28 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
 
 // Remove selected items from checkout and return them to the cart as unselected
 exports.removeItemsFromCheckout = async (req, res) => {
-  const { selectedCartItemIds } = req.body; 
+  const selectedCartItemId = req.params.selectedCartItemId;
+ 
   const userId = req.user.user_id; 
 
   // Validate input
-  if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
-    return res.status(400).json({ message: "No items provided for removal from checkout." });
+  if (!selectedCartItemId) {
+    return res.status(400).json({ message: "No item provided for removal from checkout." });
   }
 
   try {
-    console.log("Removing items from checkout:", selectedCartItemIds, "for user ID:", userId);
-
-    // Prepare the SQL placeholders for the item IDs
-    const placeholders = selectedCartItemIds.map(() => "?").join(",");
+    console.log("Removing item from checkout:", selectedCartItemId, "for user ID:", userId);
 
     // Update the `selected` status of the items to `0` (unselected)
     const query = `
       UPDATE cart_items
       SET selected = 0
-      WHERE cart_item_id IN (${placeholders})
+      WHERE cart_item_id =?
         AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
         AND selected = 1
     `;
 
-    // Execute the query
-    const [result] = await db.execute(query, [...selectedCartItemIds, userId]);
+    const [result] = await db.execute(query, [selectedCartItemId, userId]);
 
     // Check if any rows were affected (i.e., items were actually updated)
     if (result.affectedRows === 0) {
@@ -120,7 +117,7 @@ exports.removeItemsFromCheckout = async (req, res) => {
     }
 
     // Respond with a success message
-    console.log("Items removed from checkout and marked as unselected.");
+    console.log("Item removed from checkout and marked as unselected.");
     res.status(200).json({ message: "Items successfully removed from checkout and marked as unselected." });
   } catch (error) {
     console.error("Error while removing items from checkout:", error.message);
@@ -430,6 +427,31 @@ exports.getOrderStatistics = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+//get the weekly order summary for the current month
+exports.getWeeklyOrderSummary=async(req,res)=>{
+ const query= 'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name,COUNT(DISTINCT ord.order_id) AS order_count FROM \`order\` ord JOIN \`order_items\` oi ON ord.order_id=oi.order_id JOIN \`item\` itm ON oi.item_id=itm.item_id JOIN \`category\` c ON itm.category_id=c.category_id WHERE MONTH(ord.order_date)=MONTH(CURRENT_DATE()) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number,c.category_name;'; 
+
+ try{
+  const[results]=await db.execute(query);
+
+  const formattedData={};
+  results.forEach(row=>{
+    const week='Week ${row.week_number}';
+    if(!formattedData[week]){
+      formattedData[week]={};
+    }
+    formattedData[week][row.category_name]=row.order_count;
+  });
+
+  res.status(200).json(formattedData);
+ }catch(error){
+  console.error('Error fetching weekly order summary',error);
+  res.status(500).json({
+    error:'Failed to fetch weekly order summary'
+  });
+ }
 };
 
 // Update order status
