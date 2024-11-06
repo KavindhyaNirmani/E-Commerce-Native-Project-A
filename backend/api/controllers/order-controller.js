@@ -280,8 +280,8 @@ exports.placeOrder = async (req, res) => {
 
     // Create a new order
     const [orderResult] = await connection.execute(
-      `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount) 
-             VALUES (?, ?, 'Pending', ?,?,?)`,
+      `INSERT INTO \`order\` (user_id, total_amount, order_status, cart_id,discount,final_amount,order_date) 
+             VALUES (?, ?, 'Pending', ?,?,?,Now())`,
       [userId, totalAmount, cart_id, discountAmount, finalAmount]
     );
     const orderId = orderResult.insertId;
