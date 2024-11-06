@@ -33,6 +33,9 @@ router.get("/admin/statistics", protect,adminOrSuperAdmin, orderController.getOr
 // Route to get weekly order summary
 router.get('/weekly-order-summary', orderController.getWeeklyOrderSummary);
 
+// Route for admins to get the percentage of each order status (Pending, Successful, Failed)
+router.get("/admin/order-status-percentages", protect, adminOrSuperAdmin, orderController.getOrderStatusPercentages);
+
 // Route for admins to update the status of a specific order
 router.put("/admin/order-status/:orderId", protect,adminOrSuperAdmin, orderController.updateOrderStatus);
 
