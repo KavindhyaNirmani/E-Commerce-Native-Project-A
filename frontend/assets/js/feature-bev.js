@@ -62,7 +62,7 @@ class featureSection extends HTMLElement {
                 <div class="card">
                   <img class="card-image" src="./assets/images/feature-bev-img4.jpg" alt="Delivery" />
                   <div class="card-body">
-                    <h5 class="card-title">Chrismas</h5>
+                    <h5 class="card-title">Christmas</h5>
                     
                   </div>
                 </div>
