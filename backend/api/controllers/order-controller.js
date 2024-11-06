@@ -65,7 +65,7 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
   const userId = req.user.user_id;
   try {
     const [selectedItems] = await db.execute(
-      `SELECT ci.*, itm.item_name, itm.item_price 
+      `SELECT ci.*, itm.item_name, itm.item_price, itm.item_image 
        FROM cart_items ci 
        JOIN cart c ON ci.cart_id = c.cart_id 
        JOIN item itm ON ci.item_id = itm.item_id 
