@@ -4,6 +4,35 @@
 
 const jwt = require("jsonwebtoken");
 
+exports.superAdminOnly = (req, res, next) => {
+  if (req.user.role !== "super admin") {
+    return res.status(403).json({
+      message: "Access denied, super admins only",
+    });
+  }
+  next();
+};
+
+// Modify adminOnly middleware to allow admins to view admins but restrict add/delete actions
+exports.adminViewOnly = (req, res, next) => {
+  if (req.user.role === "admin" && !["GET"].includes(req.method)) {
+    return res.status(403).json({
+      message: "Access denied, admins can only view admins",
+    });
+  }
+  next();
+};
+
+// Middleware to allow access for admin and super admin
+exports.adminOrSuperAdmin = (req, res, next) => {
+  if (req.user.role !== "admin" && req.user.role !== "super admin") {
+    return res.status(403).json({
+      message: "Access denied, admins or super admins only",
+    });
+  }
+  next();
+};
+
 exports.protect = (req, res, next) => {
   console.log("Middleware protect executed");
 

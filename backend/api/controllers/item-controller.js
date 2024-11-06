@@ -1,8 +1,5 @@
 const Category = require("../models/Category");
 const Item = require("../models/Item");
-const fs = require("fs"); //using for file system.It can readFiles(),writeFile(),appendFile(),etc.
-const path = require("path");
-const multer = require("multer");
 
 //get all items based on category(pizza,cake,beverage)
 exports.getItemsByCategory = async (req, res) => {
@@ -31,7 +28,7 @@ exports.getItemsByCategory = async (req, res) => {
   }
 };
 
-//Get all items (excluding deleted ones)
+//Get all items for admin (excluding deleted ones)
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll();
@@ -73,7 +70,7 @@ exports.addItem = async (req, res) => {
   console.log("Add item request received");
 
   const { item_name, item_description, item_price, category_name } = req.body;
-  const item_image = `/assets/images/menu/${req.file.filename}`;
+  const item_image = `/images/menu/${req.file.filename}`;
 
   try {
     //Find category by name
@@ -110,7 +107,7 @@ exports.addItem = async (req, res) => {
 exports.updateItem = async (req, res) => {
   const { item_id } = req.params;
   const { item_name, item_description, item_price, category_name } = req.body;
-  let item_image = req.file ? `/assets/images/menu/${req.file.filename}` : null; // Ensure file is optional
+  let item_image = req.file ? `/images/menu/${req.file.filename}` : null; // Ensure file is optional
 
   try {
     // Find the category by name

@@ -1,6 +1,7 @@
 body {
   overflow-x: hidden;
-  background-image: linear-gradient(#6c6a6a, #1e1e1e) !important;
+  height: 100%;
+  background-color: #1e1e1e !important;
 }
 
 .content {
@@ -9,7 +10,7 @@ body {
 }
 
 .container h2 {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Menu section */
@@ -18,81 +19,46 @@ body {
   text-align: left;
   padding: 0;
 }
-
-#beverageCard,
-#cakeCard,
-#pizzaCard {
-  background-color: #1f0b0b;
-  border-radius: 20px;
-  overflow: hidden;
-  max-width: 150px;
-  max-height: 170px;
-  min-width: 80px;
-  width: 100%;
-  margin: 0; /* Set margin to 0 for no gaps */
-  margin-bottom: 5px; /* Space between cards if needed */
-}
-
-.card-img-container {
-  background-color: #1f0b0b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  width: 100%;
-  height: 300px;
-  max-height: 300px;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
+.category-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 10px;
 }
-
-.col {
-  padding: 0; /* Remove padding to minimize space */
-}
-
-.card h5 {
+.category-name {
+  font-weight: bold;
+  font-size: 16px;
   text-align: center;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /*Order Summary Section*/
 .order-summary-box {
-  background-color: #4d4d4d;
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(165, 154, 154, 0.6);
+  border-radius: 10px;
   padding: 20px;
-  border-radius: 8px;
-  color: white;
   position: relative;
-  max-width: 150px; /* Set the maximum width */
-  margin: 0 auto; /* Center the box horizontally */
-  min-height: 150px;
 }
-
+.order-title {
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #c59d5f;
+}
 .order-summary-box h4 {
   color: white;
+  font-size: 36px;
 }
-
-.arrow {
-  position: absolute;
-  right: 15px;
-  bottom: 20px;
-  font-size: 24px;
-  color: white;
+.order-summary-box p {
+  font-weight: bold;
 }
-
-.arrow-link {
-  text-decoration: none;
-}
-
-.arrow-link:hover .arrow {
-  color: #fad700;
-}
-
-h2 {
-  color: #fad700;
+.chart-container {
+  background-color: #e9ecef;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
 }
 
 /*offer section*/
@@ -103,12 +69,12 @@ h2 {
 
 .modal-content {
   background-color: #666;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .modal-header {
   background-color: #000;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 #closeModal {
@@ -117,14 +83,14 @@ h2 {
 
 .modal-footer button {
   width: 100px;
-  background-color: #fad700;
+  background-color: #c59d5f;
   border: none;
   color: black;
   font-weight: bold;
 }
 
 .modal-footer button:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
 }
 
 .form-control {
@@ -136,7 +102,7 @@ h2 {
 .form-control:focus {
   box-shadow: none;
   background-color: #444;
-  color: #fad700;
+  color: #c59d5f;
 }
 
 /* Special offer section styles */
@@ -165,34 +131,34 @@ h2 {
 }
 
 .custom-yellow {
-  background-color: #fad700; /* Set your custom yellow */
+  background-color: #c59d5f;
   color: black;
-  border: 2px solid #fad700;
+  border: 2px solid #c59d5f;
   font-weight: bolder;
   margin-bottom: 20px;
 }
 
 .custom-yellow:hover,
 .custom-yellow:active {
-  background-color: #666; /* Slightly darker yellow on hover */
-  color: #fad700;
+  background-color: transparent;
+  color: #c59d5f;
   font-weight: bold;
 }
 
 .custom-yellow-outline {
   background-color: transparent;
-  color: #fad700;
-  border: 2px solid #fad700; /* Border to match the 'outline' style */
+  color: #c59d5f;
+  border: 2px solid #c59d5f;
   margin-bottom: 20px;
 }
 
 .custom-yellow-outline:hover {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: black;
   font-weight: bold;
 }
 p {
-  color: #fad700;
+  color: #ffffff;
 }
 
 /* Menu section */
@@ -212,8 +178,7 @@ p {
   max-height: 170px;
   min-width: 80px;
   width: 100%;
-  margin: 0; /* Set margin to 0 for no gaps */
-  margin-bottom: 5px; /* Space between cards if needed */
+  margin-bottom: 5px;
 }
 
 .card-img-container {
@@ -234,7 +199,7 @@ p {
 }
 
 .col {
-  padding: 0; /* Remove padding to minimize space */
+  padding: 0;
 }
 
 /* Centering for small screens */
@@ -242,20 +207,18 @@ p {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Centering the row items */
+    justify-content: center;
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; /* Set margin to 0 for no gaps */
+    margin: 0;
   }
 
-  .card-img-container {
-    height: 250px;
-  }
   body {
     margin-left: 300px;
     height: 100%;
+    overflow-x: hidden;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -276,17 +239,14 @@ p {
     padding: 10px 0;
   }
 
-  .card-img-container {
-    height: 250px;
-  }
-
   .col {
-    margin-bottom: 3px; /* Adjust margin between cards */
-    padding: 0; /* Remove padding for no extra space */
+    margin-bottom: 3px;
+    padding: 0;
   }
   body {
     margin-left: 0;
     height: 100%;
+    overflow-x: hidden;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -305,33 +265,21 @@ p {
   }
   body {
     margin-left: 300px;
+    overflow-x: hidden;
   }
 }
 @media (max-width: 576px) {
   .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
   }
 
   .col {
     flex: 0 0 auto;
-    margin: 0; 
-    display: flex; 
-    justify-content: center; 
-  }
-
-  #card {
-    width: 100%;
-    max-width: 150px; 
-    margin-bottom: 5px; 
-  }
-
-  .card-img-container {
-    height: 250px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
+    margin: 0;
+    display: flex;
+    justify-content: center;
   }
   .custom-yellow {
     margin-bottom: 20px;
@@ -341,6 +289,11 @@ p {
   }
   body {
     height: 100%;
+    overflow-x: hidden;
   }
 }
-
+@media (max-width: 320px) {
+  .order-summary-box p {
+    font-size: 16px;
+  }
+}

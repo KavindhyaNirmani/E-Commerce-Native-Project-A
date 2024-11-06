@@ -4,119 +4,152 @@
 }
 
 /*Welcome section*/
-#carouselExampleFade {
-  margin: 8px; 
+/* Carousel Zoom and Fade */
+.carousel-item {
+  transition: opacity 0.75s ease-in-out;
+  max-height: 100%;
+  overflow: hidden;
+}
+.carousel-item.active {
+  opacity: 0.5;
+}
+.zoom-image {
+  animation: zoomEffect 10s ease-in-out infinite;
 }
 
-.carousel-caption h2 {
-  color: #ffffff;
-  text-align: left;
-  font-size: clamp(20px, 5vw, 60px);
+@keyframes zoomEffect {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
-
 .carousel-caption h1 {
-  color: #fad700;
-  text-align: left;
-  font-size: clamp(30px, 7vw, 80px);
+  color: #c59d5f;
+  text-align: center;
+  font-size: clamp(40px, 9vw, 100px);
   font-style: oblique;
   font-weight: 1000;
-  letter-spacing: 3px;
+  font-family: "cookie", cursive;
+  letter-spacing: 5px;
 }
-
+.carousel-caption h2 {
+  color: #ffffff;
+  text-align: center;
+  font-size: clamp(20px, 5vw, 60px);
+  font-family: "Courier New", Courier, monospace;
+  margin: 40px 0 0 0;
+}
 .carousel-caption {
   position: absolute;
   top: clamp(10px, 2vw, 50px);
   left: clamp(10px, 2vw, 70px);
 }
-
-.carousel-item.active {
-  opacity: 1; 
-}
-
-.carousel-item {
-  max-height: 520px; 
-  overflow: hidden; 
-  transition: opacity 5s ease-in;
-}
-
 /* Carousel Images */
 .carousel-item img {
-  width: 100%; 
-  height: 520px; 
-  object-fit: cover; 
-}
-
-/*Feature Section*/
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 8px;
-  background-color: #1f0b0b;
-}
-
-.feature {
-  flex: 1 1 300px;
-  max-width: 300px;
-  text-align: center;
-  margin: 10px;
-}
-
-.feature img {
-  width: 130px;
-  height: auto;
-  max-width: 150px;
-  margin-top: 10px;
-}
-
-.feature h3 {
-  font-size: 1.5rem;
-  margin-top: 10px;
-  color: white;
-  font-family: Lato;
-}
-
-.feature p {
-  font-size: 1rem;
-  color: white;
-  font-family: Lato;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 1;
 }
 
 /*About Section*/
-.about {
-  background-color: #484242;
-  padding: 40px 0;
-  margin: 8px;
+.about-section {
+  margin: 20px 50px 20px 50px;
+  padding: 0 15% 0 15%;
 }
-/*text side*/
-.about-text h2 {
-  color: #fad700;
-  font-weight: bold;
-  margin-top: 20px;
-  font-size: 34px;
+.about-images {
+  justify-content: center;
+  position: relative;
+  margin-top: 20%;
 }
 
-.about-text p {
-  color: #ffffff;
-  font-size: 18px;
+.about-images img {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 0 20px 0 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Define positions for each image */
+.about-images .img1 {
+  width: 43%;
+  top: 20%;
+  left: 6%;
+  z-index: 3;
+}
+
+.about-images .img2 {
+  width: 40%;
+  top: 20%;
+  right: 6%;
+  z-index: 2;
+}
+
+.about-images .img3 {
+  width: 43%;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+}
+
+.about-images .img4 {
+  width: 43%;
+  top: 53%;
+  right: 10%;
+  z-index: 3;
+}
+
+.about-images img:hover {
+  transform: scale(1.15);
+  z-index: 5;
+}
+
+.about-text {
+  color: #343a40;
+  padding: 50px 50px 0 50px;
   text-align: justify;
+  margin-top: 50px;
+}
+.about-text h2 {
+  text-align: center;
+}
+.about-text p {
+  color: #343a40;
+  text-align: justify;
+  font-size: 18px !important;
 }
 
-/*image side*/
-.about-img img {
-  width: 70%;
-  height: auto;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 20px;
-  opacity: 1;
-  display: block;
-  margin: 0 auto;
+#readMore {
+  font-size: larger;
+  justify-content: center;
+  align-items: center;
+}
+
+.additional-content {
+  display: none;
+  margin: 0;
+  text-align: justify;
+  font-size: 18px;
+}
+.additional-content h5 {
+  color: #c59d5f;
+  font-weight: bold;
+}
+.hidden {
+  display: none;
 }
 
 /* Menu Section */
+.our-menu {
+  margin: 0;
+  padding-bottom: 20px;
+}
 .menutopic {
   background-color: transparent;
-  color: #fad700;
+  color: #c59d5f;
   padding: 5px 10px;
   border-radius: 50px;
   text-align: center;
@@ -124,17 +157,23 @@
   font-weight: bold;
   margin-bottom: 20px;
 }
-
+.menu-card {
+  margin: 5px 0 0 0;
+  padding: 0;
+  text-align: center;
+}
 /* Cards */
 #cakeCard,
 #pizzaCard,
 #beverageCard {
-  background-color: #1f0b0b;
-  border-radius: 20px;
-  margin: 0 auto; 
+  background-color: #000000;
+  border-color: #000000;
+  border-width: 2px;
+  border-radius: 25px;
+  margin: 0 auto;
   width: 100%;
-  max-width: 320px; 
-  height: 320px; 
+  max-width: 320px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -142,7 +181,6 @@
 
 /* Card Image Container */
 .card-img-container {
-  background-color: #1f0b0b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,19 +188,21 @@
   height: 100%;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
-  padding: 10px;
+  padding: 0;
+  border-width: 2px;
+  border-color: #000000;
 }
 
-.card img {
+.menu-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure image scales properly and doesn't stretch */
+  object-fit: cover;
 }
 
 /* Buttons inside cards */
-.card .btn {
-  background-color: #fad700;
-  color: #000000;
+.menu-card .btn {
+  background-color: transparent;
+  color: #c59d5f;
   border: none;
   padding: 8px 20px;
   border-radius: 15px;
@@ -170,18 +210,21 @@
   width: 55%;
   cursor: pointer;
   min-width: fit-content;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 0;
 }
 
-.card .btn:hover,
-.card .btn:focus {
-  background-color: #faf000 !important;
-  color: #000000 !important;
+.menu-card .btn:hover,
+.menu-card .btn:focus {
+  background-color: transparent !important;
+  border: 2px groove #fccb45;
+  color: #fccb45 !important;
 }
 
-.card .btn:active {
-  background-color: #faf000 !important;
-  color: #000000 !important;
+.menu-card .btn:active {
+  background-color: transparent !important;
+  border: 2px #fccb45;
+  border-style: groove;
+  color: #fccb45 !important;
 }
 
 /* Offer Section */
@@ -205,13 +248,15 @@
 .button-container {
   margin-top: 20px;
 }
+
 .container h2 {
-  color: #fad700;
+  color: #c59d5f;
   font-size: 36px;
 }
+
 /* Button Style */
 #viewMoreBtn {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: #000000;
   border: none;
   padding: 8px 18px;
@@ -229,7 +274,7 @@
 #viewMoreBtn:hover,
 #viewMoreBtn:focus,
 #viewMoreBtn:active {
-  background-color: #faf000;
+  background-color: #fccb45;
   color: #000000;
   outline: none;
   border: none;
@@ -237,34 +282,71 @@
 }
 
 #notOfferMessage {
-  color: #ffffff;
+  color: #000000;
   font-size: 12px;
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  .about-section {
+    margin: 20px 100px 20px 100px;
+    padding: 0;
+  }
+  .additional-content p,
+  li {
+    text-align: justify;
+    font-size: 14px !important;
+  }
+  .about-text p {
+    font-size: 14px !important;
+  }
+}
 @media (max-width: 768px) {
   #viewMoreBtn {
     padding: 6px 14px;
     width: 130px;
     font-size: 12px;
   }
-  .about-text h2 {
-    font-size: 24px;
+
+  .carousel-caption h1 {
+    font-size: 72px;
   }
-  .about-text p {
-    font-size: 14px;
+  .about-section {
+    margin: 20px 50px 20px 50px;
+  }
+  .additional-content p,
+  li,
+  h5 {
+    padding: 0 20px 0 20px;
   }
 }
 
 /*for screens between 320px and 576px */
 @media (max-width: 576px) {
   .carousel-item img {
-    height: 250px; /* Adjust height for smaller screens to maintain proportionality */
+    height: 250px;
   }
   #viewMoreBtn {
     padding: 5px 12px;
     width: 110px;
     font-size: 12px;
+  }
+  .card {
+    margin: 5px;
+  }
+  .carousel-caption h5,
+  p {
+    font-size: 12px;
+  }
+  .carousel-item img {
+    height: 300px;
+  }
+  .about-images {
+    display: none;
+  }
+  .about-section {
+    margin: 0;
+    padding: 20px;
   }
 }
 
@@ -273,12 +355,12 @@
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 280px; /* Reduce the card size */
-    height: 280px; /* Reduce the height proportionally */
+    max-width: 280px;
+    height: 280px;
   }
 
   .card-img-container {
-    height: 240px; /* Adjust image container height */
+    height: 240px;
   }
 }
 
@@ -287,12 +369,12 @@
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 260px; /* Reduce the card size further */
-    height: 260px; /* Adjust height proportionally */
+    max-width: 260px;
+    height: 260px;
   }
 
   .card-img-container {
-    height: 220px; /* Adjust image container height */
+    height: 220px;
   }
 }
 
@@ -301,14 +383,11 @@
   #cakeCard,
   #pizzaCard,
   #beverageCard {
-    max-width: 240px; /* Reduce the card width more for tiny screens */
-    height: 240px; /* Reduce height accordingly */
+    max-width: 240px;
+    height: 240px;
   }
 
   .card-img-container {
-    height: 200px; /* Reduce image height for very small screens */
-  }
-  .carousel-item img {
-    height: 200px; /* Further reduce height for very small screens */
+    height: 200px;
   }
 }

@@ -1,21 +1,16 @@
 const express = require("express");
 const itemController = require("../controllers/item-controller");
-const { protect, adminOnly } = require("../middleware/auth-middleware");
+const { protect,adminOrSuperAdmin } = require("../middleware/auth-middleware");
 const multer = require("multer");
 const path = require("path");
 const router = express.Router();
 
-//const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\Menu');
-
-const menuAssetsPath = path.resolve(
-  __dirname,
-  "../../../frontend/assets/images/menu"
-);
-console.log("Saving to:", menuAssetsPath);
+const menuPath = path.resolve(__dirname, "../../images/menu");
+console.log("Saving to:", menuPath);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, menuAssetsPath);
+    cb(null, menuPath);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -28,13 +23,13 @@ const upload = multer({ storage: storage });
 //Fetch items by category(pizza,cake,beverage)
 router.get("/category/:category_name", itemController.getItemsByCategory);
 
-/// Fetch all items
-router.get("/", itemController.getAllItems);
+// Fetch all items
+router.get("/", protect,adminOrSuperAdmin,itemController.getAllItems);
 
 // Fetch a single item by its ID
-router.get("/:item_id", itemController.getItemById);
+router.get("/:item_id", protect,itemController.getItemById);
 
-router.use("/assets/images/menu", express.static(menuAssetsPath));
+router.use("/images/menu", express.static(menuPath));
 
 // Add a new item (with image upload)
 //router.post('/', protect, adminOnly, upload.single('item_image'), itemController.addItem);
@@ -42,9 +37,9 @@ router.use("/assets/images/menu", express.static(menuAssetsPath));
 router.post("/", upload.single("item_image"), itemController.addItem);
 
 // Update an item (with image upload)
-router.put("/:item_id", upload.single("item_image"), itemController.updateItem);
+router.put("/:item_id", upload.single("item_image"), protect,adminOrSuperAdmin, itemController.updateItem);
 
 // Delete an item (soft delete)
-router.delete("/:item_id", itemController.deleteItem);
+router.delete("/:item_id", protect,adminOrSuperAdmin, itemController.deleteItem);
 
 module.exports = router;

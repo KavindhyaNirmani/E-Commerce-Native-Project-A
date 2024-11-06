@@ -2,11 +2,11 @@ const db = require("../../config/db");
 
 class CartItem {
   //Add a new item to the cart
-  static async addItem(cartId, itemId, quantity) {
+  static async addItem(cartId, itemId) {
     try {
       const [result] = await db.execute(
-        "INSERT INTO cart_items (cart_id,item_id,quantity) VALUES (?,?,?)",
-        [cartId, itemId, quantity]
+        "INSERT INTO cart_items (cart_id,item_id) VALUES (?,?)",
+        [cartId, itemId]
       );
       return result.insertId; //Return the new cart_item's ID
     } catch (error) {
@@ -18,7 +18,7 @@ class CartItem {
   static async getItemsByCartId(cartId) {
     try {
       const [result] = await db.execute(
-        "SELECT ci.cart_item_id,ci.quantity,i.item_name,i.item_price,i.item_image FROM cart_items ci JOIN item i ON ci.item_id= i.item_id WHERE ci.cart_id=?",
+        "SELECT ci.cart_item_id,ci.quantity,itm.item_name,itm.item_price,itm.item_image FROM cart_items ci JOIN item itm ON ci.item_id= itm.item_id WHERE ci.cart_id=? AND ci.is_deleted = 0 ",
         [cartId]
       );
       return result; //return the list of cart items

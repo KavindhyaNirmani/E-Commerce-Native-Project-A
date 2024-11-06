@@ -1,13 +1,11 @@
 const db = require("../../config/db");
-const fs = require("fs");
-const path = require("path");
 
 class Item {
   //Find item by category
   static async findByCategory(category_id) {
     try {
       const [results] = await db.execute(
-        "SELECT*FROM item WHERE category_id=?",
+        "SELECT*FROM item WHERE category_id=? AND is_deleted = 0",
         [category_id]
       );
       return results;
@@ -20,7 +18,7 @@ class Item {
   static async findAll() {
     try {
       const [results] = await db.execute(
-        "SELECT * FROM item WHERE is_deleted = 0"
+        "SELECT itm.item_id, itm.item_name, itm.item_description, itm.item_price, itm.item_image, c.category_name FROM item itm JOIN category c ON itm.category_id = c.category_id WHERE itm.is_deleted = 0 "
       );
       return results;
     } catch (error) {

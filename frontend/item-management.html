@@ -135,7 +135,7 @@
 
           <div class="modal-body">
             <form id="myForm">
-              <div class="card image-holder">
+              <div class="card image-holder mb-3">
                 <label for="imgInput" class="upload">
                   <i class="bi bi-plus-circle-dotted fs-1"></i>
                   <input
@@ -149,7 +149,7 @@
                 <img
                   id="imgPreview"
                   src=" "
-                  alt="Image Preview"
+                  alt=" "
                   width="200"
                   height="200"
                   class="img d-block mx-auto"
@@ -157,12 +157,12 @@
               </div>
 
               <div class="inputField">
-                <div>
+                <div class="mb-3">
                   <label for="name" class="form-label">Item Name</label>
                   <input type="text" id="name" class="form-control" required />
                 </div>
 
-                <div>
+                <div class="mb-3">
                   <label for="description" class="form-label"
                     >Item Description</label
                   >
@@ -174,7 +174,7 @@
                   />
                 </div>
 
-                <div>
+                <div class="mb-3">
                   <label for="price" class="form-label">Price (Rs)</label>
                   <input
                     type="number"
@@ -185,7 +185,7 @@
                   />
                 </div>
 
-                <div>
+                <div class="mb-3">
                   <label for="category" class="form-label">Category</label>
                   <select id="category" class="form-select" required>
                     <option value="">Select Category</option>
@@ -199,10 +199,9 @@
           </div>
 
           <div class="modal-footer">
-            <button type="submit" form="myForm" class="btn btn-primary">
-              Submit
-            </button>
-            <button type="reset" class="btn btn-danger">Discard</button>
+            <button type="submit" form="myForm" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+
           </div>
         </div>
       </div>
@@ -270,7 +269,6 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="viewCategory" class="form-label">Category</label>
                 <select id="viewCategory" class="form-select" disabled>
                   <option value="pizza">Pizza</option>
                   <option value="cake">Cake</option>
@@ -305,11 +303,14 @@
         // Function to load items from the API
         const loadItems = async () => {
           try {
-            const response = await fetch("https://ecom-back-t1.netfy.app/items", {
-              headers: {
-                Authorization: `Bearer ${JWT_TOKEN}`,
-              },
-            });
+            const response = await fetch(
+              "https://ecom-back-t1.netfy.app/items",
+              {
+                headers: {
+                  Authorization: `Bearer ${JWT_TOKEN}`,
+                },
+              }
+            );
             if (!response.ok)
               throw new Error(
                 `Error: ${response.status} ${response.statusText}`

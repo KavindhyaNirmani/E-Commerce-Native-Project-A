@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gather and Grab</title>
-    <link rel="icon" type="image/png" href="./assets/images/logo.png?v=1" />
+    <title>YumZy - Food & Beverages</title>
+    <link rel="icon" href="./assets/images/yumzy-icon.png" type="image/png" />
 
     <!--Bootstrap CSS-->
     <link
@@ -39,9 +39,9 @@
   </head>
   <body
     style="
-      background-color: linear-gradient(#6c6a6a, #1e1e1e);
-      color: #fad700;
+      font-family: 'Lato', sans-serif;
       height: 100vh;
+      background-color: #1e1e1e !important;
     "
   >
     <!-- Placeholder for Sidebar -->
@@ -88,47 +88,35 @@
           >
             <!-- Pizza -->
             <div class="col">
-              <div class="card text-center" id="pizzaCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-pizza.jfif"
-                    class="card-img-top img-fluid"
-                    alt="pizza"
-                  />
-                </div>
-                <div class="card-body">
-                  <h5>Pizza</h5>
-                </div>
+              <div class="col-4 text-center">
+                <img
+                  src="./assets/images/menu-pizza.jpg"
+                  alt="Pizza"
+                  class="category-image"
+                />
+                <div class="category-name">Pizza</div>
               </div>
             </div>
             <!-- Cake -->
             <div class="col">
-              <div class="card text-center" id="cakeCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-cake.png"
-                    class="card-img-top img-fluid"
-                    alt="cake"
-                  />
-                </div>
-                <div class="card-body">
-                  <h5>Cake</h5>
-                </div>
+              <div class="col-4 text-center">
+                <img
+                  src="./assets/images/menu-cake.jpg"
+                  alt="Pizza"
+                  class="category-image"
+                />
+                <div class="category-name">Pizza</div>
               </div>
             </div>
             <!-- Beverages -->
             <div class="col">
-              <div class="card text-center" id="beverageCard">
-                <div class="card-img-container">
-                  <img
-                    src="./assets/images/menu-beverage.png"
-                    class="card-img-top img-fluid"
-                    alt="beverage"
-                  />
-                </div>
-                <div class="card-body">
-                  <h5>Beverages</h5>
-                </div>
+              <div class="col-4 text-center">
+                <img
+                  src="./assets/images/menu-beverages.jpg"
+                  alt="Pizza"
+                  class="category-image"
+                />
+                <div class="category-name">Pizza</div>
               </div>
             </div>
           </div>
@@ -136,8 +124,9 @@
       </section>
 
       <!-- Order Summary Section -->
+
       <div class="container my-5">
-        <h2 class="text-warning">Order Summary</h2>
+        <h2 class="order-title">Order Summary</h2>
         <div class="row">
           <!-- Total Orders -->
           <div class="col-lg-3 col-md-6 col-6 mb-4">
@@ -145,9 +134,6 @@
             <div class="order-summary-box text-center">
               <p>Total Orders:</p>
               <h4 id="total-orders">0</h4>
-              <a href="order-management.html" class="arrow-link">
-                <span class="arrow">→</span>
-              </a>
             </div>
           </div>
 
@@ -164,7 +150,7 @@
           <div class="col-lg-3 col-md-6 col-6 mb-4">
             <!-- Adjusted for responsiveness -->
             <div class="order-summary-box text-center">
-              <p>Successfull Orders:</p>
+              <p>Successful Orders:</p>
               <h4 id="successfull-orders">0</h4>
             </div>
           </div>
@@ -179,6 +165,7 @@
           </div>
         </div>
       </div>
+      -->
 
       <!-- Special Offers Section -->
       <div class="container my-4">
@@ -219,11 +206,11 @@
             <div class="modal-body">
               <form id="offerForm">
                 <div class="form-group">
-                  <label for="offerDetail">Title</label>
+                  <label for="offerTitle">Title</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="offerDetail"
+                    id="offerTitle"
                     placeholder="Enter offer details"
                     required
                   />
@@ -239,11 +226,11 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="offerDetail">Discount</label>
+                  <label for="offerDiscount">Discount</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="offerDetail"
+                    id="offerDiscount"
                     placeholder="Enter offer details"
                     required
                   />
@@ -258,21 +245,21 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="offerDetail">Start Date</label>
+                  <label for="startDate">Start Date</label>
                   <input
                     type="date"
                     class="form-control"
-                    id="offerDetail"
+                    id="startDate"
                     placeholder="Enter offer details"
                     required
                   />
                 </div>
                 <div class="form-group">
-                  <label for="offerDetail">End Date</label>
+                  <label for="endDate">End Date</label>
                   <input
                     type="date"
                     class="form-control"
-                    id="offerDetail"
+                    id="endDate"
                     placeholder="Enter offer details"
                     required
                   />
@@ -292,12 +279,17 @@
       </div>
     </div>
     <script>
-      let offers = []; // Array to store offer images and details
-      let showOffers = false; // State variable to track if offers are shown
+      let offers = [];
+      let showOffers = false;
 
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order details from the backend API
-        fetch("/api/orders/summary") // Replace with your actual API endpoint
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        })
           .then((response) => response.json())
           .then((data) => {
             // Update the order summaries with the data from the API
@@ -306,7 +298,7 @@
             document.getElementById("pending-orders").textContent =
               data.pendingOrders;
             document.getElementById("successfull-orders").textContent =
-              data.successfullOrders;
+              data.successfulOrders;
             document.getElementById("failed-orders").textContent =
               data.failedOrders;
           })
@@ -314,6 +306,26 @@
             console.error("Error fetching order data:", error);
           });
       });
+
+      //document.addEventListener("DOMContentLoaded", () => {
+      // Fetch order details from the backend API
+      //   fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics")
+      //    .then((response) => response.json())
+      //    .then((data) => {
+      // Update the order summaries with the data from the API
+      //      document.getElementById("total-orders").textContent =
+      //      data.totalOrders;
+      //    document.getElementById("pending-orders").textContent =
+      //       data.pendingOrders;
+      //      document.getElementById("successfull-orders").textContent =
+      //        data.successfulOrders;
+      //      document.getElementById("failed-orders").textContent =
+      //        data.failedOrders;
+      //    })
+      //    .catch((error) => {
+      //    console.error("Error fetching order data:", error);
+      //     });
+      //   });
 
       // Handle modal popup for adding new offer
       document
@@ -334,21 +346,21 @@
             reader.onload = function (e) {
               // Push new offer details into the array
               offers.push({ detail: offerDetail, image: e.target.result });
-              displayOffers(); // Display offers after adding new one
-              $("#addOfferModal").modal("hide"); // Close modal
+              displayOffers();
+              $("#addOfferModal").modal("hide");
             };
-            reader.readAsDataURL(offerImage); // Read the image file as a data URL
+            reader.readAsDataURL(offerImage);
           }
         });
 
       // Function to display offers
       function displayOffers() {
         const gallery = document.getElementById("special-offer-gallery");
-        gallery.innerHTML = ""; // Clear previous offers
+        gallery.innerHTML = "";
 
         // Check if there are offers
         if (offers.length === 0) {
-          gallery.innerHTML = "<p>No special offers yet.</p>"; // Display message when no offers
+          gallery.innerHTML = "<p>No special offers yet.</p>";
           return; // Exit the function
         }
 
@@ -377,15 +389,15 @@
 
       // Function to toggle offers visibility
       document.getElementById("view-more-btn").onclick = function () {
-        showOffers = !showOffers; // Toggle the state
-        this.textContent = showOffers ? "Hide Offers" : "View More"; // Change button text
-        displayOffers(); // Refresh offer display
+        showOffers = !showOffers;
+        this.textContent = showOffers ? "Hide Offers" : "View More";
+        displayOffers();
       };
 
       // Function to delete an offer
       function deleteOffer(index) {
-        offers.splice(index, 1); // Remove offer from the array
-        displayOffers(); // Refresh the display
+        offers.splice(index, 1);
+        displayOffers();
       }
 
       // Initial display of offers (if any)
