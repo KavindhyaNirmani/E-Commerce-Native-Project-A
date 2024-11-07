@@ -41,11 +41,9 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
 
     if (selectedItems.length === 0) {
       console.log("No items found for the provided IDs.");
-      return res
-        .status(404)
-        .json({
-          error: "Selected items not found in the cart or have been deleted.",
-        });
+      return res.status(404).json({
+        error: "Selected items not found in the cart or have been deleted.",
+      });
     }
 
     return res.status(200).json({ items: selectedItems });
@@ -89,16 +87,23 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
 // Remove selected items from checkout and return them to the cart as unselected
 exports.removeItemsFromCheckout = async (req, res) => {
   const selectedCartItemId = req.params.selectedCartItemId;
- 
-  const userId = req.user.user_id; 
+
+  const userId = req.user.user_id;
 
   // Validate input
   if (!selectedCartItemId) {
-    return res.status(400).json({ message: "No item provided for removal from checkout." });
+    return res
+      .status(400)
+      .json({ message: "No item provided for removal from checkout." });
   }
 
   try {
-    console.log("Removing item from checkout:", selectedCartItemId, "for user ID:", userId);
+    console.log(
+      "Removing item from checkout:",
+      selectedCartItemId,
+      "for user ID:",
+      userId
+    );
 
     // Update the `selected` status of the items to `0` (unselected)
     const query = `
@@ -113,22 +118,37 @@ exports.removeItemsFromCheckout = async (req, res) => {
 
     // Check if any rows were affected (i.e., items were actually updated)
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "No selected items found for removal." });
+      return res
+        .status(404)
+        .json({ message: "No selected items found for removal." });
     }
 
     // Respond with a success message
     console.log("Item removed from checkout and marked as unselected.");
-    res.status(200).json({ message: "Items successfully removed from checkout and marked as unselected." });
+    res
+      .status(200)
+      .json({
+        message:
+          "Items successfully removed from checkout and marked as unselected.",
+      });
   } catch (error) {
     console.error("Error while removing items from checkout:", error.message);
-    res.status(500).json({ message: "Failed to remove items from checkout.", error: error.message });
+    res
+      .status(500)
+      .json({
+        message: "Failed to remove items from checkout.",
+        error: error.message,
+      });
   }
 };
 
-
 // Calculate order summary for selected items in the cart
-exports.calculateOrderSummary = async (selectedCartItemIds) => {
+exports.calculateOrderSummary = async (req, res) => {
+  const { selectedCartItemIds } = req.body;
+  console.log("Received selectedCartItemIds:", selectedCartItemIds);
+
   if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    console.log("No items selected condition triggered.");
     return res.status(400).json({ error: "No items selected" });
   }
 
@@ -141,6 +161,8 @@ exports.calculateOrderSummary = async (selectedCartItemIds) => {
        WHERE ci.cart_item_id IN (${placeholders}) AND ci.is_deleted = 0`,
       selectedCartItemIds
     );
+
+    console.log("Selected items from database:", selectedItems);
 
     if (selectedItems.length === 0) {
       return res
@@ -164,7 +186,8 @@ exports.calculateOrderSummary = async (selectedCartItemIds) => {
     let totalQuantity = 0;
 
     selectedItems.forEach((item) => {
-      const { quantity, item_price } = item;
+      const quantity = item.quantity ?? 1; // Default to 1 if quantity is null
+      const { item_price } = item;
       totalAmount += quantity * item_price;
       totalQuantity += quantity;
     });
@@ -178,15 +201,99 @@ exports.calculateOrderSummary = async (selectedCartItemIds) => {
       finalAmount,
     });
 
-    return {
+    return res.json({
       totalAmount,
       discountAmount,
       finalAmount,
       totalQuantity,
-    };
+    });
   } catch (err) {
     console.error("Error while calculating order summary:", err);
     res.status(500).json({ error: "Failed to calculate order summary" });
+  }
+};
+
+// Get order summary for selected items (GET method)
+exports.getOrderSummary = async (req, res) => {
+  const { selectedCartItemIds } = req.query;
+  console.log("Received selectedCartItemIds:", selectedCartItemIds);
+
+  if (
+    !selectedCartItemIds ||
+    !Array.isArray(JSON.parse(selectedCartItemIds)) ||
+    JSON.parse(selectedCartItemIds).length === 0
+  ) {
+    console.log("No items selected condition triggered.");
+    return res.status(400).json({ error: "No items selected" });
+  }
+
+  try {
+    const cartItemIds = JSON.parse(selectedCartItemIds);
+
+    const placeholders = cartItemIds.map(() => "?").join(",");
+
+    // Fetch selected items from the cart_items table, including item details from the items table
+    const [selectedItems] = await db.execute(
+      `SELECT ci.cart_item_id, ci.quantity, itm.item_price, itm.item_name
+       FROM cart_items ci
+       JOIN item itm ON ci.item_id = itm.item_id
+       WHERE ci.cart_item_id IN (${placeholders}) AND ci.is_deleted = 0`,
+      cartItemIds
+    );
+
+    console.log("Selected items from database:", selectedItems);
+
+    if (selectedItems.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "Selected items not found or already deleted" });
+    }
+
+    // Check for any active promotion
+    const [promotion] = await db.execute(
+      `SELECT pr.discount_percentage 
+       FROM promotion p
+       JOIN promotion_rule pr ON p.promotion_id = pr.promotion_id
+       WHERE CURDATE() BETWEEN p.start_date AND p.end_date 
+       LIMIT 1`
+    );
+
+    // Set discount percentage (0 if no promotion is found)
+    const discountPercentage = promotion.length
+      ? promotion[0].discount_percentage
+      : 0;
+
+    let totalAmount = 0;
+    let totalQuantity = 0;
+
+    // Calculate the total amount, total quantity, and total discount
+    selectedItems.forEach((item) => {
+      const quantity = item.quantity ?? 1; // Default to 1 if quantity is null
+      const { item_price } = item;
+      totalAmount += quantity * item_price;
+      totalQuantity += quantity;
+    });
+
+    // Calculate discount amount based on the totalAmount
+    const discountAmount = (totalAmount * discountPercentage) / 100;
+    const finalAmount = totalAmount - discountAmount;
+
+    console.log("Calculated Order Summary:", {
+      totalAmount,
+      discountAmount,
+      finalAmount,
+    });
+
+    // Send the calculated order summary as a response
+    return res.json({
+      totalAmount,
+      discountAmount,
+      finalAmount,
+      totalQuantity,
+    });
+  } catch (err) {
+    console.error("Error while calculating order summary:", err);
+    return res.status(500).json({ error: "Failed to calculate order summary" });
   }
 };
 
@@ -430,34 +537,34 @@ exports.getOrderStatistics = async (req, res) => {
 };
 
 //get the weekly order summary for the current month
-exports.getWeeklyOrderSummary=async(req,res)=>{
- const query= 'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name,COUNT(DISTINCT ord.order_id) AS order_count FROM \`order\` ord JOIN \`order_items\` oi ON ord.order_id=oi.order_id JOIN \`item\` itm ON oi.item_id=itm.item_id JOIN \`category\` c ON itm.category_id=c.category_id WHERE MONTH(ord.order_date)=MONTH(CURRENT_DATE()) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number,c.category_name;'; 
+exports.getWeeklyOrderSummary = async (req, res) => {
+  const query =
+    'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name,COUNT(DISTINCT ord.order_id) AS order_count FROM `order` ord JOIN `order_items` oi ON ord.order_id=oi.order_id JOIN `item` itm ON oi.item_id=itm.item_id JOIN `category` c ON itm.category_id=c.category_id WHERE MONTH(ord.order_date)=MONTH(CURRENT_DATE()) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number,c.category_name;';
 
- try{
-  const[results]=await db.execute(query);
+  try {
+    const [results] = await db.execute(query);
 
-  const formattedData={};
-  results.forEach(row=>{
-    const week='Week ${row.week_number}';
-    if(!formattedData[week]){
-      formattedData[week]={};
-    }
-    formattedData[week][row.category_name]=row.order_count;
-  });
+    const formattedData = {};
+    results.forEach((row) => {
+      const week = "Week ${row.week_number}";
+      if (!formattedData[week]) {
+        formattedData[week] = {};
+      }
+      formattedData[week][row.category_name] = row.order_count;
+    });
 
-  res.status(200).json(formattedData);
- }catch(error){
-  console.error('Error fetching weekly order summary',error);
-  res.status(500).json({
-    error:'Failed to fetch weekly order summary'
-  });
- }
+    res.status(200).json(formattedData);
+  } catch (error) {
+    console.error("Error fetching weekly order summary", error);
+    res.status(500).json({
+      error: "Failed to fetch weekly order summary",
+    });
+  }
 };
 
 // Calculate order status percentages
 exports.getOrderStatusPercentages = async (req, res) => {
   try {
-    
     const [totalCount] = await db.execute(
       `SELECT COUNT(*) AS count FROM \`order\` WHERE is_deleted=0`
     );
@@ -484,7 +591,10 @@ exports.getOrderStatusPercentages = async (req, res) => {
 
     // Calculate percentages
     const pendingPercentage = ((pendingOrders / totalOrders) * 100).toFixed(2);
-    const successfulPercentage = ((successfulOrders / totalOrders) * 100).toFixed(2);
+    const successfulPercentage = (
+      (successfulOrders / totalOrders) *
+      100
+    ).toFixed(2);
     const failedPercentage = ((failedOrders / totalOrders) * 100).toFixed(2);
 
     res.json({
@@ -494,7 +604,9 @@ exports.getOrderStatusPercentages = async (req, res) => {
     });
   } catch (error) {
     console.error("Error calculating order status percentages:", error);
-    res.status(500).json({ error: "Failed to calculate order status percentages." });
+    res
+      .status(500)
+      .json({ error: "Failed to calculate order status percentages." });
   }
 };
 
@@ -508,7 +620,7 @@ exports.updateOrderStatus = async (req, res) => {
   try {
     await db.execute(
       `UPDATE \`order\` SET order_status = ? WHERE order_id = ?`,
-      [newStatus.orderId]
+      [newStatus, orderId]
     );
     res.json({ message: "Order status updated successfully." });
   } catch (error) {
