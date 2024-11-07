@@ -65,7 +65,7 @@ exports.getSelectedItemsInCheckout = async (req, res) => {
   const userId = req.user.user_id;
   try {
     const [selectedItems] = await db.execute(
-      `SELECT ci.*, itm.item_name, itm.item_price 
+      `SELECT ci.*, itm.item_name, itm.item_price, itm.item_image 
        FROM cart_items ci 
        JOIN cart c ON ci.cart_id = c.cart_id 
        JOIN item itm ON ci.item_id = itm.item_id 
@@ -452,6 +452,50 @@ exports.getWeeklyOrderSummary=async(req,res)=>{
     error:'Failed to fetch weekly order summary'
   });
  }
+};
+
+// Calculate order status percentages
+exports.getOrderStatusPercentages = async (req, res) => {
+  try {
+    
+    const [totalCount] = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE is_deleted=0`
+    );
+    const totalOrders = totalCount[0].count;
+
+    if (totalOrders === 0) {
+      return res.status(200).json({ message: "No orders available." });
+    }
+
+    //counts orders by status
+    const [pendingCount] = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Pending' AND is_deleted=0`
+    );
+    const [successfulCount] = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Successful' AND is_deleted=0`
+    );
+    const [failedCount] = await db.execute(
+      `SELECT COUNT(*) AS count FROM \`order\` WHERE order_status = 'Failed' AND is_deleted=0`
+    );
+
+    const pendingOrders = pendingCount[0].count;
+    const successfulOrders = successfulCount[0].count;
+    const failedOrders = failedCount[0].count;
+
+    // Calculate percentages
+    const pendingPercentage = ((pendingOrders / totalOrders) * 100).toFixed(2);
+    const successfulPercentage = ((successfulOrders / totalOrders) * 100).toFixed(2);
+    const failedPercentage = ((failedOrders / totalOrders) * 100).toFixed(2);
+
+    res.json({
+      pending: pendingPercentage,
+      successful: successfulPercentage,
+      failed: failedPercentage,
+    });
+  } catch (error) {
+    console.error("Error calculating order status percentages:", error);
+    res.status(500).json({ error: "Failed to calculate order status percentages." });
+  }
 };
 
 // Update order status
