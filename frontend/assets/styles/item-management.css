@@ -31,7 +31,7 @@ td button i {
 
 .btn {
   color: #fad700;
-  font-size: 120%; 
+  font-size: 120%;
   display: inline;
 }
 
@@ -42,8 +42,8 @@ td button i {
 .btn1 {
   background-color: #fad700;
   color: #000000;
-  font-weight:700;
-  border-radius: 5px; 
+  font-weight: 700;
+  border-radius: 5px;
   border-style: none;
 }
 
@@ -52,7 +52,7 @@ td button i {
   color: #000000;
 }
 
- /* add/edit form */
+/* add/edit form */
 
 .modal-content {
   width: 80%;
@@ -64,17 +64,15 @@ td button i {
   color: #000000;
 }
 
-.modal-title{
+.modal-title {
   color: #fad700;
 }
-
 
 .modal-body form {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 5px;
-  
 }
 
 .modal-body form .image-holder {
@@ -136,7 +134,7 @@ body {
   }
 
   .content {
-    margin-left: 0; 
+    margin-left: 0;
   }
 
   .modal-body form {
@@ -145,22 +143,22 @@ body {
   }
 
   .modal-body form .image-holder {
-    width: 100%; 
+    width: 100%;
     height: auto;
   }
 
   .modal-body form .inputField {
-    flex-basis: 100%; 
-    margin-left: 0; 
+    flex-basis: 100%;
+    margin-left: 0;
   }
 
   .inputField > div {
-    flex-direction: column; 
-    align-items: flex-start; 
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .inputField > div label {
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
   }
 
   td button i {
