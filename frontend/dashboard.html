@@ -307,20 +307,21 @@
             console.error("Error fetching pie chart data:", error)
           );
 
-        // Fetch data for bar chart (weekly order summary)
-        fetch("https://ecom-back-t1.netfy.app/orders/weekly-order-summary", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            createBarChart(data);
-          })
-          .catch((error) =>
-            console.error("Error fetching bar chart data:", error)
-          );
+       // Fetch data for bar chart (weekly order summary for categories)
+fetch("https://ecom-back-t1.netfy.app/orders/weekly-order-summary", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Data fetched for chart:", data);
+    createBarChart(data);
+  })
+  .catch((error) =>
+    console.error("Error fetching bar chart data:", error)
+  );
       });
 
       // Function to create the pie chart
@@ -334,7 +335,7 @@
               {
                 label: "Order Percentages",
                 data: [data.pending, data.successful, data.failed],
-                backgroundColor: ["red", "#32CD32", "blue"],
+                backgroundColor: ["#c59d5f ", "#e6b98c", "blue"],
                 borderWidth: 1,
               },
             ],
@@ -351,48 +352,65 @@
       }
 
       // Function to create the bar chart
-      function createBarChart(data) {
-        const ctx = document.getElementById("barChart").getContext("2d");
-        new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: data.labels, // dates
-            datasets: [
-              {
-                label: "Total Orders",
-                data: data.totalOrders, // order counts per day
-                backgroundColor: "#87CEEB",
-                borderWidth: 1,
-              },
-              {
-                label: "Successful Orders",
-                data: data.successfulOrders, // successful order counts
-                backgroundColor: "#32CD32",
-                borderWidth: 1,
-              },
-              {
-                label: "Failed Orders",
-                data: data.failedOrders, // failed order counts
-                backgroundColor: "#FF6347",
-                borderWidth: 1,
-              },
-            ],
+      // Function to create the bar chart
+function createBarChart(data) {
+  const ctx = document.getElementById("barChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: data.week_number, // ["Week 1", "Week 2", "Week 3", "Week 4"]
+      datasets: [
+        {
+          label: "Pizza Orders",
+          data: data.pizzaOrders, // [10, 15, 20, 25]
+          backgroundColor: "#FFD700", // gold for pizza
+          borderWidth: 1,
+        },
+        {
+          label: "Cake Orders",
+          data: data.cakeOrders, // [5, 8, 12, 10]
+          backgroundColor: "#FF69B4", // pink for cake
+          borderWidth: 1,
+        },
+        {
+          label: "Beverage Orders",
+          data: data.beverageOrders, // [7, 11, 13, 9]
+          backgroundColor: "#87CEFA", // light blue for beverages
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Order Count"
           },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-            plugins: {
-              legend: {
-                position: "top",
-              },
-            },
+          ticks: {
+            stepSize: 1, // Ensures the y-axis increments by 1
+            precision: 0  // Rounds values to whole numbers
           },
-        });
-      }
+        },
+        x: {
+          title: {
+            display: true,
+            text: "Weeks"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    },
+  });
+}
+
+
 
       // Function to fetch and display order summary counts
       function fetchOrderSummary() {
@@ -408,7 +426,7 @@
               data.totalOrders;
             document.getElementById("pending-orders").textContent =
               data.pendingOrders;
-            document.getElementById("successfull-orders").textContent =
+            document.getElementById("successful-orders").textContent =
               data.successfulOrders;
             document.getElementById("failed-orders").textContent =
               data.failedOrders;
