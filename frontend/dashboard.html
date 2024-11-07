@@ -124,47 +124,67 @@
       </section>
 
       <!-- Order Summary Section -->
+<div class="container my-1">
+  <h2 class="order-title">Order Summary</h2>
 
-      <div class="container my-5">
-        <h2 class="order-title">Order Summary</h2>
-        <div class="row">
-          <!-- Total Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
-              <p>Total Orders:</p>
-              <h4 id="total-orders">0</h4>
-            </div>
-          </div>
-
-          <!-- Pending Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
-              <p>Pending Orders:</p>
-              <h4 id="pending-orders">0</h4>
-            </div>
-          </div>
-
-          <!-- Successfull Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
-              <p>Successful Orders:</p>
-              <h4 id="successfull-orders">0</h4>
-            </div>
-          </div>
-
-          <!-- Failed Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
-              <p>Failed Orders:</p>
-              <h4 id="failed-orders">0</h4>
-            </div>
-          </div>
-        </div>
+  <!-- Order Summary Boxes in a Single Row -->
+  <div class="row text-center mb-4">
+    <!-- Total Orders -->
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="order-summary-box">
+        <p>Total Orders:</p>
+        <h4 id="total-orders">0</h4>
       </div>
+    </div>
+
+    <!-- Pending Orders -->
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="order-summary-box">
+        <p>Pending Orders:</p>
+        <h4 id="pending-orders">0</h4>
+      </div>
+    </div>
+
+    <!-- Successful Orders -->
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="order-summary-box">
+        <p>Successful Orders:</p>
+        <h4 id="successful-orders">0</h4>
+      </div>
+    </div>
+
+    <!-- Failed Orders -->
+    <div class="col-lg-3 col-md-6 col-6 mb-3">
+      <div class="order-summary-box">
+        <p>Failed Orders:</p>
+        <h4 id="failed-orders">0</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="row">
+    <!-- Pie Chart (smaller width) -->
+    <div class="col-lg-4 col-md-6 mb-4 text-center">
+      <div class="chart-box">
+        <h4>Order Status Distribution</h4>
+        <!-- Placeholder for Pie Chart -->
+        <canvas id="pieChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Bar Chart (larger width) -->
+    <div class="col-lg-8 col-md-6 mb-4 text-center">
+      <div class="chart-box">
+        <h4>Order Summary Chart</h4>
+        <!-- Placeholder for Bar Chart -->
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       -->
 
       <!-- Special Offers Section -->
@@ -278,34 +298,134 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
       let offers = [];
       let showOffers = false;
 
-      document.addEventListener("DOMContentLoaded", () => {
-        // Fetch order details from the backend API
-        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Update the order summaries with the data from the API
-            document.getElementById("total-orders").textContent =
-              data.totalOrders;
-            document.getElementById("pending-orders").textContent =
-              data.pendingOrders;
-            document.getElementById("successfull-orders").textContent =
-              data.successfulOrders;
-            document.getElementById("failed-orders").textContent =
-              data.failedOrders;
-          })
-          .catch((error) => {
-            console.error("Error fetching order data:", error);
-          });
-      });
+ document.addEventListener("DOMContentLoaded", () => {
+  // Fetch order summaries
+  fetchOrderSummary();
+
+  // Fetch data for pie chart (order percentages)
+  fetch("https://ecom-back-t1.netfy.app/orders/admin/order-status-percentages", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      createPieChart(data);
+    })
+    .catch((error) => console.error("Error fetching pie chart data:", error));
+
+  // Fetch data for bar chart (weekly order summary)
+  fetch("https://ecom-back-t1.netfy.app/orders/weekly-order-summary", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      createBarChart(data);
+    })
+    .catch((error) => console.error("Error fetching bar chart data:", error));
+});
+
+// Function to create the pie chart
+function createPieChart(data) {
+  const ctx = document.getElementById("pieChart").getContext("2d");
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Pending", "Successful", "Failed"], // Adjust labels based on your API data
+      datasets: [
+        {
+          label: "Order Percentages",
+          data: [data.pending, data.successful, data.failed], // Assuming data structure
+          backgroundColor: ["red", "#32CD32", "blue"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    },
+  });
+}
+
+// Function to create the bar chart
+function createBarChart(data) {
+  const ctx = document.getElementById("barChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: data.labels, // Assuming data.labels contains the days of the week or dates
+      datasets: [
+        {
+          label: "Total Orders",
+          data: data.totalOrders, // Assuming data.totalOrders contains order counts per day
+          backgroundColor: "#87CEEB",
+          borderWidth: 1,
+        },
+        {
+          label: "Successful Orders",
+          data: data.successfulOrders, // Assuming data.successfulOrders contains successful order counts
+          backgroundColor: "#32CD32",
+          borderWidth: 1,
+        },
+        {
+          label: "Failed Orders",
+          data: data.failedOrders, // Assuming data.failedOrders contains failed order counts
+          backgroundColor: "#FF6347",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    },
+  });
+}
+
+// Function to fetch and display order summary counts
+function fetchOrderSummary() {
+  fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("total-orders").textContent = data.totalOrders;
+      document.getElementById("pending-orders").textContent = data.pendingOrders;
+      document.getElementById("successfull-orders").textContent = data.successfulOrders;
+      document.getElementById("failed-orders").textContent = data.failedOrders;
+    })
+    .catch((error) => console.error("Error fetching order data:", error));
+}
+
+
+
 
       //document.addEventListener("DOMContentLoaded", () => {
       // Fetch order details from the backend API
