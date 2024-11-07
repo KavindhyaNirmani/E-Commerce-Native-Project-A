@@ -12,28 +12,24 @@
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
     <!-- Font-Awesome CSS -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
   </head>
   <body
     style="
       font-family: 'Lato', sans-serif;
       background-image: none;
       height: 100%;
-    "
-  >
+    ">
     <!-- Top bar and header -->
     <div id="topBar"></div>
     <div id="headerPlaceholder"></div>
@@ -133,7 +129,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         displaySelectedItems();
       });
-    
+
       async function displaySelectedItems() {
         const token = localStorage.getItem("authToken");
         if (!token) {
@@ -141,7 +137,7 @@
             "Authentication required. Please log in again.";
           return;
         }
-    
+
         try {
           const response = await fetch(
             "https://ecom-back-t1.netfy.app/orders/checkout/selected-items",
@@ -153,40 +149,53 @@
               },
             }
           );
-    
-          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+          if (!response.ok)
+            throw new Error(`HTTP error! Status: ${response.status}`);
           const data = await response.json();
           const itemsContainer = document.getElementById("order-items");
           itemsContainer.innerHTML = "";
           let subTotal = 0;
-    
+
           if (Array.isArray(data.items) && data.items.length > 0) {
             data.items.forEach((item) => {
               const itemTotal = parseFloat(item.item_price) * item.quantity;
               subTotal += itemTotal;
-    
+
               const row = document.createElement("tr");
               row.innerHTML = `
-                <td><img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
+                <td><img src="https://ecom-back-t1.netfy.app${
+                  item.item_image
+                }" alt="${
+                item.item_name
+              }" style="width: 50px; height: 50px;"></td>
                 <td>${item.item_name}</td>
                 <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
                 <td>${item.quantity}</td>
                 <td>Rs.${itemTotal.toFixed(2)}</td>
-                <td><button class="btn btn-danger btn-sm remove-btn" data-item-id="${item.item_id}">Remove</button></td>
+                <td><button class="btn btn-danger btn-sm remove-btn" data-item-id="${
+                  item.item_id
+                }">Remove</button></td>
               `;
               itemsContainer.appendChild(row);
             });
-    
-            document.getElementById("sub-total").innerText = subTotal.toFixed(2);
-            document.getElementById("total").innerText = (subTotal - 0).toFixed(2);
+
+            document.getElementById("sub-total").innerText =
+              subTotal.toFixed(2);
+            document.getElementById("total").innerText = (subTotal - 0).toFixed(
+              2
+            );
             document.getElementById("item-count").innerText = data.items.length;
-    
+
             // Attach remove event to each button
             document.querySelectorAll(".remove-btn").forEach((button) => {
-              button.addEventListener("click", () => removeItem(button.dataset.itemId));
+              button.addEventListener("click", () =>
+                removeItem(button.dataset.itemId)
+              );
             });
           } else {
-            itemsContainer.innerHTML = '<tr><td colspan="6">No selected items found</td></tr>';
+            itemsContainer.innerHTML =
+              '<tr><td colspan="6">No selected items found</td></tr>';
           }
         } catch (error) {
           console.error("Error fetching selected items:", error);
@@ -194,7 +203,7 @@
             "Error fetching selected items. Please try again later.";
         }
       }
-    
+
       async function removeItem(selectedCartItemId) {
         const token = localStorage.getItem("authToken");
         if (!token) {
@@ -202,7 +211,7 @@
             "Authentication required. Please log in again.";
           return;
         }
-    
+
         try {
           const response = await fetch(
             "https://ecom-back-t1.netfy.app/orders/checkout/remove-items-from-checkout/:selectedCartItemId",
@@ -215,9 +224,10 @@
               body: JSON.stringify({ item_id: selectedCartItemId }),
             }
           );
-    
-          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    
+
+          if (!response.ok)
+            throw new Error(`HTTP error! Status: ${response.status}`);
+
           // Refresh items after removal
           displaySelectedItems();
         } catch (error) {

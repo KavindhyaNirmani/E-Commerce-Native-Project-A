@@ -10,7 +10,8 @@ body {
 }
 
 .container-fluid {
-  background: url("../images/login-signup-image.jpg") no-repeat center center/cover;
+  background: url("../images/login-signup-image.jpg") no-repeat center
+    center/cover;
   opacity: 0.9;
 }
 
@@ -190,8 +191,6 @@ p a:hover {
     height: 100vh;
     overflow: auto;
     padding-bottom: 40px;
-   
-    
   }
   .header {
     text-align: center;
@@ -234,7 +233,6 @@ p a:hover {
   .cus-button {
     margin-top: 20px;
   }
-
 }
 
 @media (min-width: 768px) and (max-width: 922px) {

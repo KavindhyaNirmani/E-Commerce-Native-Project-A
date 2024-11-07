@@ -35,21 +35,30 @@ body {
 
 /*Order Summary Section*/
 .order-summary-box {
-  background-color: transparent;
-  border: 2px solid #ffffff;
-  box-shadow: 0 4px 10px rgba(165, 154, 154, 0.6);
-  border-radius: 10px;
-  padding: 20px;
-  position: relative;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #333;
+  color: #f7c654;
 }
+
+.chart-box {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
 .order-title {
   font-weight: bold;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
   color: #c59d5f;
+  text-align: left;
+  padding: 0;
 }
 .order-summary-box h4 {
   color: white;
-  font-size: 36px;
+  font-size: 16px;
 }
 .order-summary-box p {
   font-weight: bold;
