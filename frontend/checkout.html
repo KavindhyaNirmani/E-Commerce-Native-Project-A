@@ -6,7 +6,6 @@
     <title>Gather & Grab - Checkout</title>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="./assets/styles/cart.css" />
     <link rel="stylesheet" href="./assets/styles/checkout.css" />
 
     <!-- Google Fonts -->
@@ -34,8 +33,6 @@
       height: 100%;
     "
   >
-    <!-- Top bar and header -->
-    <div id="topBar"></div>
     <div id="headerPlaceholder"></div>
 
     <script>
@@ -76,9 +73,9 @@
 
         <!-- Order summary -->
         <div class="col-lg-4">
-          <div class="order-summary bg-dark text-white p-3 rounded">
+          <div class="order-summary">
             <h4>Order Summary</h4>
-            <table class="table-borderless">
+            <table>
               <tr>
                 <td>No. of Items</td>
                 <td>:</td>
@@ -177,9 +174,12 @@
                 <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
                 <td>${item.quantity}</td>
                 <td>Rs.${itemTotal.toFixed(2)}</td>
-                <td><button class="btn btn-danger btn-sm remove-btn" data-item-id="${
+                <td><button class="btn btn-danger" onclick="removeItem(${
                   item.cart_item_id
-                }">Remove</button></td>
+                }
+                  )"aria-label="Remove"><i class="fa fa-trash"></i>
+                   </button>
+                </td>
               `;
               itemsContainer.appendChild(row);
             });

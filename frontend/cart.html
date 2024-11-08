@@ -9,35 +9,42 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/cart.css" />
     <!-- Google font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
     <!-- Font-Awesome -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <!-- jQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <!-- Popper.js and Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body
     style="
       font-family: 'Lato', sans-serif;
       background-image: none;
       height: 100%;
-    ">
+    "
+  >
     <!-- Navbar -->
     <div id="headerPlaceholder"></div>
 
@@ -72,7 +79,8 @@
           </table>
           <button
             class="btn-add"
-            onclick="window.location.href='index.html#menu'">
+            onclick="window.location.href='index.html#menu'"
+          >
             Add item
           </button>
         </div>
@@ -195,18 +203,22 @@
             <td>
               <button onclick="changeQuantity(${
                 item.cart_item_id
-              }, -1)" class="btn btn-sm btn-secondary">-</button>
+              }, -1)" class="btn-qunatity">-</button>
               <span id="quantity-${item.cart_item_id}">${quantity}</span>
               <button onclick="changeQuantity(${
                 item.cart_item_id
-              }, 1)" class="btn btn-sm btn-secondary">+</button>
+              }, 1)" class="btn-qunatity">+</button>
             </td>
             <td>Rs: <span id="total-${item.cart_item_id}">${itemTotal.toFixed(
             2
           )}</span></td>
             <td><button class="btn btn-danger" onclick="removeItem(${
               item.cart_item_id
-            })">Remove</button></td>
+            }
+              )"aria-label="Remove"><i class="fa fa-trash"></i>
+             </button>
+            </td>
+
           `;
           cartItemsContainer.appendChild(row);
         });
@@ -279,6 +291,7 @@
           document.getElementById(`total-${cartItemId}`).textContent = (
             currentQuantity * itemPrice
           ).toFixed(2);
+
           updateOrderSummary();
         } catch (error) {
           console.error("Error updating item quantity:", error);
