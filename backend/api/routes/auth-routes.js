@@ -6,14 +6,16 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const authController = require("../controllers/auth-controller");
-const { protect,superAdminOnly, adminOrSuperAdmin,adminOnly} = require("../middleware/auth-middleware");
+const {
+  protect,
+  superAdminOnly,
+  adminOrSuperAdmin,
+  adminOnly,
+} = require("../middleware/auth-middleware");
 const router = express.Router(); //create a new instance of the Express Router
 
 //const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
-const userImagePath = path.resolve(
-  __dirname,
-  "../../images/user-image"
-);
+const userImagePath = path.resolve(__dirname, "../../images/user-image");
 console.log("Saving to:", userImagePath);
 
 const storage = multer.diskStorage({
@@ -37,11 +39,16 @@ router.post("/login", authController.login);
 router.use("/images/user-image", express.static(userImagePath));
 
 //Admin creation(-super-admin-only route)
-router.post('/add-admin',  upload.single('user_image'), protect,superAdminOnly,authController.addAdmin);
-
+router.post(
+  "/add-admin",
+  upload.single("user_image"),
+  protect,
+  superAdminOnly,
+  authController.addAdmin
+);
 
 //Get all admins
-router.get('/admins',protect,adminOrSuperAdmin,authController.getAllAdmins);
+router.get("/admins", protect, adminOrSuperAdmin, authController.getAllAdmins);
 
 //Delete an admin by Id
 router.delete(
@@ -57,5 +64,8 @@ router.get("/", (req, res) => {
       "Auth routes are available for registration and login. Use /register or /login.",
   });
 });
+
+// Fetch all registered users (only accessible to admins and super-admins)
+router.get("/users", protect, adminOrSuperAdmin, authController.getAllUsers);
 
 module.exports = router;
