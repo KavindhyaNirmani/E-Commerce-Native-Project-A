@@ -10,8 +10,7 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
     <!--Custom CSS-->
     <link rel="stylesheet" href="./assets/styles/dashboard.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
@@ -20,9 +19,11 @@
 
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-
+      rel="stylesheet" />
+    <!-- jQuery-->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"></script>
     <!-- Popper.js and Bootstrap JS -->
     <!--<script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
@@ -43,8 +44,7 @@
       font-family: 'Lato', sans-serif;
       height: 100vh;
       background-color: #1e1e1e !important;
-    "
-  >
+    ">
     <!-- Placeholder for Sidebar -->
     <div id="sidebar-placeholder"></div>
 
@@ -78,94 +78,68 @@
     </script>
 
     <div class="content">
-      <!-- Menu section -->
-      <section class="our menu-padding" style="margin-top: 10px">
-        <div class="container" id="menu">
-          <div class="menutopic text-center">
-            <h2>Menu Category</h2>
-          </div>
-          <div
-            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-3"
-          >
-            <!-- Pizza -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-pizza.jpg"
-                  alt="Pizza"
-                  class="category-image"
-                />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Cake -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-cake.jpg"
-                  alt="Pizza"
-                  class="category-image"
-                />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Beverages -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-beverages.jpg"
-                  alt="Pizza"
-                  class="category-image"
-                />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Order Summary Section -->
-
-      <div class="container my-5">
+      <div class="container my-1">
         <h2 class="order-title">Order Summary</h2>
-        <div class="row">
+
+        <!-- Order Summary Boxes in a Single Row -->
+        <div class="row text-center mb-4">
           <!-- Total Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
+          <div class="col-lg-3 col-md-6 col-6 mb-3">
+            <div class="order-summary-box">
               <p>Total Orders:</p>
               <h4 id="total-orders">0</h4>
             </div>
           </div>
 
           <!-- Pending Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
+          <div class="col-lg-3 col-md-6 col-6 mb-3">
+            <div class="order-summary-box">
               <p>Pending Orders:</p>
               <h4 id="pending-orders">0</h4>
             </div>
           </div>
 
-          <!-- Successfull Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
+          <!-- Successful Orders -->
+          <div class="col-lg-3 col-md-6 col-6 mb-3">
+            <div class="order-summary-box">
               <p>Successful Orders:</p>
-              <h4 id="successfull-orders">0</h4>
+              <h4 id="successful-orders">0</h4>
             </div>
           </div>
 
           <!-- Failed Orders -->
-          <div class="col-lg-3 col-md-6 col-6 mb-4">
-            <!-- Adjusted for responsiveness -->
-            <div class="order-summary-box text-center">
+          <div class="col-lg-3 col-md-6 col-6 mb-3">
+            <div class="order-summary-box">
               <p>Failed Orders:</p>
               <h4 id="failed-orders">0</h4>
             </div>
           </div>
         </div>
+
+        <!-- Chart Section -->
+        <div class="row">
+          <!-- Pie Chart (smaller width) -->
+          <div class="col-lg-4 col-md-6 mb-4 text-center">
+            <div class="chart-box">
+              <h4>Order Status Distribution</h4>
+              <!-- Placeholder for Pie Chart -->
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Bar Chart (larger width) -->
+          <div class="col-lg-8 col-md-6 mb-4 text-center">
+            <div class="chart-box">
+              <h4>Order Summary Chart</h4>
+              <!-- Placeholder for Bar Chart -->
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+        </div>
       </div>
+
+      
 
       <!-- Special Offers Section -->
       <div class="container my-4">
@@ -189,8 +163,7 @@
         id="addOfferModal"
         tabindex="-1"
         aria-labelledby="addOfferModalLabel"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -200,8 +173,7 @@
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                id="closeModal"
-              ></button>
+                id="closeModal"></button>
             </div>
             <div class="modal-body">
               <form
@@ -322,232 +294,197 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
       // let offers = [];
       // let showOffers = false;
 
-      /* document.addEventListener("DOMContentLoaded", () => {
-          // Fetch order details from the backend API
-          fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+      document.addEventListener("DOMContentLoaded", () => {
+        // Fetch order summaries
+        fetchOrderSummary();
+
+        // Fetch data for pie chart (order percentages)
+        fetch(
+          "https://ecom-back-t1.netfy.app/orders/admin/order-status-percentages",
+          {
             method: "GET",
             headers: {
               Authorization: `Bearer ${localStorage.getItem("authToken")}`,
             },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            createPieChart(data);
           })
-            .then((response) => response.json())
-            .then((data) => {
-              // Update the order summaries with the data from the API
-              document.getElementById("total-orders").textContent =
-                data.totalOrders;
-              document.getElementById("pending-orders").textContent =
-                data.pendingOrders;
-              document.getElementById("successfull-orders").textContent =
-                data.successfulOrders;
-              document.getElementById("failed-orders").textContent =
-                data.failedOrders;
-            })
-            .catch((error) => {
-              console.error("Error fetching order data:", error);
-            });
-          })
-*/
-
-      //offer section
-
-      const addOfferButton = document.getElementById("addOfferButton");
-      const submitOfferBtn = document.getElementById("submitOfferBtn");
-      const offerForm = document.getElementById("offerForm");
-      const offerList = document.getElementById("offerList");
-
-      addOfferButton.addEventListener("click", () => {
-        const addOfferModal = new bootstrap.Modal(
-          document.getElementById("addOfferModal")
-        );
-        addOfferModal.show();
-      });
-
-      fetchOffers();
-
-      submitOfferBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        if (offerForm.checkValidity()) {
-          await submitOfferForm();
-        } else {
-          offerForm.classList.add("was-validated");
-        }
-      });
-
-      async function fetchOffers() {
-        try {
-          const token = localStorage.getItem("authToken");
-
-          const response = await axios.get(
-            "https://ecom-back-t1.netfy.app/promotion",
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
+          .catch((error) =>
+            console.error("Error fetching pie chart data:", error)
           );
-          const offers = response.data;
-          offerList.innerHTML = ""; // Clear previous offers
 
-          offers.forEach((offer) => {
-            const imageUrl = offer.promotion_image
-              ? `https://ecom-back-t1.netfy.app${offer.promotion_image}`
-              : "";
+        // Fetch data for bar chart (weekly order summary for categories)
+        fetch("https://ecom-back-t1.netfy.app/orders/weekly-order-summary", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Data fetched for chart:", data);
+            createBarChart(data);
+          })
+          .catch((error) =>
+            console.error("Error fetching bar chart data:", error)
+          );
+      });
 
-            const offerCard = `
-              <div class="card m-2 promotion-card" style="width: 18rem;">
-                ${
-                  offer.promotion_image
-                    ? `<img src="${imageUrl}" class="card-img-top" >`
-                    : ""
-                }
-                <div class="card-body">
-                  <h5 class="card-title">${offer.title}</h5>
-                  <h5 class="card-text">${offer.promotion_description}</h5>
-                  <h6>Start: ${new Date(
-                    offer.start_date
-                  ).toLocaleDateString()}</h6>
-                  <h6>End: ${new Date(offer.end_date).toLocaleDateString()}</h6>
-                  <button class="btn btn-danger remove-offer-button" data-remove-id="${
-                    offer.promotion_id
-                  }">Remove offer</button>
-                </div>
-              </div>
-            `;
-            offerList.innerHTML += offerCard;
-          });
+      // Function to create the pie chart
+      function createPieChart(data) {
+        const ctx = document.getElementById("pieChart").getContext("2d");
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Pending", "Successful", "Failed"],
+            datasets: [
+              {
+                label: "Order Percentages",
+                data: [data.pending, data.successful, data.failed],
+                backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "white",
+                },
+                position: "top",
+              },
+            },
+          },
+        });
+      }
+
+      // Fetch data from the backend API
+      async function fetchData() {
+        try {
+          const response = await fetch("/weekly-order-summary");
+          const data = await response.json();
+          renderChart(data);
         } catch (error) {
-          console.error("Error fetching offers:", error);
+          console.error("Error fetching data:", error);
         }
       }
 
-      // Submit offer form data to backend
-
-      async function submitOfferForm() {
-        const token = localStorage.getItem("authToken");
-
-        const formData = new FormData();
-        formData.append(
-          "title",
-          document.getElementById("offerTitle").value || null
-        );
-        formData.append(
-          "promotion_description",
-          document.getElementById("offerDetail").value || null
-        );
-        formData.append("min_price", document.getElementById("minPrice").value);
-        formData.append("discount_percentage", document.getElementById("disPercentage").value);
-        formData.append(
-          "categories",
-          document.getElementById("category").value || null
-        );
-        formData.append(
-          "start_date",
-          document.getElementById("startDate").value || null
-        );
-        formData.append(
-          "end_date",
-          document.getElementById("endDate").value || null
-        );
-
-        const offerImage = document.getElementById("offerImage").files[0];
-        if (offerImage) {
-          formData.append("promotion_image", offerImage);
-        } else {
-          formData.append("promotion_image", null);
-        }
-
-        // Define the rules object
-        const rules = {
-          min_price: document.getElementById("minPrice").value || null,
-          discount_percentage:
-            document.getElementById("disPercentage").value || null,
-        };
-
-        // Add rules as a JSON string
-        formData.append("rules", JSON.stringify(rules));
-
-        try {
-          for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-          }
-          const response = await axios.post(
-            "https://ecom-back-t1.netfy.app/promotion",
-            formData,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+      // Function to create the bar chart
+      function createBarChart(data) {
+        const ctx = document.getElementById("barChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: Object.keys(data), // ["Week 1", "Week 2", "Week 3", "Week 4"]
+            datasets: [
+              {
+                label: "Pizza Orders",
+                data: Object.values(data).map((week) => week.Pizza),
+                backgroundColor: "#c59d5f",
+                borderWidth: 1,
               },
-            }
-          );
-          console.log("Offer added response:", response.data);
-          alert("Offer added successfully!");
-
-          offerForm.reset();
-          offerForm.classList.remove("was-validated");
-
-          addOfferModal.hide();
-
-          fetchOffers();
-        } catch (error) {
-          console.error(
-            "Error adding offer:",
-            error.response ? error.response.data : error.message
-          );
-          alert("Failed to add offer.");
-        }
+              {
+                label: "Cake Orders",
+                data: Object.values(data).map((week) => week.Cake),
+                backgroundColor: "#8a5a44",
+                borderWidth: 1,
+              },
+              {
+                label: "Beverage Orders",
+                data: Object.values(data).map((week) => week.Beverage),
+                backgroundColor: "#e6b98c",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Order Count",
+                  color: "white",
+                },
+                ticks: {
+                  stepSize: 1,
+                  precision: 0,
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
+                },
+              },
+              x: {
+                ticks: {
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
+                },
+                title: {
+                  display: true,
+                  text: "Weeks",
+                  color: "white",
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: "white",
+                },
+                position: "top",
+              },
+              tooltip: {
+                bodyColor: "white",
+              },
+            },
+          },
+        });
       }
 
-      offerList.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("remove-offer-button")) {
-          const offerId = e.target.getAttribute("data-remove-id");
-          if (confirm("Are you sure you want to remove this offer?")) {
-            try {
-              await axios.delete(
-                `https://ecom-back-t1.netfy.app/promotion/${offerId}`,
-                {
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                      "authToken"
-                    )}`,
-                  },
-                }
-              );
+      window.onload = fetchData;
 
-              alert("Offer removed successfully!");
-              fetchOffers(); // Refresh the offers list after deletion
-            } catch (error) {
-              console.error("Error removing offer:", error);
-              alert("Failed to remove offer. Please try again.");
-            }
-          }
-        }
-      });
-
-      //document.addEventListener("DOMContentLoaded", () => {
-      // Fetch order details from the backend API
-      //   fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics")
-      //    .then((response) => response.json())
-      //    .then((data) => {
-      // Update the order summaries with the data from the API
-      //      document.getElementById("total-orders").textContent =
-      //      data.totalOrders;
-      //    document.getElementById("pending-orders").textContent =
-      //       data.pendingOrders;
-      //      document.getElementById("successfull-orders").textContent =
-      //        data.successfulOrders;
-      //      document.getElementById("failed-orders").textContent =
-      //        data.failedOrders;
-      //    })
-      //    .catch((error) => {
-      //    console.error("Error fetching order data:", error);
-      //     });
-      //   });
+      // Function to fetch and display order summary counts
+      function fetchOrderSummary() {
+        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("total-orders").textContent =
+              data.totalOrders;
+            document.getElementById("pending-orders").textContent =
+              data.pendingOrders;
+            document.getElementById("successful-orders").textContent =
+              data.successfulOrders;
+            document.getElementById("failed-orders").textContent =
+              data.failedOrders;
+          })
+          .catch((error) => console.error("Error fetching order data:", error));
+      }
 
       // Handle modal popup for adding new offer
     </script>

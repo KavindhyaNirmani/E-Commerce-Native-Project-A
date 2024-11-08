@@ -45,7 +45,7 @@ class featureSection extends HTMLElement {
                 <div class="card">
                   <img class="card-image" src="./assets/images/feature-pizza-img1.jpg" alt="24h-service" />
                   <div class="card-body">
-                    <h5 class="card-title">Healthy Pizza</h5>
+                    <h5 class="card-title">Healthy</h5>
                    
                   </div>
                 </div>
@@ -63,7 +63,7 @@ class featureSection extends HTMLElement {
                 <div class="card">
                   <img class="card-image" src="./assets/images/feature-pizza-img1.jpg" alt="Delivery" />
                   <div class="card-body">
-                    <h5 class="card-title">Customized Pizza</h5>
+                    <h5 class="card-title">Customize</h5>
                     
                   </div>
                 </div>
@@ -72,7 +72,7 @@ class featureSection extends HTMLElement {
                 <div class="card">
                   <img class="card-image" src="./assets/images/feature-pizza-img3.jpg" alt="Dessert" />
                   <div class="card-body">
-                    <h5 class="card-title">Enjoy With Family</h5>
+                    <h5 class="card-title">Enjoy</h5>
                    
                   </div>
                 </div>

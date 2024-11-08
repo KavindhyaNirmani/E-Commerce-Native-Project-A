@@ -13,7 +13,8 @@ body {
 }
 
 .container-fluid {
-  background: url("../images/login-signup-image.jpg") no-repeat center center/cover;
+  background: url("../images/login-signup-image.jpg") no-repeat center
+    center/cover;
   opacity: 0.9;
 }
 

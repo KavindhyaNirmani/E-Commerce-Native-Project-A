@@ -91,7 +91,8 @@ exports.login = async (req, res) => {
   }
 };
 
-const checkMissingFields = (body, requiredFields) =>requiredFields.filter((field) => !body[field]);
+const checkMissingFields = (body, requiredFields) =>
+  requiredFields.filter((field) => !body[field]);
 
 // Add new admin (only admins can add another admin)
 exports.addAdmin = async (req, res) => {
@@ -147,10 +148,9 @@ exports.addAdmin = async (req, res) => {
       password: hashedPassword,
       phone_no: phone_no || null,
       address: address || null,
-      role:role||null,
+      role: role || null,
       //user_image: req.file ? req.file.filename : null, // Assign the file name from multer
       user_image,
-      
     };
 
     await User.createAdmin(newAdmin);

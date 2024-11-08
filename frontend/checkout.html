@@ -1,138 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gather & Grab - Checkout</title>
-  
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gather & Grab - Checkout</title>
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/styles/checkout.css" />
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="./assets/styles/cart.css" />
-  <link rel="stylesheet" href="./assets/styles/checkout.css" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <!-- Font-Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-  <!-- Font-Awesome CSS (no integrity for compatibility) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
+      background-image: none;
+      height: 100%;
+    "
+  >
+    <div id="headerPlaceholder"></div>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body style="font-family: 'Lato', sans-serif; background-image: none; height: 100%;">
-  <!-- Top bar and header -->
-  <div id="topBar"></div>
-  <div id="headerPlaceholder"></div>
+    <script>
+      fetch("./assets/widgets/header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("headerPlaceholder").innerHTML = data;
+          const offcanvasNavbar = document.getElementById("offcanvasNavbar");
+          if (offcanvasNavbar) offcanvasNavbar.style.backgroundColor = "black";
+        })
+        .catch((error) => console.error("Error loading header:", error));
+    </script>
 
-  <script>
-    fetch("./assets/widgets/header.html")
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("headerPlaceholder").innerHTML = data;
-        const offcanvasNavbar = document.getElementById("offcanvasNavbar");
-        if (offcanvasNavbar) offcanvasNavbar.style.backgroundColor = "black";
-      })
-      .catch(error => console.error("Error loading header:", error));
-  </script>
+    <!-- Main content for checkout -->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Checkout error message -->
+          <div id="checkout-error" class="text-danger mb-3"></div>
 
-  <!-- Main content for checkout -->
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-lg-8">
-        <table id="checkout-table" class="table table-striped text-white">
-          <thead>
-            <tr>
-              <th>Select</th>
-              <th>Item</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Remove</th>
-            </tr>
-          </thead>
-          <tbody id="order-items"></tbody>
-        </table>
-      </div>
-
-      <div class="col-lg-4">
-        <div class="order-summary bg-dark text-white p-3 rounded">
-          <h4>Order Summary</h4>
-          <table class="table-borderless">
-            <tr><td>No. of Items</td><td>:</td><td><span id="item-count">0</span></td></tr>
-            <tr><td>Sub Total</td><td>:</td><td>Rs.<span id="sub-total">0.00</span></td></tr>
-            <tr><td>Discount</td><td>:</td><td>Rs.<span id="discount">0.00</span></td></tr>
-            <tr><td colspan="3"><hr class="full-width-line" /></td></tr>
-            <tr><td><strong>Total </strong></td><td>:</td><td><strong>Rs. <span id="total">0.00</span></strong></td></tr>
+          <!-- Table for order items -->
+          <table id="checkout-table" class="table table-striped text-white">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody id="order-items">
+              <!-- Items will be loaded here dynamically -->
+            </tbody>
           </table>
-          <button id="checkout-btn" class="btn btn-success mt-3">Proceed to Checkout</button>
+        </div>
+
+        <!-- Order summary -->
+        <div class="col-lg-4">
+          <div class="order-summary">
+            <h4>Order Summary</h4>
+            <table>
+              <tr>
+                <td>No. of Items</td>
+                <td>:</td>
+                <td><span id="item-count">0</span></td>
+              </tr>
+              <tr>
+                <td>Sub Total</td>
+                <td>:</td>
+                <td>Rs.<span id="sub-total">0.00</span></td>
+              </tr>
+              <tr>
+                <td>Discount</td>
+                <td>:</td>
+                <td>Rs.<span id="discount">0.00</span></td>
+              </tr>
+              <tr>
+                <td colspan="3"><hr class="full-width-line" /></td>
+              </tr>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td>:</td>
+                <td>
+                  <strong>Rs. <span id="total">0.00</span></strong>
+                </td>
+              </tr>
+            </table>
+            <button id="checkout-btn" class="btn btn-success mt-3">
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <div id="footerPlaceholder"></div>
-  <script>
-    fetch("./assets/widgets/footer.html")
-      .then(response => response.text())
-      .then(data => document.getElementById("footerPlaceholder").innerHTML = data)
-      .catch(error => console.error("Error loading footer:", error));
-  </script>
+    <!-- Footer -->
+    <div id="footerPlaceholder"></div>
+    <script>
+      fetch("./assets/widgets/footer.html")
+        .then((response) => response.text())
+        .then(
+          (data) =>
+            (document.getElementById("footerPlaceholder").innerHTML = data)
+        )
+        .catch((error) => console.error("Error loading footer:", error));
+    </script>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Fetch and Display Cart Items Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    <!-- Fetch and Display Cart Items Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
         displaySelectedItems();
-    });
+      });
 
-    async function displaySelectedItems() {
+      async function displaySelectedItems() {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          document.getElementById("checkout-error").innerText =
+            "Authentication required. Please log in again.";
+          return;
+        }
+
         try {
-            const response = await fetch('https://ecom-back-t1.netfy.app/orders/checkout/selected-items', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer YOUR_TOKEN_HERE' // Replace with your actual token
+          const response = await fetch(
+            "https://ecom-back-t1.netfy.app/orders/checkout/selected-items",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok)
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          const data = await response.json();
+          const itemsContainer = document.getElementById("order-items");
+          itemsContainer.innerHTML = "";
+          let subTotal = 0;
+
+          if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((item) => {
+              const itemTotal = parseFloat(item.item_price) * item.quantity;
+              subTotal += itemTotal;
+
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td><img src="https://ecom-back-t1.netfy.app${
+                  item.item_image
+                }" alt="${
+                item.item_name
+              }" style="width: 50px; height: 50px;"></td>
+                <td>${item.item_name}</td>
+                <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
+                <td>${item.quantity}</td>
+                <td>Rs.${itemTotal.toFixed(2)}</td>
+                <td><button class="btn btn-danger" onclick="removeItem(${
+                  item.cart_item_id
                 }
+                  )"aria-label="Remove"><i class="fa fa-trash"></i>
+                   </button>
+                </td>
+              `;
+              itemsContainer.appendChild(row);
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
+            document.getElementById("sub-total").innerText =
+              subTotal.toFixed(2);
+            document.getElementById("total").innerText = (subTotal - 0).toFixed(
+              2
+            );
+            document.getElementById("item-count").innerText = data.items.length;
 
-            const data = await response.json();
-
-            if (data.error) {
-                console.error(data.error);
-                // Display error message on the page
-                document.getElementById('checkout-error').innerText = data.error;
-                return;
-            }
-
-            const itemsContainer = document.getElementById('checkout-items');
-            itemsContainer.innerHTML = ''; // Clear existing items
-
-            // Check if selectedItems exists and is an array
-            if (Array.isArray(data.selectedItems) && data.selectedItems.length > 0) {
-                // Iterate over the selected items and display them
-                data.selectedItems.forEach(item => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'list-group-item';
-                    itemElement.innerText = `${item.name} - $${item.price.toFixed(2)}`; // Ensure price is formatted
-                    itemsContainer.appendChild(itemElement);
-                });
-            } else {
-                itemsContainer.innerHTML = '<div>No selected items found.</div>'; // Display a message if no items
-            }
+            // Attach remove event to each button
+            document.querySelectorAll(".remove-btn").forEach((button) => {
+              button.addEventListener("click", () =>
+                removeItem(button.dataset.itemId)
+              );
+            });
+          } else {
+            itemsContainer.innerHTML =
+              '<tr><td colspan="6">No selected items found</td></tr>';
+          }
         } catch (error) {
-            console.error('Error fetching selected items:', error);
-            const errorMessageElement = document.getElementById('checkout-error');
-            if (errorMessageElement) {
-                errorMessageElement.innerText = 'Error fetching selected items. Please try again later.';
-            }
+          console.error("Error fetching selected items:", error);
+          document.getElementById("checkout-error").innerText =
+            "Error fetching selected items. Please try again later.";
         }
-    }
-</script>
-</body>
+      }
+
+      async function removeItem(cartItemId) {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          document.getElementById("checkout-error").innerText =
+            "Authentication required. Please log in again.";
+          return;
+        }
+
+        try {
+          const url = `https://ecom-back-t1.netfy.app/orders/checkout/remove-items-from-checkout/${cartItemId}`;
+
+          // Log the URL to the console for debugging
+          console.log("Removing item with URL:", url);
+
+          // Send the POST request to remove the item
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          console.log(data.message);
+
+          // Refresh items after removal
+          displaySelectedItems();
+        } catch (error) {
+          console.error("Error removing item:", error);
+          document.getElementById("checkout-error").innerText =
+            "Error removing item. Please try again later.";
+        }
+      }
+    </script>
+    <script src="./assets/widgets/contact.js"></script>
+  </body>
 </html>

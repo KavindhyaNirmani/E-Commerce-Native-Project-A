@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 //CORS setup
-app.use((req, res,next) => {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   res.header(
@@ -46,22 +46,13 @@ app.use("/orders", orderRoutes);
 app.use("/promotion", promotionRoutes);
 app.use("/api/feedback", feedbackRoutes);
 
-const menuPath = path.resolve(
-  __dirname,
-  "./images/menu"
-);
+const menuPath = path.resolve(__dirname, "./images/menu");
 app.use("/images/menu", express.static(menuPath));
 
-const userImagePath = path.resolve(
-  __dirname,
-  "./images/user-image"
-);
+const userImagePath = path.resolve(__dirname, "./images/user-image");
 app.use("/images/user-image", express.static(userImagePath));
 
-const promotionPath = path.resolve(
-  __dirname,
-  "./images/promotion"
-);
+const promotionPath = path.resolve(__dirname, "./images/promotion");
 app.use("/images/promotion", express.static(promotionPath));
 
 app.use((req, res, next) => {

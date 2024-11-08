@@ -203,18 +203,22 @@
             <td>
               <button onclick="changeQuantity(${
                 item.cart_item_id
-              }, -1)" class="btn btn-sm btn-secondary">-</button>
+              }, -1)" class="btn-qunatity">-</button>
               <span id="quantity-${item.cart_item_id}">${quantity}</span>
               <button onclick="changeQuantity(${
                 item.cart_item_id
-              }, 1)" class="btn btn-sm btn-secondary">+</button>
+              }, 1)" class="btn-qunatity">+</button>
             </td>
             <td>Rs: <span id="total-${item.cart_item_id}">${itemTotal.toFixed(
             2
           )}</span></td>
             <td><button class="btn btn-danger" onclick="removeItem(${
               item.cart_item_id
-            })">Remove</button></td>
+            }
+              )"aria-label="Remove"><i class="fa fa-trash"></i>
+             </button>
+            </td>
+
           `;
           cartItemsContainer.appendChild(row);
         });
@@ -287,6 +291,7 @@
           document.getElementById(`total-${cartItemId}`).textContent = (
             currentQuantity * itemPrice
           ).toFixed(2);
+
           updateOrderSummary();
         } catch (error) {
           console.error("Error updating item quantity:", error);
@@ -356,7 +361,6 @@
 
       // Define the function to pass items to checkout
       async function passItemsToCheckout() {
-        // Fetch selected items; ensure this function returns the correct structure
         const selectedItems = getSelectedItems();
         const token = localStorage.getItem("authToken");
 
@@ -365,7 +369,6 @@
           return;
         }
 
-        // Check if there are items selected for checkout
         if (!selectedItems || selectedItems.length === 0) {
           alert("Please select items to proceed to checkout.");
           return;
@@ -384,7 +387,7 @@
                 selectedCartItemIds: selectedItems.map(
                   (item) => item.cart_item_id
                 ),
-              }), // Use only cart_item_id
+              }),
             }
           );
 
@@ -396,18 +399,22 @@
             );
             alert(
               errorResponse.error ||
-                "Error proceeding to checkout. Please try again."
+                "Failed to transfer items. Please try again."
             );
             return;
           }
 
-          // Redirect to checkout page after successful transfer
+          // Redirect to the checkout page on successful transfer
+          alert("Items transferred to checkout successfully!");
           window.location.href = "checkout.html";
         } catch (error) {
           console.error("Error transferring items to checkout:", error);
-          alert("Error proceeding to checkout. Please try again.");
+          alert(
+            "An error occurred while transferring items. Please try again."
+          );
         }
       }
     </script>
+    <script src="./assets/widgets/contact.js"></script>
   </body>
 </html>
