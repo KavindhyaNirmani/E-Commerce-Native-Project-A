@@ -143,9 +143,10 @@ exports.removeItemsFromCheckout = async (req, res) => {
 };
 
 // Calculate order summary for selected items in the cart
-exports.calculateOrderSummary = async (req, res) => {
-  const { selectedCartItemIds } = req.body;
-  console.log("Received selectedCartItemIds:", selectedCartItemIds);
+exports.calculateOrderSummary = async (selectedCartItemIds) => {
+  if (!selectedCartItemIds || !Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
+    throw new Error("Invalid or missing 'selectedCartItemIds'");
+  }
 
   if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
     console.log("No items selected condition triggered.");
@@ -201,12 +202,7 @@ exports.calculateOrderSummary = async (req, res) => {
       finalAmount,
     });
 
-    return res.json({
-      totalAmount,
-      discountAmount,
-      finalAmount,
-      totalQuantity,
-    });
+    return { totalAmount, discountAmount, finalAmount };
   } catch (err) {
     console.error("Error while calculating order summary:", err);
     res.status(500).json({ error: "Failed to calculate order summary" });
