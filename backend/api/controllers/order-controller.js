@@ -386,7 +386,7 @@ exports.placeOrder = async (req, res) => {
     );
     const orderId = orderResult.insertId;
 
-    // Add items to the order
+    // Add items to the order_items table
     for (const item of items) {
       const { item_id, quantity, item_price } = item;
       console.log("Attempting to insert into order_items:", {
@@ -398,7 +398,8 @@ exports.placeOrder = async (req, res) => {
 
       try {
         await connection.execute(
-          `INSERT INTO order_items (order_id, item_id, quantity, item_price) VALUES (?, ?, ?, ?)`,
+          `INSERT INTO order_items (order_id, item_id, quantity, item_price) VALUES (?, ?, ?, ?)
+`,
           [orderId, item_id, quantity, item_price]
         );
         console.log("Inserted item successfully:", { orderId, item_id });
