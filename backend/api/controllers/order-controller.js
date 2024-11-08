@@ -536,18 +536,29 @@ exports.getOrderStatistics = async (req, res) => {
 //get the weekly order summary for the current month
 exports.getWeeklyOrderSummary = async (req, res) => {
   const query =
-    'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name,COUNT(DISTINCT ord.order_id) AS order_count FROM `order` ord JOIN `order_items` oi ON ord.order_id=oi.order_id JOIN `item` itm ON oi.item_id=itm.item_id JOIN `category` c ON itm.category_id=c.category_id WHERE MONTH(ord.order_date)=MONTH(CURRENT_DATE()) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number,c.category_name;';
+    'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name, SUM(oi.quantity) AS total_quantity FROM `order` ord JOIN `order_items` oi ON ord.order_id=oi.order_id JOIN `item` itm ON oi.item_id=itm.item_id JOIN `category` c ON itm.category_id=c.category_id WHERE ord.order_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 4 WEEK) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number DESC,c.category_name;';
 
   try {
     const [results] = await db.execute(query);
 
+    // Find the unique week numbers for the last 4 weeks
+    const uniqueWeeks = [...new Set(results.map(row => row.week_number))]
+                          .sort((a, b) => b - a) // Sort in descending order
+                          .slice(0, 4)           // Take the last 4 unique weeks
+                          .reverse();  
+
     const formattedData = {};
+    uniqueWeeks.forEach((week, index) => {
+      formattedData[`Week ${index + 1}`] = {};
+    });
+
+    // Populate the formatted data with total quantities per category for each "Week X"
     results.forEach((row) => {
-      const week = "Week ${row.week_number}";
-      if (!formattedData[week]) {
-        formattedData[week] = {};
+      const weekIndex = uniqueWeeks.indexOf(row.week_number);
+      if (weekIndex > -1) {
+        const weekLabel = `Week ${weekIndex + 1}`;
+        formattedData[weekLabel][row.category_name] = row.total_quantity;
       }
-      formattedData[week][row.category_name] = row.order_count;
     });
 
     res.status(200).json(formattedData);
