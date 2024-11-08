@@ -25,12 +25,19 @@
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       crossorigin="anonymous"></script>
     <!-- Popper.js and Bootstrap JS -->
-    <script
+    <!--<script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body
     style="
@@ -71,48 +78,6 @@
     </script>
 
     <div class="content">
-      <!-- Menu section -->
-      <section class="our menu-padding" style="margin-top: 10px">
-        <div class="container" id="menu">
-          <div class="menutopic text-center">
-            <h2>Menu Category</h2>
-          </div>
-          <div
-            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-3">
-            <!-- Pizza -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-pizza.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Cake -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-cake.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Beverages -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-beverages.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Order Summary Section -->
       <div class="container my-1">
         <h2 class="order-title">Order Summary</h2>
@@ -174,19 +139,19 @@
         </div>
       </div>
 
-      -->
+      
 
       <!-- Special Offers Section -->
       <div class="container my-4">
         <h2>Special Offers</h2>
-        <div id="special-offer-gallery" class="text-center mt-5">
+        <div id="offerList" class="text-center mt-5 d-flex flex-wrap gap-3">
           <!-- Offer images will be dynamically loaded here -->
         </div>
         <div class="text-center my-2 mt-3">
-          <button id="add-offer-btn" class="btn custom-yellow ml-2">
+          <button id="addOfferButton" class="btn custom-yellow ml-2">
             Add New
           </button>
-          <button id="view-more-btn" class="btn custom-yellow-outline ml-2">
+          <button id="viewMoreButton " class="btn custom-yellow-outline ml-2">
             View More
           </button>
         </div>
@@ -211,7 +176,13 @@
                 id="closeModal"></button>
             </div>
             <div class="modal-body">
-              <form id="offerForm">
+              <form
+                id="offerForm"
+                method="POST"
+                class="needs-validation"
+                novalidate
+                enctype="multipart/form-data"
+              >
                 <div class="form-group">
                   <label for="offerTitle">Title</label>
                   <input
@@ -219,8 +190,11 @@
                     class="form-control"
                     id="offerTitle"
                     placeholder="Enter offer details"
-                    required />
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
                 </div>
+
                 <div class="form-group">
                   <label for="offerDetail">Description</label>
                   <input
@@ -228,25 +202,60 @@
                     class="form-control"
                     id="offerDetail"
                     placeholder="Enter offer details"
-                    required />
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
                 </div>
+
                 <div class="form-group">
-                  <label for="offerDiscount">Discount</label>
+                  <label for="minPrice">Minimum Price</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="offerDiscount"
+                    id="minPrice"
                     placeholder="Enter offer details"
-                    required />
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
                 </div>
+
+                <div class="form-group">
+                  <label for="disPercentage">Discount Percentage</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="disPercentage"
+                    placeholder="Enter offer details"
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="category" class="form-label">Category</label>
+                  <select class="form-select" id="category" required>
+                    <option value="" selected disabled>
+                      Select a category
+                    </option>
+                    <option value="cake">Cake</option>
+                    <option value="pizza">Pizza</option>
+                    <option value="beverage">Beverage</option>
+                  </select>
+                  <div class="invalid-feedback">Please fill the field!</div>
+                </div>
+
                 <div class="form-group">
                   <label for="offerImage">Upload Image</label><br />
                   <input
                     type="file"
                     class="form-control"
                     id="offerImage"
-                    required />
+                    accept="image/*"
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
                 </div>
+
                 <div class="form-group">
                   <label for="startDate">Start Date</label>
                   <input
@@ -254,8 +263,11 @@
                     class="form-control"
                     id="startDate"
                     placeholder="Enter offer details"
-                    required />
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
                 </div>
+
                 <div class="form-group">
                   <label for="endDate">End Date</label>
                   <input
@@ -263,17 +275,20 @@
                     class="form-control"
                     id="endDate"
                     placeholder="Enter offer details"
-                    required />
+                    required
+                  />
+                  <div class="invalid-feedback">Please fill the field!</div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn" id="submitOfferBtn">
+                    Submit
+                  </button>
+                  <button type="button" class="btn" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
                 </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn" id="submitOfferBtn">
-                Submit
-              </button>
-              <button type="button" class="btn" data-bs-dismiss="modal">
-                Cancel
-              </button>
             </div>
           </div>
         </div>
@@ -282,8 +297,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-      let offers = [];
-      let showOffers = false;
+      // let offers = [];
+      // let showOffers = false;
 
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order summaries
@@ -335,7 +350,7 @@
               {
                 label: "Order Percentages",
                 data: [data.pending, data.successful, data.failed],
-                backgroundColor: ["#c59d5f ", "#e6b98c", "blue"],
+                backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
                 borderWidth: 1,
               },
             ],
@@ -344,6 +359,9 @@
             responsive: true,
             plugins: {
               legend: {
+                labels: {
+                  color: "white",
+                },
                 position: "top",
               },
             },
@@ -373,19 +391,19 @@
               {
                 label: "Pizza Orders",
                 data: Object.values(data).map((week) => week.Pizza),
-                backgroundColor: "#FFD700",
+                backgroundColor: "#c59d5f",
                 borderWidth: 1,
               },
               {
                 label: "Cake Orders",
                 data: Object.values(data).map((week) => week.Cake),
-                backgroundColor: "#FF69B4",
+                backgroundColor: "#8a5a44",
                 borderWidth: 1,
               },
               {
                 label: "Beverage Orders",
                 data: Object.values(data).map((week) => week.Beverage),
-                backgroundColor: "#87CEFA",
+                backgroundColor: "#e6b98c",
                 borderWidth: 1,
               },
             ],
@@ -398,22 +416,46 @@
                 title: {
                   display: true,
                   text: "Order Count",
+                  color: "white",
                 },
                 ticks: {
-                  stepSize: 1, // Ensures the y-axis increments by 1
-                  precision: 0, // Rounds values to whole numbers
+                  stepSize: 1,
+                  precision: 0,
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
                 },
               },
               x: {
+                ticks: {
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
+                },
                 title: {
                   display: true,
                   text: "Weeks",
+                  color: "white",
                 },
               },
             },
             plugins: {
               legend: {
+                labels: {
+                  color: "white",
+                },
                 position: "top",
+              },
+              tooltip: {
+                bodyColor: "white",
               },
             },
           },
@@ -445,80 +487,6 @@
       }
 
       // Handle modal popup for adding new offer
-      document
-        .getElementById("add-offer-btn")
-        .addEventListener("click", function () {
-          $("#addOfferModal").modal("show");
-        });
-
-      // Handle adding new offer logic
-      document
-        .getElementById("submitOfferBtn")
-        .addEventListener("click", function () {
-          const offerDetail = document.getElementById("offerDetail").value;
-          const offerImage = document.getElementById("offerImage").files[0];
-
-          if (offerImage) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              // Push new offer details into the array
-              offers.push({ detail: offerDetail, image: e.target.result });
-              displayOffers();
-              $("#addOfferModal").modal("hide");
-            };
-            reader.readAsDataURL(offerImage);
-          }
-        });
-
-      // Function to display offers
-      function displayOffers() {
-        const gallery = document.getElementById("special-offer-gallery");
-        gallery.innerHTML = "";
-
-        // Check if there are offers
-        if (offers.length === 0) {
-          gallery.innerHTML = "<p>No special offers yet.</p>";
-          return; // Exit the function
-        }
-
-        // Always show the first offer, if available
-        if (offers.length > 0) {
-          const firstOffer = offers[0];
-          gallery.innerHTML += `<div class="offer-img-container">
-                    <img src="${firstOffer.image}" alt="Offer" class="special-offer-img" />
-                    <button class="delete-btn" onclick="deleteOffer(0)">X</button>
-                    <p>${firstOffer.detail}</p>
-                </div>`;
-        }
-
-        // Show remaining offers only when the toggle is active
-        if (showOffers) {
-          for (let i = 1; i < offers.length; i++) {
-            const offer = offers[i];
-            gallery.innerHTML += `<div class="offer-img-container">
-                        <img src="${offer.image}" alt="Offer" class="special-offer-img" />
-                        <button class="delete-btn" onclick="deleteOffer(${i})">X</button>
-                        <p>${offer.detail}</p>
-                    </div>`;
-          }
-        }
-      }
-
-      // Function to toggle offers visibility
-      document.getElementById("view-more-btn").onclick = function () {
-        showOffers = !showOffers;
-        this.textContent = showOffers ? "Hide Offers" : "View More";
-        displayOffers();
-      };
-
-      // Function to delete an offer
-      function deleteOffer(index) {
-        offers.splice(index, 1);
-        displayOffers();
-      }
-
-      // Initial display of offers (if any)
-      displayOffers();
     </script>
   </body>
 </html>
