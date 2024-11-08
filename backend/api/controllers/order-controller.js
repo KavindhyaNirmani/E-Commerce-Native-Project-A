@@ -542,10 +542,10 @@ exports.getWeeklyOrderSummary = async (req, res) => {
     const [results] = await db.execute(query);
 
     // Find the unique week numbers for the last 4 weeks
-    const uniqueWeeks = [...new Set(results.map(row => row.week_number))]
-                          .sort((a, b) => b - a) // Sort in descending order
-                          .slice(0, 4)           // Take the last 4 unique weeks
-                          .reverse();  
+    const uniqueWeeks = [...new Set(results.map((row) => row.week_number))]
+      .sort((a, b) => b - a) // Sort in descending order
+      .slice(0, 4) // Take the last 4 unique weeks
+      .reverse();
 
     const formattedData = {};
     uniqueWeeks.forEach((week, index) => {

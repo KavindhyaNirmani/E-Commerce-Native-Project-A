@@ -85,7 +85,7 @@ class User {
     try {
       const [results] = await db.execute(
         "SELECT * FROM user WHERE role IN (?,?) AND is_deleted = 0",
-        ["admin","super admin"]
+        ["admin", "super admin"]
       );
 
       return results;

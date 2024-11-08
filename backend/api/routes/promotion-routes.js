@@ -7,10 +7,7 @@ const path = require("path");
 const router = express.Router();
 
 // Set up the storage for images
-const promotionPath = path.resolve(
-  __dirname,
-  "../../images/promotion"
-);
+const promotionPath = path.resolve(__dirname, "../../images/promotion");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, promotionPath);
@@ -54,7 +51,12 @@ router.post("/apply", promotionController.applyPromotion);
 router.get("/", promotionController.getAllPromotions);
 
 // Admin-only route to fetch a promotion by ID
-router.get("/:promotionId", protect,adminOrSuperAdmin, promotionController.getPromotionById);
+router.get(
+  "/:promotionId",
+  protect,
+  adminOrSuperAdmin,
+  promotionController.getPromotionById
+);
 
 // Admin-only route to delete a promotion by ID
 router.delete(
