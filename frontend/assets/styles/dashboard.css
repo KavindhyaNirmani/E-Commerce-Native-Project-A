@@ -70,6 +70,12 @@ body {
   text-align: center;
 }
 
+.chart-box{
+  background-color: #333;
+  color: #ffffff !important;
+}
+
+
 /*offer section*/
 .special-offer-img {
   width: 300px;
@@ -207,6 +213,11 @@ p {
   object-fit: cover;
 }
 
+card-body{
+  .p{
+    color: #000;
+  }
+}
 .col {
   padding: 0;
 }
