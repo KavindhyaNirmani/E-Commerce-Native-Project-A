@@ -13,47 +13,25 @@
   text-align: center;
 }
 
-/* Cart Table */
-.empty-cart-message {
-  color: #ffffff;
-}
-
-.table {
+#cart-table {
   margin-top: 60px;
   background-color: #444444;
-  height: 80vh;
+  height: 40vh;
   overflow-y: scroll;
-  color: azure;
   font-size: 12px;
   border-spacing: 0 10px;
+  vertical-align: middle;
 }
 
 .table thead th {
-  background-color: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
+  background-color: #000000;
+  color: #ffffff;
   vertical-align: middle;
 }
 
 .table tbody tr td {
   color: #ffffff !important;
-  border-bottom: 10px solid #6c6a6c;
-}
-
-#cart-table th {
-  padding: 5px;
-  font-size: 14px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 10px solid #6c6a6c;
-}
-
-#cart-table td {
-  padding: 5px;
-  font-size: 12px;
-  height: 80px;
-  justify-content: center;
-  align-items: center;
+  border-bottom: 5px solid #6c6a6c;
 }
 
 .item-price,
@@ -150,9 +128,7 @@
   }
   .table {
     margin-top: 60px;
-    
   }
-  
 
   #cart-table th,
   #cart-table td {
