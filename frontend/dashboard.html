@@ -71,48 +71,6 @@
     </script>
 
     <div class="content">
-      <!-- Menu section -->
-      <section class="our menu-padding" style="margin-top: 10px">
-        <div class="container" id="menu">
-          <div class="menutopic text-center">
-            <h2>Menu Category</h2>
-          </div>
-          <div
-            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center g-1 mt-3">
-            <!-- Pizza -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-pizza.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Cake -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-cake.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-            <!-- Beverages -->
-            <div class="col">
-              <div class="col-4 text-center">
-                <img
-                  src="./assets/images/menu-beverages.jpg"
-                  alt="Pizza"
-                  class="category-image" />
-                <div class="category-name">Pizza</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Order Summary Section -->
       <div class="container my-1">
         <h2 class="order-title">Order Summary</h2>
@@ -335,7 +293,7 @@
               {
                 label: "Order Percentages",
                 data: [data.pending, data.successful, data.failed],
-                backgroundColor: ["#c59d5f ", "#e6b98c", "blue"],
+                backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
                 borderWidth: 1,
               },
             ],
@@ -344,6 +302,9 @@
             responsive: true,
             plugins: {
               legend: {
+                labels: {
+                  color: "white",
+                },
                 position: "top",
               },
             },
@@ -373,19 +334,19 @@
               {
                 label: "Pizza Orders",
                 data: Object.values(data).map((week) => week.Pizza),
-                backgroundColor: "#FFD700",
+                backgroundColor: "#c59d5f",
                 borderWidth: 1,
               },
               {
                 label: "Cake Orders",
                 data: Object.values(data).map((week) => week.Cake),
-                backgroundColor: "#FF69B4",
+                backgroundColor: "#8a5a44",
                 borderWidth: 1,
               },
               {
                 label: "Beverage Orders",
-                data: Object.values(data).map((week) => week.Beverages),
-                backgroundColor: "#87CEFA",
+                data: Object.values(data).map((week) => week.Beverage),
+                backgroundColor: "#e6b98c",
                 borderWidth: 1,
               },
             ],
@@ -398,22 +359,46 @@
                 title: {
                   display: true,
                   text: "Order Count",
+                  color: "white",
                 },
                 ticks: {
-                  stepSize: 1, // Ensures the y-axis increments by 1
-                  precision: 0, // Rounds values to whole numbers
+                  stepSize: 1,
+                  precision: 0,
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
                 },
               },
               x: {
+                ticks: {
+                  color: "white",
+                },
+                grid: {
+                  color: "#ffffff54",
+                },
+                border: {
+                  color: "white",
+                },
                 title: {
                   display: true,
                   text: "Weeks",
+                  color: "white",
                 },
               },
             },
             plugins: {
               legend: {
+                labels: {
+                  color: "white",
+                },
                 position: "top",
+              },
+              tooltip: {
+                bodyColor: "white",
               },
             },
           },
