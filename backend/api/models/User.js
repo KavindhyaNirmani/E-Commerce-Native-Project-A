@@ -85,7 +85,7 @@ class User {
     try {
       const [results] = await db.execute(
         "SELECT * FROM user WHERE role IN (?,?) AND is_deleted = 0",
-        ["admin","super admin"]
+        ["admin", "super admin"]
       );
 
       return results;
@@ -102,6 +102,18 @@ class User {
       ]);
     } catch (error) {
       throw new Error("Error deleting the admin:" + error.message);
+    }
+  }
+
+  // Fetch all regular users
+  static async findAllUsers() {
+    try {
+      const [results] = await db.execute(
+        "SELECT user_id, email, username FROM user WHERE role = 'user' AND is_deleted = 0"
+      );
+      return results;
+    } catch (error) {
+      throw new Error("Error fetching users: " + error.message);
     }
   }
 }
