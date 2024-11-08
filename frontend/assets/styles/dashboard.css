@@ -213,6 +213,11 @@ p {
   object-fit: cover;
 }
 
+card-body{
+  .p{
+    color: #000;
+  }
+}
 .col {
   padding: 0;
 }
