@@ -21,7 +21,7 @@ exports.addItemToCart = async (req, res) => {
   }
 
   const quantity = 1;
-  
+
   try {
     // First, check if a cart exists for the user. If not, create one
     const [userCart] = await db.execute(

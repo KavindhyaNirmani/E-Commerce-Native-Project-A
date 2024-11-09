@@ -125,27 +125,28 @@ exports.removeItemsFromCheckout = async (req, res) => {
 
     // Respond with a success message
     console.log("Item removed from checkout and marked as unselected.");
-    res
-      .status(200)
-      .json({
-        message:
-          "Items successfully removed from checkout and marked as unselected.",
-      });
+    res.status(200).json({
+      message:
+        "Items successfully removed from checkout and marked as unselected.",
+    });
   } catch (error) {
     console.error("Error while removing items from checkout:", error.message);
-    res
-      .status(500)
-      .json({
-        message: "Failed to remove items from checkout.",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Failed to remove items from checkout.",
+      error: error.message,
+    });
   }
 };
 
 // Calculate order summary for selected items in the cart
-exports.calculateOrderSummary = async (req, res) => {
-  const { selectedCartItemIds } = req.body;
-  console.log("Received selectedCartItemIds:", selectedCartItemIds);
+exports.calculateOrderSummary = async (selectedCartItemIds) => {
+  if (
+    !selectedCartItemIds ||
+    !Array.isArray(selectedCartItemIds) ||
+    selectedCartItemIds.length === 0
+  ) {
+    throw new Error("Invalid or missing 'selectedCartItemIds'");
+  }
 
   if (!Array.isArray(selectedCartItemIds) || selectedCartItemIds.length === 0) {
     console.log("No items selected condition triggered.");
@@ -201,12 +202,7 @@ exports.calculateOrderSummary = async (req, res) => {
       finalAmount,
     });
 
-    return res.json({
-      totalAmount,
-      discountAmount,
-      finalAmount,
-      totalQuantity,
-    });
+    return { totalAmount, discountAmount, finalAmount };
   } catch (err) {
     console.error("Error while calculating order summary:", err);
     res.status(500).json({ error: "Failed to calculate order summary" });
@@ -390,7 +386,7 @@ exports.placeOrder = async (req, res) => {
     );
     const orderId = orderResult.insertId;
 
-    // Add items to the order
+    // Add items to the order_items table
     for (const item of items) {
       const { item_id, quantity, item_price } = item;
       console.log("Attempting to insert into order_items:", {
@@ -402,7 +398,8 @@ exports.placeOrder = async (req, res) => {
 
       try {
         await connection.execute(
-          `INSERT INTO order_items (order_id, item_id, quantity, item_price) VALUES (?, ?, ?, ?)`,
+          `INSERT INTO order_items (order_id, item_id, quantity, item_price) VALUES (?, ?, ?, ?)
+`,
           [orderId, item_id, quantity, item_price]
         );
         console.log("Inserted item successfully:", { orderId, item_id });
@@ -539,18 +536,29 @@ exports.getOrderStatistics = async (req, res) => {
 //get the weekly order summary for the current month
 exports.getWeeklyOrderSummary = async (req, res) => {
   const query =
-    'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name,COUNT(DISTINCT ord.order_id) AS order_count FROM `order` ord JOIN `order_items` oi ON ord.order_id=oi.order_id JOIN `item` itm ON oi.item_id=itm.item_id JOIN `category` c ON itm.category_id=c.category_id WHERE MONTH(ord.order_date)=MONTH(CURRENT_DATE()) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number,c.category_name;';
+    'SELECT WEEK(ord.order_date,1) AS week_number,c.category_name, SUM(oi.quantity) AS total_quantity FROM `order` ord JOIN `order_items` oi ON ord.order_id=oi.order_id JOIN `item` itm ON oi.item_id=itm.item_id JOIN `category` c ON itm.category_id=c.category_id WHERE ord.order_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 4 WEEK) AND YEAR(ord.order_date)=YEAR(CURRENT_DATE()) AND ord.order_status ="Successful" GROUP BY week_number,c.category_name ORDER BY week_number DESC,c.category_name;';
 
   try {
     const [results] = await db.execute(query);
 
+    // Find the unique week numbers for the last 4 weeks
+    const uniqueWeeks = [...new Set(results.map((row) => row.week_number))]
+      .sort((a, b) => b - a) // Sort in descending order
+      .slice(0, 4) // Take the last 4 unique weeks
+      .reverse();
+
     const formattedData = {};
+    uniqueWeeks.forEach((week, index) => {
+      formattedData[`Week ${index + 1}`] = {};
+    });
+
+    // Populate the formatted data with total quantities per category for each "Week X"
     results.forEach((row) => {
-      const week = "Week ${row.week_number}";
-      if (!formattedData[week]) {
-        formattedData[week] = {};
+      const weekIndex = uniqueWeeks.indexOf(row.week_number);
+      if (weekIndex > -1) {
+        const weekLabel = `Week ${weekIndex + 1}`;
+        formattedData[weekLabel][row.category_name] = row.total_quantity;
       }
-      formattedData[week][row.category_name] = row.order_count;
     });
 
     res.status(200).json(formattedData);

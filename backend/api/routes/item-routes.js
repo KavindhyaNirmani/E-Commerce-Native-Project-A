@@ -1,6 +1,6 @@
 const express = require("express");
 const itemController = require("../controllers/item-controller");
-const { protect,adminOrSuperAdmin } = require("../middleware/auth-middleware");
+const { protect, adminOrSuperAdmin } = require("../middleware/auth-middleware");
 const multer = require("multer");
 const path = require("path");
 const router = express.Router();
@@ -24,10 +24,10 @@ const upload = multer({ storage: storage });
 router.get("/category/:category_name", itemController.getItemsByCategory);
 
 // Fetch all items
-router.get("/", protect,adminOrSuperAdmin,itemController.getAllItems);
+router.get("/", protect, adminOrSuperAdmin, itemController.getAllItems);
 
 // Fetch a single item by its ID
-router.get("/:item_id", protect,itemController.getItemById);
+router.get("/:item_id", protect, itemController.getItemById);
 
 router.use("/images/menu", express.static(menuPath));
 
@@ -37,9 +37,20 @@ router.use("/images/menu", express.static(menuPath));
 router.post("/", upload.single("item_image"), itemController.addItem);
 
 // Update an item (with image upload)
-router.put("/:item_id", upload.single("item_image"), protect,adminOrSuperAdmin, itemController.updateItem);
+router.put(
+  "/:item_id",
+  upload.single("item_image"),
+  protect,
+  adminOrSuperAdmin,
+  itemController.updateItem
+);
 
 // Delete an item (soft delete)
-router.delete("/:item_id", protect,adminOrSuperAdmin, itemController.deleteItem);
+router.delete(
+  "/:item_id",
+  protect,
+  adminOrSuperAdmin,
+  itemController.deleteItem
+);
 
 module.exports = router;
