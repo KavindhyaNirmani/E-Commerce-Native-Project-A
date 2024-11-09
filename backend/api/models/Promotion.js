@@ -12,7 +12,7 @@ class Promotion {
       categories,
     } = promotionData;
 
-    const connection = await db.getConnection(); // Use transaction
+    const connection = await db.getConnection(); 
 
     try {
       await connection.beginTransaction();
