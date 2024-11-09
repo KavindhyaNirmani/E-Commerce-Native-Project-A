@@ -37,6 +37,8 @@
       crossorigin="anonymous"></script>
 
       <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body
     style="
@@ -369,10 +371,6 @@ function fetchCustomerData() {
 }
 
 
-
-      let offers = [];
-      let showOffers = false;
-
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch order summaries
         fetchOrderSummary();
@@ -538,8 +536,8 @@ function fetchCustomerData() {
       window.onload = fetchData;
 
       // Function to fetch and display order summary counts
-      function fetchOrderSummary() {
-        fetch("https://ecom-back-t1.netfy.app/orders/admin/statistics", {
+      function fetchOffers() {
+        fetch("https://ecom-back-t1.netfy.app/promotion", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -560,6 +558,182 @@ function fetchCustomerData() {
       }
 
       // Handle modal popup for adding new offer
+      const addOfferButton = document.getElementById("addOfferButton");
+      const submitOfferBtn = document.getElementById("submitOfferBtn");
+      const offerForm = document.getElementById("offerForm");
+      const offerList = document.getElementById("offerList");
+
+      addOfferButton.addEventListener("click", () => {
+        const addOfferModal = new bootstrap.Modal(
+          document.getElementById("addOfferModal")
+        );
+        addOfferModal.show();
+      });
+
+      fetchOffers();
+
+      submitOfferBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (offerForm.checkValidity()) {
+          await submitOfferForm();
+        } else {
+          offerForm.classList.add("was-validated");
+        }
+      });
+
+      async function fetchOffers() {
+        try {
+          const token = localStorage.getItem("authToken");
+
+          const response = await axios.get(
+            "https://ecom-back-t1.netfy.app/promotion",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const offers = response.data;
+          offerList.innerHTML = ""; // Clear previous offers
+
+          offers.forEach((offer) => {
+            const imageUrl = offer.promotion_image
+              ? `https://ecom-back-t1.netfy.app${offer.promotion_image}`
+              : "";
+
+            const offerCard = `
+              <div class="card m-2 promotion-card" style="width: 18rem;">
+                ${
+                  offer.promotion_image
+                    ? `<img src="${imageUrl}" class="card-img-top" >`
+                    : ""
+                }
+                <div class="card-body">
+                  <h5 class="card-title">${offer.title}</h5>
+                  <h5 class="card-text">${offer.promotion_description}</h5>
+                  <h6>Start: ${new Date(
+                    offer.start_date
+                  ).toLocaleDateString()}</h6>
+                  <h6>End: ${new Date(offer.end_date).toLocaleDateString()}</h6>
+                  <button class="btn btn-danger remove-offer-button" data-remove-id="${
+                    offer.promotion_id
+                  }">Remove offer</button>
+                </div>
+              </div>
+            `;
+            offerList.innerHTML += offerCard;
+          });
+        } catch (error) {
+          console.error("Error fetching offers:", error);
+        }
+      }
+
+      // Submit offer form data to backend
+
+      async function submitOfferForm() {
+        const token = localStorage.getItem("authToken");
+
+        const formData = new FormData();
+        formData.append(
+          "title",
+          document.getElementById("offerTitle").value || null
+        );
+        formData.append(
+          "promotion_description",
+          document.getElementById("offerDetail").value || null
+        );
+        formData.append("min_price", document.getElementById("minPrice").value);
+        formData.append("discount_percentage", document.getElementById("disPercentage").value);
+        formData.append(
+          "categories",
+          document.getElementById("category").value || null
+        );
+        formData.append(
+          "start_date",
+          document.getElementById("startDate").value || null
+        );
+        formData.append(
+          "end_date",
+          document.getElementById("endDate").value || null
+        );
+
+        const offerImage = document.getElementById("offerImage").files[0];
+        if (offerImage) {
+          formData.append("promotion_image", offerImage);
+        } else {
+          formData.append("promotion_image", null);
+        }
+
+        // Define the rules object
+        const rules = {
+          min_price: document.getElementById("minPrice").value || null,
+          discount_percentage:
+            document.getElementById("disPercentage").value || null,
+        };
+
+        // Add rules as a JSON string
+        formData.append("rules", JSON.stringify(rules));
+
+        try {
+          for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+          }
+          const response = await axios.post(
+            "https://ecom-back-t1.netfy.app/promotion",
+            formData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Offer added response:", response.data);
+          alert("Offer added successfully!");
+
+          offerForm.reset();
+          offerForm.classList.remove("was-validated");
+
+          addOfferModal.hide();
+
+          fetchOffers();
+        } catch (error) {
+          console.error(
+            "Error adding offer:",
+            error.response ? error.response.data : error.message
+          );
+          alert("Failed to add offer.");
+        }
+      }
+
+      offerList.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("remove-offer-button")) {
+          const offerId = e.target.getAttribute("data-remove-id");
+          if (confirm("Are you sure you want to remove this offer?")) {
+            try {
+              await axios.delete(
+                `https://ecom-back-t1.netfy.app/promotion/${offerId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "authToken"
+                    )}`,
+                  },
+                }
+              );
+
+              alert("Offer removed successfully!");
+              fetchOffers(); // Refresh the offers list after deletion
+            } catch (error) {
+              console.error("Error removing offer:", error);
+              alert("Failed to remove offer. Please try again.");
+            }
+          }
+        }
+          });
+      
+      
     </script>
   </body>
 </html>
