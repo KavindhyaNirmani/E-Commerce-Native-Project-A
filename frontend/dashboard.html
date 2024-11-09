@@ -661,54 +661,52 @@
         const formData = new FormData();
         formData.append(
           "title",
-          document.getElementById("offerTitle").value || null
+          document.getElementById("offerTitle").value 
         );
         formData.append(
           "promotion_description",
-          document.getElementById("offerDetail").value || null
+          document.getElementById("offerDetail").value 
         );
         formData.append("min_price", document.getElementById("minPrice").value);
         formData.append("discount_percentage", document.getElementById("disPercentage").value);
         formData.append(
           "categories",
-          document.getElementById("category").value || null
+          document.getElementById("category").value 
         );
         formData.append(
           "start_date",
-          document.getElementById("startDate").value || null
+          document.getElementById("startDate").value 
         );
         formData.append(
           "end_date",
-          document.getElementById("endDate").value || null
+          document.getElementById("endDate").value 
         );
 
         const offerImage = document.getElementById("offerImage").files[0];
-        if (offerImage) {
-          formData.append("promotion_image", offerImage);
-        } else {
-          formData.append("promotion_image", null);
-        }
+        formData.append("promotion_image", offerImage );
 
         // Define the rules object
-        const rules = {
-          min_price: document.getElementById("minPrice").value || null,
+        const rules = [{
+          min_price: document.getElementById("minPrice").value,
           discount_percentage:
-            document.getElementById("disPercentage").value || null,
-        };
+            document.getElementById("disPercentage").value ,
+        },];
 
         // Add rules as a JSON string
         formData.append("rules", JSON.stringify(rules));
 
         try {
-          for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-          }
+          // Log form data for debugging
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+        
           const response = await axios.post(
             "https://ecom-back-t1.netfy.app/promotion",
             formData,
             {
               headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data", 
                 Authorization: `Bearer ${token}`,
               },
             }
@@ -719,6 +717,7 @@
           offerForm.reset();
           offerForm.classList.remove("was-validated");
 
+          const addOfferModal = new bootstrap.Modal(document.getElementById("addOfferModal"));
           addOfferModal.hide();
 
           fetchOffers();
@@ -756,6 +755,7 @@
           }
         }
           });
+
       
       
     </script>
