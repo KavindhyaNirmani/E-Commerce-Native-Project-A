@@ -123,22 +123,18 @@
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("loginForm");
 
-        // Listen for form submission
         form.addEventListener("submit", async function (event) {
-          event.preventDefault(); // Prevent default form submission
+          event.preventDefault();
 
-          // Validate the form using Bootstrap validation classes
           if (!form.checkValidity()) {
             event.stopPropagation();
             form.classList.add("was-validated");
             return;
           }
 
-          // Get form values
           const username = document.getElementById("userName").value;
           const password = document.getElementById("password").value;
 
-          // Send both username and Password in the payload
           try {
             console.log("Sending data to the server:", { username, password });
 
@@ -149,7 +145,7 @@
                 headers: {
                   "Content-Type": "application/json",
                 },
-                // Send both username and Password to the server
+
                 body: JSON.stringify({ username, password }),
               }
             );
@@ -161,10 +157,8 @@
               localStorage.setItem("authToken", data.token);
               localStorage.setItem("role", data.role);
 
-              // Log the stored token for debugging
               console.log("Stored token:", localStorage.getItem("authToken"));
 
-              // Display a success message
               alert("Login successful!");
 
               // Redirect based on user role

@@ -51,6 +51,10 @@ body {
   padding: 8px;
 }
 
+input.form-control::placeholder {
+  color: #c0bdbd; 
+}
+
 #password {
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
