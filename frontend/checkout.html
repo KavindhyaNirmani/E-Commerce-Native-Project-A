@@ -8,7 +8,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/checkout.css" />
-
+    <link rel="stylesheet" href="./assets/styles/delivery.css" />
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
@@ -31,7 +31,7 @@
     style="
       font-family: 'Lato', sans-serif;
       background-image: none;
-      height: 100%;
+      height: 100vh;
     "
   >
     <div id="headerPlaceholder"></div>
@@ -79,9 +79,199 @@
             <table id="order-summary-table">
               <!-- Dynamic summary content will be inserted here -->
             </table>
-            <button id="checkout-btn" class="btn btn-success mt-3">
-              Proceed to Checkout
+            <button
+              type="button"
+              class="btn btn-success mt-3"
+              data-bs-toggle="modal"
+              data-bs-target="#orderFormModal"
+            >
+              Open Order Form
             </button>
+            <div
+              class="modal fade"
+              id="orderFormModal"
+              tabindex="-1"
+              aria-labelledby="orderFormModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="orderFormModalLabel">
+                      Billing Address
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col mb-4">
+                            <label for="firstName">First Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="First name"
+                              aria-label="First name"
+                              required
+                            />
+                          </div>
+                          <div class="col mb-4">
+                            <label for="lastName">Last Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Last name"
+                              aria-label="Last name"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div class="mb-4">
+                          <label for="email">Email</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            placeholder="you@example.com"
+                            aria-label="email"
+                            required
+                          />
+                        </div>
+
+                        <div class="mb-4">
+                          <label for="address">Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="1234 Main St"
+                            aria-label="Address"
+                            required
+                          />
+                        </div>
+
+                        <div class="row">
+                          <div class="col mb-4">
+                            <label for="mobileNumber">Mobile Number</label>
+                            <div class="input-group">
+                              <span class="input-group-text">+94</span>
+                              <input
+                                type="tel"
+                                name="mobileNumber"
+                                class="form-control"
+                                placeholder="712345678"
+                                pattern="[0-9]{9}"
+                                required
+                                aria-label="Mobile number"
+                              />
+                            </div>
+                          </div>
+                          <div class="col mb-4">
+                            <label for="postalCode">Postal Code</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Postal code"
+                              aria-label="Postal code"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <hr class="mb-4" />
+
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="paymentMethod"
+                            id="creditCard"
+                            checked
+                            required
+                          />
+                          <label class="form-check-label" for="creditCard">
+                            Credit card (Default)
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="paymentMethod"
+                            id="debitCard"
+                            required
+                          />
+                          <label class="form-check-label" for="debitCard">
+                            Debit card
+                          </label>
+                        </div>
+
+                        <div class="row">
+                          <div class="col mb-4">
+                            <label for="cardName">Name on card</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-label="card1"
+                              required
+                            />
+                            <small class="text-muted"
+                              >Full name, as displayed on the card</small
+                            >
+                          </div>
+
+                          <div class="col mb-4">
+                            <label for="cardNumber">Card Number</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="1234-5678-9012"
+                              aria-label="Card2"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col mb-3">
+                            <label for="cardExpiry">Expiry Date</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-label="card3"
+                              required
+                            />
+                          </div>
+
+                          <div class="col mb-3">
+                            <label for="cardCVV">CVV</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              aria-label="Card4"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <hr class="mb-4" />
+
+                        <div class="d-grid gap-2">
+                          <button class="btn btn-primary" type="button">
+                            Continue to Checkout
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
