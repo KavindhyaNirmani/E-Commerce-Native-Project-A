@@ -76,8 +76,7 @@ exports.addItemToCart = async (req, res) => {
 // Get all items in the user's cart
 exports.getCartItems = async (req, res) => {
   try {
-    // Assuming you have a way to get the user's ID from the request (e.g., from a JWT token)
-    const userId = req.user.user_id; // Adjust according to your authentication logic
+    const userId = req.user.user_id;
     console.log("Fetching cart items for userId:", userId);
 
     // Fetch the cart items from the database for the user

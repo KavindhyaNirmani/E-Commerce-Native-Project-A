@@ -39,11 +39,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to the e-commerce backend API!");
 });
 
-app.use("/auth", authRoutes);
-app.use("/items", itemRoutes);
-app.use("/cart", cartRoutes);
-app.use("/orders", orderRoutes);
-app.use("/promotion", promotionRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/items", itemRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/promotion", promotionRoutes);
 app.use("/api/feedback", feedbackRoutes);
 
 const menuPath = path.resolve(__dirname, "./images/menu");
@@ -69,7 +69,5 @@ app.use((error, req, res, next) => {
     },
   });
 });
-
-app.use("/promotion", promotionRoutes);
 
 module.exports = app;

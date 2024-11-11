@@ -139,7 +139,7 @@ exports.addAdmin = async (req, res) => {
 
     // Create admin (role is 'admin')
     const newAdmin = {
-      first_name: first_name || null, // Ensure we are using null if undefined
+      first_name: first_name || null,
       last_name: last_name || null,
       username: username || null,
       email: email || null,
@@ -147,7 +147,6 @@ exports.addAdmin = async (req, res) => {
       phone_no: phone_no || null,
       address: address || null,
       role: role || null,
-      //user_image: req.file ? req.file.filename : null, // Assign the file name from multer
       user_image,
     };
 
@@ -210,4 +209,3 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
-
