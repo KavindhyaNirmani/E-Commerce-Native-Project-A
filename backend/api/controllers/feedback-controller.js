@@ -6,6 +6,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASSWORD,
   },
+  debug: true,   
+  logger: true,
 });
 
 exports.sendFeedback = async (req, res) => {
