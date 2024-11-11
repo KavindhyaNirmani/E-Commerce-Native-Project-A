@@ -151,12 +151,15 @@
         }
 
         try {
-          const response = await fetch("https://ecom-back-t1.netfy.app/cart", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await fetch(
+            "https://ecom-back-t1.netfy.app/api/cart",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
           if (!response.ok) {
             const errorResponse = await response.text();
@@ -266,7 +269,7 @@
 
         try {
           const response = await fetch(
-            `https://ecom-back-t1.netfy.app/cart/update/${cartItemId}`,
+            `https://ecom-back-t1.netfy.app/api/cart/update/${cartItemId}`,
             {
               method: "PUT",
               headers: {
@@ -308,7 +311,7 @@
 
         try {
           const response = await fetch(
-            `https://ecom-back-t1.netfy.app/cart/delete/${cartItemId}`,
+            `https://ecom-back-t1.netfy.app/api/cart/delete/${cartItemId}`,
             {
               method: "DELETE",
               headers: {
@@ -376,7 +379,7 @@
 
         try {
           const response = await fetch(
-            "https://ecom-back-t1.netfy.app/orders/checkout/transfer-selected",
+            "https://ecom-back-t1.netfy.app/api/orders/checkout/transfer-selected",
             {
               method: "POST",
               headers: {

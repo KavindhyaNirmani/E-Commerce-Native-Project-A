@@ -8,11 +8,13 @@
     <!--Bootstrap CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
     <!--Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/order-management.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
@@ -75,7 +77,8 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="orderDetailsModalLabel"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -87,7 +90,8 @@
                 type="button"
                 class="close"
                 data-dismiss="modal"
-                aria-label="Close">
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -119,7 +123,8 @@
                 type="text"
                 id="totalPrice"
                 class="form-control"
-                readonly />
+                readonly
+              />
               <!-- Order Status Dropdown -->
               <label for="orderStatus">Order Status:</label>
               <select id="orderStatus" class="form-control">
@@ -131,7 +136,8 @@
               <button
                 type="button"
                 id="updateStatusBtn"
-                class="btn btn-primary mt-3">
+                class="btn btn-primary mt-3"
+              >
                 Update Status
               </button>
             </div>
@@ -149,7 +155,7 @@
       async function fetchOrdersFromBackend() {
         try {
           const response = await fetch(
-            "https://ecom-back-t1.netfy.app/orders/admin/orders",
+            "https://ecom-back-t1.netfy.app/api/orders/admin/orders",
             {
               method: "GET",
               headers: {
@@ -208,7 +214,7 @@
 
         try {
           const response = await fetch(
-            `https://ecom-back-t1.netfy.app/orders/order-details/${orderId}`,
+            `https://ecom-back-t1.netfy.app/api/orders/order-details/${orderId}`,
             {
               method: "GET",
               headers: {
@@ -318,7 +324,7 @@
         console.log("Token before updating order status:", token);
         try {
           const response = await fetch(
-            `https://ecom-back-t1.netfy.app/orders/admin/order-status/${orderId}`,
+            `https://ecom-back-t1.netfy.app/api/orders/admin/order-status/${orderId}`,
             {
               method: "PUT",
               headers: {
@@ -377,11 +383,11 @@
               const authToken = localStorage.getItem("authToken");
 
               const response = await fetch(
-                `https://ecom-back-t1.netfy.app/orders/admin/delete/${orderId}`,
+                `https://ecom-back-t1.netfy.app/api/orders/admin/delete/${orderId}`,
                 {
                   method: "DELETE",
                   headers: {
-                    Authorization: `Bearer ${authToken}`, // Add the authToken here
+                    Authorization: `Bearer ${authToken}`,
                     "Content-Type": "application/json",
                   },
                 }
@@ -393,8 +399,7 @@
                 // Remove the corresponding row from the DOM
                 $(this).closest("tr").remove(); // Remove the entire row
 
-                // Optionally, you can also refresh the order list if needed
-                // fetchAndRenderOrders(); // Uncomment this line if you want to refresh the list
+                // fetchAndRenderOrders();
               } else {
                 alert("Failed to delete order.");
               }

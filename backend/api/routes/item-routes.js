@@ -31,9 +31,6 @@ router.get("/:item_id", protect, itemController.getItemById);
 
 router.use("/images/menu", express.static(menuPath));
 
-// Add a new item (with image upload)
-//router.post('/', protect, adminOnly, upload.single('item_image'), itemController.addItem);
-
 router.post("/", upload.single("item_image"), itemController.addItem);
 
 // Update an item (with image upload)

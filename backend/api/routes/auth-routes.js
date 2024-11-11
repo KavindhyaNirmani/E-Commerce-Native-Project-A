@@ -14,7 +14,6 @@ const {
 } = require("../middleware/auth-middleware");
 const router = express.Router(); //create a new instance of the Express Router
 
-//const absolutePath = path.join('D:\\CODE PARK\\E_Com_Test\\int-24-2-a-ecom-native\\Frontend\\Assets\\UserImage');
 const userImagePath = path.resolve(__dirname, "../../images/user-image");
 console.log("Saving to:", userImagePath);
 
