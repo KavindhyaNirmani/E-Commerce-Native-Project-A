@@ -8,48 +8,22 @@
     <!--Bootstrap CSS-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <!--Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/order-management.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
+    <!-- jQuery and Bootstrap JS -->
+    <!-- Include Bootstrap JS (no need for jQuery) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <!-- Placeholder for Sidebar -->
-    <div id="sidebar-placeholder"></div>
-
-    <script>
-      fetch("./assets/widgets/side-bar/sidebar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("sidebar-placeholder").innerHTML = data;
-
-          // After loading the sidebar, apply the active class to the current page's link
-          const currentPage = window.location.pathname.split("/").pop();
-          const links = document.querySelectorAll(".nav-link");
-
-          links.forEach((link) => {
-            const linkPage = link.getAttribute("href").split("/").pop();
-            if (linkPage === currentPage) {
-              link.classList.add("active");
-            }
-          });
-
-          // Now add the toggle functionality after the sidebar is loaded
-          const toggleBtn = document.getElementById("toggleBtn");
-          const sidebar = document.querySelector(".sidebar");
-
-          toggleBtn.addEventListener("click", function () {
-            sidebar.classList.toggle("show");
-          });
-        })
-        .catch((error) => console.error("Error loading sidebar:", error));
-    </script>
+    <common-sidebar></common-sidebar>
 
     <div class="content">
       <div class="container mt-5">
@@ -77,8 +51,7 @@
         tabindex="-1"
         role="dialog"
         aria-labelledby="orderDetailsModalLabel"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -90,8 +63,7 @@
                 type="button"
                 class="close"
                 data-dismiss="modal"
-                aria-label="Close"
-              >
+                aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -123,8 +95,7 @@
                 type="text"
                 id="totalPrice"
                 class="form-control"
-                readonly
-              />
+                readonly />
               <!-- Order Status Dropdown -->
               <label for="orderStatus">Order Status:</label>
               <select id="orderStatus" class="form-control">
@@ -136,8 +107,7 @@
               <button
                 type="button"
                 id="updateStatusBtn"
-                class="btn btn-primary mt-3"
-              >
+                class="btn btn-primary mt-3">
                 Update Status
               </button>
             </div>
@@ -145,98 +115,67 @@
         </div>
       </div>
     </div>
-
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
+    <script src="./assets/widgets/side-bar/sidebar.js"></script>
     <script>
       // Fetch all orders for admin management from the backend API
       async function fetchOrdersFromBackend() {
         try {
-          const response = await fetch(
-            "https://ecom-back-t1.netfy.app/api/orders/admin/orders",
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              },
-            }
-          );
+          const response = await $.ajax({
+            url: "https://ecom-back-t1.netfy.app/api/orders/admin/orders",
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          });
 
-          if (!response.ok) throw new Error("Failed to fetch orders.");
-          const data = await response.json(); // Assuming the API returns JSON
-          return data;
+          return response;
         } catch (error) {
-          console.error(error);
+          console.error("Failed to fetch orders:", error);
           return [];
         }
       }
 
-      let currentOrderId = null; // To store the current order ID when the modal is opened
+      let currentOrderId = null;
 
       // Function to render the order list
       function renderOrderList(orders) {
         const orderList = $("#order-list");
-        orderList.empty(); // Clear the existing order list
-
+        orderList.empty();
         orders.forEach((order) => {
-          const firstItemName =
-            order.items && order.items.length > 0
-              ? order.items[0].name
-              : "No items";
-          const total =
-            typeof order.total === "number" ? order.total.toFixed(2) : "0.00";
-
           const row = `
-            <tr data-order-id="${order.order_id}">
-              <td>${order.order_id}</td>
-              <td>${order.item_names}</td>
-              <td>Rs. ${order.total_final_price}</td>
-              <td class="order-status">${order.order_status}</td>
-              <td>
-                <button class="btn btn-warning btn-sm view-btn" data-order-id="${order.order_id}" title="View">
-                  <i class="fa fa-eye"></i>
-                </button>
-                <button class="btn btn-danger btn-sm delete-btn" data-order-id="${order.order_id}" title="Delete">
-                 <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>`;
+      <tr data-order-id="${order.order_id}">
+        <td>${order.order_id}</td>
+        <td>${order.item_names}</td>
+        <td>Rs. ${order.total_final_price}</td>
+        <td class="order-status">${order.order_status}</td>
+        <td>
+          <button class="btn btn-warning btn-sm view-btn" data-order-id="${order.order_id}" title="View">
+            <i class="fa fa-eye"></i>
+          </button>
+          <button class="btn btn-danger btn-sm delete-btn" data-order-id="${order.order_id}" title="Delete">
+           <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>`;
           orderList.append(row);
         });
       }
 
       // Fetch order details by order ID from the backend
       async function fetchOrderDetails(orderId) {
-        const token = localStorage.getItem("authToken"); // Retrieve the token from storage
-        console.log("Token before fetching order details:", token); // Debugging
-
         try {
-          const response = await fetch(
-            `https://ecom-back-t1.netfy.app/api/orders/order-details/${orderId}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`, // Add the authorization header
-              },
-            }
-          );
-
-          if (!response.ok) {
-            const errorText = await response.text(); // Get error details if available
-            throw new Error(
-              `Failed to fetch order details for ID ${orderId}. Status: ${response.status}. Response: ${errorText}`
-            );
-          }
-
-          const data = await response.json();
-          console.log("Fetched order details:", data); // Log the full response for debugging
-          return data;
+          const response = await $.ajax({
+            url: `https://ecom-back-t1.netfy.app/api/orders/order-details/${orderId}`,
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          });
+          return response;
         } catch (error) {
           console.error("Error fetching order details:", error);
           alert(
-            `An error occurred while fetching order details for Order ID ${orderId}. Error: ${error.message}. Please try again later.`
+            `An error occurred while fetching order details for Order ID ${orderId}.`
           );
           return null;
         }
@@ -248,13 +187,8 @@
           const order = await fetchOrderDetails(orderId);
           currentOrderId = orderId;
 
-          console.log("Fetched order for ID:", orderId, order); // Debugging
-
           if (!order || !order.orderDetails || !order.orderItems) {
-            console.error("Missing order or details in response:", order);
-            alert(
-              "Order details not available. Please check back later or contact support."
-            );
+            alert("Order details not available.");
             return;
           }
 
@@ -277,18 +211,17 @@
             }, ${order.orderDetails.postal_code || "N/A"}`
           );
 
-          let itemsHtml = order.orderItems
+          const itemsHtml = order.orderItems
             .map(
               (item) => `
-            <tr>
-                <td>${item.item_name || "Unknown Item"}</td>
-                <td>${item.quantity || "0"}</td>
-                <td>Rs. ${parseFloat(item.item_price).toFixed(2) || "0.00"}</td>
-                <td>Rs. ${
-                  (item.quantity * parseFloat(item.item_price)).toFixed(2) ||
-                  "0.00"
-                }</td>
-            </tr>`
+      <tr>
+          <td>${item.item_name || "Unknown Item"}</td>
+          <td>${item.quantity || "0"}</td>
+          <td>Rs. ${parseFloat(item.item_price).toFixed(2) || "0.00"}</td>
+          <td>Rs. ${
+            (item.quantity * parseFloat(item.item_price)).toFixed(2) || "0.00"
+          }</td>
+      </tr>`
             )
             .join("");
           $("#order-items").html(itemsHtml);
@@ -311,51 +244,32 @@
           );
           $("#orderStatus").val(order.orderDetails.order_status || "Pending");
         } catch (error) {
-          console.error("Error in populateModal:", error.message);
-          alert(
-            "An error occurred while populating order details. Please try again later."
-          );
+          console.error("Error in populateModal:", error);
+          alert("An error occurred while populating order details.");
         }
       }
 
       // Update order status using the backend API
       async function updateOrderStatus(orderId, newStatus) {
-        const token = localStorage.getItem("authToken");
-        console.log("Token before updating order status:", token);
         try {
-          const response = await fetch(
-            `https://ecom-back-t1.netfy.app/api/orders/admin/order-status/${orderId}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                newStatus,
-              }),
-            }
-          );
-
-          // Check if the response status is OK
-          if (!response.ok) {
-            const errorDetails = await response.json(); // Get error details if available
-            throw new Error(
-              `Failed to update order status. ${
-                errorDetails.message || response.statusText
-              }`
-            );
-          }
-
-          const updatedOrder = await response.json(); // Assuming the API returns the updated order
+          const response = await $.ajax({
+            url: `https://ecom-back-t1.netfy.app/api/orders/admin/order-status/${orderId}`,
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              "Content-Type": "application/json",
+            },
+            data: JSON.stringify({ newStatus }),
+          });
 
           // Update the status in the table
-          const orderRow = $(`tr[data-order-id="${orderId}"]`);
-          orderRow.find(".order-status").text(updatedOrder.order_status);
+          $(`tr[data-order-id="${orderId}"] .order-status`).text(
+            response.order_status
+          );
           alert("Order status updated successfully!");
         } catch (error) {
-          console.error(error);
-          alert(error.message); // Display the error message to the user
+          console.error("Error updating order status:", error);
+          alert("Failed to update order status.");
         }
       }
 
@@ -380,26 +294,17 @@
 
           if (confirmation) {
             try {
-              const authToken = localStorage.getItem("authToken");
+              const response = await $.ajax({
+                url: `https://ecom-back-t1.netfy.app/api/orders/admin/delete/${orderId}`,
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+                },
+              });
 
-              const response = await fetch(
-                `https://ecom-back-t1.netfy.app/api/orders/admin/delete/${orderId}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    Authorization: `Bearer ${authToken}`,
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-
-              if (response.ok) {
+              if (response) {
                 alert("Order deleted successfully!");
-
-                // Remove the corresponding row from the DOM
-                $(this).closest("tr").remove(); // Remove the entire row
-
-                // fetchAndRenderOrders();
+                $(this).closest("tr").remove();
               } else {
                 alert("Failed to delete order.");
               }
@@ -411,12 +316,10 @@
         });
 
         // Handle update status button click in modal
-        document
-          .getElementById("updateStatusBtn")
-          .addEventListener("click", async () => {
-            const newStatus = document.getElementById("orderStatus").value;
-            await updateOrderStatus(currentOrderId, newStatus);
-          });
+        $("#updateStatusBtn").on("click", async function () {
+          const newStatus = $("#orderStatus").val();
+          await updateOrderStatus(currentOrderId, newStatus);
+        });
       });
     </script>
   </body>
