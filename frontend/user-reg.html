@@ -39,7 +39,7 @@
   <body>
     <div class="container-fluid">
       <div class="container col-12 col-md-8 col-xl-8 form-border">
-        <h1 class="fw-bold header">START YOUR DELICIOUS FOOD JOURNEY</h1>
+        <h1 class="fw-bold header text-center">START YOUR DELICIOUS FOOD JOURNEY</h1>
         <div
           class="container col-12 col-sm-10 col-md-12 col-xl-8 shadow form-style"
         >
@@ -167,11 +167,9 @@
         $(".toggle-password").click(function (e) {
           e.preventDefault();
 
-          // Get the target input and icon based on data-target attribute
           const targetInput = $($(this).data("target"));
           const icon = $(this).find("i");
 
-          // Toggle icon and input type
           icon.toggleClass("fa-eye fa-eye-slash");
           if (targetInput.attr("type") === "password") {
             targetInput.attr("type", "text");
@@ -184,31 +182,26 @@
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("registerForm");
 
-        // Listen for form submission
         form.addEventListener("submit", async function (event) {
-          event.preventDefault(); // Prevent default form submission
+          event.preventDefault();
 
-          // Validate the form using Bootstrap validation classes
           if (!form.checkValidity()) {
             event.stopPropagation();
             form.classList.add("was-validated");
             return;
           }
 
-          // Get form values
           const email = document.getElementById("email").value;
           const username = document.getElementById("userName").value;
           const password = document.getElementById("password").value;
           const confirmPassword =
             document.getElementById("confirmPassword").value;
 
-          // Password match validation
           if (password !== confirmPassword) {
             alert("Passwords do not match.");
             return;
           }
 
-          // Send both password and confirmPassword in the payload
           try {
             console.log("Sending data to the server:", {
               email,
@@ -224,7 +217,7 @@
                 headers: {
                   "Content-Type": "application/json",
                 },
-                // Send both password and confirmPassword to the server
+
                 body: JSON.stringify({
                   email,
                   username,
@@ -238,7 +231,6 @@
             console.log("Response from server:", data);
 
             if (response.ok) {
-              // Load the modal from the external file and show it
               $("#success-modal-content").load(
                 "./reg-success.html",
                 function () {

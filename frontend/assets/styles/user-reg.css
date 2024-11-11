@@ -58,6 +58,10 @@ body {
   border-bottom-right-radius: 5px !important;
 }
 
+input.form-control::placeholder {
+  color: #c0bdbd;
+}
+
 #password,
 #confirmPassword {
   border-top-right-radius: 0 !important;
