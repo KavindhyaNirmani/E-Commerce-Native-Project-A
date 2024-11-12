@@ -16,7 +16,7 @@
 #cart-table {
   margin-top: 60px;
   background-color: #444444;
-  height: 40vh;
+  height: 50vh;
   overflow-y: scroll;
   font-size: 12px;
   border-spacing: 0 10px;
@@ -90,7 +90,6 @@
   height: 40px;
   margin-top: 20px;
   border-radius: 10px;
-
   font-size: 14px;
 }
 

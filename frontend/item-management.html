@@ -248,11 +248,8 @@
         const readDataModal = new bootstrap.Modal(
           document.getElementById("readData")
         );
-
-        // Your JWT Token (For demonstration purposes only)
-        const JWT_TOKEN =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyODE5ODQwOCwiZXhwIjoxNzI4MjA1NjA4fQ.zpPG9_VE1cNtOefGVn7e-anQ0mEucK331ffU03VKmrM";
-
+        const token = localStorage.getItem("authToken");
+        
         // Function to load items from the API
         const loadItems = async () => {
           try {
@@ -260,7 +257,7 @@
               "https://ecom-back-t1.netfy.app/api/items",
               {
                 headers: {
-                  Authorization: `Bearer ${JWT_TOKEN}`,
+                  Authorization: `Bearer ${token}`,
                 },
               }
             );
