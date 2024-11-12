@@ -1,45 +1,35 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const contactForm = document.getElementById("contactForm");
-  if (contactForm) {
-    contactForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
+$(document).ready(function () {
+  $("#contact-email").on("click", function (event) {
+    event.preventDefault();
+    $("#contactModal").modal("show");
+  });
 
-      const formData = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        contactNo: document.getElementById("contactNo").value,
-        message: document.getElementById("message").value,
-      };
+  $("#contactForm").on("submit", function (event) {
+    event.preventDefault();
 
-      try {
-        const response = await fetch(
-          "https://ecom-back-t1.netfy.app/api/feedback/send-feedback",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          }
-        );
+    const name = $("#name").val();
+    const email = $("#email").val();
+    const contactNumber = $("#contactNumber").val();
+    const message = $("#message").val();
 
-        if (response.ok) {
-          alert("Message sent successfully!");
-          document.getElementById("contactForm").reset();
-        } else {
-          const errorData = await response.json();
-          alert(
-            `Failed to send message: ${
-              errorData.message || "Please try again."
-            }`
-          );
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
-      }
+    $.ajax({
+      url: " https://ecom-back-t1.netfy.app/api/feedback/send-feedback",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        name: name,
+        email: email,
+        contactNumber: contactNumber,
+        message: message,
+      }),
+      success: function (response) {
+        alert("Your message has been sent successfully!");
+        $("#contactModal").modal("hide");
+        $("#contactForm")[0].reset();
+      },
+      error: function (error) {
+        alert("There was an error sending your message. Please try again.");
+      },
     });
-  } else {
-    console.error("contactForm element not found");
-  }
+  });
 });
