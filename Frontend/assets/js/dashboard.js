@@ -1,3 +1,171 @@
+$(document).ready(() => {
+  // Fetch order summaries
+  fetchOrderSummary();
+
+  // Fetch data for pie chart (order percentages)
+  $.ajax({
+    url: "https://ecom-back-t1.netfy.app/api/orders/admin/order-status-percentages",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    success: (data) => {
+      createPieChart(data);
+    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      console.error("Error fetching pie chart data:", errorThrown);
+    },
+  });
+
+  // Fetch data for bar chart (weekly order summary for categories)
+  $.ajax({
+    url: "https://ecom-back-t1.netfy.app/api/orders/weekly-order-summary",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    success: (data) => {
+      console.log("Data fetched for chart:", data);
+      createBarChart(data);
+    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      console.error("Error fetching bar chart data:", errorThrown);
+    },
+  });
+});
+
+// Function to create the pie chart
+function createPieChart(data) {
+  const ctx = $("#pieChart")[0].getContext("2d");
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Pending", "Successful", "Failed"],
+      datasets: [
+        {
+          label: "Order Percentages",
+          data: [data.pending, data.successful, data.failed],
+          backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: "white",
+          },
+          position: "top",
+        },
+      },
+    },
+  });
+}
+
+// Function to create the bar chart
+function createBarChart(data) {
+  const ctx = $("#barChart")[0].getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: Object.keys(data),
+      datasets: [
+        {
+          label: "Pizza Orders",
+          data: Object.values(data).map((week) => week.Pizza),
+          backgroundColor: "#c59d5f",
+          borderWidth: 1,
+        },
+        {
+          label: "Cake Orders",
+          data: Object.values(data).map((week) => week.Cake),
+          backgroundColor: "#8a5a44",
+          borderWidth: 1,
+        },
+        {
+          label: "Beverage Orders",
+          data: Object.values(data).map((week) => week.Beverage),
+          backgroundColor: "#e6b98c",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Order Count",
+            color: "white",
+          },
+          ticks: {
+            stepSize: 1,
+            precision: 0,
+            color: "white",
+          },
+          grid: {
+            color: "#ffffff54",
+          },
+          border: {
+            color: "white",
+          },
+        },
+        x: {
+          ticks: {
+            color: "white",
+          },
+          grid: {
+            color: "#ffffff54",
+          },
+          border: {
+            color: "white",
+          },
+          title: {
+            display: true,
+            text: "Weeks",
+            color: "white",
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "white",
+          },
+          position: "top",
+        },
+        tooltip: {
+          bodyColor: "white",
+        },
+      },
+    },
+  });
+}
+
+// Function to fetch and display order summary counts
+function fetchOrderSummary() {
+  $.ajax({
+    url: "https://ecom-back-t1.netfy.app/api/orders/admin/statistics",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+    success: (data) => {
+      $("#total-orders").text(data.totalOrders);
+      $("#pending-orders").text(data.pendingOrders);
+      $("#successful-orders").text(data.successfulOrders);
+      $("#failed-orders").text(data.failedOrders);
+    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      console.error("Error fetching order data:", errorThrown);
+    },
+  });
+}
+
 $(function () {
   const addOfferButton = $("#addOfferButton");
   const submitOfferBtn = $("#submitOfferBtn");
@@ -148,3 +316,68 @@ $(function () {
     }
   });
 });
+
+$(document).ready(() => {
+  fetchCustomerData();
+});
+
+function fetchCustomerData() {
+  const url = "https://ecom-back-t1.netfy.app/api/auth/users";
+  const token = localStorage.getItem("authToken");
+
+  $.ajax({
+    url: url,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    success: (data) => {
+      if (data.status === "success" && Array.isArray(data.data)) {
+        populateCustomerTable(data.data);
+      } else {
+        console.error("Unexpected data format:", data);
+      }
+    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      console.error("Error fetching customer data:", errorThrown);
+    },
+  });
+}
+
+function populateCustomerTable(users) {
+  const $customerList = $("#customer-list");
+  $customerList.empty();
+
+  // Populate the table with new user data
+  users.forEach((user) => {
+    const $row = $("<tr></tr>");
+
+    $("<td></td>")
+      .text(user.user_id || "N/A")
+      .appendTo($row);
+    $("<td></td>")
+      .text(user.username || "N/A")
+      .appendTo($row);
+    $("<td></td>")
+      .text(user.email || "N/A")
+      .appendTo($row);
+
+    $customerList.append($row);
+  });
+
+  // Reinitialize DataTable with updated data if already initialized
+  if ($.fn.DataTable.isDataTable("#example")) {
+    $("#example").DataTable().clear().destroy();
+  }
+  $("#example").DataTable({
+    pageLength: 5,
+    responsive: true,
+    autoWidth: false,
+    language: {
+      emptyTable: "No data available",
+      search: "Filter:",
+      lengthMenu: "Show _MENU_ entries",
+    },
+  });
+}
