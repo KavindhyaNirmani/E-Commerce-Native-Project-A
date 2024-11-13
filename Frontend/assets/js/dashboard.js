@@ -3,35 +3,36 @@ $(document).ready(() => {
   fetchOrderSummary();
 
   // Fetch data for pie chart (order percentages)
-  $.ajax({
-    url: "https://ecom-back-t1.netfy.app/api/orders/admin/order-status-percentages",
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-    },
-    success: (data) => {
-      createPieChart(data);
-    },
-    error: (jqXHR, textStatus, errorThrown) => {
-      console.error("Error fetching pie chart data:", errorThrown);
-    },
-  });
+  axios
+    .get(
+      "https://ecom-back-t1.netfy.app/api/orders/admin/order-status-percentages",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      }
+    )
+    .then((response) => {
+      createPieChart(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching pie chart data:", error);
+    });
 
   // Fetch data for bar chart (weekly order summary for categories)
-  $.ajax({
-    url: "https://ecom-back-t1.netfy.app/api/orders/weekly-order-summary",
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-    },
-    success: (data) => {
-      console.log("Data fetched for chart:", data);
-      createBarChart(data);
-    },
-    error: (jqXHR, textStatus, errorThrown) => {
-      console.error("Error fetching bar chart data:", errorThrown);
-    },
-  });
+  axios
+    .get("https://ecom-back-t1.netfy.app/api/orders/weekly-order-summary", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+    .then((response) => {
+      console.log("Data fetched for chart:", response.data);
+      createBarChart(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching bar chart data:", error);
+    });
 });
 
 // Function to create the pie chart
@@ -45,7 +46,7 @@ function createPieChart(data) {
         {
           label: "Order Percentages",
           data: [data.pending, data.successful, data.failed],
-          backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
+          backgroundColor: ["#c59d5f", "#e6b98c", "#8a5a44"],
           borderWidth: 1,
         },
       ],
@@ -148,22 +149,22 @@ function createBarChart(data) {
 
 // Function to fetch and display order summary counts
 function fetchOrderSummary() {
-  $.ajax({
-    url: "https://ecom-back-t1.netfy.app/api/orders/admin/statistics",
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-    },
-    success: (data) => {
+  axios
+    .get("https://ecom-back-t1.netfy.app/api/orders/admin/statistics", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+    .then((response) => {
+      const data = response.data;
       $("#total-orders").text(data.totalOrders);
       $("#pending-orders").text(data.pendingOrders);
       $("#successful-orders").text(data.successfulOrders);
       $("#failed-orders").text(data.failedOrders);
-    },
-    error: (jqXHR, textStatus, errorThrown) => {
+    })
+    .catch((error) => {
       console.error("Error fetching order data:", errorThrown);
-    },
-  });
+    });
 }
 
 $(function () {
