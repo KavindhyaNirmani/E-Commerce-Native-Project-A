@@ -29,7 +29,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
   </head>
-  <body style="font-family: 'Lato', sans-serif; background-image: none; height: 100%;">
+  <body
+    style="
+      font-family: 'Lato', sans-serif;
+      background-image: none;
+      height: 100%;
+    "
+  >
     <!-- Navbar -->
     <div id="headerPlaceholder"></div>
 
@@ -51,7 +57,12 @@
             </thead>
             <tbody id="cart-items"></tbody>
           </table>
-          <button class="btn-add" onclick="window.location.href='index.html#menu'">Add item</button>
+          <button
+            class="btn-add"
+            onclick="window.location.href='index.html#menu'"
+          >
+            Add item
+          </button>
         </div>
 
         <!-- Order Summary -->
@@ -80,7 +91,9 @@
               <tr>
                 <td><strong>Total </strong></td>
                 <td>:</td>
-                <td><strong>Rs. <span id="total">0.00</span></strong></td>
+                <td>
+                  <strong>Rs. <span id="total">0.00</span></strong>
+                </td>
               </tr>
             </table>
             <button class="btn-checkout" onclick="passItemsToCheckout()">
