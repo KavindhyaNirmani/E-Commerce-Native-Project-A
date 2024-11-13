@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   // Header
   axios
     .get("./assets/widgets/header.html")
@@ -90,27 +90,30 @@ $(document).ready(function () {
     console.log("Adding item to cart:", item);
     console.log("Using token:", token);
 
-    $.ajax({
-      url: "https://ecom-back-t1.netfy.app/api/cart/add",
-      type: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      contentType: "application/json",
-      data: JSON.stringify({ item_id: item.item_id }),
-      success: function (response) {
+    axios
+      .post(
+        "https://ecom-back-t1.netfy.app/api/cart/add",
+        { item_id: item.item_id },
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      .then((response) => {
         console.log("Response Data:", response);
         alert(`${item.item_name} has been added to your cart.`);
         window.location.href = "cart.html";
-      },
-      error: function (error) {
+      })
+      .catch((error) => {
         console.error(
           "There was an error adding the item to your cart:",
           error
         );
         const errorMessage = error.responseJSON?.message || "Unknown error";
         alert(`Error adding item to cart: ${errorMessage}`);
-      },
-    });
+      });
   }
 });
