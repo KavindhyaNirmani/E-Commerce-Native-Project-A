@@ -16,21 +16,21 @@ $(document).ready(function () {
     })
     .catch((error) => console.error("Error loading footer:", error));
 
-  //Cake menu data and limit
-  let allCakeData = [];
-  let cakeLimit = 3;
+  //Pizza limit
+  let allBeverageData = [];
+  let beverageLimit = 3;
 
   axios
-    .get("https://ecom-back-t1.netfy.app/api/items/category/cake")
+    .get("https://ecom-back-t1.netfy.app/api/items/category/beverage")
     .then((response) => {
-      allCakeData = response.data;
-      displayCakeItems(allCakeData.slice(0, cakeLimit));
+      allBeverageData = response.data;
+      displayCakeItems(allBeverageData.slice(0, beverageLimit));
     })
     .catch((error) => console.error("Error loading menu data:", error));
 
   // Display cake items on the page
   function displayCakeItems(items) {
-    const $menu = $("#cakeMenu");
+    const $menu = $("#beverageMenu");
     items.forEach((item) => {
       const menuItem = $(`
           <div class="col-lg-4 col-md-6 mb-4">
@@ -59,10 +59,13 @@ $(document).ready(function () {
 
   // Load more items
   $("#viewMoreBtn").on("click", function () {
-    const additionalItems = allCakeData.slice(cakeLimit, cakeLimit + 8);
-    displayCakeItems(additionalItems);
-    cakeLimit += 8;
-    if (cakeLimit >= allCakeData.length) {
+    const additionalItems = allBeverageData.slice(
+      beverageLimit,
+      beverageLimit + 8
+    );
+    displayBeverageItems(additionalItems);
+    beverageLimit += 8;
+    if (beverageLimit >= allBeverageData.length) {
       $("#viewMoreBtn").hide();
     }
   });
@@ -102,7 +105,7 @@ $(document).ready(function () {
       },
       error: function (error) {
         console.error(
-          "There was an error adding the item to your cart:", 
+          "There was an error adding the item to your cart:",
           error
         );
         const errorMessage = error.responseJSON?.message || "Unknown error";
