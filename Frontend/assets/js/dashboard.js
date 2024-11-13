@@ -325,31 +325,32 @@ function fetchCustomerData() {
   const url = "https://ecom-back-t1.netfy.app/api/auth/users";
   const token = localStorage.getItem("authToken");
 
-  $.ajax({
-    url: url,
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    success: (data) => {
-      if (data.status === "success" && Array.isArray(data.data)) {
-        populateCustomerTable(data.data);
+  axios
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      if (
+        response.data.status === "success" &&
+        Array.isArray(response.data.data)
+      ) {
+        populateCustomerTable(response.data.data);
       } else {
-        console.error("Unexpected data format:", data);
+        console.error("Unexpected data format:", response.data);
       }
-    },
-    error: (jqXHR, textStatus, errorThrown) => {
-      console.error("Error fetching customer data:", errorThrown);
-    },
-  });
+    })
+    .catch((error) => {
+      console.error("Error fetching customer data:", error);
+    });
 }
 
 function populateCustomerTable(users) {
   const $customerList = $("#customer-list");
   $customerList.empty();
 
-  // Populate the table with new user data
   users.forEach((user) => {
     const $row = $("<tr></tr>");
 
@@ -366,7 +367,6 @@ function populateCustomerTable(users) {
     $customerList.append($row);
   });
 
-  // Reinitialize DataTable with updated data if already initialized
   if ($.fn.DataTable.isDataTable("#example")) {
     $("#example").DataTable().clear().destroy();
   }
