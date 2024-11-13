@@ -129,15 +129,16 @@ async function changeQuantity(cartItemId, change) {
   if (currentQuantity < 1) return;
 
   try {
-    await $.ajax({
-      url: `https://ecom-back-t1.netfy.app/api/cart/update/${cartItemId}`,
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({ quantity: currentQuantity }),
-    });
+    await axios.put(
+      `https://ecom-back-t1.netfy.app/api/cart/update/${cartItemId}`,
+      { quantity: currentQuantity },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     quantityElement.text(currentQuantity);
     const itemPrice = parseFloat($(`[data-id="${cartItemId}"]`).data("price"));
@@ -159,13 +160,14 @@ async function removeItem(cartItemId) {
   }
 
   try {
-    await $.ajax({
-      url: `https://ecom-back-t1.netfy.app/api/cart/delete/${cartItemId}`,
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await axios.delete(
+      `https://ecom-back-t1.netfy.app/api/cart/delete/${cartItemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     fetchCartItems();
   } catch (error) {
@@ -209,17 +211,18 @@ async function passItemsToCheckout() {
   }
 
   try {
-    await $.ajax({
-      url: "https://ecom-back-t1.netfy.app/api/orders/checkout/transfer-selected",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: JSON.stringify({
+    await axios.post(
+      "https://ecom-back-t1.netfy.app/api/orders/checkout/transfer-selected",
+      {
         selectedCartItemIds: selectedItems.map((item) => item.cart_item_id),
-      }),
-    });
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     alert("Items transferred to checkout successfully!");
     window.location.href = "checkout.html";
