@@ -7,7 +7,7 @@ html {
 
 .hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../images/cake-hero-img4.jpg");
+    url("../../images/cake-hero-img4.jpg");
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
