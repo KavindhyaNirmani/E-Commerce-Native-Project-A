@@ -9,31 +9,26 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
 
     <link
       rel="stylesheet"
-      href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
-    />
+      href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
     <link rel="stylesheet" href="./assets/styles/dashboard.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
 
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 
@@ -48,8 +43,7 @@
       font-family: 'Lato', sans-serif;
       height: 100vh;
       background-color: #1e1e1e !important;
-    "
-  >
+    ">
     <common-sidebar></common-sidebar>
 
     <div class="content">
@@ -57,7 +51,6 @@
       <div class="container my-1">
         <h2 class="order-title">Order Summary</h2>
 
-        <!-- Order Summary Boxes in a Single Row -->
         <div class="row text-center mb-4">
           <!-- Total Orders -->
           <div class="col-lg-3 col-md-6 col-6 mb-3">
@@ -94,20 +87,18 @@
 
         <!-- Chart Section -->
         <div class="row">
-          <!-- Pie Chart (smaller width) -->
+          <!-- Pie Chart-->
           <div class="col-lg-4 col-md-6 mb-4 text-center">
             <div class="chart-box">
               <h4>Order Status Distribution</h4>
-              <!-- Placeholder for Pie Chart -->
               <canvas id="pieChart"></canvas>
             </div>
           </div>
 
-          <!-- Bar Chart (larger width) -->
+          <!-- Bar Chart-->
           <div class="col-lg-8 col-md-6 mb-4 text-center">
             <div class="chart-box">
               <h4>Order Summary Chart</h4>
-              <!-- Placeholder for Bar Chart -->
               <canvas id="barChart"></canvas>
             </div>
           </div>
@@ -136,8 +127,7 @@
         id="addOfferModal"
         tabindex="-1"
         aria-labelledby="addOfferModalLabel"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -147,8 +137,7 @@
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                id="closeModal"
-              ></button>
+                id="closeModal"></button>
             </div>
             <div class="modal-body">
               <form
@@ -156,8 +145,7 @@
                 method="POST"
                 class="needs-validation"
                 novalidate
-                enctype="multipart/form-data"
-              >
+                enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="offerTitle">Title</label>
                   <input
@@ -165,8 +153,7 @@
                     class="form-control"
                     id="offerTitle"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -177,8 +164,7 @@
                     class="form-control"
                     id="offerDetail"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -189,8 +175,7 @@
                     class="form-control"
                     id="minPrice"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -201,8 +186,7 @@
                     class="form-control"
                     id="disPercentage"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -226,8 +210,7 @@
                     class="form-control"
                     id="offerImage"
                     accept="image/*"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -238,8 +221,7 @@
                     class="form-control"
                     id="startDate"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -250,8 +232,7 @@
                     class="form-control"
                     id="endDate"
                     placeholder="Enter offer details"
-                    required
-                  />
+                    required />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
 
@@ -281,248 +262,11 @@
             <th>Email Address</th>
           </tr>
         </thead>
-        <tbody id="customer-list">
-          <!-- Dynamic rows from the backend will be inserted here -->
-        </tbody>
+        <tbody id="customer-list"></tbody>
       </table>
     </div>
     <div style="height: 20px"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-      $(document).ready(() => {
-        fetchCustomerData();
-      });
-
-      function fetchCustomerData() {
-        const url = "https://ecom-back-t1.netfy.app/api/auth/users";
-        const token = localStorage.getItem("authToken");
-
-        $.ajax({
-          url: url,
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          success: (data) => {
-            if (data.status === "success" && Array.isArray(data.data)) {
-              populateCustomerTable(data.data);
-            } else {
-              console.error("Unexpected data format:", data);
-            }
-          },
-          error: (jqXHR, textStatus, errorThrown) => {
-            console.error("Error fetching customer data:", errorThrown);
-          },
-        });
-      }
-
-      function populateCustomerTable(users) {
-        const $customerList = $("#customer-list");
-        $customerList.empty();
-
-        // Populate the table with new user data
-        users.forEach((user) => {
-          const $row = $("<tr></tr>");
-
-          $("<td></td>")
-            .text(user.user_id || "N/A")
-            .appendTo($row);
-          $("<td></td>")
-            .text(user.username || "N/A")
-            .appendTo($row);
-          $("<td></td>")
-            .text(user.email || "N/A")
-            .appendTo($row);
-
-          $customerList.append($row);
-        });
-
-        // Reinitialize DataTable with updated data if already initialized
-        if ($.fn.DataTable.isDataTable("#example")) {
-          $("#example").DataTable().clear().destroy();
-        }
-        $("#example").DataTable({
-          pageLength: 5,
-          responsive: true,
-          autoWidth: false,
-          language: {
-            emptyTable: "No data available",
-            search: "Filter:",
-            lengthMenu: "Show _MENU_ entries",
-          },
-        });
-      }
-
-      $(document).ready(() => {
-        // Fetch order summaries
-        fetchOrderSummary();
-
-        // Fetch data for pie chart (order percentages)
-        $.ajax({
-          url: "https://ecom-back-t1.netfy.app/api/orders/admin/order-status-percentages",
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-          success: (data) => {
-            createPieChart(data);
-          },
-          error: (jqXHR, textStatus, errorThrown) => {
-            console.error("Error fetching pie chart data:", errorThrown);
-          },
-        });
-
-        // Fetch data for bar chart (weekly order summary for categories)
-        $.ajax({
-          url: "https://ecom-back-t1.netfy.app/api/orders/weekly-order-summary",
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-          success: (data) => {
-            console.log("Data fetched for chart:", data);
-            createBarChart(data);
-          },
-          error: (jqXHR, textStatus, errorThrown) => {
-            console.error("Error fetching bar chart data:", errorThrown);
-          },
-        });
-      });
-
-      // Function to create the pie chart
-      function createPieChart(data) {
-        const ctx = $("#pieChart")[0].getContext("2d");
-        new Chart(ctx, {
-          type: "pie",
-          data: {
-            labels: ["Pending", "Successful", "Failed"],
-            datasets: [
-              {
-                label: "Order Percentages",
-                data: [data.pending, data.successful, data.failed],
-                backgroundColor: ["#c59d5f ", "#e6b98c", "#8a5a44"],
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                labels: {
-                  color: "white",
-                },
-                position: "top",
-              },
-            },
-          },
-        });
-      }
-
-      // Function to create the bar chart
-      function createBarChart(data) {
-        const ctx = $("#barChart")[0].getContext("2d");
-        new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: Object.keys(data), // ["Week 1", "Week 2", "Week 3", "Week 4"]
-            datasets: [
-              {
-                label: "Pizza Orders",
-                data: Object.values(data).map((week) => week.Pizza),
-                backgroundColor: "#c59d5f",
-                borderWidth: 1,
-              },
-              {
-                label: "Cake Orders",
-                data: Object.values(data).map((week) => week.Cake),
-                backgroundColor: "#8a5a44",
-                borderWidth: 1,
-              },
-              {
-                label: "Beverage Orders",
-                data: Object.values(data).map((week) => week.Beverage),
-                backgroundColor: "#e6b98c",
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "Order Count",
-                  color: "white",
-                },
-                ticks: {
-                  stepSize: 1,
-                  precision: 0,
-                  color: "white",
-                },
-                grid: {
-                  color: "#ffffff54",
-                },
-                border: {
-                  color: "white",
-                },
-              },
-              x: {
-                ticks: {
-                  color: "white",
-                },
-                grid: {
-                  color: "#ffffff54",
-                },
-                border: {
-                  color: "white",
-                },
-                title: {
-                  display: true,
-                  text: "Weeks",
-                  color: "white",
-                },
-              },
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: "white",
-                },
-                position: "top",
-              },
-              tooltip: {
-                bodyColor: "white",
-              },
-            },
-          },
-        });
-      }
-
-      // Function to fetch and display order summary counts
-      function fetchOrderSummary() {
-        $.ajax({
-          url: "https://ecom-back-t1.netfy.app/api/orders/admin/statistics",
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-          success: (data) => {
-            $("#total-orders").text(data.totalOrders);
-            $("#pending-orders").text(data.pendingOrders);
-            $("#successful-orders").text(data.successfulOrders);
-            $("#failed-orders").text(data.failedOrders);
-          },
-          error: (jqXHR, textStatus, errorThrown) => {
-            console.error("Error fetching order data:", errorThrown);
-          },
-        });
-      }
-    </script>
   </body>
 </html>

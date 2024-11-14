@@ -84,19 +84,10 @@ body {
   font-weight: bold;
 }
 
-.close {
-  color: #ff0000;
-  background-color: transparent;
-  border: 1px #ff0000;
-  font-size: 50px;
+.btn-close {
+  background-color: #fff;
 }
 
-.close:hover {
-  color: #c59d5f;
-  border-color: #c59d5f;
-}
-
-/* Remove the default appearance of the select dropdown */
 #orderStatus {
   appearance: none; /* For modern browsers */
   -webkit-appearance: none; /* For Safari */
@@ -107,7 +98,6 @@ body {
   padding-right: 30px;
 }
 
-/* Ensure it looks nice on smaller screens */
 #orderStatus:focus {
   border-color: #999;
   outline: none;

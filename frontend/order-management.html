@@ -16,11 +16,10 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/styles/order-management.css" />
     <link rel="stylesheet" href="./assets/widgets/side-bar/sidebar.css" />
-    <!-- jQuery and Bootstrap JS -->
-    <!-- Include Bootstrap JS (no need for jQuery) -->
+    <!--Bootstrap JS,  jQuery and Axios -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <common-sidebar></common-sidebar>
@@ -38,9 +37,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="order-list">
-            <!-- Dynamic rows from the backend will be inserted here -->
-          </tbody>
+          <tbody id="order-list"></tbody>
         </table>
       </div>
 
@@ -49,7 +46,6 @@
         class="modal fade"
         id="orderDetailsModal"
         tabindex="-1"
-        role="dialog"
         aria-labelledby="orderDetailsModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -61,14 +57,11 @@
               <span id="orderId" class="ml-auto pr-3">Order ID:</span>
               <button
                 type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <!-- Dynamic content will be inserted here -->
               <p id="customer-id">Customer ID:</p>
               <p id="customer-name">Item Name:</p>
               <p id="customer-phone">Phone:</p>
@@ -83,9 +76,7 @@
                     <th>Total</th>
                   </tr>
                 </thead>
-                <tbody id="order-items">
-                  <!-- Items will be dynamically populated -->
-                </tbody>
+                <tbody id="order-items"></tbody>
               </table>
               <!-- Subtotal, Delivery Fee, Discount, and Total -->
               <p id="subtotal">Subtotal:</p>
@@ -117,18 +108,17 @@
     </div>
     <script src="./assets/widgets/side-bar/sidebar.js"></script>
     <script>
-      // Fetch all orders for admin management from the backend API
       async function fetchOrdersFromBackend() {
         try {
-          const response = await $.ajax({
-            url: "https://ecom-back-t1.netfy.app/api/orders/admin/orders",
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-          });
-
-          return response;
+          const response = await axios.get(
+            "https://ecom-back-t1.netfy.app/api/orders/admin/orders",
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              },
+            }
+          );
+          return response.data;
         } catch (error) {
           console.error("Failed to fetch orders:", error);
           return [];
@@ -137,7 +127,6 @@
 
       let currentOrderId = null;
 
-      // Function to render the order list
       function renderOrderList(orders) {
         const orderList = $("#order-list");
         orderList.empty();
@@ -161,17 +150,17 @@
         });
       }
 
-      // Fetch order details by order ID from the backend
       async function fetchOrderDetails(orderId) {
         try {
-          const response = await $.ajax({
-            url: `https://ecom-back-t1.netfy.app/api/orders/order-details/${orderId}`,
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-          });
-          return response;
+          const response = await axios.get(
+            `https://ecom-back-t1.netfy.app/api/orders/order-details/${orderId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              },
+            }
+          );
+          return response.data;
         } catch (error) {
           console.error("Error fetching order details:", error);
           alert(
@@ -181,7 +170,6 @@
         }
       }
 
-      // Populate modal with order details from backend API
       async function populateModal(orderId) {
         try {
           const order = await fetchOrderDetails(orderId);
@@ -192,7 +180,6 @@
             return;
           }
 
-          // Populate modal elements with order data
           $("#orderId").text(`Order ID: ${order.orderDetails.order_id}`);
           $("#customer-id").text(
             `Customer ID: ${order.orderDetails.user_id || "N/A"}`
@@ -249,22 +236,21 @@
         }
       }
 
-      // Update order status using the backend API
       async function updateOrderStatus(orderId, newStatus) {
         try {
-          const response = await $.ajax({
-            url: `https://ecom-back-t1.netfy.app/api/orders/admin/order-status/${orderId}`,
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              "Content-Type": "application/json",
-            },
-            data: JSON.stringify({ newStatus }),
-          });
+          const response = await axios.put(
+            `https://ecom-back-t1.netfy.app/api/orders/admin/order-status/${orderId}`,
+            { newStatus },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-          // Update the status in the table
           $(`tr[data-order-id="${orderId}"] .order-status`).text(
-            response.order_status
+            response.data.order_status
           );
           alert("Order status updated successfully!");
         } catch (error) {
@@ -274,18 +260,15 @@
       }
 
       $(document).ready(async function () {
-        // Load the initial order list
         const orders = await fetchOrdersFromBackend();
         renderOrderList(orders);
 
-        // Handle view button clicks
         $(document).on("click", ".view-btn", async function () {
           const orderId = $(this).data("order-id");
           await populateModal(orderId);
           $("#orderDetailsModal").modal("show");
         });
 
-        // Handle delete button clicks
         $(document).on("click", ".delete-btn", async function () {
           const orderId = $(this).data("order-id");
           const confirmation = confirm(
@@ -294,15 +277,18 @@
 
           if (confirmation) {
             try {
-              const response = await $.ajax({
-                url: `https://ecom-back-t1.netfy.app/api/orders/admin/delete/${orderId}`,
-                method: "DELETE",
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-                },
-              });
+              const response = await axios.delete(
+                `https://ecom-back-t1.netfy.app/api/orders/admin/delete/${orderId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "authToken"
+                    )}`,
+                  },
+                }
+              );
 
-              if (response) {
+              if (response.data) {
                 alert("Order deleted successfully!");
                 $(this).closest("tr").remove();
               } else {
@@ -315,7 +301,6 @@
           }
         });
 
-        // Handle update status button click in modal
         $("#updateStatusBtn").on("click", async function () {
           const newStatus = $("#orderStatus").val();
           await updateOrderStatus(currentOrderId, newStatus);
