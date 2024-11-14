@@ -2,6 +2,8 @@ $(document).ready(() => {
   displaySelectedItems();
 });
 
+let selectedCartItemIds = [];
+
 async function displaySelectedItems() {
   const token = localStorage.getItem("authToken");
   if (!token) {
@@ -31,7 +33,7 @@ async function displaySelectedItems() {
     const data = response.data;
     const itemsContainer = $("#order-items");
     itemsContainer.empty();
-    let selectedCartItemIds = [];
+    selectedCartItemIds = [];
 
     if (Array.isArray(data.items) && data.items.length > 0) {
       console.log("Selected Items:", data.items);
@@ -166,3 +168,23 @@ async function removeItem(cartItemId) {
     $("#checkout-error").text("Error removing item. Please try again later.");
   }
 }
+
+// checkout button click using jQuery
+$("#checkoutButton").on("click", function () {
+  const formData = {
+    firstName: $("input[placeholder='First name']").val(),
+    lastName: $("input[placeholder='Last name']").val(),
+    email: $("input[placeholder='you@example.com']").val(),
+    address: $("input[placeholder='1234 Main St']").val(),
+    mobileNumber: $("input[name='mobileNumber']").val(),
+    postalCode: $("input[placeholder='Postal code']").val(),
+    paymentMethod: $("input[name='paymentMethod']:checked").attr("id"),
+    cardName: $("input[aria-label='card1']").val(),
+    cardNumber: $("input[placeholder='1234-5678-9012']").val(),
+    cardExpiry: $("input[aria-label='card3']").val(),
+    cardCVV: $("input[aria-label='Card4']").val(),
+    selectedCartItemIds: selectedCartItemIds, // selected cart item IDs
+  };
+
+  console.log("Form Data:", formData);
+});
