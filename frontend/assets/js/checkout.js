@@ -170,7 +170,7 @@ async function removeItem(cartItemId) {
 }
 
 // checkout button click using jQuery
-$("#checkoutButton").on("click", function () {
+$("#checkoutButton").on("click", async function () {
   const formData = {
     firstName: $("input[placeholder='First name']").val(),
     lastName: $("input[placeholder='Last name']").val(),
@@ -183,8 +183,59 @@ $("#checkoutButton").on("click", function () {
     cardNumber: $("input[placeholder='1234-5678-9012']").val(),
     cardExpiry: $("input[aria-label='card3']").val(),
     cardCVV: $("input[aria-label='Card4']").val(),
-    selectedCartItemIds: selectedCartItemIds, // selected cart item IDs
+    selectedCartItemIds: selectedCartItemIds,
   };
 
-  console.log("Form Data:", formData);
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    $("#checkout-error").text("Authentication required. Please log in again.");
+    return;
+  }
+
+  try {
+    // Fetch order summary
+    const summaryResponse = await axios.get(
+      `https://ecom-back-t1.netfy.app/api/orders/order-summary?selectedCartItemIds=${JSON.stringify(
+        selectedCartItemIds
+      )}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (summaryResponse.status !== 200) {
+      console.error(`Failed to fetch summary: ${summaryResponse.status}`);
+      $("#checkout-error").text(
+        "Failed to load order summary. Please try again later."
+      );
+      return;
+    }
+
+    const summaryData = summaryResponse.data;
+    console.log("Order Summary Data:", summaryData);
+
+    // Add order summary to form
+    formData.orderSummary = {
+      discountAmount: summaryData.discountAmount || 0,
+      finalAmount: summaryData.finalAmount || 0,
+      totalAmount: summaryData.totalAmount || 0,
+      totalQuantity: summaryData.totalQuantity || 0,
+    };
+
+    console.log("Form Data with Order Summary:", formData);
+
+    //api not connected
+    await axios.post(
+      "https://ecom-back-t1.netfy.app/api/orders/place",
+      formData
+    );
+
+    alert("Order placed successfully!");
+  } catch (error) {
+    console.error("Error during checkout:", error);
+    $("#checkout-error").text("Error during checkout. Please try again later.");
+  }
 });
