@@ -3,6 +3,7 @@ $(document).ready(() => {
 });
 
 let selectedCartItemIds = [];
+let cart_id = null;
 
 async function displaySelectedItems() {
   const token = localStorage.getItem("authToken");
@@ -38,21 +39,20 @@ async function displaySelectedItems() {
     if (Array.isArray(data.items) && data.items.length > 0) {
       console.log("Selected Items:", data.items);
 
+      cart_id = data.items[0].cart_id; // Assuming all items belong to the same cart
+      console.log("Cart ID:", cart_id);
+
       data.items.forEach((item) => {
         selectedCartItemIds.push(item.cart_item_id);
         const itemTotal = parseFloat(item.item_price) * item.quantity;
 
         const row = $("<tr>").html(`
-            <td><img src="https://ecom-back-t1.netfy.app${
-              item.item_image
-            }" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
+            <td><img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
             <td>${item.item_name}</td>
             <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
             <td>${item.quantity}</td>
             <td>Rs.${itemTotal.toFixed(2)}</td>
-            <td><button class="btn btn-danger" onclick="removeItem(${
-              item.cart_item_id
-            })" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
+            <td><button class="btn btn-danger" onclick="removeItem(${item.cart_item_id})" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
           `);
         itemsContainer.append(row);
       });
@@ -60,8 +60,8 @@ async function displaySelectedItems() {
       console.log("Selected Cart Item IDs:", selectedCartItemIds);
 
       const summaryResponse = await axios.get(
-        `https://ecom-back-t1.netfy.app/api/orders/order-summary?selectedCartItemIds=${JSON.stringify(
-          selectedCartItemIds
+        `https://ecom-back-t1.netfy.app/api/orders/order-summary?selectedCartItemIds=${encodeURIComponent(
+          JSON.stringify(selectedCartItemIds)
         )}`,
         {
           headers: {
@@ -89,23 +89,17 @@ async function displaySelectedItems() {
             <tr>
               <td>No. of Items</td>
               <td>:</td>
-              <td><span id="item-count">${
-                summaryData.totalQuantity || 0
-              }</span></td>
+              <td><span id="item-count">${summaryData.totalQuantity || 0}</span></td>
             </tr>
             <tr>
               <td>Sub Total</td>
               <td>:</td>
-              <td>Rs.<span id="sub-total">${(
-                summaryData.totalAmount || 0
-              ).toFixed(2)}</span></td>
+              <td>Rs.<span id="sub-total">${(summaryData.totalAmount || 0).toFixed(2)}</span></td>
             </tr>
             <tr>
               <td>Discount</td>
               <td>:</td>
-              <td>Rs.<span id="discount">${(
-                summaryData.discountAmount || 0
-              ).toFixed(2)}</span></td>
+              <td>Rs.<span id="discount">${(summaryData.discountAmount || 0).toFixed(2)}</span></td>
             </tr>
             <tr>
               <td colspan="3"><hr class="full-width-line" /></td>
@@ -113,9 +107,7 @@ async function displaySelectedItems() {
             <tr>
               <td><strong>Total</strong></td>
               <td>:</td>
-              <td><strong>Rs. <span id="total">${(
-                summaryData.finalAmount || 0
-              ).toFixed(2)}</span></strong></td>
+              <td><strong>Rs. <span id="total">${(summaryData.finalAmount || 0).toFixed(2)}</span></strong></td>
             </tr>
           `;
         orderSummaryContainer.html(orderSummaryHTML);
@@ -124,9 +116,7 @@ async function displaySelectedItems() {
         $("#checkout-error").text("No order summary available.");
       }
     } else {
-      itemsContainer.html(
-        '<tr><td colspan="6">No selected items found</td></tr>'
-      );
+      itemsContainer.html('<tr><td colspan="6">No selected items found</td></tr>');
     }
   } catch (error) {
     console.error("Error fetching selected items or summary:", error);
@@ -169,21 +159,17 @@ async function removeItem(cartItemId) {
   }
 }
 
-// checkout button click using jQuery
 $("#checkoutButton").on("click", async function () {
   const formData = {
-    firstName: $("input[placeholder='First name']").val(),
-    lastName: $("input[placeholder='Last name']").val(),
-    email: $("input[placeholder='you@example.com']").val(),
+    selectedCartItemIds,
+    first_name: $("input[placeholder='First name']").val(),
+    last_name: $("input[placeholder='Last name']").val(),
     address: $("input[placeholder='1234 Main St']").val(),
-    mobileNumber: $("input[name='mobileNumber']").val(),
-    postalCode: $("input[placeholder='Postal code']").val(),
-    paymentMethod: $("input[name='paymentMethod']:checked").attr("id"),
-    cardName: $("input[aria-label='card1']").val(),
-    cardNumber: $("input[placeholder='1234-5678-9012']").val(),
-    cardExpiry: $("input[aria-label='card3']").val(),
-    cardCVV: $("input[aria-label='Card4']").val(),
-    selectedCartItemIds: selectedCartItemIds,
+    city: "Galle",
+    postal_code: $("input[placeholder='Postal code']").val(),
+    phone_number: $("input[placeholder='712345678']").val(),
+    cart_id,
+  
   };
 
   const token = localStorage.getItem("authToken");
@@ -193,10 +179,9 @@ $("#checkoutButton").on("click", async function () {
   }
 
   try {
-    // Fetch order summary
     const summaryResponse = await axios.get(
-      `https://ecom-back-t1.netfy.app/api/orders/order-summary?selectedCartItemIds=${JSON.stringify(
-        selectedCartItemIds
+      `https://ecom-back-t1.netfy.app/api/orders/order-summary?selectedCartItemIds=${encodeURIComponent(
+        JSON.stringify(selectedCartItemIds)
       )}`,
       {
         headers: {
@@ -215,22 +200,21 @@ $("#checkoutButton").on("click", async function () {
     }
 
     const summaryData = summaryResponse.data;
-    console.log("Order Summary Data:", summaryData);
-
-    // Add order summary to form
-    formData.orderSummary = {
-      discountAmount: summaryData.discountAmount || 0,
-      finalAmount: summaryData.finalAmount || 0,
-      totalAmount: summaryData.totalAmount || 0,
-      totalQuantity: summaryData.totalQuantity || 0,
-    };
+    formData.totalAmount = summaryData.totalAmount || 0;
+    formData.discountAmount = summaryData.discountAmount || 0;
+    formData.finalAmount = summaryData.finalAmount || 0;
 
     console.log("Form Data with Order Summary:", formData);
 
-    //api not connected
     await axios.post(
       "https://ecom-back-t1.netfy.app/api/orders/place",
-      formData
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     alert("Order placed successfully!");
