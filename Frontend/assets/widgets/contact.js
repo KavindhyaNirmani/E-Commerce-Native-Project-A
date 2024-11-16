@@ -19,12 +19,12 @@ $(document).ready(function () {
         contactNumber: contactNumber,
         message: message,
       })
-      .then(function (response) {
+      .then(function () {
         alert("Your message has been sent successfully!");
         $("#contactModal").modal("hide");
         $("#contactForm")[0].reset();
       })
-      .catch(function (error) {
+      .catch(function () {
         alert("There was an error sending your message. Please try again.");
       });
   });
