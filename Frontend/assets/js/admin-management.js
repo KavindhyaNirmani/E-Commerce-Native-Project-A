@@ -6,7 +6,7 @@ $(function () {
     }
   );
 
-  // Use Axios to fetch admins
+  
   async function fetchAdmins() {
     try {
       const token = localStorage.getItem("authToken");
@@ -21,7 +21,7 @@ $(function () {
         }
       );
 
-      // Debugging: log the response to check its structure
+      
       console.log("Response data:", response.data);
 
       if (response.data && response.data.data) {
@@ -35,15 +35,15 @@ $(function () {
     }
   }
 
-  // Function to display the list of admins
+  
   function displayAdmins(admins) {
-    $("#adminListContainer").empty(); // Clear existing entries
+    $("#adminListContainer").empty(); 
     admins.forEach((admin) => {
       appendNewAdminToTable(admin);
     });
   }
 
-  // Function to append admins into admin list
+  
   const appendNewAdminToTable = (admin) => {
     const imageUrl = admin.user_image
       ? `https://ecom-back-t1.netfy.app${admin.user_image}`
@@ -78,18 +78,19 @@ $(function () {
     $("#adminListContainer").append(adminCard);
   };
 
-  // Fetch admins initially
+
   fetchAdmins();
 
-  // Show the modal when add admin button is clicked
+  const adminForm = $("#addAdminForm");
+  
   $("#addAdminButton").on("click", function () {
-    $("#addAdminForm")[0].reset();
-    $("#addAdminForm").removeClass("was-validated");
+    adminForm[0].reset();
+    adminForm.removeClass("was-validated");
     $("#adminImagePreview").attr("src", "#").addClass("d-none"); // Reset image preview
     adminModal.show();
   });
 
-  // Image preview
+  
   $("#adminImage").on("change", function () {
     const file = this.files[0];
     if (file) {
@@ -105,16 +106,16 @@ $(function () {
     }
   });
 
-  // Handle form submission
-  $("#addAdminForm").on("submit", function (event) {
+ 
+  adminForm.on("submit", function (event) {
     event.preventDefault();
     const form = $(this)[0];
 
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      // Collect form data
-      var formData = new FormData();
+      
+      const formData = new FormData();
       formData.append("first_name", $("#firstName").val().trim());
       formData.append("last_name", $("#lastName").val().trim());
       formData.append("username", $("#userName").val().trim());

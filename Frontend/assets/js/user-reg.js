@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(function () {
   // Password toggle functionality
-  $(".toggle-password").click(function (e) {
+  $(".toggle-password").on("click", function () {
     e.preventDefault();
 
     const targetInput = $($(this).data("target"));
