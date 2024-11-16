@@ -1,7 +1,7 @@
 /* table */
 
 h6 {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .table {
@@ -23,24 +23,24 @@ td button i {
 
 .btn-custom {
   display: none;
-  border: #fad700;
+  border: #c59d5f;
   padding: 5px;
   width: 100px;
   font-weight: 500;
 }
 
 .btn {
-  color: #fad700;
+  color: #cf9d5f;
   font-size: 120%;
   display: inline;
 }
 
 .btn:hover {
-  color: #faff00;
+  color: #c59d5f;
 }
 
 .btn1 {
-  background-color: #fad700;
+  background-color: #c59d5f;
   color: #000000;
   font-weight: 700;
   border-radius: 5px;
@@ -48,7 +48,7 @@ td button i {
 }
 
 .btn1:hover {
-  background-color: #faff00;
+  background-color: #c59d5f;
   color: #000000;
 }
 
@@ -65,7 +65,7 @@ td button i {
 }
 
 .modal-title {
-  color: #fad700;
+  color: #c59d5f;
 }
 
 .modal-body form {
