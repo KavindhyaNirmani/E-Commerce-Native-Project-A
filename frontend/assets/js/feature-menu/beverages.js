@@ -24,12 +24,12 @@ $(function () {
     .get("https://ecom-back-t1.netfy.app/api/items/category/beverage")
     .then((response) => {
       allBeverageData = response.data;
-      displayCakeItems(allBeverageData.slice(0, beverageLimit));
+      displayBeverageItems(allBeverageData.slice(0, beverageLimit));
     })
     .catch((error) => console.error("Error loading menu data:", error));
 
   // Display cake items on the page
-  function displayCakeItems(items) {
+  function displayBeverageItems(items) {
     const $menu = $("#beverageMenu");
     items.forEach((item) => {
       const menuItem = $(`

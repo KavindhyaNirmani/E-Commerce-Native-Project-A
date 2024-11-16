@@ -75,11 +75,11 @@ function displayCartItems(items) {
         <td>
           <button onclick="changeQuantity(${
             item.cart_item_id
-          }, -1)" class="btn-qunatity">-</button>
+          }, -1)" class="btn-quantity">-</button>
           <span id="quantity-${item.cart_item_id}">${quantity}</span>
           <button onclick="changeQuantity(${
             item.cart_item_id
-          }, 1)" class="btn-qunatity">+</button>
+          }, 1)" class="btn-quantity">+</button>
         </td>
         <td>Rs: <span id="total-${item.cart_item_id}">${itemTotal.toFixed(
       2
