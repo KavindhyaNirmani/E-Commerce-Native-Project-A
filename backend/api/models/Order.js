@@ -30,11 +30,11 @@ class Order {
 
   //Get a specific order byID
   static async getOrderById(orderId) {
-    const [rows] = await db.execute("SELECT * FROM 'order' WHERE order_id=?", [
+    const [row] = await db.execute("SELECT * FROM 'order' WHERE order_id=?", [
       orderId,
     ]);
     //return the first row
-    return rows[0];
+    return row[0];
   }
 
   //Get all orders with item names and final prices

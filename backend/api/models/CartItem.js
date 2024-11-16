@@ -17,11 +17,11 @@ class CartItem {
   //Get all items in a cart by cart ID
   static async getItemsByCartId(cartId) {
     try {
-      const [result] = await db.execute(
+      const [results] = await db.execute(
         "SELECT ci.cart_item_id,ci.quantity,itm.item_name,itm.item_price,itm.item_image FROM cart_items ci JOIN item itm ON ci.item_id= itm.item_id WHERE ci.cart_id=? AND ci.is_deleted = 0 ",
         [cartId]
       );
-      return result; //return the list of cart items
+      return results; //return the list of cart items
     } catch (error) {
       throw new Error("Error fetching items in cart:" + error.message);
     }

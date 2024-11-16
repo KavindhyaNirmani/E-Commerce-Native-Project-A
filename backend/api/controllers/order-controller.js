@@ -19,7 +19,7 @@ exports.transferSelectedItemsToCheckout = async (req, res) => {
   UPDATE cart_items
   SET selected = 1
   WHERE cart_item_id IN (${placeholders})
-    AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
+  AND cart_id IN (SELECT cart_id FROM cart WHERE user_id = ?)
 `;
     console.log("Executing query to update selected items:", query, [
       ...selectedCartItemIds,
