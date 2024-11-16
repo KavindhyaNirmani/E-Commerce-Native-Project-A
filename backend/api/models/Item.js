@@ -4,11 +4,11 @@ class Item {
   //Find item by category
   static async findByCategory(category_id) {
     try {
-      const [results] = await db.execute(
+      const [result] = await db.execute(
         "SELECT*FROM item WHERE category_id=? AND is_deleted = 0",
         [category_id]
       );
-      return results;
+      return result;
     } catch (error) {
       throw new Error("Error finding items" + error.message);
     }
@@ -29,11 +29,11 @@ class Item {
   // Fetch a single item by its ID(excluding soft deleted items)
   static async findById(item_id) {
     try {
-      const [results] = await db.execute(
+      const [result] = await db.execute(
         "SELECT * FROM item WHERE item_id = ? AND is_deleted = 0",
         [item_id]
       );
-      return results.length > 0 ? results[0] : null; // Return the item or null if not found
+      return result.length > 0 ? result[0] : null; // Return the item or null if not found
     } catch (error) {
       throw new Error("Error fetching item: " + error.message);
     }
