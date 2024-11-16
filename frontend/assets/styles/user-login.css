@@ -8,8 +8,9 @@
 
 body {
   overflow: auto;
-  background-color: none !important;
+  background-color: none;
   height: 100vh;
+  font-family: "Poppins" ,sans-serif;
 }
 
 .container-fluid {
@@ -22,7 +23,7 @@ body {
   font-size: xx-large;
   color: #fdb560;
   text-shadow: 2px 2px 4px #000000;
-  font-style: "Poppins", sans-serif;
+
 }
 
 .form-title {
@@ -52,7 +53,7 @@ body {
 }
 
 input.form-control::placeholder {
-  color: #c0bdbd; 
+  color: #c0bdbd;
 }
 
 #password {
