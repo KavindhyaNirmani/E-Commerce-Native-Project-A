@@ -23,6 +23,8 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+      <!-- Add Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- jQuery-->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -34,18 +36,6 @@
   <body style="font-family: 'lato', sans-serif; background: none; height: 100%">
     <!-- Navbar -->
     <div id="headerPlaceholder"></div>
-
-    <script>
-      fetch("./assets/widgets/header.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("headerPlaceholder").innerHTML = data;
-
-          const offcanvasNavbar = document.getElementById("offcanvasNavbar");
-          offcanvasNavbar.style.backgroundColor = "black";
-        })
-        .catch((error) => console.error("Error loading header:", error));
-    </script>
 
     <!--Welcome section-->
     <div
@@ -298,23 +288,10 @@
 
     <!-- Footer Section -->
     <div id="footerPlaceholder"></div>
-    <script>
-      fetch("./assets/widgets/footer.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("footerPlaceholder").innerHTML = data;
-        })
-        .catch((error) => console.error("Error loading footer:", error));
-    </script>
+
     <!-- Custom JS -->
     <script src="./assets/js/feature.js"></script>
-
-    <script>
-      //For read more content
-      function toggleContent() {
-        $(".additional-content").toggle();
-      }
-    </script>
+    <script src="./assets/js/index.js"></script>
     <script src="./assets/widgets/contact.js"></script>
   </body>
 </html>

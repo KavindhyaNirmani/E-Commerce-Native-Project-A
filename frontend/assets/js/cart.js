@@ -1,24 +1,21 @@
-// Load header
-$.get("./assets/widgets/header.html")
-  .done(function (data) {
-    $("#headerPlaceholder").html(data);
-    const offcanvasNavbar = $("#offcanvasNavbar");
-    if (offcanvasNavbar.length) {
-      offcanvasNavbar.css("background-color", "black");
-    }
-  })
-  .fail(function (error) {
-    console.error("Error loading header:", error);
-  });
+$(function () {
+  // Header
+  axios
+    .get("./assets/widgets/header.html")
+    .then((response) => {
+      $("#headerPlaceholder").html(response.data);
+      $("#offcanvasNavbar").css("background-color", "black");
+    })
+    .catch((error) => console.error("Error loading header:", error));
 
-// Load footer
-$.get("./assets/widgets/footer.html")
-  .done(function (data) {
-    $("#footerPlaceholder").html(data);
-  })
-  .fail(function (error) {
-    console.error("Error loading footer:", error);
-  });
+  // Footer
+  axios
+    .get("./assets/widgets/footer.html")
+    .then((response) => {
+      $("#footerPlaceholder").html(response.data);
+    })
+    .catch((error) => console.error("Error loading footer:", error));
+});
 
 // Fetch cart items
 async function fetchCartItems() {
