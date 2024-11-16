@@ -1,6 +1,4 @@
-$(document).ready(() => {
-  displaySelectedItems();
-});
+displaySelectedItems();
 
 let selectedCartItemIds = [];
 let cart_id = null;
@@ -47,12 +45,16 @@ async function displaySelectedItems() {
         const itemTotal = parseFloat(item.item_price) * item.quantity;
 
         const row = $("<tr>").html(`
-            <td><img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
+            <td><img src="https://ecom-back-t1.netfy.app${
+              item.item_image
+            }" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
             <td>${item.item_name}</td>
             <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
             <td>${item.quantity}</td>
             <td>Rs.${itemTotal.toFixed(2)}</td>
-            <td><button class="btn btn-danger" onclick="removeItem(${item.cart_item_id})" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
+            <td><button class="btn btn-danger" onclick="removeItem(${
+              item.cart_item_id
+            })" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
           `);
         itemsContainer.append(row);
       });
@@ -89,17 +91,23 @@ async function displaySelectedItems() {
             <tr>
               <td>No. of Items</td>
               <td>:</td>
-              <td><span id="item-count">${summaryData.totalQuantity || 0}</span></td>
+              <td><span id="item-count">${
+                summaryData.totalQuantity || 0
+              }</span></td>
             </tr>
             <tr>
               <td>Sub Total</td>
               <td>:</td>
-              <td>Rs.<span id="sub-total">${(summaryData.totalAmount || 0).toFixed(2)}</span></td>
+              <td>Rs.<span id="sub-total">${(
+                summaryData.totalAmount || 0
+              ).toFixed(2)}</span></td>
             </tr>
             <tr>
               <td>Discount</td>
               <td>:</td>
-              <td>Rs.<span id="discount">${(summaryData.discountAmount || 0).toFixed(2)}</span></td>
+              <td>Rs.<span id="discount">${(
+                summaryData.discountAmount || 0
+              ).toFixed(2)}</span></td>
             </tr>
             <tr>
               <td colspan="3"><hr class="full-width-line" /></td>
@@ -107,7 +115,9 @@ async function displaySelectedItems() {
             <tr>
               <td><strong>Total</strong></td>
               <td>:</td>
-              <td><strong>Rs. <span id="total">${(summaryData.finalAmount || 0).toFixed(2)}</span></strong></td>
+              <td><strong>Rs. <span id="total">${(
+                summaryData.finalAmount || 0
+              ).toFixed(2)}</span></strong></td>
             </tr>
           `;
         orderSummaryContainer.html(orderSummaryHTML);
@@ -116,7 +126,9 @@ async function displaySelectedItems() {
         $("#checkout-error").text("No order summary available.");
       }
     } else {
-      itemsContainer.html('<tr><td colspan="6">No selected items found</td></tr>');
+      itemsContainer.html(
+        '<tr><td colspan="6">No selected items found</td></tr>'
+      );
     }
   } catch (error) {
     console.error("Error fetching selected items or summary:", error);
@@ -169,7 +181,6 @@ $("#checkoutButton").on("click", async function () {
     postal_code: $("input[placeholder='Postal code']").val(),
     phone_number: $("input[placeholder='712345678']").val(),
     cart_id,
-  
   };
 
   const token = localStorage.getItem("authToken");

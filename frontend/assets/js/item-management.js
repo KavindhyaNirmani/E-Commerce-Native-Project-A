@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   const form = $("#myForm");
   const tableBody = $("#data");
   const imgPreview = $("#imgPreview");
