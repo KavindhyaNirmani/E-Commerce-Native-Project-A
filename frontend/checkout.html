@@ -41,14 +41,17 @@
     <!-- Header -->
     <div id="headerPlaceholder"></div>
     <script>
-      fetch("./assets/widgets/header.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("headerPlaceholder").innerHTML = data;
-          const offcanvasNavbar = document.getElementById("offcanvasNavbar");
-          if (offcanvasNavbar) offcanvasNavbar.style.backgroundColor = "black";
+      $.get("./assets/widgets/header.html")
+        .done(function (data) {
+          $("#headerPlaceholder").html(data);
+          const offcanvasNavbar = $("#offcanvasNavbar");
+          if (offcanvasNavbar.length) {
+            offcanvasNavbar.css("background-color", "black");
+          }
         })
-        .catch((error) => console.error("Error loading header:", error));
+        .fail(function (error) {
+          console.error("Error loading header:", error);
+        });
     </script>
 
     <!-- Main content for checkout -->
@@ -303,13 +306,13 @@
     <!-- Footer -->
     <div id="footerPlaceholder"></div>
     <script>
-      fetch("./assets/widgets/footer.html")
-        .then((response) => response.text())
-        .then(
-          (data) =>
-            (document.getElementById("footerPlaceholder").innerHTML = data)
-        )
-        .catch((error) => console.error("Error loading footer:", error));
+      $.get("./assets/widgets/footer.html")
+        .done(function (data) {
+          $("#footerPlaceholder").html(data);
+        })
+        .fail(function (error) {
+          console.error("Error loading footer:", error);
+        });
     </script>
 
     <!-- External JS -->
