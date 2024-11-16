@@ -318,9 +318,8 @@ $(function () {
   });
 });
 
-$(document).ready(() => {
-  fetchCustomerData();
-});
+
+fetchCustomerData();
 
 function fetchCustomerData() {
   const url = "https://ecom-back-t1.netfy.app/api/auth/users";
