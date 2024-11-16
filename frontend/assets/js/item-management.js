@@ -30,7 +30,7 @@ $(document).ready(function () {
             <td>${escapeHTML(item.item_name)}</td>
             <td>${escapeHTML(item.item_description)}</td>
             <td>${parseFloat(item.item_price).toFixed(2)}</td>
-            <td>${escapeHTML(item.category_id)}</td>
+            <td>${escapeHTML(item.category_name)}</td>
             <td>
               <img src="https://ecom-back-t1.netfy.app${escapeHTML(
                 item.item_image
