@@ -1,14 +1,6 @@
-$(document).ready(function () {
-  console.log("Document is ready");
-
-  $("#contact-email").on("click", function (event) {
-    console.log("Contact email clicked");
-    event.preventDefault();
-    $("#contactModal").modal("show");
-  });
-
-  $("#contactForm").on("submit", function (event) {
-    console.log("Form submitted");
+$("#contactForm")
+  .off("submit")
+  .on("submit", function (event) {
     event.preventDefault();
 
     const name = $("#name").val();
@@ -31,14 +23,15 @@ $(document).ready(function () {
         message,
       })
       .then((response) => {
-        console.log("Response:", response);
-        alert("Your message has been sent successfully!");
-        $("#contactModal").modal("hide");
-        $("#contactForm")[0].reset();
+        if (response.status === 200) {
+          alert("Your message has been sent successfully!");
+          location.reload();
+        } else {
+          alert("There was an issue with your request. Please try again.");
+        }
       })
       .catch((error) => {
         console.error("Error response:", error);
         alert("There was an error sending your message. Please try again.");
       });
   });
-});
