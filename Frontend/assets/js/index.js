@@ -15,9 +15,8 @@ $(function () {
       $("#footerPlaceholder").html(response.data);
     })
     .catch((error) => console.error("Error loading footer:", error));
-
-  //For read more content
-  function toggleContent() {
-    $(".additional-content").toggle();
-  }
 });
+//For read more content
+function toggleContent() {
+  $(".additional-content").toggle();
+}
