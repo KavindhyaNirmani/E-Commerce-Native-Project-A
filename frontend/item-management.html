@@ -24,7 +24,7 @@
 
     <title>YumZy - Food & Beverages</title>
     <link rel="icon" type="image/png" href="./assets/images/yumzy-icon.png" />
-    <!-- jQuery (if needed for other parts of your project) -->
+    
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       crossorigin="anonymous"
@@ -45,7 +45,7 @@
   <body
     style="
       font-family: 'Lato', sans-serif;
-      background-image: linear-gradient(#6c6a6a, #1e1e1e);
+      background-color:#6c6a6a ;
       height: 100%;
     "
   >
@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>
-      <button class="btn1" data-bs-toggle="modal" data-bs-target="#userForm">
+      <button class="add-item-btn" data-bs-toggle="modal" data-bs-target="#userForm">
         Add Items <i class="bi bi-plus-circle"></i>
       </button>
     </section>
@@ -123,19 +123,19 @@
                   id="imgPreview"
                   src=" "
                   alt=" "
-                  width="200"
-                  height="200"
+                  width="200px"
+                  height="200px"
                   class="img d-block mx-auto"
                 />
               </div>
 
               <div class="inputField">
-                <div class="mb-3">
+                <div class="mb-3 flex-column">
                   <label for="name" class="form-label">Item Name</label>
                   <input type="text" id="name" class="form-control" required />
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 flex-column">
                   <label for="description" class="form-label"
                     >Item Description</label
                   >
@@ -147,18 +147,17 @@
                   />
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 flex-column">
                   <label for="price" class="form-label">Price (Rs)</label>
                   <input
                     type="number"
-                    step="0.01"
                     class="form-control"
                     id="price"
                     required
                   />
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 flex-column">
                   <label for="category" class="form-label">Category</label>
                   <select id="category" class="form-select" required>
                     <option value="">Select Category</option>
@@ -175,7 +174,7 @@
             <button type="submit" form="myForm" class="btn btn-primary">
               Submit
             </button>
-            <button type="reset" class="btn btn-secondary">Cancel</button>
+            <button type="reset" form="myForm" class="btn btn-secondary">Cancel</button>
           </div>
         </div>
       </div>
@@ -202,7 +201,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="card imgholder mb-3">
+            <div class="card image-holder mb-3">
               <img
                 id="viewImg"
                 alt="Item Image"
@@ -241,13 +240,6 @@
                   class="form-control"
                   disabled
                 />
-              </div>
-              <div class="mb-3">
-                <select id="viewCategory" class="form-select" disabled>
-                  <option value="pizza">Pizza</option>
-                  <option value="cake">Cake</option>
-                  <option value="beverage">Beverage</option>
-                </select>
               </div>
             </div>
           </div>
