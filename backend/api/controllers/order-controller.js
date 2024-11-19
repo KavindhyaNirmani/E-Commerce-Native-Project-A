@@ -1,4 +1,5 @@
 const db = require("../../config/db");
+const { sendEmail } = require("../../utils/email-utils");
 
 exports.transferSelectedItemsToCheckout = async (req, res) => {
   const { selectedCartItemIds } = req.body;
@@ -306,6 +307,7 @@ exports.placeOrder = async (req, res) => {
     cart_id,
   } = req.body;
   const userId = req.user.user_id;
+  const userEmail = req.user.email;
 
   if (
     !cart_id ||
@@ -415,6 +417,33 @@ exports.placeOrder = async (req, res) => {
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [orderId, address, city, postal_code, phone_number, first_name, last_name]
     );
+
+    if (!userEmail) {
+      console.error("User email is not available in the request object.");
+      return res.status(400).json({
+        error: "User email is not defined. Please ensure it is provided.",
+      });
+    }
+
+    console.log("Recipient email:", userEmail);
+
+    // Send confirmation email to the user
+    try {
+      await sendEmail(
+        userEmail,
+        `Order Confirmation - ${orderId}`,
+        `Thank you for your order! Your order ID is ${orderId}.\nWe are processing your order, and we will keep you updated on its status. Please stay tuned!`
+      );
+      console.log("Order confirmation email sent to:", userEmail);
+    } catch (emailError) {
+      console.error(
+        "Failed to send order confirmation email:",
+        emailError.message
+      );
+      return res.status(500).json({
+        error: "Failed to send order confirmation email",
+      });
+    }
 
     await connection.commit();
     res.json({
