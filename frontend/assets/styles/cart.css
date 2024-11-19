@@ -59,7 +59,7 @@ button.btn-danger:hover {
   color: #dd0f0f;
 }
 
-/* Responsive order summary */
+/* order summary */
 .order-summary {
   background-color: #ffffff;
   padding: 15px;
@@ -134,10 +134,7 @@ button.btn-danger:hover {
   .custom-td-padding {
     padding: 5px;
   }
-  .item-image {
-    width: 50px;
-    height: 50px;
-  }
+  
   .quantity-container {
     display: flex;
     flex-direction: column;

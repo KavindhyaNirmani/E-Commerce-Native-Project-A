@@ -45,14 +45,13 @@ async function displaySelectedItems() {
         const itemTotal = parseFloat(item.item_price) * item.quantity;
 
         const row = $("<tr>").html(`
-            <td><img src="https://ecom-back-t1.netfy.app${
+            <td class="custom-td-padding"><img src="https://ecom-back-t1.netfy.app${
               item.item_image
-            }" alt="${item.item_name}" style="width: 50px; height: 50px;"></td>
-            <td>${item.item_name}</td>
-            <td>Rs.${parseFloat(item.item_price).toFixed(2)}</td>
-            <td>${item.quantity}</td>
-            <td>Rs.${itemTotal.toFixed(2)}</td>
-            <td><button class="btn btn-danger" onclick="removeItem(${
+            }" alt="${item.item_name}" class="item-image"></td>
+            <td class="custom-td-padding">${item.item_name}</td>
+            <td class="custom-td-padding">${item.quantity}</td>
+            <td class="custom-td-padding">Rs.${itemTotal.toFixed(2)}</td>
+            <td class="custom-td-padding"><button class="btn btn-danger" onclick="removeItem(${
               item.cart_item_id
             })" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
           `);
