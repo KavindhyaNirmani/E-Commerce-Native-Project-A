@@ -57,33 +57,22 @@ function displayCartItems(items) {
 
   items.forEach((item) => {
     const quantity = item.quantity || 1;
-    const itemTotal = parseFloat(item.item_price) * quantity;
 
     const row = $(`
       <tr>
-        <td><input type="checkbox" class="item-checkbox" data-id="${
-          item.cart_item_id
-        }" data-price="${item.item_price}" /></td>
-        <td><img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${
-      item.item_name
-    }" style="width: 50px; height: 50px;"></td>
-        <td>${item.item_name}</td>
-        <td>Rs: ${item.item_price}</td>
-        <td>
-          <button onclick="changeQuantity(${
-            item.cart_item_id
-          }, -1)" class="btn-quantity">-</button>
+        <td class="custom-td-padding"><input type="checkbox" class="item-checkbox" data-id="${item.cart_item_id}" data-price="${item.item_price}" /></td>
+        <td class="custom-td-padding"><img src="https://ecom-back-t1.netfy.app${item.item_image}" alt="${item.item_name}" class="item-image"></td>
+        <td class="custom-td-padding">${item.item_name}</td>
+        <td class="custom-td-padding">Rs: ${item.item_price}</td>
+        <td class="custom-td-padding">
+        <div class="quantity-container">
+          <button onclick="changeQuantity(${item.cart_item_id}, -1)" class="btn-quantity">-</button>
           <span id="quantity-${item.cart_item_id}">${quantity}</span>
-          <button onclick="changeQuantity(${
-            item.cart_item_id
-          }, 1)" class="btn-quantity">+</button>
+          
+          <button onclick="changeQuantity(${item.cart_item_id}, 1)" class="btn-quantity">+</button>
+          </div>
         </td>
-        <td>Rs: <span id="total-${item.cart_item_id}">${itemTotal.toFixed(
-      2
-    )}</span></td>
-        <td><button class="btn btn-danger" onclick="removeItem(${
-          item.cart_item_id
-        })" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
+        <td class="custom-td-padding"><button class="btn-danger" onclick="removeItem(${item.cart_item_id})" aria-label="Remove"><i class="fa fa-trash"></i></button></td>
       </tr>
     `);
     cartItemsContainer.append(row);
