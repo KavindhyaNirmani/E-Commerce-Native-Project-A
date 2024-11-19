@@ -655,12 +655,55 @@ exports.updateOrderStatus = async (req, res) => {
   console.log("Updating order:", orderId, "with new status:", newStatus);
 
   try {
+    const [rows] = await db.execute(
+      `SELECT ord.*, user.email FROM \`order\` ord 
+       JOIN user user ON ord.user_id = user.user_id 
+       WHERE ord.order_id = ?`,
+      [orderId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    const order = rows[0];
+
     await db.execute(
       `UPDATE \`order\` SET order_status = ? WHERE order_id = ?`,
       [newStatus, orderId]
     );
-    res.json({ message: "Order status updated successfully." });
+
+    // Send email to the user about the order status update
+    const userEmail = order.email;
+    if (!userEmail) {
+      return res.status(400).json({ error: "User email not found" });
+    }
+    let subject = `Your Order Status has been Updated - Order ID: ${orderId}`;
+    let text;
+
+    console.log("New Status inside switch: ", newStatus);
+
+    // Custom email content based on the new status
+    switch (newStatus) {
+      case "Pending":
+        text = `Hello,\n\nYour order with ID: ${orderId} is currently pending. Our team is working on processing it, and we will keep you updated. \n\nThank you for your patience!`;
+        break;
+      case "Successful":
+        text = `Hello,\n\nWe're happy to inform you that your order with ID: ${orderId} has been successfully processed! We are now preparing your items for shipping. \n\nThank you for shopping with us, and we hope you enjoy your purchase!`;
+        break;
+      case "Failed":
+        text = `Hello,\n\nWe're sorry to inform you that your order with ID: ${orderId} has failed. There was an issue with the payment or processing. Please check your payment details and try again. \n\nIf you need any assistance, feel free to contact us.`;
+        break;
+      default:
+        text = `Hello,\n\nYour order with ID: ${orderId} status has been updated to: ${newStatus}. \n\nThank you for shopping with us!`;
+        break;
+    }
+
+    await sendEmail(userEmail, subject, text);
+
+    res.json({ message: "Order status updated successfully and email sent" });
   } catch (error) {
+    console.error("Error:", error);
     res.status(500).json({ error: error.message });
   }
 };
