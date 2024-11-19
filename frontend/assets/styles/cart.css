@@ -1,4 +1,3 @@
-/* Container spacing adjustment */
 .container {
   margin-top: 30px;
 }
@@ -11,15 +10,14 @@
   height: 30px;
   width: 30px;
   text-align: center;
+  border: none;
 }
 
 #cart-table {
   margin-top: 60px;
   background-color: #444444;
-  height: 50vh;
+  height: 60vh;
   overflow-y: scroll;
-  font-size: 12px;
-  border-spacing: 0 10px;
   vertical-align: middle;
 }
 
@@ -29,14 +27,36 @@
   vertical-align: middle;
 }
 
+.custom-td-padding {
+  padding: 10px;
+}
+
 .table tbody tr td {
   color: #ffffff !important;
   border-bottom: 5px solid #6c6a6c;
 }
+.item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+button.btn-danger {
+  background-color: #444444;
+  color: #dd0f0f;
+  border: none;
+}
 
-.item-price,
-#totalPrice {
-  color: #fad700 !important;
+.custom-td-padding button i {
+  font-size: 24px;
+}
+
+.custom-td-padding button i:hover {
+  background-color: #444444;
+}
+
+button.btn-danger:hover {
+  background-color: #444444;
+  color: #dd0f0f;
 }
 
 /* Responsive order summary */
@@ -99,7 +119,7 @@
 }
 
 /* Media Queries */
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 576px) {
   .container {
     margin-top: 50px;
   }
@@ -109,9 +129,25 @@
 
   #cart-table th,
   #cart-table td {
-    font-size: 12px;
+    font-size: 10px !important;
+  }
+  .custom-td-padding {
+    padding: 5px;
+  }
+  .item-image {
+    width: 50px;
+    height: 50px;
+  }
+  .quantity-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
   }
 
+  .custom-td-padding button i {
+    font-size: 22px;
+  }
   .order-summary {
     padding: 10px;
   }
@@ -128,17 +164,25 @@
   .table {
     margin-top: 60px;
   }
-
-  #cart-table th,
-  #cart-table td {
-    font-size: 12px;
+  .item-image {
+    width: 40px;
+    height: 40px;
   }
-
+  .custom-td-padding button i {
+    font-size: 20px;
+  }
   .order-summary {
     padding: 10px;
   }
 
   .order-summary h4 {
     font-size: 14px;
+  }
+
+  .btn-quantity {
+    width: 25px;
+    height: 25px;
+    font-size: medium;
+    text-align: center !important;
   }
 }
