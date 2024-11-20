@@ -10,7 +10,7 @@ body {
   overflow: auto;
   background-color: none;
   height: 100vh;
-  font-family: "Poppins" ,sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .container-fluid {
@@ -23,7 +23,6 @@ body {
   font-size: xx-large;
   color: #fdb560;
   text-shadow: 2px 2px 4px #000000;
-
 }
 
 .form-title {

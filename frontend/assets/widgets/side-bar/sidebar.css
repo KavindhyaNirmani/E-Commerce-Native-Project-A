@@ -95,7 +95,7 @@ body {
   .sidebar.show {
     width: 250px;
     padding: 4px;
-    z-index: 1000; 
+    z-index: 1000;
     overflow-y: hidden;
     position: fixed;
   }

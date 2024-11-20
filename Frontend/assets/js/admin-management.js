@@ -6,7 +6,6 @@ $(function () {
     }
   );
 
-  
   async function fetchAdmins() {
     try {
       const token = localStorage.getItem("authToken");
@@ -21,7 +20,6 @@ $(function () {
         }
       );
 
-      
       console.log("Response data:", response.data);
 
       if (response.data && response.data.data) {
@@ -35,15 +33,13 @@ $(function () {
     }
   }
 
-  
   function displayAdmins(admins) {
-    $("#adminListContainer").empty(); 
+    $("#adminListContainer").empty();
     admins.forEach((admin) => {
       appendNewAdminToTable(admin);
     });
   }
 
-  
   const appendNewAdminToTable = (admin) => {
     const imageUrl = admin.user_image
       ? `https://ecom-back-t1.netfy.app${admin.user_image}`
@@ -78,11 +74,10 @@ $(function () {
     $("#adminListContainer").append(adminCard);
   };
 
-
   fetchAdmins();
 
   const adminForm = $("#addAdminForm");
-  
+
   $("#addAdminButton").on("click", function () {
     adminForm[0].reset();
     adminForm.removeClass("was-validated");
@@ -90,7 +85,6 @@ $(function () {
     adminModal.show();
   });
 
-  
   $("#adminImage").on("change", function () {
     const file = this.files[0];
     if (file) {
@@ -106,7 +100,6 @@ $(function () {
     }
   });
 
- 
   adminForm.on("submit", function (event) {
     event.preventDefault();
     const form = $(this)[0];
@@ -114,7 +107,6 @@ $(function () {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
-      
       const formData = new FormData();
       formData.append("first_name", $("#firstName").val().trim());
       formData.append("last_name", $("#lastName").val().trim());
