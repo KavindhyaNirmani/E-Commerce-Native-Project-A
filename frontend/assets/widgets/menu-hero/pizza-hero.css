@@ -59,10 +59,9 @@ html {
     font-weight: 500;
     font-family: "cookie", cursive;
   }
-  
+
   .hero-text p {
     top: 60%;
     font-size: clamp(15px, 3vw, 60px);
-    
   }
 }

@@ -6,29 +6,28 @@
 #checkout-table {
   margin-top: 60px;
   align-items: center;
-  background-color: #444444;
   height: 50vh;
   overflow-y: scroll;
-  font-size: 12px;
-  border-spacing: 0 10px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 
 .table thead th {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: none;
+  color: #c59d5f;
   vertical-align: middle;
-  font-size: 14px;
+  border-top: 1px solid #c59d5f;
+  border-bottom: 1px solid #c59d5f;
 }
 
 .custom-td-padding {
   padding: 10px;
   font-size: 14px;
+  height: 10vh;
 }
 
 .table tbody tr td {
-  color: #ffffff !important;
-  border-bottom: 5px solid #6c6a6c;
+  color: #000000 !important;
+  border-bottom: 5px solid #f2f2f2;
 }
 .item-image {
   width: 70px;
@@ -37,8 +36,8 @@
 }
 
 button.btn-danger {
-  background-color: #444444;
-  color: #dd0f0f;
+  background-color: #f2f2f2;
+  color: #c59d5f;
   border: none;
 }
 
@@ -47,12 +46,14 @@ button.btn-danger {
 }
 
 .custom-td-padding button i:hover {
-  background-color: #444444;
+  background-color: #ffffff;
+  border: none;
 }
 
 button.btn-danger:hover {
-  background-color: #444444;
-  color: #dd0f0f;
+  background-color: #ffffff !important;
+  color: #dd0f0f !important;
+  border: #f2f2f2 !important;
 }
 
 /* order summary */
