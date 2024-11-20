@@ -228,30 +228,34 @@
 }
 
 /* Offer Section */
-.offer-item {
-  border: 1px solid #ddd;
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.offer-item:hover {
-  transform: scale(1.05);
-}
-
-.offer-item img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 15px;
-}
 
 .button-container {
   margin-top: 20px;
 }
 
+.promotion-card {
+  margin-top: 0;
+  display: block !important;
+  width: 15rem !important;
+  height: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.offer-section {
+  margin-top: 0;
+  padding-top: 0;
+  height: 100vh;
+}
+
 .container h2 {
   color: #c59d5f;
   font-size: 36px;
+  margin-bottom: 1px;
 }
 
 /* Button Style */

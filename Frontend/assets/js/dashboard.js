@@ -191,14 +191,14 @@ $(function () {
 
   async function fetchOffers() {
     try {
-      const token = localStorage.getItem("authToken");
+      
 
       const response = await axios.get(
         "https://ecom-back-t1.netfy.app/api/promotion",
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+           
           },
         }
       );
