@@ -1,8 +1,6 @@
-$(document).ready(() => {
-  // Fetch order summaries
+$(function () {
   fetchOrderSummary();
 
-  // Fetch data for pie chart (order percentages)
   axios
     .get(
       "https://ecom-back-t1.netfy.app/api/orders/admin/order-status-percentages",
@@ -19,7 +17,6 @@ $(document).ready(() => {
       console.error("Error fetching pie chart data:", error);
     });
 
-  // Fetch data for bar chart (weekly order summary for categories)
   axios
     .get("https://ecom-back-t1.netfy.app/api/orders/weekly-order-summary", {
       headers: {
@@ -35,7 +32,6 @@ $(document).ready(() => {
     });
 });
 
-// Function to create the pie chart
 function createPieChart(data) {
   const ctx = $("#pieChart")[0].getContext("2d");
   new Chart(ctx, {
@@ -65,7 +61,6 @@ function createPieChart(data) {
   });
 }
 
-// Function to create the bar chart
 function createBarChart(data) {
   const ctx = $("#barChart")[0].getContext("2d");
   new Chart(ctx, {
@@ -147,7 +142,6 @@ function createBarChart(data) {
   });
 }
 
-// Function to fetch and display order summary counts
 function fetchOrderSummary() {
   axios
     .get("https://ecom-back-t1.netfy.app/api/orders/admin/statistics", {
@@ -163,7 +157,7 @@ function fetchOrderSummary() {
       $("#failed-orders").text(data.failedOrders);
     })
     .catch((error) => {
-      console.error("Error fetching order data:", errorThrown);
+      console.error("Error fetching order data:", error);
     });
 }
 
@@ -261,7 +255,6 @@ $(function () {
     formData.append("rules", JSON.stringify(rules));
 
     try {
-      // Log form data for debugging
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
@@ -317,7 +310,6 @@ $(function () {
     }
   });
 });
-
 
 fetchCustomerData();
 
