@@ -24,7 +24,7 @@ class commonSidebar extends HTMLElement {
     </div>
     `;
 
-    $(document).ready(function () {
+    $(function () {
       $("#toggleBtn").on("click", function () {
         $("#sidebar").toggleClass("show");
       });
