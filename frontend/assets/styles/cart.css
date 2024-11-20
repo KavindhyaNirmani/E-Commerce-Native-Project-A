@@ -3,46 +3,50 @@
 }
 
 .btn-quantity {
-  background-color: #c59d5f;
-  color: #ffffff;
+  background-color: #ffffff;
+  border: 2px solid #c59d5f;
+  color: #c59d5f;
   font-size: large;
   border-radius: 50%;
   height: 30px;
   width: 30px;
   text-align: center;
-  border: none;
 }
 
 #cart-table {
   margin-top: 60px;
-  background-color: #444444;
+  background-color: none;
   height: 60vh;
   overflow-y: scroll;
   vertical-align: middle;
 }
 
 .table thead th {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: none;
+  color: #c59d5f;
   vertical-align: middle;
+  border-top: 1px solid #c59d5f;
 }
 
 .custom-td-padding {
   padding: 10px;
 }
-
-.table tbody tr td {
-  color: #ffffff !important;
-  border-bottom: 5px solid #6c6a6c;
+.item-checkbox {
+  accent-color: #c59d5f;
 }
+.table tbody tr td {
+  color: #000000 !important;
+  border-bottom: 5px solid #f2f2f2;
+}
+
 .item-image {
   width: 50px;
   height: 50px;
   object-fit: cover;
 }
 button.btn-danger {
-  background-color: #444444;
-  color: #dd0f0f;
+  background-color: #f2f2f2;
+  color: #c59d5f;
   border: none;
 }
 
@@ -51,12 +55,25 @@ button.btn-danger {
 }
 
 .custom-td-padding button i:hover {
-  background-color: #444444;
+  background-color: #ffffff;
+  border: none;
+}
+
+.btn-danger:active {
+  background-color: #ffffff;
+  border: none;
+}
+
+.btn-danger:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 button.btn-danger:hover {
-  background-color: #444444;
-  color: #dd0f0f;
+  background-color: #ffffff !important;
+  color: #dd0f0f !important;
+  border: #f2f2f2 !important;
 }
 
 /* order summary */
@@ -134,7 +151,7 @@ button.btn-danger:hover {
   .custom-td-padding {
     padding: 5px;
   }
-  
+
   .quantity-container {
     display: flex;
     flex-direction: column;

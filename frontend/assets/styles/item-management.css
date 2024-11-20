@@ -156,11 +156,11 @@ body {
 
   .btn,
   .btn1 {
-    font-size: 100%; /* Adjust button font size */
+    font-size: 100%;
   }
 
   .modal-content {
-    width: 80%; /* Make modal full width */
+    width: 80%;
   }
 }
 
