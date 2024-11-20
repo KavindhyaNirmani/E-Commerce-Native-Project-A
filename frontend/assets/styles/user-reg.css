@@ -41,8 +41,7 @@ body {
   max-height: 100%;
 }
 
-.form-style input
-{
+.form-style input {
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.6);

@@ -1,15 +1,14 @@
 $(function () {
   // Password toggle functionality
   $("#toggle1").on("click", function () {
-    $("#icon1").toggleClass("fa-eye")
+    $("#icon1").toggleClass("fa-eye");
 
     const input = $("#password");
     input.attr("type", input.attr("type") === "password" ? "text" : "password");
   });
 
-   
-   $("#toggle2").on("click", function () {
-    $("#icon2").toggleClass("fa-eye")
+  $("#toggle2").on("click", function () {
+    $("#icon2").toggleClass("fa-eye");
 
     const input = $("#confirmPassword");
     input.attr("type", input.attr("type") === "password" ? "text" : "password");

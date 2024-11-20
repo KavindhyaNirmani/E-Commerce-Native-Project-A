@@ -185,14 +185,11 @@ $(function () {
 
   async function fetchOffers() {
     try {
-      
-
       const response = await axios.get(
         "https://ecom-back-t1.netfy.app/api/promotion",
         {
           headers: {
             "Content-Type": "application/json",
-           
           },
         }
       );
