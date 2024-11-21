@@ -656,8 +656,8 @@ exports.updateOrderStatus = async (req, res) => {
 
   try {
     const [rows] = await db.execute(
-      `SELECT ord.*, user.email FROM \`order\` ord 
-       JOIN user user ON ord.user_id = user.user_id 
+      `SELECT ord.*, u.email FROM \`order\` ord 
+       JOIN user u ON ord.user_id = u.user_id 
        WHERE ord.order_id = ?`,
       [orderId]
     );
