@@ -21,21 +21,13 @@ $(function () {
           : "";
 
         const offerCard = `
-       <div class="card  promotion-card" style="width: 20rem; position:relative">
+       <div class="promotion-card col-12 col-sm-6 col-md-4 col-lg-3" >
          ${
            offer.promotion_image
              ? `<img src="${imageUrl}" class="card-img-top card-background" >`
              : ""
          }
-         <div class="card-body card-overlay">
-           <h5 class="card-title">${offer.title}</h5>
-           <h5 class="card-text">${offer.promotion_description}</h5>
-           <h6>Start Date: ${new Date(
-             offer.start_date
-           ).toLocaleDateString()}</h6>
-           <h6>End Date: ${new Date(offer.end_date).toLocaleDateString()}</h6>
-           
-         </div>
+         
        </div>
      `;
 
