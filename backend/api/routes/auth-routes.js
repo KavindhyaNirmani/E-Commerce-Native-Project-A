@@ -10,7 +10,6 @@ const {
   protect,
   superAdminOnly,
   adminOrSuperAdmin,
-  adminOnly,
 } = require("../middleware/auth-middleware");
 const router = express.Router(); //create a new instance of the Express Router
 
