@@ -166,6 +166,10 @@ $(function () {
   const submitOfferBtn = $("#submitOfferBtn");
   const offerForm = $("#offerForm");
   const offerList = $("#offerList");
+  const rulesContainer = $("#rulesContainer");
+  const addRuleButton = $("#addRuleBtn");
+
+  let ruleCount = 0;
 
   addOfferButton.on("click", function () {
     const addOfferModal = new bootstrap.Modal($("#addOfferModal")[0]);
@@ -173,6 +177,14 @@ $(function () {
   });
 
   fetchOffers();
+
+  addRuleButton.on("click", function () {
+    addRule();
+  });
+
+  rulesContainer.on("click", ".remove-rule-button", function () {
+    $(this).closest(".rule-item").remove();
+  });
 
   submitOfferBtn.on("click", async function (e) {
     e.preventDefault();
@@ -182,6 +194,41 @@ $(function () {
       offerForm.addClass("was-validated");
     }
   });
+
+  function addRule(minPrice = "", discountPercentage = "") {
+    ruleCount++;
+    const ruleItem = `
+      <div class="rule-item border p-2 mb-2">
+        <div class="form-group">
+          <label for="ruleMinPrice${ruleCount}">Minimum Price</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ruleMinPrice${ruleCount}"
+            name="ruleMinPrice"
+            value="${minPrice}"
+            placeholder="Enter minimum price"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="ruleDiscount${ruleCount}">Discount Percentage</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ruleDiscount${ruleCount}"
+            name="ruleDiscount"
+            value="${discountPercentage}"
+            placeholder="Enter discount percentage"
+            required
+          />
+        </div>
+        <button type="button" class="btn btn-danger btn-sm remove-rule-button mt-2">
+          Remove Rule
+        </button>
+      </div>`;
+    rulesContainer.append(ruleItem);
+  }
 
   async function fetchOffers() {
     try {
@@ -193,12 +240,29 @@ $(function () {
           },
         }
       );
+      console.log("Fetched Offers:", response.data);
 
       offerList.empty();
       response.data.forEach((offer) => {
         const imageUrl = offer.promotion_image
           ? `https://ecom-back-t1.netfy.app${offer.promotion_image}`
           : "";
+
+          const rulesArray = Array.isArray(offer.rules)
+          ? offer.rules
+          : offer.rules ? JSON.parse(offer.rules) : [];
+  
+        const rulesHtml =Array.isArray(offer.rules) && offer.rules.length > 0
+        ? offer.rules
+            .map(
+              (rule, index) => `
+                <li>
+                  Rule ${index + 1}: Minimum Price - ${rule.min_price}, 
+                  Discount - ${rule.discount_percentage}%
+                </li>`
+            )
+            .join("")
+        : "<li>No rules available</li>";
 
         const offerCard = `
       <div class="card m-2 promotion-card" style="width: 18rem;">
@@ -213,6 +277,10 @@ $(function () {
           <h6>Start Date: ${new Date(
             offer.start_date
           ).toLocaleDateString()}</h6>
+          <h6>Rules:</h6>
+            <ul class="rules-list">
+              ${rulesHtml}
+              </ul>
           <h6>End Date: ${new Date(offer.end_date).toLocaleDateString()}</h6>
           <button class="btn btn-danger remove-offer-button" data-remove-id="${
             offer.promotion_id
@@ -233,8 +301,6 @@ $(function () {
     const formData = new FormData();
     formData.append("title", $("#offerTitle").val());
     formData.append("promotion_description", $("#offerDetail").val());
-    formData.append("min_price", $("#minPrice").val());
-    formData.append("discount_percentage", $("#disPercentage").val());
     formData.append("categories", $("#category").val());
     formData.append("start_date", $("#startDate").val());
     formData.append("end_date", $("#endDate").val());
@@ -242,12 +308,24 @@ $(function () {
     const offerImage = $("#offerImage")[0].files[0];
     formData.append("promotion_image", offerImage);
 
-    const rules = [
-      {
-        min_price: $("#minPrice").val(),
-        discount_percentage: $("#disPercentage").val(),
-      },
-    ];
+    const rules = [];
+    rulesContainer.find(".rule-item").each(function () {
+      const minPrice = $(this).find('input[name="ruleMinPrice"]').val();
+      const discountPercentage = $(this)
+        .find('input[name="ruleDiscount"]')
+        .val();
+
+  
+
+      if (minPrice && discountPercentage) {
+        rules.push({
+          min_price: minPrice,
+          discount_percentage: discountPercentage,
+        });
+      }
+    });
+
+    console.log("Rules being sent:", rules);
 
     formData.append("rules", JSON.stringify(rules));
 

@@ -62,12 +62,12 @@ body {
 
 .modal-content {
   background-color: #666;
-  color: #c59d5f;
+  color: white;
 }
 
 .modal-header {
   background-color: #000;
-  color: #c59d5f;
+  color: white;
 }
 
 #closeModal {
@@ -95,7 +95,6 @@ body {
 .form-control:focus {
   box-shadow: none;
   background-color: #444;
-  color: #c59d5f;
 }
 
 /* Special offer styles */
@@ -276,5 +275,20 @@ table.dataTable.display tbody tr:nth-child(odd) * {
 @media (max-width: 320px) {
   .order-summary-box p {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  body{
+    overflow-x: hidden;
+  }
+  #offerList {
+    justify-content: center !important; 
+    gap: 1rem; 
+  }
+
+  .promotion-card{
+    justify-content: center;
+    
   }
 }
