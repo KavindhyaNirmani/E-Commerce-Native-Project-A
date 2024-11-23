@@ -34,6 +34,7 @@ $(function () {
 
 function createPieChart(data) {
   const ctx = $("#pieChart")[0].getContext("2d");
+
   new Chart(ctx, {
     type: "pie",
     data: {
@@ -49,12 +50,19 @@ function createPieChart(data) {
     },
     options: {
       responsive: true,
+      layout: {
+        padding: {
+          bottom: 50,
+          top: 10,
+        },
+      },
       plugins: {
         legend: {
           labels: {
             color: "white",
           },
           position: "top",
+          padding: 0,
         },
       },
     },
@@ -248,21 +256,24 @@ $(function () {
           ? `https://ecom-back-t1.netfy.app${offer.promotion_image}`
           : "";
 
-          const rulesArray = Array.isArray(offer.rules)
+        const rulesArray = Array.isArray(offer.rules)
           ? offer.rules
-          : offer.rules ? JSON.parse(offer.rules) : [];
-  
-        const rulesHtml =Array.isArray(offer.rules) && offer.rules.length > 0
-        ? offer.rules
-            .map(
-              (rule, index) => `
+          : offer.rules
+          ? JSON.parse(offer.rules)
+          : [];
+
+        const rulesHtml =
+          Array.isArray(offer.rules) && offer.rules.length > 0
+            ? offer.rules
+                .map(
+                  (rule, index) => `
                 <li>
                   Rule ${index + 1}: Minimum Price - ${rule.min_price}, 
                   Discount - ${rule.discount_percentage}%
                 </li>`
-            )
-            .join("")
-        : "<li>No rules available</li>";
+                )
+                .join("")
+            : "<li>No rules available</li>";
 
         const offerCard = `
       <div class="card m-2 promotion-card" style="width: 18rem;">
@@ -277,14 +288,14 @@ $(function () {
           <h6>Start Date: ${new Date(
             offer.start_date
           ).toLocaleDateString()}</h6>
-          <h6>Rules:</h6>
+          
+          <h6>End Date: ${new Date(offer.end_date).toLocaleDateString()}</h6>
+         <h6>Rules:</h6>
             <ul class="rules-list">
               ${rulesHtml}
-              </ul>
-          <h6>End Date: ${new Date(offer.end_date).toLocaleDateString()}</h6>
-          <button class="btn btn-danger remove-offer-button" data-remove-id="${
-            offer.promotion_id
-          }">Remove offer</button>
+              </ul> <button class="btn btn-danger remove-offer-button" data-remove-id="${
+                offer.promotion_id
+              }">Remove offer</button>
         </div>
       </div>
     `;
@@ -314,8 +325,6 @@ $(function () {
       const discountPercentage = $(this)
         .find('input[name="ruleDiscount"]')
         .val();
-
-  
 
       if (minPrice && discountPercentage) {
         rules.push({
