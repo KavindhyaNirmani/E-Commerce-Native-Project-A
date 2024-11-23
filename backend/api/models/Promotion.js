@@ -12,7 +12,7 @@ class Promotion {
       categories,
     } = promotionData;
 
-    const connection = await db.getConnection(); 
+    const connection = await db.getConnection();
 
     try {
       await connection.beginTransaction();
@@ -32,12 +32,22 @@ class Promotion {
       const promotion_id = result.insertId;
 
       // Insert associated rules
-      for (const rule of rules) {
-        await connection.execute(
-          `INSERT INTO promotion_rule (promotion_id, min_price, discount_percentage) 
-          VALUES (?, ?, ?)`,
-          [promotion_id, rule.min_price, rule.discount_percentage]
-        );
+      if (rules && rules.length > 0) {
+        for (const rule of rules) {
+          console.log(
+            "Inserting rule:",
+            rule,
+            "for promotion_id:",
+            promotion_id
+          );
+          await connection.execute(
+            `INSERT INTO promotion_rule (promotion_id, min_price, discount_percentage) 
+            VALUES (?, ?, ?)`,
+            [promotion_id, rule.min_price, rule.discount_percentage]
+          );
+        }
+      } else {
+        console.log("No rules to insert");
       }
 
       await connection.commit();
@@ -60,32 +70,45 @@ class Promotion {
     }
   }
 
-  // Get all active promotions with associated rules
   static async findAll() {
     try {
+      // Fetch all promotions
       const [promotions] = await db.execute(`SELECT * FROM promotion`);
+      if (promotions.length === 0) return promotions; // Return empty if no promotions found
 
+      // Collect promotion IDs
       const promotionIds = promotions.map((promo) => promo.promotion_id);
-      if (!promotionIds.length) return promotions;
 
+      // Fetch all rules for the collected promotion IDs
       const [rules] = await db.execute(
-        `SELECT * FROM promotion_rule WHERE promotion_id IN (?)`,
-        [promotionIds]
+        `SELECT * FROM promotion_rule WHERE promotion_id IN (${promotionIds.join(
+          ","
+        )})`
       );
 
       // Group rules by promotion_id
-      const groupedRules = rules.reduce((acc, rule) => {
-        acc[rule.promotion_id] = acc[rule.promotion_id] || [];
-        acc[rule.promotion_id].push(rule);
-        return acc;
-      }, {});
+      const groupedRules = {};
+      promotionIds.forEach((id) => (groupedRules[id] = [])); // Initialize empty arrays for each promotion_id
 
-      return promotions.map((promo) => ({
-        ...promo,
-        rules: groupedRules[promo.promotion_id] || [],
+      rules.forEach((rule) => {
+        if (!groupedRules[rule.promotion_id]) {
+          groupedRules[rule.promotion_id] = [];
+        }
+        groupedRules[rule.promotion_id].push({
+          rule_id: rule.rule_id,
+          min_price: rule.min_price,
+          discount_percentage: rule.discount_percentage,
+        });
+      });
+
+      // Attach rules to the corresponding promotion
+      return promotions.map((promotion) => ({
+        ...promotion,
+        rules: groupedRules[promotion.promotion_id] || [],
       }));
     } catch (error) {
-      throw new Error("Error fetching promotions: " + error.message);
+      console.error("Error fetching promotions:", error);
+      throw new Error("Failed to fetch promotions.");
     }
   }
 
@@ -106,7 +129,12 @@ class Promotion {
         [promotionId]
       );
 
-      promotion.rules = rules;
+      console.log("Fetched rules for promotion:", rules);
+      promotion.rules = rules.map((rule) => ({
+        rule_id: rule.rule_id,
+        min_price: rule.min_price,
+        discount_percentage: rule.discount_percentage,
+      }));
       return promotion;
     } catch (error) {
       throw new Error("Error fetching promotion: " + error.message);

@@ -4,6 +4,7 @@ const Promotion = require("../models/Promotion");
 exports.getAllPromotions = async (req, res) => {
   try {
     const promotions = await Promotion.findAll();
+    console.log("Promotions with rules:", promotions);
     res.status(200).json(promotions);
   } catch (error) {
     console.error("Error fetching promotions:", error);
