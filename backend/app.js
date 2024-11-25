@@ -35,10 +35,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the e-commerce backend API!");
-});
-
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/cart", cartRoutes);
