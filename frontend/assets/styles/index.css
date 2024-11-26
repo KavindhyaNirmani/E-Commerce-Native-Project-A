@@ -244,7 +244,6 @@
   justify-content: center;
   align-items: center;
   width: 350px !important;
-  height: auto !important;
   visibility: visible !important;
   opacity: 1 !important;
   background: #f8f9fa;
@@ -260,8 +259,6 @@
   max-width: 400px;
   border-radius: 10px;
   object-fit: cover;
-}
-.offer-section {
 }
 
 .container h2 {

@@ -96,13 +96,13 @@
           <!-- Pie Chart-->
           <div class="col-lg-4 col-md-6 mb-4 text-center">
             <div class="chart-box">
-              <h4>Order Status Distribution</h4>
-              <canvas id="pieChart"></canvas>
+              <h4 class="pb-1 pt-1">Order Status Distribution</h4>
+              <canvas id="pieChart" class="pt-2"></canvas>
             </div>
           </div>
 
           <!-- Bar Chart-->
-          <div class="col-lg-8 col-md-6 mb-4 text-center">
+          <div class="col-lg-8 col-md-6 mb-3 text-center">
             <div class="chart-box">
               <h4>Order Summary Chart</h4>
               <canvas id="barChart"></canvas>
@@ -114,14 +114,16 @@
       <!-- Special Offers Section -->
       <div class="container my-4">
         <h2>Special Offers</h2>
-        <div id="offerList" class="text-center mt-5 d-flex flex-wrap gap-3 justify-content-center">
+        <div
+          id="offerList"
+          class="text-center mt-5 d-flex flex-wrap gap-3 justify-content-center"
+        >
           <!-- Offer images will be dynamically loaded here -->
         </div>
         <div class="text-center my-2 mt-3">
           <button id="addOfferButton" class="btn custom-yellow ml-2">
             Add New
           </button>
-          
         </div>
       </div>
 
@@ -176,8 +178,6 @@
                   />
                   <div class="invalid-feedback">Please fill the field!</div>
                 </div>
-
-                
 
                 <div class="form-group">
                   <label for="category" class="form-label">Category</label>
@@ -237,7 +237,11 @@
                     type="button"
                     class="btn btn-sm btn mt-2 mb-3"
                     id="addRuleBtn"
-                    style="border:solid #c59d5f; font-weight: 500; color: white;"
+                    style="
+                      border: solid #c59d5f;
+                      font-weight: 500;
+                      color: white;
+                    "
                   >
                     Add Rule
                   </button>
