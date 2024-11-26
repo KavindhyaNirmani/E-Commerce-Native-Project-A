@@ -54,6 +54,11 @@ body {
   text-align: center;
 }
 
+#pieChart,
+#barChart {
+  width: 500px;
+  height: 500px;
+}
 /*offer section*/
 .special-offer-img {
   width: 300px;
@@ -279,16 +284,15 @@ table.dataTable.display tbody tr:nth-child(odd) * {
 }
 
 @media (max-width: 576px) {
-  body{
+  body {
     overflow-x: hidden;
   }
   #offerList {
-    justify-content: center !important; 
-    gap: 1rem; 
+    justify-content: center !important;
+    gap: 1rem;
   }
 
-  .promotion-card{
+  .promotion-card {
     justify-content: center;
-    
   }
 }

@@ -30,6 +30,7 @@ body {
 .modal-dialog-custom {
   max-width: 50%;
 }
+
 .card-style {
   background-color: #2d2d2d !important;
   color: white;
@@ -46,6 +47,7 @@ body {
 .list-custom {
   background-color: #1e1e1e !important;
 }
+
 .card-body {
   background-color: #2d2d2d !important;
 }
