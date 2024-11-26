@@ -15,14 +15,14 @@
 
 #cart-table {
   margin-top: 60px;
-  background-color: none;
+  background-color:#f2f2f2;
   height: 60vh;
   overflow-y: scroll;
   vertical-align: middle;
 }
 
 .table thead th {
-  background-color: none;
+  background-color:#f2f2f2;
   color: #c59d5f;
   vertical-align: middle;
   border-top: 1px solid #c59d5f;
