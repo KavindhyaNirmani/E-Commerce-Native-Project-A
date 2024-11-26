@@ -238,13 +238,13 @@
   padding: 20px;
 }
 .promotion-card {
-  height: 100vh;
   display: flex !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 350px !important;
   visibility: visible !important;
+  height: auto;
   opacity: 1 !important;
   background: #f8f9fa;
   position: relative;
