@@ -6,6 +6,9 @@ const morgan = require("morgan"); //a middleware for logging http requests and r
 const bodyParser = require("body-parser");
 const path = require("path");
 
+const helmet = require("helmet"); // Security middleware to set HTTP headers
+const rateLimit = require("express-rate-limit"); // To limit repeated requests from the same IP
+
 const authRoutes = require("./api/routes/auth-routes");
 const itemRoutes = require("./api/routes/item-routes");
 const cartRoutes = require("./api/routes/cart-routes");
@@ -18,6 +21,17 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
+
+
+// Security middleware
+app.use(helmet()); 
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again later",
+  })
+);
 
 //CORS setup
 app.use((req, res, next) => {
